@@ -259,17 +259,21 @@
 		0490EED21EEF977000E05A84 /* UILabel+Wonderful.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDB61EEF976F00E05A84 /* UILabel+Wonderful.m */; };
 		0490EED31EEF977000E05A84 /* JMMainNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDBA1EEF976F00E05A84 /* JMMainNavController.m */; };
 		0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDBD1EEF976F00E05A84 /* JMTabBar.m */; };
-		0490EED51EEF977000E05A84 /* JMHomeCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDC11EEF976F00E05A84 /* JMHomeCollectionController.m */; };
-		0490EED61EEF977000E05A84 /* JMHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDC41EEF976F00E05A84 /* JMHomeModel.m */; };
-		0490EED71EEF977000E05A84 /* JMHomeCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDC71EEF976F00E05A84 /* JMHomeCollectionReusableView.m */; };
-		0490EED81EEF977000E05A84 /* JMHomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDC91EEF976F00E05A84 /* JMHomeCollectionViewCell.m */; };
-		0490EED91EEF977000E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDCB1EEF976F00E05A84 /* JMHomeCollectionViewFlowLayout.m */; };
 		0490EEDA1EEF977000E05A84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDCE1EEF976F00E05A84 /* AppDelegate.m */; };
 		0490EEDB1EEF977000E05A84 /* UserDefaultTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDD11EEF976F00E05A84 /* UserDefaultTools.m */; };
 		0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EDD31EEF976F00E05A84 /* ViewController.m */; };
 		0490EEDF1EEF97DB00E05A84 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0490EEDE1EEF97DB00E05A84 /* libsqlite3.tbd */; };
+		0490F1AD1EEF9C3900E05A84 /* JMHomeCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1A21EEF9C3900E05A84 /* JMHomeCollectionController.m */; };
+		0490F1AE1EEF9C3900E05A84 /* JMHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1A51EEF9C3900E05A84 /* JMHomeModel.m */; };
+		0490F1AF1EEF9C3900E05A84 /* JMHomeCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1A81EEF9C3900E05A84 /* JMHomeCollectionReusableView.m */; };
+		0490F1B01EEF9C3900E05A84 /* JMHomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1AA1EEF9C3900E05A84 /* JMHomeCollectionViewCell.m */; };
+		0490F1B11EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1AC1EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m */; };
+		0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1B51EEF9C4900E05A84 /* JMAboutUsController.m */; };
+		0490F1D71EEF9C4900E05A84 /* JMMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1BD1EEF9C4900E05A84 /* JMMeViewController.m */; };
+		0490F1DC1EEF9C4900E05A84 /* JMAccountHeaderFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1C81EEF9C4900E05A84 /* JMAccountHeaderFooter.m */; };
+		0490F1E51EEF9DCB00E05A84 /* SetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1E41EEF9DCB00E05A84 /* SetModel.m */; };
+		0490F1E81EEF9E1900E05A84 /* SetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F1E71EEF9E1900E05A84 /* SetTableViewCell.m */; };
 		04A0DDF01EEF81A400464852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DDEF1EEF81A400464852 /* main.m */; };
-		04A0DDF91EEF81A400464852 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDF71EEF81A400464852 /* Main.storyboard */; };
 		04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFA1EEF81A400464852 /* Assets.xcassets */; };
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
 		04A0DE091EEF81A400464852 /* CreativityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DE081EEF81A400464852 /* CreativityTests.m */; };
@@ -624,16 +628,6 @@
 		0490EDBA1EEF976F00E05A84 /* JMMainNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMainNavController.m; sourceTree = "<group>"; };
 		0490EDBC1EEF976F00E05A84 /* JMTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTabBar.h; sourceTree = "<group>"; };
 		0490EDBD1EEF976F00E05A84 /* JMTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTabBar.m; sourceTree = "<group>"; };
-		0490EDC01EEF976F00E05A84 /* JMHomeCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionController.h; sourceTree = "<group>"; };
-		0490EDC11EEF976F00E05A84 /* JMHomeCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionController.m; sourceTree = "<group>"; };
-		0490EDC31EEF976F00E05A84 /* JMHomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeModel.h; sourceTree = "<group>"; };
-		0490EDC41EEF976F00E05A84 /* JMHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeModel.m; sourceTree = "<group>"; };
-		0490EDC61EEF976F00E05A84 /* JMHomeCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionReusableView.h; sourceTree = "<group>"; };
-		0490EDC71EEF976F00E05A84 /* JMHomeCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionReusableView.m; sourceTree = "<group>"; };
-		0490EDC81EEF976F00E05A84 /* JMHomeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionViewCell.h; sourceTree = "<group>"; };
-		0490EDC91EEF976F00E05A84 /* JMHomeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionViewCell.m; sourceTree = "<group>"; };
-		0490EDCA1EEF976F00E05A84 /* JMHomeCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		0490EDCB1EEF976F00E05A84 /* JMHomeCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		0490EDCD1EEF976F00E05A84 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0490EDCE1EEF976F00E05A84 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0490EDCF1EEF976F00E05A84 /* Creativity_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creativity_Prefix.pch; sourceTree = "<group>"; };
@@ -642,9 +636,28 @@
 		0490EDD21EEF976F00E05A84 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		0490EDD31EEF976F00E05A84 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0490EEDE1EEF97DB00E05A84 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		0490F1A11EEF9C3900E05A84 /* JMHomeCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionController.h; sourceTree = "<group>"; };
+		0490F1A21EEF9C3900E05A84 /* JMHomeCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionController.m; sourceTree = "<group>"; };
+		0490F1A41EEF9C3900E05A84 /* JMHomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeModel.h; sourceTree = "<group>"; };
+		0490F1A51EEF9C3900E05A84 /* JMHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeModel.m; sourceTree = "<group>"; };
+		0490F1A71EEF9C3900E05A84 /* JMHomeCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionReusableView.h; sourceTree = "<group>"; };
+		0490F1A81EEF9C3900E05A84 /* JMHomeCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionReusableView.m; sourceTree = "<group>"; };
+		0490F1A91EEF9C3900E05A84 /* JMHomeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionViewCell.h; sourceTree = "<group>"; };
+		0490F1AA1EEF9C3900E05A84 /* JMHomeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionViewCell.m; sourceTree = "<group>"; };
+		0490F1AB1EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		0490F1AC1EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		0490F1B41EEF9C4900E05A84 /* JMAboutUsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAboutUsController.h; sourceTree = "<group>"; };
+		0490F1B51EEF9C4900E05A84 /* JMAboutUsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAboutUsController.m; sourceTree = "<group>"; };
+		0490F1BC1EEF9C4900E05A84 /* JMMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMeViewController.h; sourceTree = "<group>"; };
+		0490F1BD1EEF9C4900E05A84 /* JMMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMeViewController.m; sourceTree = "<group>"; };
+		0490F1C71EEF9C4900E05A84 /* JMAccountHeaderFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAccountHeaderFooter.h; sourceTree = "<group>"; };
+		0490F1C81EEF9C4900E05A84 /* JMAccountHeaderFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAccountHeaderFooter.m; sourceTree = "<group>"; };
+		0490F1E31EEF9DCB00E05A84 /* SetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetModel.h; sourceTree = "<group>"; };
+		0490F1E41EEF9DCB00E05A84 /* SetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetModel.m; sourceTree = "<group>"; };
+		0490F1E61EEF9E1900E05A84 /* SetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetTableViewCell.h; sourceTree = "<group>"; };
+		0490F1E71EEF9E1900E05A84 /* SetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetTableViewCell.m; sourceTree = "<group>"; };
 		04A0DDEB1EEF81A400464852 /* Creativity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Creativity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DDEF1EEF81A400464852 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		04A0DDF81EEF81A400464852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04A0DDFA1EEF81A400464852 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04A0DDFD1EEF81A400464852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04A0DDFF1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1218,42 +1231,10 @@
 		0490EDBE1EEF976F00E05A84 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				0490EDBF1EEF976F00E05A84 /* Controller */,
-				0490EDC21EEF976F00E05A84 /* Model */,
-				0490EDC51EEF976F00E05A84 /* View */,
+				0490F1B21EEF9C4900E05A84 /* Me */,
+				0490F19F1EEF9C3900E05A84 /* Home */,
 			);
 			path = Modules;
-			sourceTree = "<group>";
-		};
-		0490EDBF1EEF976F00E05A84 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				0490EDC01EEF976F00E05A84 /* JMHomeCollectionController.h */,
-				0490EDC11EEF976F00E05A84 /* JMHomeCollectionController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		0490EDC21EEF976F00E05A84 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0490EDC31EEF976F00E05A84 /* JMHomeModel.h */,
-				0490EDC41EEF976F00E05A84 /* JMHomeModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		0490EDC51EEF976F00E05A84 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0490EDC61EEF976F00E05A84 /* JMHomeCollectionReusableView.h */,
-				0490EDC71EEF976F00E05A84 /* JMHomeCollectionReusableView.m */,
-				0490EDC81EEF976F00E05A84 /* JMHomeCollectionViewCell.h */,
-				0490EDC91EEF976F00E05A84 /* JMHomeCollectionViewCell.m */,
-				0490EDCA1EEF976F00E05A84 /* JMHomeCollectionViewFlowLayout.h */,
-				0490EDCB1EEF976F00E05A84 /* JMHomeCollectionViewFlowLayout.m */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		0490EDCC1EEF976F00E05A84 /* Others */ = {
@@ -1317,6 +1298,88 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		0490F19F1EEF9C3900E05A84 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1A01EEF9C3900E05A84 /* Controller */,
+				0490F1A31EEF9C3900E05A84 /* Model */,
+				0490F1A61EEF9C3900E05A84 /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		0490F1A01EEF9C3900E05A84 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1A11EEF9C3900E05A84 /* JMHomeCollectionController.h */,
+				0490F1A21EEF9C3900E05A84 /* JMHomeCollectionController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0490F1A31EEF9C3900E05A84 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1A41EEF9C3900E05A84 /* JMHomeModel.h */,
+				0490F1A51EEF9C3900E05A84 /* JMHomeModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0490F1A61EEF9C3900E05A84 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1A71EEF9C3900E05A84 /* JMHomeCollectionReusableView.h */,
+				0490F1A81EEF9C3900E05A84 /* JMHomeCollectionReusableView.m */,
+				0490F1A91EEF9C3900E05A84 /* JMHomeCollectionViewCell.h */,
+				0490F1AA1EEF9C3900E05A84 /* JMHomeCollectionViewCell.m */,
+				0490F1AB1EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.h */,
+				0490F1AC1EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0490F1B21EEF9C4900E05A84 /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1E21EEF9DA300E05A84 /* Model */,
+				0490F1B31EEF9C4900E05A84 /* Controller */,
+				0490F1C41EEF9C4900E05A84 /* View */,
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
+		0490F1B31EEF9C4900E05A84 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1B41EEF9C4900E05A84 /* JMAboutUsController.h */,
+				0490F1B51EEF9C4900E05A84 /* JMAboutUsController.m */,
+				0490F1BC1EEF9C4900E05A84 /* JMMeViewController.h */,
+				0490F1BD1EEF9C4900E05A84 /* JMMeViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0490F1C41EEF9C4900E05A84 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1C71EEF9C4900E05A84 /* JMAccountHeaderFooter.h */,
+				0490F1C81EEF9C4900E05A84 /* JMAccountHeaderFooter.m */,
+				0490F1E61EEF9E1900E05A84 /* SetTableViewCell.h */,
+				0490F1E71EEF9E1900E05A84 /* SetTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0490F1E21EEF9DA300E05A84 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0490F1E31EEF9DCB00E05A84 /* SetModel.h */,
+				0490F1E41EEF9DCB00E05A84 /* SetModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		04A0DDE21EEF81A400464852 = {
 			isa = PBXGroup;
 			children = (
@@ -1345,7 +1408,6 @@
 				0490EDBE1EEF976F00E05A84 /* Modules */,
 				0490EDCC1EEF976F00E05A84 /* Others */,
 				0490EDD41EEF976F00E05A84 /* Tools */,
-				04A0DDF71EEF81A400464852 /* Main.storyboard */,
 				04A0DDFA1EEF81A400464852 /* Assets.xcassets */,
 				04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */,
 				04A0DDFF1EEF81A400464852 /* Info.plist */,
@@ -1619,7 +1681,6 @@
 				0490EDF41EEF976F00E05A84 /* a.png in Resources */,
 				0490EE281EEF977000E05A84 /* emoji_icon_ 3.png in Resources */,
 				0490EE571EEF977000E05A84 /* emoji_icon_50.png in Resources */,
-				04A0DDF91EEF81A400464852 /* Main.storyboard in Resources */,
 				0490EE8F1EEF977000E05A84 /* 2796.png in Resources */,
 				0490EE391EEF977000E05A84 /* emoji_icon_20.png in Resources */,
 				0490EE3D1EEF977000E05A84 /* emoji_icon_24.png in Resources */,
@@ -1652,6 +1713,7 @@
 			files = (
 				0490EEB21EEF977000E05A84 /* MJExtensionConst.m in Sources */,
 				0490EDDC1EEF976F00E05A84 /* NSString+Extension.m in Sources */,
+				0490F1AE1EEF9C3900E05A84 /* JMHomeModel.m in Sources */,
 				0490EEDB1EEF977000E05A84 /* UserDefaultTools.m in Sources */,
 				0490EDDA1EEF976F00E05A84 /* NSString+Base64.m in Sources */,
 				0490EEB31EEF977000E05A84 /* MJFoundation.m in Sources */,
@@ -1662,6 +1724,7 @@
 				0490EEC51EEF977000E05A84 /* UIButton+WebCache.m in Sources */,
 				0490EEA21EEF977000E05A84 /* JMFmdbModel.m in Sources */,
 				0490EEB91EEF977000E05A84 /* NSObject+MJKeyValue.m in Sources */,
+				0490F1DC1EEF9C4900E05A84 /* JMAccountHeaderFooter.m in Sources */,
 				0490EEB51EEF977000E05A84 /* MJPropertyKey.m in Sources */,
 				0490EEAB1EEF977000E05A84 /* MASViewConstraint.m in Sources */,
 				0490EEBF1EEF977000E05A84 /* SDWebImageCompat.m in Sources */,
@@ -1684,8 +1747,8 @@
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
 				0490EEC01EEF977000E05A84 /* SDWebImageDecoder.m in Sources */,
-				0490EED91EEF977000E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */,
 				0490EEC31EEF977000E05A84 /* SDWebImageManager.m in Sources */,
+				0490F1D71EEF9C4900E05A84 /* JMMeViewController.m in Sources */,
 				0490EDEB1EEF976F00E05A84 /* AFURLRequestSerialization.m in Sources */,
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EDEE1EEF976F00E05A84 /* FMDatabase.m in Sources */,
@@ -1693,17 +1756,17 @@
 				0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */,
 				0490EDE41EEF976F00E05A84 /* UIAlertController+SYQAlterViewController.m in Sources */,
 				0490EDEA1EEF976F00E05A84 /* AFSecurityPolicy.m in Sources */,
-				0490EED51EEF977000E05A84 /* JMHomeCollectionController.m in Sources */,
 				0490EECF1EEF977000E05A84 /* SXMarquee.m in Sources */,
-				0490EED71EEF977000E05A84 /* JMHomeCollectionReusableView.m in Sources */,
-				0490EED61EEF977000E05A84 /* JMHomeModel.m in Sources */,
+				0490F1AD1EEF9C3900E05A84 /* JMHomeCollectionController.m in Sources */,
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
 				0490EED01EEF977000E05A84 /* UIColor+Separate.m in Sources */,
 				0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */,
 				0490EEAA1EEF977000E05A84 /* MASViewAttribute.m in Sources */,
+				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,
 				0490EEA91EEF977000E05A84 /* MASLayoutConstraint.m in Sources */,
 				0490EECA1EEF977000E05A84 /* UIImageView+WebCache.m in Sources */,
 				0490EEA61EEF977000E05A84 /* MASCompositeConstraint.m in Sources */,
+				0490F1E81EEF9E1900E05A84 /* SetTableViewCell.m in Sources */,
 				0490EDF01EEF976F00E05A84 /* FMDatabasePool.m in Sources */,
 				0490EEBB1EEF977000E05A84 /* NSString+MJExtension.m in Sources */,
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
@@ -1712,17 +1775,21 @@
 				0490EEC61EEF977000E05A84 /* UIImage+GIF.m in Sources */,
 				0490EEC81EEF977000E05A84 /* UIImage+WebP.m in Sources */,
 				0490EEA51EEF977000E05A84 /* Tool_FMDBModel.m in Sources */,
+				0490F1B01EEF9C3900E05A84 /* JMHomeCollectionViewCell.m in Sources */,
 				0490EDE91EEF976F00E05A84 /* AFNetworkReachabilityManager.m in Sources */,
 				0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */,
 				0490EEA81EEF977000E05A84 /* MASConstraintMaker.m in Sources */,
 				0490EDF21EEF976F00E05A84 /* FMResultSet.m in Sources */,
+				0490F1E51EEF9DCB00E05A84 /* SetModel.m in Sources */,
 				0490EDDE1EEF976F00E05A84 /* NSObject+JMProperty.m in Sources */,
 				0490EEB01EEF977000E05A84 /* MBProgressHUD.m in Sources */,
 				0490EDE21EEF976F00E05A84 /* UINavigationBar+JMNavigationBar.m in Sources */,
+				0490F1B11EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */,
 				0490EECD1EEF977000E05A84 /* SXColorLabel.m in Sources */,
 				0490EDF11EEF976F00E05A84 /* FMDatabaseQueue.m in Sources */,
 				0490EEAF1EEF977000E05A84 /* ViewController+MASAdditions.m in Sources */,
 				0490EEC71EEF977000E05A84 /* UIImage+MultiFormat.m in Sources */,
+				0490F1AF1EEF9C3900E05A84 /* JMHomeCollectionReusableView.m in Sources */,
 				0490EDED1EEF976F00E05A84 /* AFURLSessionManager.m in Sources */,
 				0490EEBA1EEF977000E05A84 /* NSObject+MJProperty.m in Sources */,
 				0490EDE61EEF976F00E05A84 /* UIImage+JMImage.m in Sources */,
@@ -1734,7 +1801,6 @@
 				0490EDE11EEF976F00E05A84 /* UINavigationBar+Awesome.m in Sources */,
 				0490EEA71EEF977000E05A84 /* MASConstraint.m in Sources */,
 				0490EDEF1EEF976F00E05A84 /* FMDatabaseAdditions.m in Sources */,
-				0490EED81EEF977000E05A84 /* JMHomeCollectionViewCell.m in Sources */,
 				0490EEBE1EEF977000E05A84 /* SDImageCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1758,14 +1824,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		04A0DDF71EEF81A400464852 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04A0DDF81EEF81A400464852 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

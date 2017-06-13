@@ -12,6 +12,9 @@
 #import "JMHomeCollectionReusableView.h"
 #import "JMHomeCollectionViewFlowLayout.h"
 #import "NSObject+JMProperty.h"
+#import "JMMeViewController.h"
+#import "JMMainNavController.h"
+
 // #import "JMDrawViewController.h"
 #import "UserDefaultTools.h"
 
@@ -33,7 +36,6 @@ static NSString *const headerID = @"header";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     self.dataSource = [NSMutableArray arrayWithArray:@[@[@"", @"", @""], @[@"", @"", @""], @[@"", @"", @""], @[@"", @"", @""], @[@"", @"", @""]]];
     [self.collection reloadData];
 }
@@ -48,30 +50,28 @@ static NSString *const headerID = @"header";
     [super viewDidLoad];
     
     self.key = @"001";
+    self.title = @"我的动画";
     [self.view addSubview:self.collection];
+    
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"toolbar_setting_icon_black"] style:(UIBarButtonItemStyleDone) target:self action:@selector(setItem:)];
+    self.navigationItem.leftBarButtonItem = left;
+    
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_plus_icon_black"] style:(UIBarButtonItemStyleDone) target:self action:@selector(newItem:)];
+    self.navigationItem.rightBarButtonItem = right;
+    
 }
 
-- (UICollectionView *)collection
+- (void)setItem:(UIBarButtonItem *)sender
 {
-    if (!_collection)
-    {
-        self.collectionLayout = [[JMHomeCollectionViewFlowLayout alloc] init];
-        self.collectionLayout.delegate = self;
-        self.collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_collectionLayout];
-        _collection.backgroundColor = JMTabViewBaseColor;
-        _collection.dataSource = self;
-        _collection.delegate = self;
-        _collection.showsVerticalScrollIndicator = NO;
-        [self.view addSubview:_collection];
-        
-        // 注册
-        [_collection registerClass:[JMHomeCollectionViewCell class] forCellWithReuseIdentifier:collectionID];
-        [_collection registerClass:[JMHomeCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
-        [_collection registerClass:[JMHomeCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
-    }
-    return _collection;
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMMeViewController alloc] init]];
+    [self presentViewController:Nav animated:YES completion:nil];
 }
 
+- (void)newItem:(UIBarButtonItem *)sender
+{
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMMeViewController alloc] init]];
+    [self presentViewController:Nav animated:YES completion:nil];
+}
 
 #pragma mark UICollectionViewDataSource,
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -302,6 +302,25 @@ static NSString *const headerID = @"header";
     
     // 再把这个移动的model插入到相应的位置
     [sections insertObject:model atIndex:toPath.row];
+}
+
+- (UICollectionView *)collection
+{
+    if (!_collection)
+    {
+        self.collectionLayout = [[JMHomeCollectionViewFlowLayout alloc] init];
+        self.collectionLayout.delegate = self;
+        self.collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_collectionLayout];
+        [_collection registerClass:[JMHomeCollectionViewCell class] forCellWithReuseIdentifier:collectionID];
+        [_collection registerClass:[JMHomeCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
+        [_collection registerClass:[JMHomeCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
+        _collection.backgroundColor = JMTabViewBaseColor;
+        _collection.dataSource = self;
+        _collection.delegate = self;
+        _collection.showsVerticalScrollIndicator = NO;
+        [self.view addSubview:_collection];
+    }
+    return _collection;
 }
 
 - (void)didReceiveMemoryWarning {
