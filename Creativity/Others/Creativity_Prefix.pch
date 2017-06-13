@@ -1,0 +1,71 @@
+//
+//  Creativity_Prefix.pch
+//  Creativity
+//
+//  Created by JM Zhao on 2017/6/13.
+//  Copyright © 2017年 JMZhao. All rights reserved.
+//
+
+#ifndef Creativity_Prefix_pch
+#define Creativity_Prefix_pch
+
+#define baseTag 1000
+#define layerBaseTag 900
+#define ellipseBaseTag 800
+#define clearBaseTag 700
+
+#define JMNameFount [UIFont systemFontOfSize:13]
+#define JMTimeFount [UIFont systemFontOfSize:12]
+#define JMTextFount [UIFont systemFontOfSize:15]
+#define JMSourceFount [UIFont systemFontOfSize:12]
+
+#define JMSelf(weakSelf) __weak __typeof(&*self)weakSelf = self;
+
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+
+#define JMTabViewBaseColor JMColor(245.0, 245.0, 245.0)
+#define JMBaseColor [UIColor colorWithRed:28.0f/255.0f green:164.0f/255.0f blue:250.0f/255.0f alpha:1.0]
+#define JMColor(r, g, b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1.0]
+#define JMColorRGBA(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
+#define JMRandomColor JMColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+#define HEXCOLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:(c&0xFF)/255.0 alpha:1.0]
+
+#define JMDocumentsPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0]
+#define JMCachePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+#define JMAccountPath [JMDocumentsPath stringByAppendingPathComponent:@"001"]
+
+// 颜色
+#define JMCellBackground JMColor(239, 239, 239)
+#define JMCellContent JMColor(254, 254, 254)
+#define JMCellText JMColor(241, 241, 241)
+
+//Frame
+#define kW [[UIScreen mainScreen] bounds].size.width
+#define kH [[UIScreen mainScreen] bounds].size.height
+#define NavBarHeight self.navigationController.navigationBar.bounds.size.height
+#define StatusBarHeight 20
+#define TabBarHeight self.tabBarController.tabBar.bounds.size.height
+#define kImageOriginHight 160
+#define kScale [[UIScreen mainScreen] scale]
+
+#ifdef DEBUG
+#define JMLog(...) NSLog(__VA_ARGS__)
+#else
+#define JMLog(...)
+#endif
+
+#define JMLogDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+
+#define ALERT(title, msg) [[[UIAlertView alloc]initWithTitle:title message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show]
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* Creativity_Prefix_pch */
+
+#ifdef __OBJC__
+
+#import "UIImage+JMImage.h"
+#import "UIView+Extension.h"
+
+#endif

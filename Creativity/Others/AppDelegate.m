@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "JMMainNavController.h"
+#import "JMHomeCollectionController.h"
+#import "NSObject+PYThemeExtension.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +19,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.rootViewController = [[JMMainNavController alloc] initWithRootViewController:[[JMHomeCollectionController alloc] init]];
+    [self.window makeKeyAndVisible];
+    [self py_setThemeColor:JMBaseColor];
+    
     return YES;
 }
 
