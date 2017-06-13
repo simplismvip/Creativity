@@ -46,8 +46,8 @@
     [self creatCoverageAtindex:0 from:NO];
     self.dataSource = [NSMutableArray array];
     
-    self.leftImage = @"toolbar_setting_icon_black";
-    self.rightImage = @"navbar_plus_icon_black";
+    self.leftImage = @"navbar_close_icon_black";
+    self.rightImage = @"navbar_next_icon_black";
 }
 
 - (void)setItem:(UIBarButtonItem *)sender

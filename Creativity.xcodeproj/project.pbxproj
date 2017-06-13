@@ -286,6 +286,8 @@
 		0490F2501EEFB88C00E05A84 /* JMAttributeString.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F24F1EEFB88C00E05A84 /* JMAttributeString.m */; };
 		0490F2531EEFBC5C00E05A84 /* JMBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2521EEFBC5C00E05A84 /* JMBaseController.m */; };
 		0490F2561EEFBE1B00E05A84 /* JMGetGIFController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2551EEFBE1B00E05A84 /* JMGetGIFController.m */; };
+		0490F2591EEFC0C900E05A84 /* JMGifSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2581EEFC0C900E05A84 /* JMGifSetView.m */; };
+		0490F25C1EEFC0E600E05A84 /* JMGifView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F25B1EEFC0E600E05A84 /* JMGifView.m */; };
 		04A0DDF01EEF81A400464852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DDEF1EEF81A400464852 /* main.m */; };
 		04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFA1EEF81A400464852 /* Assets.xcassets */; };
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
@@ -695,6 +697,10 @@
 		0490F2521EEFBC5C00E05A84 /* JMBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseController.m; sourceTree = "<group>"; };
 		0490F2541EEFBE1B00E05A84 /* JMGetGIFController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGetGIFController.h; sourceTree = "<group>"; };
 		0490F2551EEFBE1B00E05A84 /* JMGetGIFController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGetGIFController.m; sourceTree = "<group>"; };
+		0490F2571EEFC0C900E05A84 /* JMGifSetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGifSetView.h; sourceTree = "<group>"; };
+		0490F2581EEFC0C900E05A84 /* JMGifSetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGifSetView.m; sourceTree = "<group>"; };
+		0490F25A1EEFC0E600E05A84 /* JMGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGifView.h; sourceTree = "<group>"; };
+		0490F25B1EEFC0E600E05A84 /* JMGifView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGifView.m; sourceTree = "<group>"; };
 		04A0DDEB1EEF81A400464852 /* Creativity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Creativity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DDEF1EEF81A400464852 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04A0DDFA1EEF81A400464852 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1462,6 +1468,10 @@
 			isa = PBXGroup;
 			children = (
 				0490F2151EEFA32900E05A84 /* NewPaint */,
+				0490F2571EEFC0C900E05A84 /* JMGifSetView.h */,
+				0490F2581EEFC0C900E05A84 /* JMGifSetView.m */,
+				0490F25A1EEFC0E600E05A84 /* JMGifView.h */,
+				0490F25B1EEFC0E600E05A84 /* JMGifView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1832,6 +1842,7 @@
 				0490EEB91EEF977000E05A84 /* NSObject+MJKeyValue.m in Sources */,
 				0490F1DC1EEF9C4900E05A84 /* JMAccountHeaderFooter.m in Sources */,
 				0490EEB51EEF977000E05A84 /* MJPropertyKey.m in Sources */,
+				0490F25C1EEFC0E600E05A84 /* JMGifView.m in Sources */,
 				0490EEAB1EEF977000E05A84 /* MASViewConstraint.m in Sources */,
 				0490EEBF1EEF977000E05A84 /* SDWebImageCompat.m in Sources */,
 				0490EEC11EEF977000E05A84 /* SDWebImageDownloader.m in Sources */,
@@ -1852,6 +1863,7 @@
 				0490EDE51EEF976F00E05A84 /* UIBarButtonItem+Item.m in Sources */,
 				0490F2501EEFB88C00E05A84 /* JMAttributeString.m in Sources */,
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
+				0490F2591EEFC0C900E05A84 /* JMGifSetView.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
 				0490EEC01EEF977000E05A84 /* SDWebImageDecoder.m in Sources */,
 				0490EEC31EEF977000E05A84 /* SDWebImageManager.m in Sources */,
