@@ -14,8 +14,7 @@
 #import "NSObject+JMProperty.h"
 #import "JMMeViewController.h"
 #import "JMMainNavController.h"
-
-// #import "JMDrawViewController.h"
+#import "JMDrawViewController.h"
 #import "UserDefaultTools.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate>
@@ -51,14 +50,9 @@ static NSString *const headerID = @"header";
     
     self.key = @"001";
     self.title = @"我的动画";
+    self.leftImage = @"toolbar_setting_icon_black";
+    self.rightImage = @"navbar_plus_icon_black";
     [self.view addSubview:self.collection];
-    
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"toolbar_setting_icon_black"] style:(UIBarButtonItemStyleDone) target:self action:@selector(setItem:)];
-    self.navigationItem.leftBarButtonItem = left;
-    
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_plus_icon_black"] style:(UIBarButtonItemStyleDone) target:self action:@selector(newItem:)];
-    self.navigationItem.rightBarButtonItem = right;
-    
 }
 
 - (void)setItem:(UIBarButtonItem *)sender
@@ -69,7 +63,7 @@ static NSString *const headerID = @"header";
 
 - (void)newItem:(UIBarButtonItem *)sender
 {
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMMeViewController alloc] init]];
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMDrawViewController alloc] init]];
     [self presentViewController:Nav animated:YES completion:nil];
 }
 

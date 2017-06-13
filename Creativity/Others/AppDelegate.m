@@ -10,6 +10,7 @@
 #import "JMMainNavController.h"
 #import "JMHomeCollectionController.h"
 #import "NSObject+PYThemeExtension.h"
+#import "StaticClass.h"
 
 @interface AppDelegate ()
 
@@ -17,8 +18,13 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [StaticClass setLineWidth:3.0];
+    [StaticClass setAlpha:1.0];
+    [StaticClass setColor:[UIColor blackColor]];
+    [StaticClass setFontName:@"Avenir-Roman"];
+    [StaticClass setFontType:0];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [[JMMainNavController alloc] initWithRootViewController:[[JMHomeCollectionController alloc] init]];

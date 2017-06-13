@@ -28,11 +28,10 @@
     self.dataSource = [NSMutableArray arrayWithArray:@[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]];
     [self setUI];
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(doneItem:)];
-    self.navigationItem.rightBarButtonItem = right;
+    self.rightImage = @"navbar_plus_icon_black";
 }
 
-- (void)doneItem:(UIBarButtonItem *)sender
+- (void)newItem:(UIBarButtonItem *)sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

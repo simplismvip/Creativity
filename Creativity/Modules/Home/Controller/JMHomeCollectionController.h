@@ -6,9 +6,9 @@
 //  Copyright © 2017年 JunMingZhaoPra. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "JMBaseController.h"
 
-@interface JMHomeCollectionController : UIViewController
+@interface JMHomeCollectionController : JMBaseController
 - (void)refreshData;
 - (void)leftSwitchEditerStatus;
 @property (nonatomic, copy) NSString *key;
