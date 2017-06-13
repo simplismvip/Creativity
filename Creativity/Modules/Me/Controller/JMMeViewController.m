@@ -28,10 +28,10 @@
     self.dataSource = [NSMutableArray arrayWithArray:@[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]];
     [self setUI];
     
-    self.rightImage = @"navbar_plus_icon_black";
+    self.leftImage = @"navbar_close_icon_black";
 }
 
-- (void)newItem:(UIBarButtonItem *)sender
+- (void)setItem:(UIBarButtonItem *)sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -76,7 +76,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SetModel *model = self.dataSource[indexPath.section][indexPath.row];
+    // SetModel *model = self.dataSource[indexPath.section][indexPath.row];
     
     if (indexPath.section==0 && indexPath.row==0) {
        
@@ -90,12 +90,10 @@
     }else if (indexPath.section==2 && indexPath.row==0) {
         
         
-    }else if (indexPath.section==2 && indexPath.row==2) {
+    }else if (indexPath.section==2 && indexPath.row==1) {
     
         JMAboutUsController *about = [[JMAboutUsController alloc] init];
-        about.title = model.title;
-        [self.tabBarController.navigationController pushViewController:about animated:YES];
-        
+        [self.navigationController pushViewController:about animated:YES];
     }
 }
 
