@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JMGetGIFController : UIViewController
-
+@property (nonatomic, strong) NSMutableArray *images;
 @end

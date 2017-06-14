@@ -34,6 +34,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL isFill;
 @property (nonatomic, strong) UIImage *image;
 
+// 花表情
 @property (nonatomic, copy) NSString *paintImage;
 @property (nonatomic, copy) NSString *paintText;
 @property (nonatomic, assign, readonly) NSUInteger undoSteps;

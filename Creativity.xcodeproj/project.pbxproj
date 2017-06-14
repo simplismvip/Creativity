@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		047FCEA71EF119D800AD0C08 /* JMCreatPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */; };
 		0490EDD91EEF976F00E05A84 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC551EEF976F00E05A84 /* NSDate+Extension.m */; };
 		0490EDDA1EEF976F00E05A84 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC581EEF976F00E05A84 /* NSString+Base64.m */; };
 		0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC5A1EEF976F00E05A84 /* NSString+Emoji.m */; };
@@ -305,6 +306,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		047FCEA51EF119D800AD0C08 /* JMCreatPaintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCreatPaintView.h; sourceTree = "<group>"; };
+		047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCreatPaintView.m; sourceTree = "<group>"; };
 		0490EC541EEF976F00E05A84 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		0490EC551EEF976F00E05A84 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		0490EC571EEF976F00E05A84 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
@@ -1479,6 +1482,8 @@
 		0490F2151EEFA32900E05A84 /* NewPaint */ = {
 			isa = PBXGroup;
 			children = (
+				047FCEA51EF119D800AD0C08 /* JMCreatPaintView.h */,
+				047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */,
 				0490F2161EEFA32900E05A84 /* AngleDraw.h */,
 				0490F2171EEFA32900E05A84 /* AngleDraw.m */,
 				0490F2181EEFA32900E05A84 /* GoPaintView.h */,
@@ -1900,6 +1905,7 @@
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,
 				0490EEA51EEF977000E05A84 /* Tool_FMDBModel.m in Sources */,
 				0490F1B01EEF9C3900E05A84 /* JMHomeCollectionViewCell.m in Sources */,
+				047FCEA71EF119D800AD0C08 /* JMCreatPaintView.m in Sources */,
 				0490F2561EEFBE1B00E05A84 /* JMGetGIFController.m in Sources */,
 				0490EDE91EEF976F00E05A84 /* AFNetworkReachabilityManager.m in Sources */,
 				0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */,
