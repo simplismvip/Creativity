@@ -46,4 +46,7 @@
 // 获取系统字体
 + (NSMutableArray *)systemFont;
 + (NSMutableArray *)systemFontType;
+
+// 
++ (NSMutableArray *)getTopBarModel;
 @end

@@ -10,6 +10,8 @@
 #import "MJExtension.h"
 #import "JMAttributeString.h"
 #import "StaticClass.h"
+#import "JMTopBarModel.h"
+#import "JMBottomModel.h"
 
 @implementation JMHelper
 
@@ -246,5 +248,62 @@
         return nil;
     }
 }
+
++ (NSMutableArray *)getTopBarModel
+{
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"topBarJson" ofType:@"json"];
+    NSDictionary *jsonDic = [self readJsonByPath:jsonPath];
+    NSArray *topBarArray = jsonDic[@"topBar"];
+    NSMutableArray *topBars = [NSMutableArray array];
+    
+    for (int i = 0; i < topBarArray.count; i ++) {
+        
+        NSDictionary *dict = topBarArray[i];
+        NSString *title = dict.allKeys.lastObject;
+        NSDictionary *valueDic = dict.allValues.lastObject;
+        
+        JMTopBarModel *model = [[JMTopBarModel alloc] init];
+        model.title = title;
+        if (i == 2) {model.column = 3;}
+        model.column = 1;
+        [topBars addObject:model];
+        
+        NSArray *imageArray = valueDic[@"imageName"];
+        NSArray *titleArray = valueDic[@"showName"];
+        NSString *isColor = valueDic[@"color"];
+        NSInteger type = [valueDic[@"type"] integerValue];
+        NSMutableArray *rows = [NSMutableArray array];
+        
+        if ([isColor isEqualToString:@"1"]) {
+            
+            NSArray *colors = valueDic[@"colorArr"];
+            for (int i = 0; i < imageArray.count; i ++) {
+                
+                JMBottomModel *model = [[JMBottomModel alloc] init];
+                model.title = titleArray[i];
+                model.image = imageArray[i];
+                model.backgroundColor = colors[i];
+                model.type = type;
+                [rows addObject:model];
+            }
+        }else{
+            
+            for (int i = 0; i < imageArray.count; i ++) {
+                
+                JMBottomModel *model = [[JMBottomModel alloc] init];
+                model.title = titleArray[i];
+                model.image = imageArray[i];
+                model.backgroundColor = nil;
+                model.type = type;
+                [rows addObject:model];
+            }
+        }
+        
+        model.models = rows;
+    }
+    
+    return topBars;
+}
+
 
 @end

@@ -292,6 +292,16 @@
 		04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFA1EEF81A400464852 /* Assets.xcassets */; };
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
 		04A0DE091EEF81A400464852 /* CreativityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DE081EEF81A400464852 /* CreativityTests.m */; };
+		A20DAF131EF2E31A008DBFA9 /* JMMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */; };
+		A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */; };
+		A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */; };
+		A20DAF181EF2E4B0008DBFA9 /* JMGestureButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF171EF2E4B0008DBFA9 /* JMGestureButton.m */; };
+		A20DAF241EF2E61E008DBFA9 /* JMBottomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF1B1EF2E61E008DBFA9 /* JMBottomCell.m */; };
+		A20DAF251EF2E61E008DBFA9 /* JMBottomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF1D1EF2E61E008DBFA9 /* JMBottomModel.m */; };
+		A20DAF261EF2E61E008DBFA9 /* JMBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF1F1EF2E61E008DBFA9 /* JMBottomView.m */; };
+		A20DAF271EF2E61E008DBFA9 /* JMTopBarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF211EF2E61E008DBFA9 /* JMTopBarModel.m */; };
+		A20DAF281EF2E61E008DBFA9 /* JMTopTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF231EF2E61E008DBFA9 /* JMTopTableView.m */; };
+		A20DAF2A1EF2E85E008DBFA9 /* topBarJson.json in Resources */ = {isa = PBXBuildFile; fileRef = A20DAF291EF2E85E008DBFA9 /* topBarJson.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -709,6 +719,25 @@
 		04A0DE041EEF81A400464852 /* CreativityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreativityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DE081EEF81A400464852 /* CreativityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreativityTests.m; sourceTree = "<group>"; };
 		04A0DE0A1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A20DAF0C1EF2E31A008DBFA9 /* JMMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMemberModel.h; sourceTree = "<group>"; };
+		A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMemberModel.m; sourceTree = "<group>"; };
+		A20DAF0E1EF2E31A008DBFA9 /* JMMembersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMembersCell.h; sourceTree = "<group>"; };
+		A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMembersCell.m; sourceTree = "<group>"; };
+		A20DAF101EF2E31A008DBFA9 /* JMMembersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMembersView.h; sourceTree = "<group>"; };
+		A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMembersView.m; sourceTree = "<group>"; };
+		A20DAF161EF2E4B0008DBFA9 /* JMGestureButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGestureButton.h; sourceTree = "<group>"; };
+		A20DAF171EF2E4B0008DBFA9 /* JMGestureButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGestureButton.m; sourceTree = "<group>"; };
+		A20DAF1A1EF2E61E008DBFA9 /* JMBottomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBottomCell.h; sourceTree = "<group>"; };
+		A20DAF1B1EF2E61E008DBFA9 /* JMBottomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBottomCell.m; sourceTree = "<group>"; };
+		A20DAF1C1EF2E61E008DBFA9 /* JMBottomModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBottomModel.h; sourceTree = "<group>"; };
+		A20DAF1D1EF2E61E008DBFA9 /* JMBottomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBottomModel.m; sourceTree = "<group>"; };
+		A20DAF1E1EF2E61E008DBFA9 /* JMBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBottomView.h; sourceTree = "<group>"; };
+		A20DAF1F1EF2E61E008DBFA9 /* JMBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBottomView.m; sourceTree = "<group>"; };
+		A20DAF201EF2E61E008DBFA9 /* JMTopBarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTopBarModel.h; sourceTree = "<group>"; };
+		A20DAF211EF2E61E008DBFA9 /* JMTopBarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTopBarModel.m; sourceTree = "<group>"; };
+		A20DAF221EF2E61E008DBFA9 /* JMTopTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTopTableView.h; sourceTree = "<group>"; };
+		A20DAF231EF2E61E008DBFA9 /* JMTopTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTopTableView.m; sourceTree = "<group>"; };
+		A20DAF291EF2E85E008DBFA9 /* topBarJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = topBarJson.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1313,6 +1342,8 @@
 		0490EDD51EEF976F00E05A84 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				A20DAF161EF2E4B0008DBFA9 /* JMGestureButton.h */,
+				A20DAF171EF2E4B0008DBFA9 /* JMGestureButton.m */,
 				047FCEE51EF26E5700AD0C08 /* JMHelper.h */,
 				047FCEE61EF26E5700AD0C08 /* JMHelper.m */,
 				047FCEE71EF26E5700AD0C08 /* JMFileManger.h */,
@@ -1471,6 +1502,8 @@
 		0490F2121EEFA32900E05A84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A20DAF191EF2E61E008DBFA9 /* TopTableView */,
+				A20DAF091EF2E31A008DBFA9 /* MembersView */,
 				0490F2151EEFA32900E05A84 /* NewPaint */,
 			);
 			path = View;
@@ -1526,6 +1559,7 @@
 				04A0DDFA1EEF81A400464852 /* Assets.xcassets */,
 				04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */,
 				04A0DDFF1EEF81A400464852 /* Info.plist */,
+				A20DAF291EF2E85E008DBFA9 /* topBarJson.json */,
 				04A0DDEE1EEF81A400464852 /* Supporting Files */,
 			);
 			path = Creativity;
@@ -1546,6 +1580,36 @@
 				04A0DE0A1EEF81A400464852 /* Info.plist */,
 			);
 			path = CreativityTests;
+			sourceTree = "<group>";
+		};
+		A20DAF091EF2E31A008DBFA9 /* MembersView */ = {
+			isa = PBXGroup;
+			children = (
+				A20DAF0C1EF2E31A008DBFA9 /* JMMemberModel.h */,
+				A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */,
+				A20DAF0E1EF2E31A008DBFA9 /* JMMembersCell.h */,
+				A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */,
+				A20DAF101EF2E31A008DBFA9 /* JMMembersView.h */,
+				A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */,
+			);
+			path = MembersView;
+			sourceTree = "<group>";
+		};
+		A20DAF191EF2E61E008DBFA9 /* TopTableView */ = {
+			isa = PBXGroup;
+			children = (
+				A20DAF1A1EF2E61E008DBFA9 /* JMBottomCell.h */,
+				A20DAF1B1EF2E61E008DBFA9 /* JMBottomCell.m */,
+				A20DAF1C1EF2E61E008DBFA9 /* JMBottomModel.h */,
+				A20DAF1D1EF2E61E008DBFA9 /* JMBottomModel.m */,
+				A20DAF1E1EF2E61E008DBFA9 /* JMBottomView.h */,
+				A20DAF1F1EF2E61E008DBFA9 /* JMBottomView.m */,
+				A20DAF201EF2E61E008DBFA9 /* JMTopBarModel.h */,
+				A20DAF211EF2E61E008DBFA9 /* JMTopBarModel.m */,
+				A20DAF221EF2E61E008DBFA9 /* JMTopTableView.h */,
+				A20DAF231EF2E61E008DBFA9 /* JMTopTableView.m */,
+			);
+			path = TopTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1687,6 +1751,7 @@
 				0490EE6A1EEF977000E05A84 /* 0032-fe0f-20e3.png in Resources */,
 				0490EE821EEF977000E05A84 /* 1f49c.png in Resources */,
 				0490EE961EEF977000E05A84 /* handwrite_03.png in Resources */,
+				A20DAF2A1EF2E85E008DBFA9 /* topBarJson.json in Resources */,
 				0490EE4A1EEF977000E05A84 /* emoji_icon_37.png in Resources */,
 				0490EE531EEF977000E05A84 /* emoji_icon_46.png in Resources */,
 				0490EE331EEF977000E05A84 /* emoji_icon_14.png in Resources */,
@@ -1828,6 +1893,7 @@
 			files = (
 				0490F2441EEFA32900E05A84 /* JMPaintView.m in Sources */,
 				0490EEB21EEF977000E05A84 /* MJExtensionConst.m in Sources */,
+				A20DAF271EF2E61E008DBFA9 /* JMTopBarModel.m in Sources */,
 				0490EDDC1EEF976F00E05A84 /* NSString+Extension.m in Sources */,
 				0490F1AE1EEF9C3900E05A84 /* JMHomeModel.m in Sources */,
 				0490EEDB1EEF977000E05A84 /* UserDefaultTools.m in Sources */,
@@ -1837,6 +1903,7 @@
 				0490EEAE1EEF977000E05A84 /* View+MASAdditions.m in Sources */,
 				0490EEC21EEF977000E05A84 /* SDWebImageDownloaderOperation.m in Sources */,
 				0490EECB1EEF977000E05A84 /* UIView+WebCacheOperation.m in Sources */,
+				A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */,
 				0490EEC51EEF977000E05A84 /* UIButton+WebCache.m in Sources */,
 				0490EEA21EEF977000E05A84 /* JMFmdbModel.m in Sources */,
 				0490EEB91EEF977000E05A84 /* NSObject+MJKeyValue.m in Sources */,
@@ -1869,6 +1936,7 @@
 				0490EEC01EEF977000E05A84 /* SDWebImageDecoder.m in Sources */,
 				0490EEC31EEF977000E05A84 /* SDWebImageManager.m in Sources */,
 				0490F1D71EEF9C4900E05A84 /* JMMeViewController.m in Sources */,
+				A20DAF181EF2E4B0008DBFA9 /* JMGestureButton.m in Sources */,
 				0490EDEB1EEF976F00E05A84 /* AFURLRequestSerialization.m in Sources */,
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EDEE1EEF976F00E05A84 /* FMDatabase.m in Sources */,
@@ -1878,7 +1946,9 @@
 				0490EDEA1EEF976F00E05A84 /* AFSecurityPolicy.m in Sources */,
 				0490EECF1EEF977000E05A84 /* SXMarquee.m in Sources */,
 				0490F1AD1EEF9C3900E05A84 /* JMHomeCollectionController.m in Sources */,
+				A20DAF281EF2E61E008DBFA9 /* JMTopTableView.m in Sources */,
 				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,
+				A20DAF251EF2E61E008DBFA9 /* JMBottomModel.m in Sources */,
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
 				0490EED01EEF977000E05A84 /* UIColor+Separate.m in Sources */,
 				0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */,
@@ -1915,6 +1985,7 @@
 				0490F1B11EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */,
 				0490EECD1EEF977000E05A84 /* SXColorLabel.m in Sources */,
 				0490EDF11EEF976F00E05A84 /* FMDatabaseQueue.m in Sources */,
+				A20DAF131EF2E31A008DBFA9 /* JMMemberModel.m in Sources */,
 				0490EEAF1EEF977000E05A84 /* ViewController+MASAdditions.m in Sources */,
 				0490EEC71EEF977000E05A84 /* UIImage+MultiFormat.m in Sources */,
 				0490F1AF1EEF9C3900E05A84 /* JMHomeCollectionReusableView.m in Sources */,
@@ -1922,12 +1993,15 @@
 				0490EEBA1EEF977000E05A84 /* NSObject+MJProperty.m in Sources */,
 				0490EDE61EEF976F00E05A84 /* UIImage+JMImage.m in Sources */,
 				0490EDE31EEF976F00E05A84 /* UIViewController+BackButtonHandler.m in Sources */,
+				A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */,
 				0490EDE71EEF976F00E05A84 /* UIView+Extension.m in Sources */,
 				0490F23E1EEFA32900E05A84 /* JMSubImageModel.m in Sources */,
 				0490EEC41EEF977000E05A84 /* SDWebImagePrefetcher.m in Sources */,
 				0490EDE81EEF976F00E05A84 /* AFHTTPSessionManager.m in Sources */,
 				0490EDEC1EEF976F00E05A84 /* AFURLResponseSerialization.m in Sources */,
 				0490EDE11EEF976F00E05A84 /* UINavigationBar+Awesome.m in Sources */,
+				A20DAF261EF2E61E008DBFA9 /* JMBottomView.m in Sources */,
+				A20DAF241EF2E61E008DBFA9 /* JMBottomCell.m in Sources */,
 				0490F2371EEFA32900E05A84 /* JMDrawViewController.m in Sources */,
 				0490EEA71EEF977000E05A84 /* MASConstraint.m in Sources */,
 				0490EDEF1EEF976F00E05A84 /* FMDatabaseAdditions.m in Sources */,

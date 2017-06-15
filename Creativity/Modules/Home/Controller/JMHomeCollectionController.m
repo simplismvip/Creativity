@@ -19,7 +19,7 @@
 #import "JMFileManger.h"
 #import "JMHelper.h"
 #import "UIImage+GIF.h"
-
+#import "JMGetGIFController.h"
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, strong) JMHomeCollectionViewFlowLayout *collectionLayout;
@@ -150,13 +150,12 @@ static NSString *const headerID = @"header";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
-    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+    JMGetGIFController *draw = [[JMGetGIFController alloc] init];
     draw.folderPath = model.folderPath;
+    UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
+    draw.images = [NSMutableArray arrayWithArray:image.images];
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
     [self presentViewController:Nav animated:YES completion:nil];
-    
-    UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
-    [draw creatGif:image.images];
 }
 
 //

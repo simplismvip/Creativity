@@ -10,20 +10,24 @@
 #import "JMPaintView.h"
 #import "JMWriteView.h"
 #import "JMGetGIFController.h"
-#import "JMCreatPaintView.h"
+#import "JMTopTableView.h"
 #import "UIImage+JMImage.h"
-#define kMargin 5.0
+#import "JMMembersView.h"
+#import "JMHelper.h"
 
-@interface JMDrawViewController ()<JMCreatPaintViewDelegate>
+
+#define kMargin 10.0
+
+@interface JMDrawViewController ()<JMTopTableViewDelegate>
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, assign) NSInteger timeNum;
-@property (nonatomic, weak) JMPaintView *paintView;
-@property (nonatomic, weak) JMCreatPaintView *paint;
+@property (nonatomic, weak) JMPaintView *memberViewView;
+@property (nonatomic, weak) JMMembersView *memberView;
 
 @property (nonatomic, strong) NSMutableArray *subViews;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) NSMutableArray *paintData;
-@property (nonatomic, strong) NSMutableArray *paintBuff;
+@property (nonatomic, strong) NSMutableArray *memberViewData;
+@property (nonatomic, strong) NSMutableArray *memberViewBuff;
 @end
 
 @implementation JMDrawViewController
@@ -31,6 +35,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.view.backgroundColor = [UIColor grayColor];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -41,48 +46,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor grayColor];
+    self.title = @"我的画板";
     
     // 首先创建画图View, 创建接收消息方法
     self.subViews = [NSMutableArray array];
-    self.paintBuff = [NSMutableArray array];
-    self.paintData = [NSMutableArray array];
+    self.memberViewBuff = [NSMutableArray array];
+    self.memberViewData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
     self.leftImage = @"navbar_close_icon_black";
     self.rightImage = @"navbar_next_icon_black";
+    
+    // 这里创建bottomView
+    self.dataSource = [JMHelper getTopBarModel];
+    JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, self.view.height-44, self.view.width, 44)];
+    topbar.delegate = self;
+    topbar.dataSource = _dataSource;
+    [self.view addSubview:topbar];
 }
 
 - (void)creatGifNew
 {
-    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.paint.frame)+kMargin, self.view.width, self.view.width)];
+    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.height-108)];
     pView.drawType = JMPaintToolTypePen;
     pView.lineDash = NO;
-    self.paintView = pView;
+    self.memberViewView = pView;
     [self.view addSubview:pView];
     [self.subViews addObject:pView];
-    [self.paint reloadData:pView.image];
 }
 
 - (void)creatGif:(NSArray *)images
 {
-    [self.view addSubview:self.paint];
+    [self.view addSubview:self.memberView];
     for (UIImage *image in images) {
         
-        JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.paint.frame)+kMargin, self.view.width, self.view.width)];
+        JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.height-108)];
         pView.drawType = JMPaintToolTypePen;
         pView.lineDash = NO;
         pView.image = image;
-        self.paintView = pView;
+        self.memberViewView = pView;
         [self.view addSubview:pView];
         [self.subViews addObject:pView];
-        [self.paint reloadData:image];
     }
 }
 
 - (void)setItem:(UIBarButtonItem *)sender
 {
-//    JMPaintView *paint = self.paintView;
-//    UIImage *image = [UIImage imageWithCaptureView:self.view rect:paint.frame];
+//    JMmemberViewView *memberView = self.memberViewView;
+//    UIImage *image = [UIImage imageWithCaptureView:self.view rect:memberView.frame];
 //    UIImage *thubim = [image imageCompressForSize:image targetSize:CGSizeMake(64, 106)];
 //    NSData *data = UIImageJPEGRepresentation(thubim, 0.1);
 //    
@@ -95,15 +105,14 @@
     gif.folderPath = self.folderPath;
     
     NSMutableArray *images = [NSMutableArray array];
-    for (JMPaintView *paint in self.subViews) {
+    for (JMPaintView *memberView in self.subViews) {
         
-        if (paint.image) {
+        if (memberView.image) {
         
-            [images addObject:paint.image];
+            [images addObject:memberView.image];
         }else{
         
-//            UIImage *image = [UIImage];
-            [images addObject:paint.image];
+            [images addObject:memberView.image];
         }
     }
     
@@ -138,19 +147,82 @@
     JMLog(@"JMDrawViewController - 销毁");
 }
 
-- (JMCreatPaintView *)paint
+- (JMMembersView *)memberView
 {
-    if (!_paint) {
+    if (!_memberView) {
         
-        JMCreatPaintView *paint = [[JMCreatPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, 44)];
-        paint.delegate = self;
-        paint.backgroundColor = [UIColor grayColor];
-        [self.view addSubview:paint];
-        self.paint = paint;
+        JMMembersView *memberView = [[JMMembersView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, 44)];
+        memberView.backgroundColor = [UIColor grayColor];
+        [self.view addSubview:memberView];
+        self.memberView = memberView;
     }
     
-    return _paint;
+    return _memberView;
 }
+
+#pragma mark -- ****************JMTopTableViewDelegate
+
+- (void)topTableView:(JMBottomType)bottomType didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    
+    if (bottomType == JMTopBarTypeShare && row==0){
+        
+        
+    }else if (bottomType == JMTopBarTypeShare && row==1){
+        
+        
+    }else if (bottomType == JMTopBarTypeShare && row==2){
+        
+        
+    }else if (bottomType == JMTopBarTypeAdd && row==0){
+        
+        
+    }else if (bottomType == JMTopBarTypeAdd && row==1){
+        
+        
+    }else if (bottomType == JMTopBarTypeAdd && row==2){
+        
+        
+    }else if (bottomType == JMTopBarTypeAdd && row==3){
+        
+        
+    }else if (bottomType == JMTopBarTypeAdd && row==4){
+        
+        
+    }else if (bottomType == JMTopBarTypepaint){
+        
+        
+    }else if (bottomType == JMTopBarTypeclear && row==0){
+        
+        
+    }else if (bottomType == JMTopBarTypeclear && row==1){
+        
+        
+    }else if (bottomType == JMTopBarTypeclear && row==2){
+        
+        
+    }else if (bottomType == JMTopBarTypeNote && row==0){
+        
+        
+    }else if (bottomType == JMTopBarTypeNote && row==1){
+        
+        
+    }else if (bottomType == JMTopBarTypeNote && row==2){
+        
+        
+    }else if (bottomType == JMTopBarTypeNote && row==3){
+        
+
+    }else if (bottomType == JMTopBarTypeNote && row==4){
+        
+        
+    }else if (bottomType == JMTopBarTypeNote && row==5){
+        
+        
+    }
+}
+
 
 /*
 
