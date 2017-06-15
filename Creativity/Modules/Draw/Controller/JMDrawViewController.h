@@ -9,5 +9,7 @@
 #import "JMBaseController.h"
 
 @interface JMDrawViewController : JMBaseController
-
+@property (nonatomic, copy) NSString *folderPath;
+- (void)creatGifNew;
+- (void)creatGif:(NSArray *)images;
 @end

@@ -16,6 +16,9 @@
 #import "JMMainNavController.h"
 #import "JMDrawViewController.h"
 #import "UserDefaultTools.h"
+#import "JMFileManger.h"
+#import "JMHelper.h"
+#import "UIImage+GIF.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
@@ -35,7 +38,32 @@ static NSString *const headerID = @"header";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.dataSource = [NSMutableArray arrayWithArray:@[@[@"", @"", @""], @[@"", @"", @""], @[@"", @"", @""], @[@"", @"", @""], @[@"", @"", @""]]];
+    NSError *error;
+    
+    self.dataSource = [NSMutableArray array];
+    NSArray *dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:JMDocumentsPath error:&error];
+    
+    for (NSString *path in dirs) {
+        
+        if (![path isEqualToString:@".DS_Store"]) {
+            
+            NSString *pngPath = [JMDocumentsPath stringByAppendingPathComponent:path];
+            NSArray *pngs = [JMFileManger getFileFromDir:pngPath bySuffix:@"gif"];
+            
+            if (pngs.count>0) {
+                
+                NSDictionary *dic = @{
+                                      @"folderPath":pngs.firstObject,
+                                      @"creatDate":[JMHelper timestamp:path],
+                                      @"size":@"1024"
+                                      };
+                
+                JMHomeModel *model = [JMHomeModel objectWithDictionary:dic];
+                [self.dataSource addObject:model];
+            }
+        }
+    }
+    
     [self.collection reloadData];
 }
 
@@ -63,31 +91,33 @@ static NSString *const headerID = @"header";
 
 - (void)newItem:(UIBarButtonItem *)sender
 {
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMDrawViewController alloc] init]];
+    NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+    [JMFileManger creatDir:gifPath];
+    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+    draw.folderPath = gifPath;
+    [draw creatGifNew];
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
     [self presentViewController:Nav animated:YES completion:nil];
 }
 
 #pragma mark UICollectionViewDataSource,
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.dataSource.count;
+    return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.dataSource[section] count];
+    return self.dataSource.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMHomeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionID forIndexPath:indexPath];
-    /*
-    cell.collection = collectionView;
-    cell.isGrid = [UserDefaultTools readBoolByKey:self.key];
-    cell.inEditState = _inEditState;
-    cell.model = self.dataSource[indexPath.section][indexPath.row];
-    cell.delegate = self;
-     */
+    cell.model = self.dataSource[indexPath.row];
+//    cell.inEditState = _inEditState;
+//    cell.delegate = self;
+    
     return cell;
 }
 
@@ -116,17 +146,17 @@ static NSString *const headerID = @"header";
     return YES;
 }
 
-// 点击高亮
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-//    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-//    cell.backgroundColor = [UIColor greenColor];
-}
-
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    JMHomeModel *model = self.dataSource[indexPath.row];
+    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+    draw.folderPath = model.folderPath;
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+    [self presentViewController:Nav animated:YES completion:nil];
     
+    UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
+    [draw creatGif:image.images];
 }
 
 //
@@ -137,7 +167,7 @@ static NSString *const headerID = @"header";
         [_collection performBatchUpdates:^{
             
             JMHomeModel *homeModel = self.dataSource[indexPath.section][indexPath.row];
-            [[NSFileManager defaultManager] removeItemAtPath:[JMAccountPath stringByAppendingPathComponent:homeModel.folderName] error:nil];
+            [[NSFileManager defaultManager] removeItemAtPath:[JMDocumentsPath stringByAppendingPathComponent:homeModel.folderPath] error:nil];
             
             [self.collection deleteItemsAtIndexPaths:@[indexPath]];
             [self.dataSource[indexPath.section] removeObjectAtIndex:indexPath.row];
@@ -152,15 +182,8 @@ static NSString *const headerID = @"header";
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([UserDefaultTools readBoolByKey:self.key]) {
-        
-        NSInteger rows = (self.view.width-10*4)/3;
-        return CGSizeMake(rows, rows+40);
-        
-    } else {
-        
-        return CGSizeMake(self.view.width-20, (self.view.width-6)/4+20);
-    }
+    NSInteger rows = (self.view.width-10*4)/3;
+    return CGSizeMake(rows, rows+40);
 }
 
 // 动态设置每个分区的EdgeInsets
@@ -240,7 +263,7 @@ static NSString *const headerID = @"header";
     [self.collection performBatchUpdates:^{
         
         JMHomeModel *homeModel = self.dataSource[indexPath.section][indexPath.row];
-        [[NSFileManager defaultManager] removeItemAtPath:[JMAccountPath stringByAppendingPathComponent:homeModel.folderName] error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:[JMDocumentsPath stringByAppendingPathComponent:homeModel.folderPath] error:nil];
         
         [self.collection deleteItemsAtIndexPaths:@[indexPath]];
         [self.dataSource[indexPath.section] removeObjectAtIndex:indexPath.row];

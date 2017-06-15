@@ -9,11 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface JMHomeModel : NSObject
-@property (nonatomic, copy) NSString *pngName;
-@property (nonatomic, copy) NSString *jpegName;
+
 @property (nonatomic, copy) NSString *creatDate;
 @property (nonatomic, copy) NSString *size;
-@property (nonatomic, copy) NSString *jsonName;
-@property (nonatomic, copy) NSString *folderName;
-@property (nonatomic, assign) BOOL isVoice;
+@property (nonatomic, copy) NSString *jsonPath;
+@property (nonatomic, copy) NSString *folderPath;
 @end

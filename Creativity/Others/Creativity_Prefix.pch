@@ -33,7 +33,6 @@
 
 #define JMDocumentsPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0]
 #define JMCachePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-#define JMAccountPath [JMDocumentsPath stringByAppendingPathComponent:@"001"]
 
 // 颜色
 #define JMCellBackground JMColor(239, 239, 239)

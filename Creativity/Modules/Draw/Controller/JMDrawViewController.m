@@ -11,9 +11,10 @@
 #import "JMWriteView.h"
 #import "JMGetGIFController.h"
 #import "JMCreatPaintView.h"
+#import "UIImage+JMImage.h"
+#define kMargin 5.0
 
 @interface JMDrawViewController ()<JMCreatPaintViewDelegate>
-@property (nonatomic, copy) NSString *folderPath;
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, weak) JMPaintView *paintView;
@@ -47,11 +48,35 @@
     self.paintBuff = [NSMutableArray array];
     self.paintData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
-    
-    [self creatCoverageAtindex:0 from:NO];
-    
     self.leftImage = @"navbar_close_icon_black";
     self.rightImage = @"navbar_next_icon_black";
+}
+
+- (void)creatGifNew
+{
+    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.paint.frame)+kMargin, self.view.width, self.view.width)];
+    pView.drawType = JMPaintToolTypePen;
+    pView.lineDash = NO;
+    self.paintView = pView;
+    [self.view addSubview:pView];
+    [self.subViews addObject:pView];
+    [self.paint reloadData:pView.image];
+}
+
+- (void)creatGif:(NSArray *)images
+{
+    [self.view addSubview:self.paint];
+    for (UIImage *image in images) {
+        
+        JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.paint.frame)+kMargin, self.view.width, self.view.width)];
+        pView.drawType = JMPaintToolTypePen;
+        pView.lineDash = NO;
+        pView.image = image;
+        self.paintView = pView;
+        [self.view addSubview:pView];
+        [self.subViews addObject:pView];
+        [self.paint reloadData:image];
+    }
 }
 
 - (void)setItem:(UIBarButtonItem *)sender
@@ -67,48 +92,28 @@
 - (void)newItem:(UIBarButtonItem *)sender
 {
     JMGetGIFController *gif = [[JMGetGIFController alloc] init];
+    gif.folderPath = self.folderPath;
     
     NSMutableArray *images = [NSMutableArray array];
-    
     for (JMPaintView *paint in self.subViews) {
         
-        [images addObject:paint.image];
+        if (paint.image) {
+        
+            [images addObject:paint.image];
+        }else{
+        
+//            UIImage *image = [UIImage];
+            [images addObject:paint.image];
+        }
     }
     
     gif.images = images;
     [self.navigationController pushViewController:gif animated:YES];
 }
 
-- (void)creatCoverageAtindex:(NSInteger)index from:(BOOL)from
-{
-//    CGFloat margin = 5;
-//    JMCreatPaintView *paint = [[JMCreatPaintView alloc] initWithFrame:CGRectMake(0, 44+margin, self.view.width, 44)];
-//    paint.delegate = self;
-//    paint.backgroundColor = [UIColor grayColor];
-//    [self.view addSubview:paint];
-//    self.paint = paint;
-    
-    // mainBoard
-    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44, self.view.width, self.view.height-88)];
-    pView.drawType = JMPaintToolTypePen;
-    pView.lineDash = NO;
-    self.paintView = pView;
-    [self.view addSubview:pView];
-    [self.subViews addObject:pView];
-}
-
 - (void)newCallback
 {
-    // mainBoard
-    CGFloat margin = 5;
-    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_paint.frame)+margin, self.view.width, self.view.height-54)];
-    pView.drawType = JMPaintToolTypePen;
-    pView.lineDash = NO;
-    self.paintView = pView;
-    [self.view addSubview:pView];
-    [self.subViews addObject:pView];
-    
-    [self.paint reloadData:pView.image];
+    [self creatGifNew];
 }
 
 - (void)touchItem:(NSInteger)index
@@ -133,7 +138,19 @@
     JMLog(@"JMDrawViewController - 销毁");
 }
 
-
+- (JMCreatPaintView *)paint
+{
+    if (!_paint) {
+        
+        JMCreatPaintView *paint = [[JMCreatPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, 44)];
+        paint.delegate = self;
+        paint.backgroundColor = [UIColor grayColor];
+        [self.view addSubview:paint];
+        self.paint = paint;
+    }
+    
+    return _paint;
+}
 
 /*
 

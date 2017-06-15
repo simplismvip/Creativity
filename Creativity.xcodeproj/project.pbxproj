@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		047FCEA71EF119D800AD0C08 /* JMCreatPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */; };
+		047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE61EF26E5700AD0C08 /* JMHelper.m */; };
+		047FCEEA1EF26E5700AD0C08 /* JMFileManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE81EF26E5700AD0C08 /* JMFileManger.m */; };
 		0490EDD91EEF976F00E05A84 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC551EEF976F00E05A84 /* NSDate+Extension.m */; };
 		0490EDDA1EEF976F00E05A84 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC581EEF976F00E05A84 /* NSString+Base64.m */; };
 		0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC5A1EEF976F00E05A84 /* NSString+Emoji.m */; };
@@ -305,6 +307,10 @@
 /* Begin PBXFileReference section */
 		047FCEA51EF119D800AD0C08 /* JMCreatPaintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCreatPaintView.h; sourceTree = "<group>"; };
 		047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCreatPaintView.m; sourceTree = "<group>"; };
+		047FCEE51EF26E5700AD0C08 /* JMHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHelper.h; sourceTree = "<group>"; };
+		047FCEE61EF26E5700AD0C08 /* JMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHelper.m; sourceTree = "<group>"; };
+		047FCEE71EF26E5700AD0C08 /* JMFileManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFileManger.h; sourceTree = "<group>"; };
+		047FCEE81EF26E5700AD0C08 /* JMFileManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFileManger.m; sourceTree = "<group>"; };
 		0490EC541EEF976F00E05A84 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		0490EC551EEF976F00E05A84 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		0490EC571EEF976F00E05A84 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
@@ -1307,6 +1313,10 @@
 		0490EDD51EEF976F00E05A84 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				047FCEE51EF26E5700AD0C08 /* JMHelper.h */,
+				047FCEE61EF26E5700AD0C08 /* JMHelper.m */,
+				047FCEE71EF26E5700AD0C08 /* JMFileManger.h */,
+				047FCEE81EF26E5700AD0C08 /* JMFileManger.m */,
 				0490F24E1EEFB88C00E05A84 /* JMAttributeString.h */,
 				0490F24F1EEFB88C00E05A84 /* JMAttributeString.m */,
 				0490F24B1EEFB7CF00E05A84 /* StaticClass.h */,
@@ -1842,6 +1852,7 @@
 				0490EDDF1EEF976F00E05A84 /* NSObject+PYThemeExtension.m in Sources */,
 				0490EED31EEF977000E05A84 /* JMMainNavController.m in Sources */,
 				0490EEDA1EEF977000E05A84 /* AppDelegate.m in Sources */,
+				047FCEEA1EF26E5700AD0C08 /* JMFileManger.m in Sources */,
 				0490EEA11EEF977000E05A84 /* JMFmdbManger.m in Sources */,
 				0490EEB71EEF977000E05A84 /* NSObject+MJClass.m in Sources */,
 				0490EECE1EEF977000E05A84 /* SXHeadLine.m in Sources */,
@@ -1867,6 +1878,7 @@
 				0490EDEA1EEF976F00E05A84 /* AFSecurityPolicy.m in Sources */,
 				0490EECF1EEF977000E05A84 /* SXMarquee.m in Sources */,
 				0490F1AD1EEF9C3900E05A84 /* JMHomeCollectionController.m in Sources */,
+				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
 				0490EED01EEF977000E05A84 /* UIColor+Separate.m in Sources */,
 				0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */,

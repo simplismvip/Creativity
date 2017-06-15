@@ -24,15 +24,15 @@
         UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.width-44, self.height)];
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
+        
         [self addSubview:scrollView];
         self.scrollView = scrollView;
         
         UIButton *addF = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [addF setImage:[[UIImage imageNamed:@"navbar_arrowleft_icon_black"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:(UIControlStateNormal)];
-        addF.backgroundColor = [UIColor whiteColor];
+        [addF setImage:[UIImage imageNamed:@"newImage"] forState:(UIControlStateNormal)];
         [addF addTarget:self action:@selector(addItem:) forControlEvents:(UIControlEventTouchUpInside)];
         addF.frame = CGRectMake(0, 0, 44, self.height);
-        [_scrollView addSubview:addF];
+        [scrollView addSubview:addF];
         
         UIButton *add = [UIButton buttonWithType:(UIButtonTypeSystem)];
         add.backgroundColor = JMRandomColor;
@@ -49,11 +49,10 @@
 {
     CGFloat margin = 5;
     UIButton *add = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    add.backgroundColor = [UIColor whiteColor];
-    [add setImage:[newImage imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:(UIControlStateNormal)];
-    add.tag = _scrollView.subviews.count;
-    [add addTarget:self action:@selector(addItem:) forControlEvents:(UIControlEventTouchUpInside)];
     add.frame = CGRectMake((44+margin)*_scrollView.subviews.count, 0, 44, self.height);
+    [add setImage:newImage forState:(UIControlStateNormal)];
+    add.tag = self.scrollView.subviews.count;
+    [add addTarget:self action:@selector(addItem:) forControlEvents:(UIControlEventTouchUpInside)];
     [_scrollView addSubview:add];
     
     NSInteger number = _scrollView.subviews.count;
@@ -63,10 +62,12 @@
         
         CGFloat x = CGRectGetMaxX(_addAction.frame)+44 < self.width ? (44+margin)*number : self.width-44.0;
         _addAction.frame = CGRectMake(x, 0, 44, self.height);
-        
-//        CGPoint position = CGPointMake(x-_scrollView.width, 0);
-//        [_scrollView setContentOffset:position animated:YES];
     }];
+    
+    for (UIButton *btn in _scrollView.subviews) {
+
+        NSLog(@"%@--%@--%f", btn, btn.backgroundColor, _scrollView.alpha);
+    }
 }
 
 - (void)addItem:(UIButton *)sender
