@@ -59,7 +59,8 @@
     self.pathArray = [NSMutableArray array];
     self.bufferArray = [NSMutableArray array];
     self.points = [NSMutableArray array];
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor whiteColor];
+    self.alpha = 0.5;
 }
 
 #pragma mark - Drawing

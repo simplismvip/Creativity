@@ -29,9 +29,9 @@
         
         UIButton *addF = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [addF setImage:[[UIImage imageNamed:@"navbar_arrowleft_icon_black"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:(UIControlStateNormal)];
+        addF.backgroundColor = [UIColor whiteColor];
         [addF addTarget:self action:@selector(addItem:) forControlEvents:(UIControlEventTouchUpInside)];
         addF.frame = CGRectMake(0, 0, 44, self.height);
-        addF.alpha = 0.5;
         [_scrollView addSubview:addF];
         
         UIButton *add = [UIButton buttonWithType:(UIButtonTypeSystem)];
@@ -49,11 +49,11 @@
 {
     CGFloat margin = 5;
     UIButton *add = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    add.backgroundColor = [UIColor whiteColor];
     [add setImage:[newImage imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:(UIControlStateNormal)];
     add.tag = _scrollView.subviews.count;
     [add addTarget:self action:@selector(addItem:) forControlEvents:(UIControlEventTouchUpInside)];
     add.frame = CGRectMake((44+margin)*_scrollView.subviews.count, 0, 44, self.height);
-    add.alpha = 0.5;
     [_scrollView addSubview:add];
     
     NSInteger number = _scrollView.subviews.count;

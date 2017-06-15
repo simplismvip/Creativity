@@ -47,7 +47,7 @@
     UIButton *gif = [UIButton buttonWithType:(UIButtonTypeSystem)];
     gif.backgroundColor = [UIColor grayColor];
     gif.frame = CGRectMake(self.view.width/2+20, CGRectGetMaxY(slide.frame), 100, 100);
-    [gif setTitle:@"导出GIF" forState:(UIControlStateNormal)];
+    [gif setTitle:@"导出Video" forState:(UIControlStateNormal)];
     [gif addTarget:self action:@selector(creatVideo:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:gif];
 }

@@ -40,15 +40,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor grayColor];
     
     // 首先创建画图View, 创建接收消息方法
     self.subViews = [NSMutableArray array];
     self.paintBuff = [NSMutableArray array];
     self.paintData = [NSMutableArray array];
+    self.dataSource = [NSMutableArray array];
     
     [self creatCoverageAtindex:0 from:NO];
-    self.dataSource = [NSMutableArray array];
     
     self.leftImage = @"navbar_close_icon_black";
     self.rightImage = @"navbar_next_icon_black";
@@ -61,7 +61,7 @@
 //    UIImage *thubim = [image imageCompressForSize:image targetSize:CGSizeMake(64, 106)];
 //    NSData *data = UIImageJPEGRepresentation(thubim, 0.1);
 //    
-//    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)newItem:(UIBarButtonItem *)sender
@@ -81,15 +81,15 @@
 
 - (void)creatCoverageAtindex:(NSInteger)index from:(BOOL)from
 {
-    CGFloat margin = 5;
-    JMCreatPaintView *paint = [[JMCreatPaintView alloc] initWithFrame:CGRectMake(0, 44+margin, self.view.width, 44)];
-    paint.delegate = self;
-    paint.backgroundColor = [UIColor grayColor];
-    [self.view addSubview:paint];
-    self.paint = paint;
+//    CGFloat margin = 5;
+//    JMCreatPaintView *paint = [[JMCreatPaintView alloc] initWithFrame:CGRectMake(0, 44+margin, self.view.width, 44)];
+//    paint.delegate = self;
+//    paint.backgroundColor = [UIColor grayColor];
+//    [self.view addSubview:paint];
+//    self.paint = paint;
     
     // mainBoard
-    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(paint.frame)+margin, self.view.width, self.view.height-54)];
+    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44, self.view.width, self.view.height-88)];
     pView.drawType = JMPaintToolTypePen;
     pView.lineDash = NO;
     self.paintView = pView;

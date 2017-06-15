@@ -129,22 +129,6 @@ static NSString *const headerID = @"header";
     
 }
 
-// 长按某item，弹出copy和paste的菜单
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-
-// 使copy和paste有效
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
-{
-    if ([NSStringFromSelector(action) isEqualToString:@"copy:"] || [NSStringFromSelector(action) isEqualToString:@"paste:"])
-    {
-        return YES;
-    }
-    return NO;
-}
-
 //
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
 {
@@ -174,6 +158,7 @@ static NSString *const headerID = @"header";
         return CGSizeMake(rows, rows+40);
         
     } else {
+        
         return CGSizeMake(self.view.width-20, (self.view.width-6)/4+20);
     }
 }

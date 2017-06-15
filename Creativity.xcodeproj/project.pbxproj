@@ -277,9 +277,6 @@
 		0490F2371EEFA32900E05A84 /* JMDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2011EEFA32900E05A84 /* JMDrawViewController.m */; };
 		0490F23D1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F20F1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m */; };
 		0490F23E1EEFA32900E05A84 /* JMSubImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2111EEFA32900E05A84 /* JMSubImageModel.m */; };
-		0490F2401EEFA32900E05A84 /* AngleDraw.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2171EEFA32900E05A84 /* AngleDraw.m */; };
-		0490F2411EEFA32900E05A84 /* GoPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2191EEFA32900E05A84 /* GoPaintView.m */; };
-		0490F2421EEFA32900E05A84 /* JMPainPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F21B1EEFA32900E05A84 /* JMPainPath.m */; };
 		0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F21D1EEFA32900E05A84 /* JMPaintTools.m */; };
 		0490F2441EEFA32900E05A84 /* JMPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F21F1EEFA32900E05A84 /* JMPaintView.m */; };
 		0490F2451EEFA32900E05A84 /* JMWriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490F2211EEFA32900E05A84 /* JMWriteView.m */; };
@@ -680,12 +677,6 @@
 		0490F20F1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSubImageCollectionViewCell.m; sourceTree = "<group>"; };
 		0490F2101EEFA32900E05A84 /* JMSubImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSubImageModel.h; sourceTree = "<group>"; };
 		0490F2111EEFA32900E05A84 /* JMSubImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSubImageModel.m; sourceTree = "<group>"; };
-		0490F2161EEFA32900E05A84 /* AngleDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleDraw.h; sourceTree = "<group>"; };
-		0490F2171EEFA32900E05A84 /* AngleDraw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleDraw.m; sourceTree = "<group>"; };
-		0490F2181EEFA32900E05A84 /* GoPaintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoPaintView.h; sourceTree = "<group>"; };
-		0490F2191EEFA32900E05A84 /* GoPaintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoPaintView.m; sourceTree = "<group>"; };
-		0490F21A1EEFA32900E05A84 /* JMPainPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPainPath.h; sourceTree = "<group>"; };
-		0490F21B1EEFA32900E05A84 /* JMPainPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPainPath.m; sourceTree = "<group>"; };
 		0490F21C1EEFA32900E05A84 /* JMPaintTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPaintTools.h; sourceTree = "<group>"; };
 		0490F21D1EEFA32900E05A84 /* JMPaintTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPaintTools.m; sourceTree = "<group>"; };
 		0490F21E1EEFA32900E05A84 /* JMPaintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPaintView.h; sourceTree = "<group>"; };
@@ -700,10 +691,10 @@
 		0490F2521EEFBC5C00E05A84 /* JMBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseController.m; sourceTree = "<group>"; };
 		0490F2541EEFBE1B00E05A84 /* JMGetGIFController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGetGIFController.h; sourceTree = "<group>"; };
 		0490F2551EEFBE1B00E05A84 /* JMGetGIFController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGetGIFController.m; sourceTree = "<group>"; };
-		0490F2571EEFC0C900E05A84 /* JMGifSetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGifSetView.h; sourceTree = "<group>"; };
-		0490F2581EEFC0C900E05A84 /* JMGifSetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGifSetView.m; sourceTree = "<group>"; };
-		0490F25A1EEFC0E600E05A84 /* JMGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGifView.h; sourceTree = "<group>"; };
-		0490F25B1EEFC0E600E05A84 /* JMGifView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGifView.m; sourceTree = "<group>"; };
+		0490F2571EEFC0C900E05A84 /* JMGifSetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMGifSetView.h; path = ../JMGifSetView.h; sourceTree = "<group>"; };
+		0490F2581EEFC0C900E05A84 /* JMGifSetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMGifSetView.m; path = ../JMGifSetView.m; sourceTree = "<group>"; };
+		0490F25A1EEFC0E600E05A84 /* JMGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMGifView.h; path = ../JMGifView.h; sourceTree = "<group>"; };
+		0490F25B1EEFC0E600E05A84 /* JMGifView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMGifView.m; path = ../JMGifView.m; sourceTree = "<group>"; };
 		04A0DDEB1EEF81A400464852 /* Creativity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Creativity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DDEF1EEF81A400464852 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04A0DDFA1EEF81A400464852 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1471,10 +1462,6 @@
 			isa = PBXGroup;
 			children = (
 				0490F2151EEFA32900E05A84 /* NewPaint */,
-				0490F2571EEFC0C900E05A84 /* JMGifSetView.h */,
-				0490F2581EEFC0C900E05A84 /* JMGifSetView.m */,
-				0490F25A1EEFC0E600E05A84 /* JMGifView.h */,
-				0490F25B1EEFC0E600E05A84 /* JMGifView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1484,18 +1471,16 @@
 			children = (
 				047FCEA51EF119D800AD0C08 /* JMCreatPaintView.h */,
 				047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */,
-				0490F2161EEFA32900E05A84 /* AngleDraw.h */,
-				0490F2171EEFA32900E05A84 /* AngleDraw.m */,
-				0490F2181EEFA32900E05A84 /* GoPaintView.h */,
-				0490F2191EEFA32900E05A84 /* GoPaintView.m */,
-				0490F21A1EEFA32900E05A84 /* JMPainPath.h */,
-				0490F21B1EEFA32900E05A84 /* JMPainPath.m */,
 				0490F21C1EEFA32900E05A84 /* JMPaintTools.h */,
 				0490F21D1EEFA32900E05A84 /* JMPaintTools.m */,
 				0490F21E1EEFA32900E05A84 /* JMPaintView.h */,
 				0490F21F1EEFA32900E05A84 /* JMPaintView.m */,
 				0490F2201EEFA32900E05A84 /* JMWriteView.h */,
 				0490F2211EEFA32900E05A84 /* JMWriteView.m */,
+				0490F2571EEFC0C900E05A84 /* JMGifSetView.h */,
+				0490F2581EEFC0C900E05A84 /* JMGifSetView.m */,
+				0490F25A1EEFC0E600E05A84 /* JMGifView.h */,
+				0490F25B1EEFC0E600E05A84 /* JMGifView.m */,
 			);
 			path = NewPaint;
 			sourceTree = "<group>";
@@ -1876,7 +1861,6 @@
 				0490EDEB1EEF976F00E05A84 /* AFURLRequestSerialization.m in Sources */,
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EDEE1EEF976F00E05A84 /* FMDatabase.m in Sources */,
-				0490F2421EEFA32900E05A84 /* JMPainPath.m in Sources */,
 				0490EEB41EEF977000E05A84 /* MJProperty.m in Sources */,
 				0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */,
 				0490EDE41EEF976F00E05A84 /* UIAlertController+SYQAlterViewController.m in Sources */,
@@ -1896,7 +1880,6 @@
 				0490EEBB1EEF977000E05A84 /* NSString+MJExtension.m in Sources */,
 				0490F2451EEFA32900E05A84 /* JMWriteView.m in Sources */,
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
-				0490F2411EEFA32900E05A84 /* GoPaintView.m in Sources */,
 				04A0DDF01EEF81A400464852 /* main.m in Sources */,
 				0490EEAD1EEF977000E05A84 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				0490EEC61EEF977000E05A84 /* UIImage+GIF.m in Sources */,
@@ -1917,7 +1900,6 @@
 				0490EDDE1EEF976F00E05A84 /* NSObject+JMProperty.m in Sources */,
 				0490EEB01EEF977000E05A84 /* MBProgressHUD.m in Sources */,
 				0490EDE21EEF976F00E05A84 /* UINavigationBar+JMNavigationBar.m in Sources */,
-				0490F2401EEFA32900E05A84 /* AngleDraw.m in Sources */,
 				0490F1B11EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */,
 				0490EECD1EEF977000E05A84 /* SXColorLabel.m in Sources */,
 				0490EDF11EEF976F00E05A84 /* FMDatabaseQueue.m in Sources */,
