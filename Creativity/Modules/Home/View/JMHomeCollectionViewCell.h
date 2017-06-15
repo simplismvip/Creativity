@@ -19,7 +19,6 @@
 @interface JMHomeCollectionViewCell : UICollectionViewCell
 @property (nonatomic, strong) JMHomeModel *model;
 @property (nonatomic, strong) UICollectionView *collection;
-@property (nonatomic, assign) BOOL isGrid;
 @property (nonatomic, weak) id<JMHomeCollectionViewCellDelegate> delegate;
 @property (nonatomic, assign) BOOL inEditState; //是否处于编辑状态
 @end

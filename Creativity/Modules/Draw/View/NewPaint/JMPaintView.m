@@ -59,7 +59,7 @@
     self.pathArray = [NSMutableArray array];
     self.bufferArray = [NSMutableArray array];
     self.points = [NSMutableArray array];
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma mark - Drawing
@@ -264,6 +264,21 @@
     self.currentTool = nil;
     self.image = nil;
     JMLog(@"销毁--JMPaintView");
+}
+
+- (void)setImage:(UIImage *)image
+{
+    _image = image;
+    
+    JMPaintToolImage *tool = [JMPaintToolImage new];
+    tool.image = image;
+    
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    [tool draw];
+    _image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [self.pathArray addObject:tool];
+    
 }
 
 @end

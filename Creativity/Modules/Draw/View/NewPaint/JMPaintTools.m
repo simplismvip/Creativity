@@ -440,10 +440,19 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
 
 - (void)draw
 {
-    UIImage *image = [[UIImage imageNamed:self.drawImage] imageByApplyingAlpha:_linesAlpha];
-    CGPoint point = CGPointMake(_lastPoint.x-self.linesOffSet, _lastPoint.y-self.linesOffSet);
-    [image drawAtPoint:point];
-    image = nil;
+    if (self.image) {
+        
+        CGPoint point = CGPointMake(0, 0);
+        [_image drawAtPoint:point];
+        _image = nil;
+        
+    }else {
+    
+        UIImage *image = [[UIImage imageNamed:self.drawImage] imageByApplyingAlpha:_linesAlpha];
+        CGPoint point = CGPointMake(_lastPoint.x-self.linesOffSet, _lastPoint.y-self.linesOffSet);
+        [image drawAtPoint:point];
+        image = nil;
+    }
 }
 
 // 矩阵操作

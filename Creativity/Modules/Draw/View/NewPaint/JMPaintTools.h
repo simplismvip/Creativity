@@ -62,6 +62,7 @@
 #pragma mark 图片
 @interface JMPaintToolImage : NSObject<JMPaintTool>
 @property (nonatomic, copy) NSString *drawImage;
+@property (nonatomic, strong) UIImage *image;
 @end
 
 #pragma mark 文字

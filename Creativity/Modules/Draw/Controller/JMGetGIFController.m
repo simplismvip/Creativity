@@ -9,6 +9,7 @@
 #import "JMGetGIFController.h"
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "JMHelper.h"
 
 @interface JMGetGIFController ()
 @property (nonatomic, weak) UIImageView *birdImage;
@@ -54,12 +55,14 @@
 
 - (void)creatGIF:(UIButton *)sender
 {
-    [self makeAnimatedGIF:@"animation.gif" images:_images delayTime:_delayTime];
+    NSString *gifName = [NSString stringWithFormat:@"%@.gif", [JMHelper timerString]];
+    [self makeAnimatedGIF:[self.folderPath stringByAppendingPathComponent:gifName] images:_images delayTime:_delayTime];
 }
 
 - (void)creatVideo:(UIButton *)sender
 {
-    [self makeAnimatedGIF:@"animation.gif" images:_images delayTime:_delayTime];
+    NSString *gifName = [NSString stringWithFormat:@"%@.gif", [JMHelper timerString]];
+    [self makeAnimatedGIF:[self.folderPath stringByAppendingPathComponent:gifName] images:_images delayTime:_delayTime];
 }
 
 - (void)changeDelayTime:(UISlider *)slider
@@ -70,14 +73,13 @@
     [_birdImage startAnimating];
 }
 
-- (NSURL *)makeAnimatedGIF:(NSString *)name images:(NSArray *)images delayTime:(CGFloat)delayTime
+- (NSURL *)makeAnimatedGIF:(NSString *)path images:(NSArray *)images delayTime:(CGFloat)delayTime
 {
     NSUInteger const kFrameCount = images.count;
     NSDictionary *fileProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFLoopCount: @0,}};
     NSDictionary *frameProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFDelayTime: [NSNumber numberWithFloat:delayTime],}};
     
-    NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
-    NSURL *fileURL = [documentsDirectoryURL URLByAppendingPathComponent:name];
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)fileURL, kUTTypeGIF, kFrameCount, NULL);
     CGImageDestinationSetProperties(destination, (__bridge CFDictionaryRef)fileProperties);
     
