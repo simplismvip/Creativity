@@ -97,7 +97,6 @@
         if ([cell.indetifiel isEqualToString:identifier]) {
             
             reuseCell = cell;
-            
             *stop = YES;
         }
     }];
@@ -124,7 +123,7 @@
         JMBottomCell *cell = self.reuserCell[@(i)];
         
         if (cell == nil) {
-            NSLog(@"selectCell = %d", i);
+            
             cell = [self.dataSource tableView:self index:i];
             [cell addTarget:self action:@selector(select:) forControlEvents:(UIControlEventTouchUpInside)];
             cell.frame = cellFrame;

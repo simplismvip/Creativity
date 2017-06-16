@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		047FCEA71EF119D800AD0C08 /* JMCreatPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */; };
 		047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE61EF26E5700AD0C08 /* JMHelper.m */; };
 		047FCEEA1EF26E5700AD0C08 /* JMFileManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE81EF26E5700AD0C08 /* JMFileManger.m */; };
 		047FCEF01EF3777000AD0C08 /* JMMediaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEEF1EF3777000AD0C08 /* JMMediaHelper.m */; };
@@ -284,8 +283,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		047FCEA51EF119D800AD0C08 /* JMCreatPaintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCreatPaintView.h; sourceTree = "<group>"; };
-		047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCreatPaintView.m; sourceTree = "<group>"; };
 		047FCEE51EF26E5700AD0C08 /* JMHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHelper.h; sourceTree = "<group>"; };
 		047FCEE61EF26E5700AD0C08 /* JMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHelper.m; sourceTree = "<group>"; };
 		047FCEE71EF26E5700AD0C08 /* JMFileManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFileManger.h; sourceTree = "<group>"; };
@@ -1454,8 +1451,6 @@
 		0490F2151EEFA32900E05A84 /* NewPaint */ = {
 			isa = PBXGroup;
 			children = (
-				047FCEA51EF119D800AD0C08 /* JMCreatPaintView.h */,
-				047FCEA61EF119D800AD0C08 /* JMCreatPaintView.m */,
 				0490F21C1EEFA32900E05A84 /* JMPaintTools.h */,
 				0490F21D1EEFA32900E05A84 /* JMPaintTools.m */,
 				0490F21E1EEFA32900E05A84 /* JMPaintView.h */,
@@ -1887,7 +1882,6 @@
 				0490EEA51EEF977000E05A84 /* Tool_FMDBModel.m in Sources */,
 				0490F1B01EEF9C3900E05A84 /* JMHomeCollectionViewCell.m in Sources */,
 				A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */,
-				047FCEA71EF119D800AD0C08 /* JMCreatPaintView.m in Sources */,
 				0490F2561EEFBE1B00E05A84 /* JMGetGIFController.m in Sources */,
 				0490EDE91EEF976F00E05A84 /* AFNetworkReachabilityManager.m in Sources */,
 				0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */,

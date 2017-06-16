@@ -14,6 +14,8 @@
 #import "JMBottomModel.h"
 #import "JMGestureButton.h"
 #import "JMHelper.h"
+#import "JMBottomView.h"
+
 
 @interface JMTopTableView()<JMBottomViewDataSourceDelegate, JMBottomViewDelegate>
 @property (nonatomic, assign) NSInteger section;
@@ -27,24 +29,6 @@
     if (self) {
         
         self.backgroundColor = [UIColor whiteColor];
-        
-//        NSArray * fontArrays = [[UIFont familyNames] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-//            
-//            NSString *str1 = (NSString *)obj1;
-//            NSString *str2 = (NSString *)obj2;
-//            return [str1 compare:str2];
-//        }];
-//        
-//        for(NSString *fontfamilyname in fontArrays)
-//        {
-//            NSLog(@"family:'%@'",fontfamilyname);
-//            
-//            for(NSString *fontName in [UIFont fontNamesForFamilyName:fontfamilyname])
-//            {
-//                NSLog(@"\tfont:'%@'",fontName);
-//            }
-//            NSLog(@"-------------");
-//        }
     }
     
     return self;
@@ -56,12 +40,13 @@
     
     int i = 0;
     for (JMTopBarModel *model in dataSource) {
+        
         UIButton *btn = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [btn setTitle:model.title forState:(UIControlStateNormal)];
         [btn setImage:[UIImage imageNamed:model.image] forState:(UIControlStateNormal)];
-        btn.backgroundColor = JMTabViewBaseColor;
-        [btn setTintColor:JMColor(85, 85, 85)];
-        btn.tag = i+baseTag; // JMColor(52, 118, 237)
+        btn.backgroundColor = JMColor(33, 33, 33);
+        [btn setTintColor:[UIColor whiteColor]];
+        btn.tag = i+baseTag;
         [btn addTarget:self action:@selector(topBarAction:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:btn];
         i ++;
@@ -71,14 +56,13 @@
 - (void)topBarAction:(UIButton *)sender
 {
     self.section = sender.tag-baseTag;
-    
     JMGestureButton *gesture = [JMGestureButton creatGestureButton];
     JMBottomView *bottom = [[JMBottomView alloc] initWithFrame:CGRectMake(0, self.superview.height, self.superview.width, 44)];
     [UIView animateWithDuration:0.1 animations:^{bottom.frame = CGRectMake(0, self.superview.height-44, self.superview.width, 44);}];
     bottom.dataSource = self;
     bottom.delegate = self;
     bottom.section = self.section;
-    bottom.backgroundColor = JMColor(245, 245, 245);
+    bottom.backgroundColor = JMColor(33, 33, 33);
     [bottom reloadData];
     [gesture addSubview:bottom];
 }
@@ -109,6 +93,7 @@
     if (bModel.backgroundColor) {
         
         cell.cellTintColor = [JMHelper getColor:bModel.backgroundColor];
+        
     }else{
     
         cell.cellTintColor = JMColor(105, 105, 105);

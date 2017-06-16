@@ -7,6 +7,7 @@
 //
 
 #import "JMBottomCell.h"
+#import "UIImage+JMImage.h"
 
 @implementation JMBottomCell
 
@@ -48,16 +49,17 @@
     if (isCellSelect) {
         
         self.backgroundColor = JMColor(205, 205, 205);
+    
     }else{
+     
         self.backgroundColor = JMColor(245, 245, 245);
     }
-    NSLog(@"%d", isCellSelect);
 }
 
 - (void)setCellImage:(NSString *)cellImage
 {
     _cellImage = cellImage;
-    [self setImage:[[UIImage imageNamed:cellImage] imageWithRenderingMode:(UIImageRenderingModeAlwaysTemplate)] forState:0];
+    [self setImage:[UIImage imageWithTemplateName:cellImage] forState:0];
 }
 
 - (void)setCellTitle:(NSString *)cellTitle
