@@ -18,6 +18,8 @@
 #import "JMAttributeTextInputView.h"
 #import "JMAttributeStringAnimationView.h"
 #import "JMAnimationView.h"
+#import "JMEmojiAnimationView.h"
+#import "JMSubImageModel.h"
 
 #define kMargin 10.0
 
@@ -188,15 +190,33 @@
         
         _paintView.drawType = (JMPaintToolType)row;
         
-        
-        JMSelf(ws);
-        JMAttributeTextInputView *attribute = [[JMAttributeTextInputView alloc] initWithFrame:CGRectMake(0,self.view.height, self.view.width, 50)];
-        attribute.textViewMaxLine = 5;
-        attribute.placeholderLabel.text = @"请输入...";
-        attribute.inputAttribute = ^(NSString *sendContent) {ws.paintView.paintText = sendContent;};
-        [self.view addSubview:attribute];
-        [attribute.textInput becomeFirstResponder];
-        _paintView.drawType = (JMPaintToolType)row;
+        if (row == 5){
+            
+            JMSelf(ws);
+            JMEmojiAnimationView *animation = [[JMEmojiAnimationView alloc] initWithFrame:self.view.bounds];
+            [self.view addSubview:animation];
+            
+            _paintView.drawType = (JMPaintToolType)row;
+            animation.animationBlock = ^(id model) {
+                
+                JMSubImageModel *emojiModel = (JMSubImageModel *)model;
+                ws.paintView.paintImage = emojiModel.name;
+            };
+            
+            [UIView animateWithDuration:0.3 animations:^{animation.alpha = 1.0;}];
+            
+        }else if (row == 6){
+            
+            JMSelf(ws);
+            JMAttributeTextInputView *attribute = [[JMAttributeTextInputView alloc] initWithFrame:CGRectMake(0,self.view.height, self.view.width, 50)];
+            attribute.textViewMaxLine = 5;
+            attribute.placeholderLabel.text = @"请输入...";
+            attribute.inputAttribute = ^(NSString *sendContent) {ws.paintView.paintText = sendContent;};
+            [self.view addSubview:attribute];
+            [attribute.textInput becomeFirstResponder];
+            _paintView.drawType = (JMPaintToolType)row;
+            
+        }
         
     }else if (bottomType == JMTopBarTypeClear && row==0){
         

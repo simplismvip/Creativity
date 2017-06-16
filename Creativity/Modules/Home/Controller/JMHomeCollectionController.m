@@ -122,25 +122,6 @@ static NSString *const headerID = @"header";
     return cell;
 }
 
-//// 返回辅助视图工具
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-//{
-//    JMHomeCollectionReusableView *header;
-//    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-//        
-//        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerID forIndexPath:indexPath];
-//        header.text.text = [NSString stringWithFormat:@"section %ld", indexPath.section+1];
-//        if (header == nil) {header = [[JMHomeCollectionReusableView alloc] init];}
-//        
-//    }else if ([kind isEqualToString:UICollectionElementKindSectionFooter]){
-//        
-//        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerID forIndexPath:indexPath];
-//        if (header == nil) {header = [[JMHomeCollectionReusableView alloc] init];}
-//    }
-//    
-//    return header;
-//}
-
 #pragma mark UICollectionViewDelegate
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -188,33 +169,8 @@ static NSString *const headerID = @"header";
 // 动态设置每个分区的EdgeInsets
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(5, 10, 5, 10);
+    return UIEdgeInsetsMake(10, 10, 5, 10);
 }
-
-// 动态设置每行的间距大小
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 5;
-}
-
-// 动态设置每列的间距大小
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 5;
-}
-
-// 动态设置某个分区头视图大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    return CGSizeMake(self.view.width, 25);
-}
-
-// 动态设置某个分区尾视图大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    return CGSizeMake(0, 0);
-}
-
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -249,7 +205,6 @@ static NSString *const headerID = @"header";
     // 进入或退出编辑状态
     [self.collectionLayout setInEditState:self.inEditState];
 }
-
 
 #pragma mark -- JMHomeCollectionViewCellDelegate
 - (void)showRoomMembers:(NSIndexPath *)indexPath currentPoint:(CGPoint)currentPoint

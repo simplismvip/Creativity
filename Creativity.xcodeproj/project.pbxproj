@@ -269,6 +269,8 @@
 		A20DAF271EF2E61E008DBFA9 /* JMTopBarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF211EF2E61E008DBFA9 /* JMTopBarModel.m */; };
 		A20DAF281EF2E61E008DBFA9 /* JMTopTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF231EF2E61E008DBFA9 /* JMTopTableView.m */; };
 		A20DAF2A1EF2E85E008DBFA9 /* topBarJson.json in Resources */ = {isa = PBXBuildFile; fileRef = A20DAF291EF2E85E008DBFA9 /* topBarJson.json */; };
+		A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF2D1EF42338008DBFA9 /* JMEmojiAnimationView.m */; };
+		A20DAF311EF42338008DBFA9 /* JMSelectEmojiView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF2F1EF42338008DBFA9 /* JMSelectEmojiView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -685,6 +687,10 @@
 		A20DAF221EF2E61E008DBFA9 /* JMTopTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTopTableView.h; sourceTree = "<group>"; };
 		A20DAF231EF2E61E008DBFA9 /* JMTopTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTopTableView.m; sourceTree = "<group>"; };
 		A20DAF291EF2E85E008DBFA9 /* topBarJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = topBarJson.json; sourceTree = "<group>"; };
+		A20DAF2C1EF42338008DBFA9 /* JMEmojiAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEmojiAnimationView.h; sourceTree = "<group>"; };
+		A20DAF2D1EF42338008DBFA9 /* JMEmojiAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEmojiAnimationView.m; sourceTree = "<group>"; };
+		A20DAF2E1EF42338008DBFA9 /* JMSelectEmojiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSelectEmojiView.h; sourceTree = "<group>"; };
+		A20DAF2F1EF42338008DBFA9 /* JMSelectEmojiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSelectEmojiView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1435,6 +1441,7 @@
 		0490F2121EEFA32900E05A84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A20DAF2B1EF42338008DBFA9 /* EmojisView */,
 				047FCEF91EF3DCBC00AD0C08 /* AttributeString */,
 				047FCF091EF3DCBC00AD0C08 /* ColorView */,
 				A20DAF191EF2E61E008DBFA9 /* TopTableView */,
@@ -1545,6 +1552,17 @@
 				A20DAF231EF2E61E008DBFA9 /* JMTopTableView.m */,
 			);
 			path = TopTableView;
+			sourceTree = "<group>";
+		};
+		A20DAF2B1EF42338008DBFA9 /* EmojisView */ = {
+			isa = PBXGroup;
+			children = (
+				A20DAF2C1EF42338008DBFA9 /* JMEmojiAnimationView.h */,
+				A20DAF2D1EF42338008DBFA9 /* JMEmojiAnimationView.m */,
+				A20DAF2E1EF42338008DBFA9 /* JMSelectEmojiView.h */,
+				A20DAF2F1EF42338008DBFA9 /* JMSelectEmojiView.m */,
+			);
+			path = EmojisView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1868,6 +1886,7 @@
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,
 				0490EEA51EEF977000E05A84 /* Tool_FMDBModel.m in Sources */,
 				0490F1B01EEF9C3900E05A84 /* JMHomeCollectionViewCell.m in Sources */,
+				A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */,
 				047FCEA71EF119D800AD0C08 /* JMCreatPaintView.m in Sources */,
 				0490F2561EEFBE1B00E05A84 /* JMGetGIFController.m in Sources */,
 				0490EDE91EEF976F00E05A84 /* AFNetworkReachabilityManager.m in Sources */,
@@ -1893,6 +1912,7 @@
 				047FCF161EF3DCBC00AD0C08 /* JMAttributeStringModel.m in Sources */,
 				047FCF1A1EF3DCBD00AD0C08 /* JMAnimationView.m in Sources */,
 				0490EDE31EEF976F00E05A84 /* UIViewController+BackButtonHandler.m in Sources */,
+				A20DAF311EF42338008DBFA9 /* JMSelectEmojiView.m in Sources */,
 				A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */,
 				0490EDE71EEF976F00E05A84 /* UIView+Extension.m in Sources */,
 				047FCF191EF3DCBD00AD0C08 /* JMAttributeTextInputView.m in Sources */,
