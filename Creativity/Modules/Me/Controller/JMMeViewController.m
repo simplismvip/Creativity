@@ -9,6 +9,7 @@
 #import "JMMeViewController.h"
 #import "JMAboutUsController.h"
 #import "SetModel.h"
+#import "JMHelper.h"
 #import "SetTableViewCell.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -25,9 +26,8 @@
     
     [super viewDidLoad];
     
-    self.dataSource = [NSMutableArray arrayWithArray:@[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]];
+    self.dataSource = [JMHelper getSetModel];
     [self setUI];
-    
     self.leftImage = @"navbar_close_icon_black";
 }
 

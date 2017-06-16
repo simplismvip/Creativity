@@ -41,11 +41,9 @@
     SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (cell == nil) {cell = [[self alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
-    
-    
-    // cell.leftImage.image = [[UIImage imageNamed:model.icon] imageWithRenderingMode:(UIImageRenderingModeAlwaysTemplate)];
-    // cell.textTitle.text = model.title;
-    // cell.accessoryType = model.accessoryType.integerValue;
+    cell.leftImage.image = [[UIImage imageNamed:model.icon] imageWithRenderingMode:(UIImageRenderingModeAlwaysTemplate)];
+    cell.textTitle.text = model.title;
+    cell.accessoryType = model.accessoryType.integerValue;
     return cell;
 }
 

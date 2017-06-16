@@ -3,8 +3,8 @@
 
 		  	{
 		  		"添加":{
-		  				"imageName":["coverage_32", "image"],
-						"showName":["图层", "照片"],
+		  				"imageName":["coverage_32", "coverage_32", "image"],
+						"showName":["添加", "图层", "照片"],
 						"color":"0",
                         "type":"3"
 					}
@@ -12,8 +12,8 @@
 
 		  	{
 		  		"画笔":{
-		  				"imageName":["cave_32", "line_32", "arrow_32", "rect_32", "ellopse_32"],
-						"showName":["曲线", "直线", "箭头", "矩形", "椭圆"],
+		  				"imageName":["cave_32", "line_32", "arrow_32", "rect_32", "ellopse_32", "emoji_32", "textNote"],
+						"showName":["曲线", "直线", "箭头", "矩形", "椭圆", "表情", "文字"],
 						"color":"0",
                         "type":"4"
 					}
@@ -31,7 +31,7 @@
 		  	{
 		  		"注释":{
 		  				"imageName":["dashLine", "fill_32", "fontSize"],
-						"showName":["虚线设置", "填充", "文字设置", "颜色设置"],
+						"showName":["虚线", "填充", "文字"],
 						"color":"0",
                         "type":"7"
 					}
@@ -39,8 +39,8 @@
                 
             {
                 "颜色":{
-                        "imageName":["color_32-1",  "emoji_32", "textNote"],
-                        "showName":["颜色", "表情", "文字"],
+                        "imageName":["color_32-1"],
+                        "showName":["颜色"],
                         "color":"0",
                         "type":"3"
                 }

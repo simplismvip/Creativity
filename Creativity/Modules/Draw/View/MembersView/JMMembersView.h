@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol JMMembersViewDelegate <NSObject>
-- (void)moveCoverageAtIndexPath:(NSInteger)fromIndex toIndex:(NSInteger)toIndex from:(BOOL)from;
-- (void)removeCoverageAtIndex:(NSInteger)index from:(BOOL)from;
-- (void)hideCoverageAtIndex:(NSInteger)index isHide:(BOOL) isHide from:(BOOL)from;
+- (void)moveCoverageAtIndexPath:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
+- (void)removeCoverageAtIndex:(NSInteger)index;
+- (void)hideCoverageAtIndex:(NSInteger)index isHide:(BOOL)isHide;
 @end
 
 @interface JMMembersView : UIView

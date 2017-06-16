@@ -12,8 +12,11 @@
 #import "StaticClass.h"
 #import "JMTopBarModel.h"
 #import "JMBottomModel.h"
+#import "SetModel.h"
+#import "JMAttributeStringModel.h"
 
 @implementation JMHelper
+
 
 // 字符串转字典
 + (NSDictionary *)parseJSONStringToNSDictionary:(NSString *)JSONString {
@@ -305,5 +308,82 @@
     return topBars;
 }
 
++ (NSMutableArray *)getSetModel
+{
+    NSArray *setA = kSetArray;
+    NSMutableArray *mutab = [NSMutableArray array];
+    
+    for (NSArray *arr in setA) {
+        
+        NSMutableArray *a = [NSMutableArray array];
+        for (NSDictionary *dic in arr) {
+            
+            [a addObject:[SetModel mj_objectWithKeyValues:dic]];
+        }
+        
+        [mutab addObject:a];
+    }
+    
+    return mutab;
+}
+
++ (NSMutableArray *)systemFont
+{
+    NSMutableArray *fontArray = [NSMutableArray array];
+    NSArray * fontArrays = [[UIFont familyNames] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        
+        NSString *str1 = (NSString *)obj1;
+        NSString *str2 = (NSString *)obj2;
+        return [str1 compare:str2];
+    }];
+    
+    for(NSString *fontfamilyname in fontArrays) {
+        
+        NSMutableArray *fonts = [NSMutableArray array];
+        NSMutableDictionary *mutableDic = [NSMutableDictionary dictionary];
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:fontfamilyname];
+        
+        if (fontNames.count> 1) {
+            
+            JMAttributeStringModel *model = [[JMAttributeStringModel alloc] init];
+            model.fontName = fontNames.firstObject;
+            [fonts addObject:model];
+            
+            //            for(NSString *fontName in fontNames) {
+            //
+            //                JMAttributeStringModel *model = [[JMAttributeStringModel alloc] init];
+            //                model.fontName = fontName;
+            //                [fonts addObject:model];
+            //            }
+            
+            [mutableDic setValue:fonts forKey:fontfamilyname];
+            [fontArray addObject:mutableDic];
+        }
+    }
+    
+    return fontArray;
+}
+
++ (NSMutableArray *)systemFontType
+{
+    NSMutableArray *fontArray = [NSMutableArray array];
+    
+    for (int i = 0; i < 7; i ++) {
+        
+        NSMutableArray *fonts = [NSMutableArray array];
+        NSMutableDictionary *mutableDic = [NSMutableDictionary dictionary];
+        
+        JMAttributeStringModel *model = [[JMAttributeStringModel alloc] init];
+        model.attribute = @"字体类型";
+        [fonts addObject:model];
+        
+        [mutableDic setValue:fonts forKey:[NSString stringWithFormat:@"type = %d", i]];
+        [fontArray addObject:mutableDic];
+        
+    }
+    
+    
+    return fontArray;
+}
 
 @end

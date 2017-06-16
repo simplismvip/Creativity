@@ -11,6 +11,7 @@
 #import "JMMemberModel.h"
 #import "NSObject+JMProperty.h"
 #import "JMGestureButton.h"
+#import "JMPaintView.h"
 
 @interface JMMembersView() <UITableViewDelegate, UITableViewDataSource, JMMembersCellDelegate>
 
@@ -24,25 +25,10 @@
 + (void)initMemberDataArray:(NSMutableArray *)dataArray isEditer:(BOOL)isEditer addDelegate:(id)delegate
 {
     NSMutableArray *array = [NSMutableArray array];
-    for (NSDictionary *dic in dataArray) {
+    for (JMPaintView *paint in dataArray) {
         
         JMMemberModel *model = [JMMemberModel new];
-        
-        if ([dic[@"fm"] isEqualToString:@"textNote"]) {
-            
-            model.Thumbnail = @"pencle";
-            
-        }else if ([dic[@"fm"] isEqualToString:@"mp3Note"]) {
-            
-            model.Thumbnail = @"horm_32";
-            
-        }else if ([dic[@"fm"] isEqualToString:@"emojiNote"]) {
-            
-            model.Thumbnail = dic[@"filePath"];
-        }
-        
-        model.content = dic[@"fm"];
-        model.index = [dic[@"index"] integerValue];
+        model.thumbnailImage = paint.image;
         [array addObject:model];
     }
     
@@ -90,24 +76,12 @@
     return 1;
 }
 
-/*
- if (!model.isHide) {
- 
- 
- }else{
- 
- [cell.showAndHide setImage:[UIImage imageWithRenderingName:@"05"] forState:(UIControlStateNormal)];
- }
-
- */
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JMMembersCell *cell = [JMMembersCell initWithMemberCell:tableView cellForRowAtIndexPath:indexPath];
     cell.delegate = self;
     JMMemberModel *model = self.memberArray[indexPath.row];
-    cell.name.text = model.content;
-    cell.header.image = [UIImage imageNamed:model.Thumbnail];
+    cell.header.image = model.thumbnailImage;
     [cell.showAndHide setImage:[UIImage imageWithTemplateName:model.showAndHide] forState:(UIControlStateNormal)];
     return cell;
 }
@@ -119,14 +93,13 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     if (editingStyle ==UITableViewCellEditingStyleDelete)
     {
-        if ([self.delegate respondsToSelector:@selector(removeCoverageAtIndex:from:)]) {
+        if ([self.delegate respondsToSelector:@selector(removeCoverageAtIndex:)]) {
             
             [self.memberArray removeObjectAtIndex:indexPath.row];
             [self.tabView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.delegate removeCoverageAtIndex:indexPath.row from:YES];
+            [self.delegate removeCoverageAtIndex:indexPath.row];
         }
     }
 }
@@ -134,9 +107,9 @@
 // 移动
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    if ([self.delegate respondsToSelector:@selector(moveCoverageAtIndexPath:toIndex:from:)]) {
+    if ([self.delegate respondsToSelector:@selector(moveCoverageAtIndexPath:toIndex:)]) {
         
-        [self.delegate moveCoverageAtIndexPath:fromIndexPath.row toIndex:toIndexPath.row from:YES];
+        [self.delegate moveCoverageAtIndexPath:fromIndexPath.row toIndex:toIndexPath.row];
         JMMemberModel *model = self.memberArray[fromIndexPath.row];
         [self.memberArray removeObjectAtIndex:fromIndexPath.row];
         [self.memberArray insertObject:model atIndex:toIndexPath.row];
@@ -172,9 +145,9 @@
 
 - (void)hideView:(NSInteger)index isHide:(BOOL)isHide;
 {
-    if ([self.delegate respondsToSelector:@selector(hideCoverageAtIndex:isHide:from:)]) {
+    if ([self.delegate respondsToSelector:@selector(hideCoverageAtIndex:isHide:)]) {
         
-        [self.delegate hideCoverageAtIndex:index isHide:isHide from:YES];
+        [self.delegate hideCoverageAtIndex:index isHide:isHide];
     }
 }
 

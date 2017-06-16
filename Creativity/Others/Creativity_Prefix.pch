@@ -30,9 +30,14 @@
 #define JMColorRGBA(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
 #define JMRandomColor JMColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 #define HEXCOLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:(c&0xFF)/255.0 alpha:1.0]
+#define UIColorFromRGB(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:A]
 
 #define JMDocumentsPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0]
 #define JMCachePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+// @[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]
+
+#define kSetArray @[@[@{@"title":@"获取Pro", @"icon":@"mine_32",@"accessoryType":@"1"}], @[@{@"title":@"帮助中心", @"icon":@"more",@"accessoryType":@"1"}, @{@"title":@"反馈", @"icon":@"night",@"accessoryType":@"1"}], @[@{@"title":@"版本", @"icon":@"cache",@"accessoryType":@"1"}, @{@"title":@"软件许可", @"icon":@"advice",@"accessoryType":@"0"}]];
 
 // 颜色
 #define JMCellBackground JMColor(239, 239, 239)
@@ -66,5 +71,6 @@
 
 #import "UIImage+JMImage.h"
 #import "UIView+Extension.h"
-
+#import "StaticClass.h"
+#import "JMHelper.h"
 #endif

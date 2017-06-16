@@ -8,15 +8,11 @@
 
 #import <UIKit/UIKit.h>
 typedef enum : NSUInteger {
-    JMTopBarTypeBack=0,
-//    JMTopBarTypeColor=1,
-    JMTopBarTypeShare,
-    JMTopBarTypeAdd,
-    JMTopBarTypepaint,
-    JMTopBarTypeclear,
-//    JMTopBarTypeSource,
-    JMTopBarTypeNote
-//    JMTopBarTypeWidth
+    JMTopBarTypeAdd = 0,
+    JMTopBarTypePaint,
+    JMTopBarTypeClear,
+    JMTopBarTypeNote,
+    JMTopBarTypeColor
 } JMBottomType;
 
 @protocol JMTopTableViewDelegate <NSObject>

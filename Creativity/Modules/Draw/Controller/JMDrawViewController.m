@@ -14,14 +14,17 @@
 #import "UIImage+JMImage.h"
 #import "JMMembersView.h"
 #import "JMHelper.h"
-
+#import "JMMembersView.h"
+#import "JMAttributeTextInputView.h"
+#import "JMAttributeStringAnimationView.h"
+#import "JMAnimationView.h"
 
 #define kMargin 10.0
 
 @interface JMDrawViewController ()<JMTopTableViewDelegate>
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, assign) NSInteger timeNum;
-@property (nonatomic, weak) JMPaintView *memberViewView;
+@property (nonatomic, weak) JMPaintView *paintView;
 @property (nonatomic, weak) JMMembersView *memberView;
 
 @property (nonatomic, strong) NSMutableArray *subViews;
@@ -53,8 +56,16 @@
     self.memberViewBuff = [NSMutableArray array];
     self.memberViewData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
-    self.leftImage = @"navbar_close_icon_black";
-    self.rightImage = @"navbar_next_icon_black";
+    
+    if (_fromGif) {
+        
+        self.rightTitle = @"完成";
+        
+    }else{
+    
+        self.leftImage = @"navbar_close_icon_black";
+        self.rightImage = @"navbar_next_icon_black";
+    }
     
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
@@ -69,7 +80,7 @@
     JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.height-108)];
     pView.drawType = JMPaintToolTypePen;
     pView.lineDash = NO;
-    self.memberViewView = pView;
+    self.paintView = pView;
     [self.view addSubview:pView];
     [self.subViews addObject:pView];
 }
@@ -83,7 +94,7 @@
         pView.drawType = JMPaintToolTypePen;
         pView.lineDash = NO;
         pView.image = image;
-        self.memberViewView = pView;
+        self.paintView = pView;
         [self.view addSubview:pView];
         [self.subViews addObject:pView];
     }
@@ -110,9 +121,6 @@
         if (memberView.image) {
         
             [images addObject:memberView.image];
-        }else{
-        
-            [images addObject:memberView.image];
         }
     }
     
@@ -120,9 +128,9 @@
     [self.navigationController pushViewController:gif animated:YES];
 }
 
-- (void)newCallback
+- (void)rightTitleItem:(UIBarButtonItem *)sender
 {
-    [self creatGifNew];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)touchItem:(NSInteger)index
@@ -161,71 +169,93 @@
 }
 
 #pragma mark -- ****************JMTopTableViewDelegate
-
 - (void)topTableView:(JMBottomType)bottomType didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    
-    if (bottomType == JMTopBarTypeShare && row==0){
+
+    if (bottomType == JMTopBarTypeAdd && row==0){
         
-        
-    }else if (bottomType == JMTopBarTypeShare && row==1){
-        
-        
-    }else if (bottomType == JMTopBarTypeShare && row==2){
-        
-        
-    }else if (bottomType == JMTopBarTypeAdd && row==0){
-        
+        [self creatGifNew];
         
     }else if (bottomType == JMTopBarTypeAdd && row==1){
         
+        [JMMembersView initMemberDataArray:self.subViews isEditer:NO addDelegate:self];
         
     }else if (bottomType == JMTopBarTypeAdd && row==2){
         
         
-    }else if (bottomType == JMTopBarTypeAdd && row==3){
+    }else if (bottomType == JMTopBarTypePaint){
+        
+        _paintView.drawType = (JMPaintToolType)row;
         
         
-    }else if (bottomType == JMTopBarTypeAdd && row==4){
+        JMSelf(ws);
+        JMAttributeTextInputView *attribute = [[JMAttributeTextInputView alloc] initWithFrame:CGRectMake(0,self.view.height, self.view.width, 50)];
+        attribute.textViewMaxLine = 5;
+        attribute.placeholderLabel.text = @"请输入...";
+        attribute.inputAttribute = ^(NSString *sendContent) {ws.paintView.paintText = sendContent;};
+        [self.view addSubview:attribute];
+        [attribute.textInput becomeFirstResponder];
+        _paintView.drawType = (JMPaintToolType)row;
         
+    }else if (bottomType == JMTopBarTypeClear && row==0){
         
-    }else if (bottomType == JMTopBarTypepaint){
+        [_paintView undoLatestStep];
+
+    }else if (bottomType == JMTopBarTypeClear && row==1){
         
+        [_paintView clearAll];
         
-    }else if (bottomType == JMTopBarTypeclear && row==0){
+    }else if (bottomType == JMTopBarTypeClear && row==2){
         
-        
-    }else if (bottomType == JMTopBarTypeclear && row==1){
-        
-        
-    }else if (bottomType == JMTopBarTypeclear && row==2){
-        
+        [_paintView redoLatestStep];
         
     }else if (bottomType == JMTopBarTypeNote && row==0){
         
+        _paintView.lineDash = !_paintView.lineDash;
         
     }else if (bottomType == JMTopBarTypeNote && row==1){
         
+        _paintView.isFill = !_paintView.isFill;
         
     }else if (bottomType == JMTopBarTypeNote && row==2){
         
+        NSLog(@"文字设置");
         
-    }else if (bottomType == JMTopBarTypeNote && row==3){
+        JMAttributeStringAnimationView *animation = [[JMAttributeStringAnimationView alloc] initWithFrame:self.view.bounds];
+        animation.alpha = 0.0;
+        animation.attributeString = ^(NSString *fontName) {[StaticClass setFontName:fontName];};
+        [self.view addSubview:animation];
+        [UIView animateWithDuration:0.3 animations:^{animation.alpha = 1.0;}];
         
-
-    }else if (bottomType == JMTopBarTypeNote && row==4){
+    }else if (bottomType == JMTopBarTypeColor && row==0){
         
-        
-    }else if (bottomType == JMTopBarTypeNote && row==5){
-        
-        
+        JMAnimationView *animation = [[JMAnimationView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:animation];
+        [UIView animateWithDuration:0.3 animations:^{animation.alpha = 1.0;}];
     }
 }
 
+- (void)moveCoverageAtIndexPath:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
+{
+
+}
+
+- (void)removeCoverageAtIndex:(NSInteger)index
+{
+
+}
+
+- (void)hideCoverageAtIndex:(NSInteger)index isHide:(BOOL)isHide
+{
+
+}
 
 /*
+ NSInteger row = indexPath.row;
 
+ 
+ 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].

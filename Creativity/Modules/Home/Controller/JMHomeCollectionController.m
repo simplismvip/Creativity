@@ -94,6 +94,7 @@ static NSString *const headerID = @"header";
     NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
     [JMFileManger creatDir:gifPath];
     JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+    draw.fromGif = NO;
     draw.folderPath = gifPath;
     [draw creatGifNew];
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
@@ -154,8 +155,7 @@ static NSString *const headerID = @"header";
     draw.folderPath = model.folderPath;
     UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
     draw.images = [NSMutableArray arrayWithArray:image.images];
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-    [self presentViewController:Nav animated:YES completion:nil];
+    [self.navigationController pushViewController:draw animated:YES];
 }
 
 //

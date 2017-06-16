@@ -49,4 +49,5 @@
 
 // 
 + (NSMutableArray *)getTopBarModel;
++ (NSMutableArray *)getSetModel;
 @end

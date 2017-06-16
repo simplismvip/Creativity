@@ -33,6 +33,19 @@
     
     
 }
+
+- (void)leftTitleItem:(UIBarButtonItem *)sender
+{
+    
+    
+}
+
+- (void)rightTitleItem:(UIBarButtonItem *)sender
+{
+    
+    
+}
+
 // @"toolbar_setting_icon_black"
 //
 - (void)setLeftImage:(NSString *)leftImage
@@ -47,6 +60,21 @@
 {
     _rightImage = rightImage;
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:rightImage] style:(UIBarButtonItemStyleDone) target:self action:@selector(newItem:)];
+    self.navigationItem.rightBarButtonItem = right;
+}
+
+- (void)setLeftTitle:(NSString *)leftTitle
+{
+    _leftTitle = leftTitle;
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithTitle:leftTitle style:(UIBarButtonItemStyleDone) target:self action:@selector(leftTitleItem:)];
+    self.navigationItem.leftBarButtonItem = left;
+}
+
+- (void)setRightTitle:(NSString *)rightTitle
+{
+    _rightTitle = rightTitle;
+    
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:rightTitle style:(UIBarButtonItemStyleDone) target:self action:@selector(rightTitleItem:)];
     self.navigationItem.rightBarButtonItem = right;
 }
 

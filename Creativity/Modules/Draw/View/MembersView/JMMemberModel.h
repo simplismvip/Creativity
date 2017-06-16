@@ -15,4 +15,5 @@
 @property (nonatomic, copy) NSString *Thumbnail;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *showAndHide;
+@property (nonatomic, strong) UIImage *thumbnailImage;
 @end

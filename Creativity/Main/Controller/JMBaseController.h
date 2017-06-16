@@ -11,4 +11,6 @@
 @interface JMBaseController : UIViewController
 @property (nonatomic, copy) NSString *leftImage;
 @property (nonatomic, copy) NSString *rightImage;
+@property (nonatomic, copy) NSString *rightTitle;
+@property (nonatomic, copy) NSString *leftTitle;
 @end
