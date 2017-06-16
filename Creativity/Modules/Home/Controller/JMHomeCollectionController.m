@@ -122,24 +122,24 @@ static NSString *const headerID = @"header";
     return cell;
 }
 
-// 返回辅助视图工具
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    JMHomeCollectionReusableView *header;
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        
-        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerID forIndexPath:indexPath];
-        header.text.text = [NSString stringWithFormat:@"section %ld", indexPath.section+1];
-        if (header == nil) {header = [[JMHomeCollectionReusableView alloc] init];}
-        
-    }else if ([kind isEqualToString:UICollectionElementKindSectionFooter]){
-        
-        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerID forIndexPath:indexPath];
-        if (header == nil) {header = [[JMHomeCollectionReusableView alloc] init];}
-    }
-    
-    return header;
-}
+//// 返回辅助视图工具
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+//{
+//    JMHomeCollectionReusableView *header;
+//    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+//        
+//        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerID forIndexPath:indexPath];
+//        header.text.text = [NSString stringWithFormat:@"section %ld", indexPath.section+1];
+//        if (header == nil) {header = [[JMHomeCollectionReusableView alloc] init];}
+//        
+//    }else if ([kind isEqualToString:UICollectionElementKindSectionFooter]){
+//        
+//        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerID forIndexPath:indexPath];
+//        if (header == nil) {header = [[JMHomeCollectionReusableView alloc] init];}
+//    }
+//    
+//    return header;
+//}
 
 #pragma mark UICollectionViewDelegate
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -181,8 +181,8 @@ static NSString *const headerID = @"header";
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger rows = (self.view.width-10*4)/3;
-    return CGSizeMake(rows, rows+40);
+    NSInteger rows = (self.view.width-10*3)/2;
+    return CGSizeMake(rows, rows);
 }
 
 // 动态设置每个分区的EdgeInsets
@@ -313,9 +313,7 @@ static NSString *const headerID = @"header";
         self.collectionLayout.delegate = self;
         self.collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_collectionLayout];
         [_collection registerClass:[JMHomeCollectionViewCell class] forCellWithReuseIdentifier:collectionID];
-        [_collection registerClass:[JMHomeCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
-        [_collection registerClass:[JMHomeCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
-        _collection.backgroundColor = JMTabViewBaseColor;
+        _collection.backgroundColor = JMColor(41, 41, 41);
         _collection.dataSource = self;
         _collection.delegate = self;
         _collection.showsVerticalScrollIndicator = NO;

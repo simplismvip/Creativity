@@ -60,7 +60,7 @@
     
     JMFiltersView *filter = [[JMFiltersView alloc] initWithFrame:CGRectMake(10, _coverView.height-45, _coverView.width-20, 40)];
     filter.tinColor = [UIColor whiteColor];
-    filter.titles = @[@{@"title":@"返回", @"image":@"close_icon_black"}, @{@"title":@"选择字体", @"image":@"emoji"}, @{@"title":@"字体样式", @"image":@"heart_32"}];
+    filter.titles = @[@{@"title":@"返回", @"image":@"navbar_close_icon_black"}, @{@"title":@"选择字体", @"image":@"emoji"}, @{@"title":@"字体样式", @"image":@"heart_32"}];
     filter.contentSize = CGSizeMake(filter.width*0.63, 30);
     filter.filter = ^(NSInteger type) {
         

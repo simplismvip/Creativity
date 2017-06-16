@@ -26,7 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = JMColor(207, 207, 207);
+        self.backgroundColor = [UIColor whiteColor];
         
 //        NSArray * fontArrays = [[UIFont familyNames] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
 //            
@@ -175,7 +175,7 @@
     CGFloat w = self.width/self.dataSource.count;
     for (UIView *view in self.subviews) {
         
-        view.frame = CGRectMake(i*w, 0, w, self.height-1);
+        view.frame = CGRectMake(i*w, 1, w, self.height);
         i ++;
     }
 }

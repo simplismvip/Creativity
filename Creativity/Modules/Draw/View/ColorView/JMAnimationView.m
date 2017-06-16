@@ -35,10 +35,10 @@
         coverView.layer.masksToBounds = YES;
         [self addSubview:coverView];
         self.coverView = coverView;
-        
+        //
         UIButton *close = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         close.tintColor = [UIColor whiteColor];
-        [close setImage:[UIImage imageWithTemplateName:@"close_icon_black"] forState:(UIControlStateNormal)];
+        [close setImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"] forState:(UIControlStateNormal)];
         [close addTarget:self action:@selector(closeView:) forControlEvents:UIControlEventTouchUpInside];
         
         [UIView animateWithDuration:0.3 animations:^{

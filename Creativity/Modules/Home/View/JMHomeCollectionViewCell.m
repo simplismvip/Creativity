@@ -22,12 +22,9 @@
 {
     if ([super initWithFrame:frame]) {
         
-        self.backgroundColor = [UIColor whiteColor];
-        self.layer.cornerRadius = 5;
-        self.layer.masksToBounds = YES;
+        self.backgroundColor = JMColor(251, 251, 251);
         
         _classImage = [[UIImageView alloc] initWithFrame:CGRectZero];
-        _classImage.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_classImage];
         
         _deleteBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];

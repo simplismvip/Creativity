@@ -47,6 +47,7 @@
 
 - (void)Done:(UIBarButtonItem *)done
 {
+    [self creatGIF:nil];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -81,14 +82,13 @@
     
     self.delayTime = 1.0;
     UIImageView *birdImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height/2)];
+//    birdImage.backgroundColor = [UIColor whiteColor];
     birdImage.contentMode = UIViewContentModeScaleAspectFit;
     [birdImage setAnimationImages:_images];
     birdImage.animationRepeatCount = 0;
     birdImage.animationDuration = 1.0;
     [birdImage startAnimating];
     [self.view addSubview:birdImage];
-    
-    birdImage.backgroundColor = [UIColor redColor];
     self.birdImage = birdImage;
     
     UISlider *slide = [[UISlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(birdImage.frame), self.view.width-60, 30)];

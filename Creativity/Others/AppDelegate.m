@@ -29,7 +29,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [[JMMainNavController alloc] initWithRootViewController:[[JMHomeCollectionController alloc] init]];
     [self.window makeKeyAndVisible];
-    [self py_setThemeColor:JMBaseColor];
+    [self py_setThemeColor:JMColor(33, 33, 33)];
     
     return YES;
 }
