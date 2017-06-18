@@ -53,8 +53,11 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"collectionView"]) {
+        
         [self setUpGestureRecognizers];
+        
     } else {
+        
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
@@ -69,8 +72,6 @@
 #pragma mark - 手势动画
 - (void)longGesture:(UILongPressGestureRecognizer *)gesture
 {
-    if (!self.inEditState) {[self setInEditState:YES];}
-    
     switch (gesture.state) {
             
         case UIGestureRecognizerStateBegan: {
@@ -84,36 +85,30 @@
             
             // 得到当前cell的映射(截图)
             self.moveView = [targetCell snapshotViewAfterScreenUpdates:YES];
-            self.moveView.layer.borderWidth = 3;
+            self.moveView.layer.borderWidth = 2;
             self.moveView.layer.borderColor = JMBaseColor.CGColor;
             self.moveView.layer.cornerRadius = 10;
             self.moveView.layer.masksToBounds = YES;
             
             [self.collectionView addSubview:self.moveView];
             targetCell.hidden = YES;
-            self.moveView.transform = CGAffineTransformMakeScale(1.1, 1.1);
-            self.moveView.center = location;
-        }
-            break;
-        case UIGestureRecognizerStateChanged: {
-            CGPoint point = [gesture locationInView:self.collectionView];
             
-            // 更新cell的位置
-            self.moveView.center = point;
-            NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-            if (indexPath == nil)  return;
-            if (indexPath.section == self.currentIndexPath.section && indexPath.section == 0) {
-                [self.collectionView moveItemAtIndexPath:self.currentIndexPath toIndexPath:indexPath];
+            [UIView animateWithDuration:0.3 animations:^{
                 
-                // 使用代理方法更新数据源
-                if ([self.delegate respondsToSelector:@selector(moveItemAtIndexPath:toIndexPath:)]) {
-                    [self.delegate moveItemAtIndexPath:self.currentIndexPath toIndexPath:indexPath];
-                }
-                self.currentIndexPath = indexPath;
-            }
+                self.moveView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+                
+            } completion:^(BOOL finished) {
+               
+                [UIView animateWithDuration:0.2 animations:^{
+                    
+                    self.moveView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                }];
+            }];
         }
             break;
+
         case UIGestureRecognizerStateEnded: {
+            [self setInEditState:!self.inEditState];
             UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:self.currentIndexPath];
             [UIView animateWithDuration:0.25 animations:^{
                 self.moveView.center = cell.center;
@@ -122,7 +117,7 @@
                 cell.hidden = NO;
                 self.moveView = nil;
                 self.currentIndexPath = nil;
-                [self.collectionView reloadData];
+//                [self.collectionView reloadData];
             }];
         }
             break;

@@ -45,7 +45,6 @@ typedef enum {
 - (void)clearAll;
 - (void)undoLatestStep;
 - (void)redoLatestStep;
-- (void)startPaint;
 
 @end
 

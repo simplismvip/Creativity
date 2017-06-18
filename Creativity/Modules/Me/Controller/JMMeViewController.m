@@ -13,6 +13,7 @@
 #import "SetTableViewCell.h"
 #import "JMAccountHeaderFooter.h"
 #import "JMFileManger.h"
+#import "Masonry.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -55,6 +56,12 @@
     }
     [self.view addSubview:setTableView];
     self.setTableView = setTableView;
+    
+    [setTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.edges.mas_equalTo(self.view);
+        
+    }];
 }
 
 #pragma mark --

@@ -10,7 +10,6 @@
 
 @protocol JMHomeCollectionViewCellDelegate <NSObject>
 @optional
-- (void)showRoomMembers:(NSIndexPath *)indexPath currentPoint:(CGPoint)currentPoint;
 - (void)deleteByIndexPath:(NSIndexPath *)indexPath;
 - (void)share:(NSIndexPath *)indexPath;
 @end

@@ -29,4 +29,25 @@
 + (NSString *)getFontName;
 + (void)setFontType:(NSInteger)fontType;
 + (NSInteger)getFontType;
+
+// 设置笔画种类
++ (void)setPaintType:(NSInteger)paintType;
++ (NSInteger)getPaintType;
+
+// 设置填充，
++ (void)setFillType:(BOOL)fillType;
++ (BOOL)getFillType;
+
+// 虚线
++ (void)setDashType:(BOOL)dashType;
++ (BOOL)getDashType;
+
+// 设置填充，
++ (void)setPaintImage:(NSString *)paintImage;
++ (NSString *)getPaintImage;
+
+// 虚线
++ (void)setPaintText:(NSString *)paintText;
++ (NSString *)getPaintText;
+
 @end

@@ -28,16 +28,17 @@
     for (JMPaintView *paint in dataArray) {
         
         JMMemberModel *model = [JMMemberModel new];
+        model.showAndHide = @"vesion_show_32";
         model.thumbnailImage = paint.image;
         [array addObject:model];
     }
     
-    JMMembersView *base = [[self alloc] initWithFrame:CGRectMake(0, kH, kW, kH*0.418)];
+    JMMembersView *base = [[self alloc] initWithFrame:CGRectMake(0, kH, kW, kW*0.618)];
     base.memberArray = array;
     base.editer = isEditer;
     base.delegate = delegate;
     [[JMGestureButton creatGestureButton] addSubview:base];
-    [UIView animateWithDuration:0.4 animations:^{base.frame = CGRectMake(0, kH-kH*0.418, kW, kH*0.418);}];
+    [UIView animateWithDuration:0.4 animations:^{base.frame = CGRectMake(0, kH-kW*0.618, kW, kW*0.618);}];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -50,9 +51,12 @@
         tabView.delegate = self;
         tabView.dataSource = self;
         tabView.alpha = 0.95;
-        tabView.separatorColor = tabView.backgroundColor;
+        tabView.separatorColor = JMColorRGBA(217, 51, 58, 0.5);
         tabView.showsVerticalScrollIndicator = NO;
         tabView.allowsSelection = NO;
+        if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){
+            tabView.cellLayoutMarginsFollowReadableWidth = NO;
+        }
         [self addSubview:tabView];
         self.tabView = tabView;
     }
@@ -82,6 +86,7 @@
     cell.delegate = self;
     JMMemberModel *model = self.memberArray[indexPath.row];
     cell.header.image = model.thumbnailImage;
+    cell.name.text = [NSString stringWithFormat:@"%ld", indexPath.row];;
     [cell.showAndHide setImage:[UIImage imageWithTemplateName:model.showAndHide] forState:(UIControlStateNormal)];
     return cell;
 }

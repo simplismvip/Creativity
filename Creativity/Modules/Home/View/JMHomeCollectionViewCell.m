@@ -13,6 +13,7 @@
 @interface JMHomeCollectionViewCell ()
 @property (nonatomic, strong) UIImageView *classImage;
 @property (nonatomic, strong) UIButton *deleteBtn;
+@property (nonatomic, strong) UIButton *shareBtn;
 
 @end
 
@@ -28,29 +29,13 @@
         [self.contentView addSubview:_classImage];
         
         _deleteBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        _deleteBtn.hidden = YES;
-        [_deleteBtn setTintColor:JMColor(115, 115, 155)];
-        [_deleteBtn addTarget:self action:@selector(deleteByIndexPath:event:) forControlEvents:(UIControlEventTouchUpInside)];
-        [_deleteBtn setImage:[UIImage imageWithTemplateName:@"collectionDelete"] forState:(UIControlStateNormal)];
+        [_deleteBtn setTintColor:JMColor(217, 51, 58)];
+        [_deleteBtn addTarget:self action:@selector(share:event:) forControlEvents:(UIControlEventTouchUpInside)];
+        [_deleteBtn setImage:[UIImage imageWithTemplateName:@"navbar_share_icon_black"] forState:(UIControlStateNormal)];
         [self.contentView addSubview:_deleteBtn];
     }
     
     return self;
-}
-
-- (void)showRoomNumber:(UIButton *)sender event:(id)event
-{
-    if ([self.delegate respondsToSelector:@selector(showRoomMembers:currentPoint:)]) {
-        
-        NSSet *touches =[event allTouches];
-        UITouch *touch =[touches anyObject];
-        CGPoint currentTouchPosition = [touch locationInView:_collection];
-        NSIndexPath *indexpath = [_collection indexPathForItemAtPoint:currentTouchPosition];
-        if (indexpath) {
-            
-            [self.delegate showRoomMembers:indexpath currentPoint:currentTouchPosition];
-        }
-    }
 }
 
 - (void)deleteByIndexPath:(UIButton *)sender event:(id)event
@@ -115,14 +100,18 @@
 {
     if (inEditState && _inEditState != inEditState) {
         
-        self.layer.borderWidth = 1.0;
-        self.layer.borderColor = [UIColor grayColor].CGColor;
-        _deleteBtn.hidden = NO;
+        self.layer.borderWidth = 0.5;
+        self.layer.borderColor = JMColor(217, 51, 58).CGColor;
+        [_deleteBtn setImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"] forState:(UIControlStateNormal)];
+        [_deleteBtn removeTarget:self action:@selector(share:event:) forControlEvents:(UIControlEventTouchUpInside)];
+        [_deleteBtn addTarget:self action:@selector(deleteByIndexPath:event:) forControlEvents:(UIControlEventTouchUpInside)];
         
     } else {
         
+        [_deleteBtn setImage:[UIImage imageWithTemplateName:@"navbar_share_icon_black"] forState:(UIControlStateNormal)];
+        [_deleteBtn removeTarget:self action:@selector(deleteByIndexPath:event:) forControlEvents:(UIControlEventTouchUpInside)];
+        [_deleteBtn addTarget:self action:@selector(share:event:) forControlEvents:(UIControlEventTouchUpInside)];
         self.layer.borderColor = [UIColor clearColor].CGColor;
-        _deleteBtn.hidden = YES;
     }
 }
 

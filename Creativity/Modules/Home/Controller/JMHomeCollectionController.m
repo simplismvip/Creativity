@@ -20,6 +20,9 @@
 #import "JMHelper.h"
 #import "UIImage+GIF.h"
 #import "JMGetGIFController.h"
+#import "Masonry.h"
+#import "FLAnimatedImageView+WebCache.h"
+
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, strong) JMHomeCollectionViewFlowLayout *collectionLayout;
@@ -272,6 +275,12 @@ static NSString *const headerID = @"header";
         _collection.delegate = self;
         _collection.showsVerticalScrollIndicator = NO;
         [self.view addSubview:_collection];
+        
+        [_collection mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.edges.mas_equalTo(self.view);
+            
+        }];
     }
     return _collection;
 }

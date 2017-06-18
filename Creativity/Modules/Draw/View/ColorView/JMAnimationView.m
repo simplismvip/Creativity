@@ -25,8 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.alpha = 0.0;
-        self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.3];
+        self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
         coverView.backgroundColor = JMBaseColor;

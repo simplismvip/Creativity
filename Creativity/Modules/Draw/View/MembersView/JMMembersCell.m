@@ -20,6 +20,8 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
+        self.textLabel.textColor = JMColor(55, 55, 55);
+        
         // 左侧label
         self.header = [[UIImageView alloc] init];
         self.header.backgroundColor = JMColor(245, 245, 245);
@@ -33,11 +35,9 @@
         
         // 右侧label
         self.showAndHide = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [self.showAndHide setTintColor:JMColor(52, 118, 237)];
-        [self.showAndHide addTarget:self action:@selector(showAndHide:event:) forControlEvents:(UIControlEventTouchUpInside)];
-        [self addSubview:self.showAndHide];
-        
-        self.textLabel.textColor = JMColor(55, 55, 55);
+        [_showAndHide setTintColor:JMColorRGBA(217, 51, 58, 0.5)];
+        [_showAndHide addTarget:self action:@selector(showAndHide:event:) forControlEvents:(UIControlEventTouchUpInside)];
+        [self addSubview:_showAndHide];
         
         UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(getEditer:)];
         [self addGestureRecognizer:ges];
@@ -70,7 +70,9 @@
             if (self.drawViewHide) {
                
                 [self.showAndHide setImage:[UIImage imageWithTemplateName:@"vesion_hide_32"] forState:(UIControlStateNormal)];
+                
             }else{
+                
                 [self.showAndHide setImage:[UIImage imageWithTemplateName:@"vesion_show_32"] forState:(UIControlStateNormal)];
             }
         }

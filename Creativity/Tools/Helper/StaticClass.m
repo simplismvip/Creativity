@@ -17,6 +17,11 @@ static CGFloat _fontSize;
 static UIColor *_lineColor;
 static NSString *_fontName;
 static NSInteger _fontType;
+static NSInteger _paintType;
+static BOOL _dashType;
+static BOOL _fillType;
+static NSString *_paintImage;
+static NSString *_paintText;
 
 + (void)setNumber:(NSInteger)number{
 
@@ -86,6 +91,61 @@ static NSInteger _fontType;
 + (NSInteger)getFontType
 {
     return _fontType;
+}
+
+// 设置笔画种类
++ (void)setPaintType:(NSInteger)paintType
+{
+    _paintType = paintType;
+}
+
++ (NSInteger)getPaintType
+{
+    return _paintType;
+}
+
+// 设置填充，
++ (void)setFillType:(BOOL)fillType
+{
+    _fillType = fillType;
+}
+
++ (BOOL)getFillType
+{
+    return _fillType;
+}
+
+// 虚线
++ (void)setDashType:(BOOL)dashType
+{
+    _dashType = dashType;
+}
+
++ (BOOL)getDashType
+{
+    return _dashType;
+}
+
+// 设置填充，
++ (void)setPaintImage:(NSString *)paintImage
+{
+    _paintImage = paintImage;
+}
+
++ (NSString *)getPaintImage
+{
+    return _paintImage;
+}
+
+// 虚线
++ (void)setPaintText:(NSString *)paintText
+{
+    _paintText = paintText;
+}
+
++ (NSString *)getPaintText
+{
+    return _paintText;
 }
 
 @end

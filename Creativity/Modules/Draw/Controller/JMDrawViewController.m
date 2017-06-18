@@ -21,10 +21,14 @@
 #import "JMEmojiAnimationView.h"
 #import "JMSubImageModel.h"
 #import <UMMobClick/MobClick.h>
+#import "JMPopView.h"
+#import "JMTopBarModel.h"
+#import "JMBottomModel.h"
+#import "Masonry.h"
 
 #define kMargin 10.0
 
-@interface JMDrawViewController ()<JMTopTableViewDelegate>
+@interface JMDrawViewController ()<JMTopTableViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, weak) JMPaintView *paintView;
@@ -64,10 +68,15 @@
     
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
-    JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, self.view.height-44, self.view.width, 44)];
+    JMTopTableView *topbar = [[JMTopTableView alloc] init];
     topbar.delegate = self;
     topbar.dataSource = _dataSource;
     [self.view addSubview:topbar];
+
+    [topbar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(self.view);
+        make.height.mas_equalTo(@44);
+    }];
 }
 
 - (void)creatGifNew
@@ -75,13 +84,19 @@
     self.leftImage = @"navbar_close_icon_black";
     self.rightImage = @"navbar_next_icon_black";
     
-    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.width)];
-    pView.center = self.view.center;
-    pView.drawType = JMPaintToolTypePen;
-    pView.lineDash = NO;
+    JMPaintView *pView = [[JMPaintView alloc] init];
+    pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
+    pView.lineDash = [StaticClass getDashType];
+    pView.paintText = [StaticClass getPaintText];
+    pView.paintImage = [StaticClass getPaintImage];
     self.paintView = pView;
     [self.view addSubview:pView];
     [self.subViews addObject:pView];
+    
+    [pView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.view);
+        make.width.height.mas_equalTo(self.view.width);
+    }];
 }
 
 - (void)creatGif:(NSArray *)images
@@ -91,14 +106,16 @@
     [self.view addSubview:self.memberView];
     for (UIImage *image in images) {
         
-        JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.width)];
-        pView.center = self.view.center;
-        pView.drawType = JMPaintToolTypePen;
-        pView.lineDash = NO;
+        JMPaintView *pView = [[JMPaintView alloc] init];
         pView.image = image;
         self.paintView = pView;
         [self.view addSubview:pView];
         [self.subViews addObject:pView];
+        
+        [pView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self.view);
+            make.width.height.mas_equalTo(self.view.width);
+        }];
     }
 }
 
@@ -174,13 +191,27 @@
 - (void)topTableView:(JMBottomType)bottomType didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-
-    if (bottomType == JMTopBarTypeAdd && row==0){
+    NSString *title = nil;
+    
+    JMTopBarModel *tModel = self.dataSource[indexPath.section];
+    if (tModel.models.count == 1) {
         
+        title = tModel.title;
+        
+    }else{
+    
+        JMBottomModel *bModel = [_dataSource[indexPath.section] models][row];
+        title = bModel.title;
+    }
+    
+    if (bottomType == JMTopBarTypeAdd){
+        
+        [JMPopView popView:self.view title:title];
         [self creatGifNew];
         
-    }else if (bottomType == JMTopBarTypeAdd && row==1){
+    }else if (bottomType == JMTopBarTypeLayerManger){
         
+        [JMPopView popView:self.view title:title];
         [JMMembersView initMemberDataArray:self.subViews isEditer:NO addDelegate:self];
         
     }else if (bottomType == JMTopBarTypeAdd && row==2){
@@ -188,19 +219,20 @@
         
     }else if (bottomType == JMTopBarTypePaint){
         
+        [JMPopView popView:self.view title:title];
         _paintView.drawType = (JMPaintToolType)row;
+        [StaticClass setPaintType:row];
         
         if (row == 5){
             
             JMSelf(ws);
             JMEmojiAnimationView *animation = [[JMEmojiAnimationView alloc] initWithFrame:self.view.bounds];
             [self.view addSubview:animation];
-            
-            _paintView.drawType = (JMPaintToolType)row;
             animation.animationBlock = ^(id model) {
                 
                 JMSubImageModel *emojiModel = (JMSubImageModel *)model;
                 ws.paintView.paintImage = emojiModel.name;
+                [StaticClass setPaintImage:emojiModel.name];
             };
             
             [UIView animateWithDuration:0.3 animations:^{animation.alpha = 1.0;}];
@@ -211,44 +243,51 @@
             JMAttributeTextInputView *attribute = [[JMAttributeTextInputView alloc] initWithFrame:CGRectMake(0,self.view.height, self.view.width, 50)];
             attribute.textViewMaxLine = 5;
             attribute.placeholderLabel.text = @"请输入...";
-            attribute.inputAttribute = ^(NSString *sendContent) {ws.paintView.paintText = sendContent;};
+            attribute.inputAttribute = ^(NSString *sendContent) {ws.paintView.paintText = sendContent;[StaticClass setPaintText:sendContent];};
             [self.view addSubview:attribute];
             [attribute.textInput becomeFirstResponder];
-            _paintView.drawType = (JMPaintToolType)row;
-            
         }
         
     }else if (bottomType == JMTopBarTypeClear && row==0){
         
+        [JMPopView popView:self.view title:title];
         [_paintView undoLatestStep];
 
     }else if (bottomType == JMTopBarTypeClear && row==1){
         
+        [JMPopView popView:self.view title:title];
         [_paintView clearAll];
         
     }else if (bottomType == JMTopBarTypeClear && row==2){
         
+        [JMPopView popView:self.view title:title];
         [_paintView redoLatestStep];
         
     }else if (bottomType == JMTopBarTypeNote && row==0){
         
+        [JMPopView popView:self.view title:title];
         _paintView.lineDash = !_paintView.lineDash;
+        [StaticClass setDashType:_paintView.lineDash];
         
     }else if (bottomType == JMTopBarTypeNote && row==1){
         
+        [JMPopView popView:self.view title:title];
         _paintView.isFill = !_paintView.isFill;
-        
+        [StaticClass setFillType:_paintView.isFill];
     }else if (bottomType == JMTopBarTypeNote && row==2){
         
-        NSLog(@"文字设置");
+        NSLog(@"添加图片");
         
+    }else if (bottomType == JMTopBarTypeFontSet){
+        
+        NSLog(@"文字设置");
         JMAttributeStringAnimationView *animation = [[JMAttributeStringAnimationView alloc] initWithFrame:self.view.bounds];
         animation.alpha = 0.0;
         animation.attributeString = ^(NSString *fontName) {[StaticClass setFontName:fontName];};
         [self.view addSubview:animation];
         [UIView animateWithDuration:0.3 animations:^{animation.alpha = 1.0;}];
-        
-    }else if (bottomType == JMTopBarTypeColor && row==0){
+    
+    }else if (bottomType == JMTopBarTypeColor){
         
         JMAnimationView *animation = [[JMAnimationView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:animation];
@@ -258,18 +297,82 @@
 
 - (void)moveCoverageAtIndexPath:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
-
+    [self.view exchangeSubviewAtIndex:fromIndex+1 withSubviewAtIndex:toIndex+1];
+    [self.subViews exchangeObjectAtIndex:fromIndex withObjectAtIndex:toIndex];
 }
 
 - (void)removeCoverageAtIndex:(NSInteger)index
 {
-
+    JMPaintView *pView = self.subViews[index];
+    [pView removeFromSuperview];
+    [self.subViews removeObjectAtIndex:index];
 }
 
 - (void)hideCoverageAtIndex:(NSInteger)index isHide:(BOOL)isHide
 {
-
+    JMPaintView *pView = self.subViews[index];
+    pView.hidden = isHide;
 }
+
+#pragma mark -- ****************初始化图片选择器
+- (void)getImageFromLibrary
+{
+    JMSelf(ws);
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    
+    // 相机
+    [alertController addAction:[UIAlertAction actionWithTitle:@"相机" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        
+        if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeCamera)]) {[ws initImagePicker:1];}
+    }]];
+    
+    // 相册
+    [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        
+        if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypePhotoLibrary)]) {[ws initImagePicker:0];}
+    }]];
+    
+    // 取消
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:nil]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    if (IS_IPAD) {
+        
+        UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+        
+        if (popover){
+            popover.sourceView = self.navigationController.navigationBar;
+            popover.sourceRect = self.navigationController.navigationBar.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        }
+    }
+}
+
+#pragma mark -- 初始化图片选择器
+- (void)initImagePicker:(NSInteger)number
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.view.frame = CGRectMake(0, 0, self.view.width, self.view.height - 64);
+    picker.delegate = self;
+    picker.sourceType = number;
+    picker.allowsEditing = NO;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+#pragma mark -- UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0) {
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+//添加代码，处理选中图像又取消的情况
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    
+    JMLog(@"取消选中");
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 /*
  NSInteger row = indexPath.row;

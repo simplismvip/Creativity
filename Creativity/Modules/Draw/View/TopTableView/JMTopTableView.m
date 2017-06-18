@@ -15,7 +15,7 @@
 #import "JMGestureButton.h"
 #import "JMHelper.h"
 #import "JMBottomView.h"
-
+#import "Masonry.h"
 
 @interface JMTopTableView()<JMBottomViewDataSourceDelegate, JMBottomViewDelegate>
 @property (nonatomic, assign) NSInteger section;
@@ -56,15 +56,33 @@
 - (void)topBarAction:(UIButton *)sender
 {
     self.section = sender.tag-baseTag;
-    JMGestureButton *gesture = [JMGestureButton creatGestureButton];
-    JMBottomView *bottom = [[JMBottomView alloc] initWithFrame:CGRectMake(0, self.superview.height, self.superview.width, 44)];
-    [UIView animateWithDuration:0.1 animations:^{bottom.frame = CGRectMake(0, self.superview.height-44, self.superview.width, 44);}];
-    bottom.dataSource = self;
-    bottom.delegate = self;
-    bottom.section = self.section;
-    bottom.backgroundColor = JMColor(33, 33, 33);
-    [bottom reloadData];
-    [gesture addSubview:bottom];
+    
+    JMTopBarModel *tModel = self.dataSource[_section];
+    if (tModel.models.count == 1) {
+     
+        if ([self.delegate respondsToSelector:@selector(topTableView:didSelectRowAtIndexPath:)]) {
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:self.section];
+            [self.delegate topTableView:self.section didSelectRowAtIndexPath:indexPath];
+        }
+        
+    }else{
+    
+        JMGestureButton *gesture = [JMGestureButton creatGestureButton];
+        JMBottomView *bottom = [[JMBottomView alloc] initWithFrame:CGRectMake(0, self.superview.height, self.superview.width, 44)];
+        [UIView animateWithDuration:0.1 animations:^{bottom.frame = CGRectMake(0, self.superview.height-44, self.superview.width, 44);}];
+        bottom.dataSource = self;
+        bottom.delegate = self;
+        bottom.section = self.section;
+        bottom.backgroundColor = JMColor(33, 33, 33);
+        [bottom reloadData];
+        [gesture addSubview:bottom];
+        
+        [bottom mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.mas_equalTo(gesture);
+            make.height.mas_equalTo(44);
+        }];
+    }
 }
 
 #pragma mark -- TopBarDataSourceDelegate

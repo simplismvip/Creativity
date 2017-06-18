@@ -448,10 +448,13 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
         
     }else {
     
+        CGFloat scare = [StaticClass getLineWidth] / 10.0;
         UIImage *image = [[UIImage imageNamed:self.drawImage] imageByApplyingAlpha:_linesAlpha];
-        CGPoint point = CGPointMake(_lastPoint.x-self.linesOffSet, _lastPoint.y-self.linesOffSet);
-        [image drawAtPoint:point];
+        UIImage *newImage = [image compressOriginalImage:image toSize:CGSizeMake(image.size.width*scare, image.size.height*scare)];
+        CGPoint point = CGPointMake(_lastPoint.x-newImage.size.width/2, _lastPoint.y-newImage.size.height/2);
+        [newImage drawAtPoint:point];
         image = nil;
+        newImage = nil;
     }
 }
 

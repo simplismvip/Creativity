@@ -41,6 +41,9 @@
     [StaticClass setColor:[UIColor blackColor]];
     [StaticClass setFontName:@"Avenir-Roman"];
     [StaticClass setFontType:0];
+    [StaticClass setDashType:NO];
+    [StaticClass setFillType:NO];
+    [StaticClass setPaintType:0];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [[JMMainNavController alloc] initWithRootViewController:[[JMHomeCollectionController alloc] init]];

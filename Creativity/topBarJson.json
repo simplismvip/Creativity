@@ -3,16 +3,25 @@
 
 		  	{
 		  		"添加":{
-		  				"imageName":["coverage_32", "coverage_32", "image"],
-						"showName":["添加", "图层", "照片"],
+		  				"imageName":["coverage_32"],
+						"showName":["添加"],
 						"color":"0",
                         "type":"3"
 					}
 			},
+                
+            {
+                "图层":{
+                    "imageName":["coverage_32"],
+                    "showName":["图层"],
+                    "color":"0",
+                    "type":"3"
+                }
+            },
 
 		  	{
 		  		"画笔":{
-		  				"imageName":["cave_32", "line_32", "arrow_32", "rect_32", "ellopse_32", "emoji_32", "textNote"],
+		  				"imageName":["cave_32", "line_32", "arrow_32", "rect_32", "ellopse_32", "navbar_emoticon_icon_black", "textNote"],
 						"showName":["曲线", "直线", "箭头", "矩形", "椭圆", "表情", "文字"],
 						"color":"0",
                         "type":"4"
@@ -30,12 +39,21 @@
 
 		  	{
 		  		"注释":{
-		  				"imageName":["dashLine", "fill_32", "fontSize"],
-						"showName":["虚线", "填充", "文字"],
+		  				"imageName":["dashLine", "fill_32", "image"],
+						"showName":["虚线", "填充", "照片"],
 						"color":"0",
                         "type":"7"
 					}
 			},
+            
+            {
+                "文字":{
+                        "imageName":["fontSize"],
+                        "showName":["文字"],
+                        "color":"0",
+                        "type":"7"
+                    }
+            },
                 
             {
                 "颜色":{

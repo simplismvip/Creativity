@@ -7,6 +7,7 @@
 //
 
 #import "JMGestureButton.h"
+#import "Masonry.h"
 
 @implementation JMGestureButton
 
@@ -17,6 +18,13 @@
     gesture.backgroundColor = [UIColor clearColor];
     [gesture addTarget:gesture action:@selector(rem_GestureBtn:) forControlEvents:(UIControlEventTouchUpInside)];
     [[[UIApplication sharedApplication] keyWindow] addSubview:gesture];
+    
+    [gesture mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+        make.edges.mas_equalTo([[UIApplication sharedApplication] keyWindow]);
+        
+    }];
+    
     return gesture;
 }
     
@@ -27,6 +35,10 @@
     gesture.backgroundColor = [UIColor clearColor];
     [gesture addTarget:gesture action:@selector(rem_GestureBtn:) forControlEvents:(UIControlEventTouchUpInside)];
     [suView addSubview:gesture];
+    [gesture mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.edges.mas_equalTo([[UIApplication sharedApplication] keyWindow]);
+    }];
     return gesture;
 }
 

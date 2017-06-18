@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 typedef enum : NSUInteger {
     JMTopBarTypeAdd = 0,
+    JMTopBarTypeLayerManger,
     JMTopBarTypePaint,
     JMTopBarTypeClear,
     JMTopBarTypeNote,
+    JMTopBarTypeFontSet,
     JMTopBarTypeColor
 } JMBottomType;
 
