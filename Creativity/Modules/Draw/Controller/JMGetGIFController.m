@@ -11,6 +11,9 @@
 #import "JMMediaHelper.h"
 #import "JMDrawViewController.h"
 #import "JMMainNavController.h"
+#import <UMMobClick/MobClick.h>
+#import "UIImage+GIF.h"
+#import "JMFileManger.h"
 
 @interface JMGetGIFController ()
 @property (nonatomic, weak) UIImageView *birdImage;
@@ -19,23 +22,36 @@
 
 @implementation JMGetGIFController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMGetGIFController"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMGetGIFController"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
-    
     [self configUI];
+    [self showGif];
 }
 
+// 创建Gif文件
 - (void)creatGIF:(UIButton *)sender
 {
-    NSString *gifName = [NSString stringWithFormat:@"%@.gif", [JMHelper timerString]];
-    [JMMediaHelper makeAnimatedGIF:[self.folderPath stringByAppendingPathComponent:gifName] images:_images delayTime:_delayTime];
+    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
 }
 
+// 创建Video文件
 - (void)creatVideo:(UIButton *)sender
 {
-    NSString *gifName = [NSString stringWithFormat:@"%@.mp4", [JMHelper timerString]];
-    [JMMediaHelper saveImagesToVideoWithImages:_images andVideoPath:[self.folderPath stringByAppendingPathComponent:gifName] completed:^(NSString *filePath) {
+    [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
+    [JMMediaHelper saveImagesToVideoWithImages:_images andVideoPath:self.filePath completed:^(NSString *filePath) {
         
         NSLog(@"成功--%@", filePath);
         
@@ -45,6 +61,7 @@
     }];
 }
 
+// 编辑完成
 - (void)Done:(UIBarButtonItem *)done
 {
     [self creatGIF:nil];
@@ -54,60 +71,84 @@
 - (void)Editer:(UIBarButtonItem *)done
 {
     JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-    draw.folderPath = _folderPath;
-    draw.fromGif = YES;
-    [draw creatGifNew];
+    [draw creatGif:_images];
+    
+    // 删除GIF文件
+    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
+    draw.folderPath = [_filePath stringByReplacingOccurrencesOfString:string withString:@""];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
     [self presentViewController:Nav animated:YES completion:nil];
 }
 
+- (void)deleteBtn:(UIBarButtonItem *)done
+{
+    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
+    [JMFileManger removeFileByPath:[_filePath stringByReplacingOccurrencesOfString:string withString:@""]];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+// 修改gif帧数
 - (void)changeDelayTime:(UISlider *)slider
 {
-    _birdImage.animationRepeatCount = 0;
-    _birdImage.animationDuration = 2.0f - (slider.value*2.0+0.01);
-    _delayTime = 2.0f - (slider.value*2.0+0.01);
-    [_birdImage startAnimating];
+    _delayTime = 1.0f - (slider.value*1.0+0.01);
+    [self showGif];
 }
 
 - (void)configUI
 {
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
+    
     if (_isHome) {
     
+        UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
         UIBarButtonItem *editer = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(Editer:)];
         self.navigationItem.rightBarButtonItems = @[right, editer];
+        
     }else{
+        
+        UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
         self.navigationItem.rightBarButtonItems = @[right];
     }
     
-    self.delayTime = 1.0;
+    self.delayTime = 0.5;
     UIImageView *birdImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height/2)];
-//    birdImage.backgroundColor = [UIColor whiteColor];
-    birdImage.contentMode = UIViewContentModeScaleAspectFit;
-    [birdImage setAnimationImages:_images];
-    birdImage.animationRepeatCount = 0;
-    birdImage.animationDuration = 1.0;
-    [birdImage startAnimating];
     [self.view addSubview:birdImage];
     self.birdImage = birdImage;
     
     UISlider *slide = [[UISlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(birdImage.frame), self.view.width-60, 30)];
-    [slide addTarget:self action:@selector(changeDelayTime:) forControlEvents:(UIControlEventValueChanged)];
+    slide.value = 0.5;
+    [slide addTarget:self action:@selector(changeDelayTime:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:slide];
     
     UIButton *video = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    video.backgroundColor = [UIColor grayColor];
-    video.frame = CGRectMake(self.view.width/2-100-20, CGRectGetMaxY(slide.frame), 100, 100);
+    video.backgroundColor = [UIColor redColor];
+    video.frame = CGRectMake(self.view.width/2-100-20, CGRectGetMaxY(slide.frame)+20, 100, 100);
     [video setTitle:@"导出GIF" forState:(UIControlStateNormal)];
     [video addTarget:self action:@selector(creatGIF:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:video];
     
     UIButton *gif = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    gif.backgroundColor = [UIColor grayColor];
-    gif.frame = CGRectMake(self.view.width/2+20, CGRectGetMaxY(slide.frame), 100, 100);
+    gif.backgroundColor = [UIColor redColor];
+    gif.frame = CGRectMake(self.view.width/2+20, CGRectGetMaxY(slide.frame)+20, 100, 100);
     [gif setTitle:@"导出Video" forState:(UIControlStateNormal)];
     [gif addTarget:self action:@selector(creatVideo:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:gif];
+}
+
+- (void)showGif
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
+        UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            self.birdImage.image = image;
+        });
+        
+    });
 }
 
 - (void)didReceiveMemoryWarning {

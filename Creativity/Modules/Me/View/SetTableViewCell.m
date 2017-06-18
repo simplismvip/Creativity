@@ -7,7 +7,9 @@
 //
 
 #import "SetTableViewCell.h"
+#import "MSCellAccessory.h"
 #import "SetModel.h"
+
 @interface SetTableViewCell()
 @property (nonatomic, weak) UIImageView *leftImage;
 @property (nonatomic, weak) UILabel *textTitle;
@@ -39,11 +41,11 @@
 {
     static NSString *ID = @"baseCell";
     SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (cell == nil) {cell = [[self alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
-    cell.leftImage.image = [[UIImage imageNamed:model.icon] imageWithRenderingMode:(UIImageRenderingModeAlwaysTemplate)];
+    if (cell == nil) {cell = [[SetTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
+    cell.leftImage.image = [UIImage imageWithTemplateName:model.icon];
     cell.textTitle.text = model.title;
-    cell.accessoryType = model.accessoryType.integerValue;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMColor(220, 103, 91)];
     return cell;
 }
 
@@ -54,7 +56,6 @@
     _leftImage.frame = CGRectMake(10, 12, self.height-20, self.height-20);
     _textTitle.frame = CGRectMake(CGRectGetMaxX(_leftImage.frame)+10, 8, self.width*0.6, self.height-10);
 }
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];

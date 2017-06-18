@@ -94,7 +94,6 @@ static NSString *const headerID = @"header";
     NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
     [JMFileManger creatDir:gifPath];
     JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-    draw.fromGif = NO;
     draw.folderPath = gifPath;
     [draw creatGifNew];
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
@@ -133,7 +132,8 @@ static NSString *const headerID = @"header";
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
     JMGetGIFController *draw = [[JMGetGIFController alloc] init];
-    draw.folderPath = model.folderPath;
+    draw.filePath = model.folderPath;
+    draw.isHome = YES;
     UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
     draw.images = [NSMutableArray arrayWithArray:image.images];
     [self.navigationController pushViewController:draw animated:YES];
@@ -220,7 +220,7 @@ static NSString *const headerID = @"header";
         [[NSFileManager defaultManager] removeItemAtPath:[JMDocumentsPath stringByAppendingPathComponent:homeModel.folderPath] error:nil];
         
         [self.collection deleteItemsAtIndexPaths:@[indexPath]];
-        [self.dataSource[indexPath.section] removeObjectAtIndex:indexPath.row];
+        [self.dataSource removeObjectAtIndex:indexPath.row];
         
         
     } completion:^(BOOL finished) {
@@ -250,14 +250,13 @@ static NSString *const headerID = @"header";
 // 改变数据源中model的位置
 - (void)moveItemAtIndexPath:(NSIndexPath *)formPath toIndexPath:(NSIndexPath *)toPath
 {
-    NSMutableArray *sections = self.dataSource[formPath.section];
-    JMHomeModel *model = sections[formPath.row];
+    JMHomeModel *model = self.dataSource[formPath.row];
     
     // 先把移动的这个model移除
-    [sections removeObject:model];
+    [self.dataSource removeObject:model];
     
     // 再把这个移动的model插入到相应的位置
-    [sections insertObject:model atIndex:toPath.row];
+    [self.dataSource insertObject:model atIndex:toPath.row];
 }
 
 - (UICollectionView *)collection

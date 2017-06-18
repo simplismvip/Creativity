@@ -37,7 +37,7 @@
 
 // @[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]
 
-#define kSetArray @[@[@{@"title":@"获取Pro", @"icon":@"mine_32",@"accessoryType":@"1"}], @[@{@"title":@"帮助中心", @"icon":@"more",@"accessoryType":@"1"}, @{@"title":@"反馈", @"icon":@"night",@"accessoryType":@"1"}], @[@{@"title":@"版本", @"icon":@"cache",@"accessoryType":@"1"}, @{@"title":@"软件许可", @"icon":@"advice",@"accessoryType":@"0"}]];
+#define kSetArray @[@[@{@"title":@"获取Pro", @"icon":@"mine_32",@"accessoryType":@"1"}], @[@{@"title":@"帮助中心", @"icon":@"more",@"accessoryType":@"1"}, @{@"title":@"反馈", @"icon":@"night",@"accessoryType":@"1"}, @{@"title":@"情况缓存", @"icon":@"night",@"accessoryType":@"1"}], @[@{@"title":@"版本", @"icon":@"cache",@"accessoryType":@"1"}, @{@"title":@"软件许可", @"icon":@"advice",@"accessoryType":@"0"}]];
 
 // 颜色
 #define JMCellBackground JMColor(239, 239, 239)

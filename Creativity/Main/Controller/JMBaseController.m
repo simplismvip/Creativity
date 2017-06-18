@@ -17,9 +17,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
-    
 }
 
 - (void)setItem:(UIBarButtonItem *)sender

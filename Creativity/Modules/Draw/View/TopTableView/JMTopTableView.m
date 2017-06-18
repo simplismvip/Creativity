@@ -160,7 +160,7 @@
     CGFloat w = self.width/self.dataSource.count;
     for (UIView *view in self.subviews) {
         
-        view.frame = CGRectMake(i*w, 1, w, self.height);
+        view.frame = CGRectMake(i*w, 0, w, self.height);
         i ++;
     }
 }

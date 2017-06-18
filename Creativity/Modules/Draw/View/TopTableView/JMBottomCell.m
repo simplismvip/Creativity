@@ -24,7 +24,7 @@
 {
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    self.titleLabel.font = [UIFont systemFontOfSize:9.0];
+    self.titleLabel.font = [UIFont systemFontOfSize:7.0];
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect
@@ -39,21 +39,24 @@
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 {
     CGFloat imageW = CGRectGetWidth(contentRect);
-    CGFloat imageH = contentRect.size.height * 0.7;
+    CGFloat imageH = contentRect.size.height * 0.65;
     return CGRectMake(0, 0, imageW, imageH);
 }
 
 - (void)setIsCellSelect:(BOOL)isCellSelect
 {
     _isCellSelect = isCellSelect;
-    if (isCellSelect) {
-        
-        self.backgroundColor = JMColor(205, 205, 205);
     
-    }else{
-     
-        self.backgroundColor = JMColor(245, 245, 245);
-    }
+    self.backgroundColor = JMColor(33, 33, 33);
+    
+//    if (isCellSelect) {
+//        
+//        self.backgroundColor = JMColor(205, 205, 205);
+//    
+//    }else{
+//     
+//        self.backgroundColor = JMColor(33, 33, 33);
+//    }
 }
 
 - (void)setCellImage:(NSString *)cellImage
@@ -71,8 +74,8 @@
 - (void)setCellTintColor:(UIColor *)cellTintColor
 {
     _cellTintColor = cellTintColor;
-    [self setTitleColor:JMColor(105, 105, 105) forState:0];
-    [self setTintColor:cellTintColor];
+    [self setTitleColor:[UIColor whiteColor] forState:0];
+    [self setTintColor:JMColor(217, 51, 58)];
 }
 
 - (void)setCellBackgroundColor:(UIColor *)cellBackgroundColor

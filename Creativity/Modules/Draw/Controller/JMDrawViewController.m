@@ -20,6 +20,7 @@
 #import "JMAnimationView.h"
 #import "JMEmojiAnimationView.h"
 #import "JMSubImageModel.h"
+#import <UMMobClick/MobClick.h>
 
 #define kMargin 10.0
 
@@ -41,11 +42,13 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor grayColor];
+    [MobClick beginLogPageView:@"JMDrawViewController"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMDrawViewController"];
 }
 
 - (void)viewDidLoad {
@@ -59,16 +62,6 @@
     self.memberViewData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
     
-    if (_fromGif) {
-        
-        self.rightTitle = @"完成";
-        
-    }else{
-    
-        self.leftImage = @"navbar_close_icon_black";
-        self.rightImage = @"navbar_next_icon_black";
-    }
-    
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
     JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, self.view.height-44, self.view.width, 44)];
@@ -79,7 +72,11 @@
 
 - (void)creatGifNew
 {
-    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.height-108)];
+    self.leftImage = @"navbar_close_icon_black";
+    self.rightImage = @"navbar_next_icon_black";
+    
+    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.width)];
+    pView.center = self.view.center;
     pView.drawType = JMPaintToolTypePen;
     pView.lineDash = NO;
     self.paintView = pView;
@@ -89,10 +86,13 @@
 
 - (void)creatGif:(NSArray *)images
 {
+    self.rightTitle = @"完成";
+    
     [self.view addSubview:self.memberView];
     for (UIImage *image in images) {
         
-        JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.height-108)];
+        JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, self.view.width)];
+        pView.center = self.view.center;
         pView.drawType = JMPaintToolTypePen;
         pView.lineDash = NO;
         pView.image = image;
@@ -115,7 +115,7 @@
 - (void)newItem:(UIBarButtonItem *)sender
 {
     JMGetGIFController *gif = [[JMGetGIFController alloc] init];
-    gif.folderPath = self.folderPath;
+    gif.filePath = [self.folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
     
     NSMutableArray *images = [NSMutableArray array];
     for (JMPaintView *memberView in self.subViews) {

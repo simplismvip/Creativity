@@ -11,6 +11,8 @@
 #import "SetModel.h"
 #import "JMHelper.h"
 #import "SetTableViewCell.h"
+#import "JMAccountHeaderFooter.h"
+#import "JMFileManger.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -28,10 +30,10 @@
     
     self.dataSource = [JMHelper getSetModel];
     [self setUI];
-    self.leftImage = @"navbar_close_icon_black";
+    self.rightTitle = @"完成";
 }
 
-- (void)setItem:(UIBarButtonItem *)sender
+- (void)rightTitleItem:(UIBarButtonItem *)sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -74,6 +76,31 @@
     return cell;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    JMAccountHeaderFooter *headView = [JMAccountHeaderFooter headViewWithTableView:tableView];
+    
+    if (section == 0) {
+    
+        headView.name.text = @"Creativity Pro";
+        
+    }else if (section == 1){
+    
+        headView.name.text = @"关于";
+        
+    }else{
+    
+        headView.name.text = @"支持中心";
+    }
+    
+    return headView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 44;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // SetModel *model = self.dataSource[indexPath.section][indexPath.row];
@@ -86,6 +113,11 @@
         
     }else if (indexPath.section == 1 && indexPath.row==1){
         
+        [self customerFeedback];
+        
+    }else if (indexPath.section == 1 && indexPath.row==2){
+        
+        [JMFileManger clearCache:JMDocumentsPath];
         
     }else if (indexPath.section==2 && indexPath.row==0) {
         
@@ -97,9 +129,32 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+// 用户反馈
+- (void)customerFeedback
 {
-    return 15.0;
+    NSMutableString *mailUrl = [[NSMutableString alloc] init];
+    
+    //添加收件人
+    NSArray *toRecipients = [NSArray arrayWithObject: @"simplismvip@163.com"];
+    [mailUrl appendFormat:@"mailto:%@", [toRecipients componentsJoinedByString:@","]];
+    
+    //添加抄送
+    NSArray *ccRecipients = [NSArray arrayWithObjects:@"simplismvip@163.com", nil];
+    [mailUrl appendFormat:@"?cc=%@", [ccRecipients componentsJoinedByString:@","]];
+    
+    //添加密送
+    NSArray *bccRecipients = [NSArray arrayWithObjects:@"simplismvip@163.com", nil];
+    [mailUrl appendFormat:@"&bcc=%@", [bccRecipients componentsJoinedByString:@","]];
+    
+    // 添加主题
+    [mailUrl appendString:@"&subject=用户反馈"];
+    
+    //添加邮件内容
+    [mailUrl appendString:@"&body=<b>Hello</b> 在这里添加内容 !"];
+    
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<> "].invertedSet;
+    NSString *email = [mailUrl stringByAddingPercentEncodingWithAllowedCharacters:set];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
 }
 
 - (void)didReceiveMemoryWarning {

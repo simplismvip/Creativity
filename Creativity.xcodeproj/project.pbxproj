@@ -270,6 +270,10 @@
 		A20DAF2A1EF2E85E008DBFA9 /* topBarJson.json in Resources */ = {isa = PBXBuildFile; fileRef = A20DAF291EF2E85E008DBFA9 /* topBarJson.json */; };
 		A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF2D1EF42338008DBFA9 /* JMEmojiAnimationView.m */; };
 		A20DAF311EF42338008DBFA9 /* JMSelectEmojiView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF2F1EF42338008DBFA9 /* JMSelectEmojiView.m */; };
+		A20DAF361EF4363F008DBFA9 /* UIView+AccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF331EF4363F008DBFA9 /* UIView+AccessViewController.m */; };
+		A20DAF371EF4363F008DBFA9 /* MSCellAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF351EF4363F008DBFA9 /* MSCellAccessory.m */; };
+		A20DAF3C1EF4A12B008DBFA9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A20DAF3B1EF4A12B008DBFA9 /* libz.tbd */; };
+		E38178D8D78B0997D888FA8D /* libPods-Creativity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -665,6 +669,9 @@
 		04A0DE041EEF81A400464852 /* CreativityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreativityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DE081EEF81A400464852 /* CreativityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreativityTests.m; sourceTree = "<group>"; };
 		04A0DE0A1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.release.xcconfig"; sourceTree = "<group>"; };
+		7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.debug.xcconfig"; sourceTree = "<group>"; };
+		923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Creativity.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20DAF0C1EF2E31A008DBFA9 /* JMMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMemberModel.h; sourceTree = "<group>"; };
 		A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMemberModel.m; sourceTree = "<group>"; };
 		A20DAF0E1EF2E31A008DBFA9 /* JMMembersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMembersCell.h; sourceTree = "<group>"; };
@@ -688,6 +695,11 @@
 		A20DAF2D1EF42338008DBFA9 /* JMEmojiAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEmojiAnimationView.m; sourceTree = "<group>"; };
 		A20DAF2E1EF42338008DBFA9 /* JMSelectEmojiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSelectEmojiView.h; sourceTree = "<group>"; };
 		A20DAF2F1EF42338008DBFA9 /* JMSelectEmojiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSelectEmojiView.m; sourceTree = "<group>"; };
+		A20DAF321EF4363F008DBFA9 /* UIView+AccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AccessViewController.h"; sourceTree = "<group>"; };
+		A20DAF331EF4363F008DBFA9 /* UIView+AccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AccessViewController.m"; sourceTree = "<group>"; };
+		A20DAF341EF4363F008DBFA9 /* MSCellAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCellAccessory.h; sourceTree = "<group>"; };
+		A20DAF351EF4363F008DBFA9 /* MSCellAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCellAccessory.m; sourceTree = "<group>"; };
+		A20DAF3B1EF4A12B008DBFA9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -695,7 +707,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A20DAF3C1EF4A12B008DBFA9 /* libz.tbd in Frameworks */,
 				0490EEDF1EEF97DB00E05A84 /* libsqlite3.tbd in Frameworks */,
+				E38178D8D78B0997D888FA8D /* libPods-Creativity.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1316,7 +1330,9 @@
 		0490EEDD1EEF97DB00E05A84 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A20DAF3B1EF4A12B008DBFA9 /* libz.tbd */,
 				0490EEDE1EEF97DB00E05A84 /* libsqlite3.tbd */,
+				923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1386,6 +1402,10 @@
 		0490F1C41EEF9C4900E05A84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A20DAF321EF4363F008DBFA9 /* UIView+AccessViewController.h */,
+				A20DAF331EF4363F008DBFA9 /* UIView+AccessViewController.m */,
+				A20DAF341EF4363F008DBFA9 /* MSCellAccessory.h */,
+				A20DAF351EF4363F008DBFA9 /* MSCellAccessory.m */,
 				0490F1C71EEF9C4900E05A84 /* JMAccountHeaderFooter.h */,
 				0490F1C81EEF9C4900E05A84 /* JMAccountHeaderFooter.m */,
 				0490F1E61EEF9E1900E05A84 /* SetTableViewCell.h */,
@@ -1472,6 +1492,7 @@
 				04A0DE071EEF81A400464852 /* CreativityTests */,
 				04A0DDEC1EEF81A400464852 /* Products */,
 				0490EEDD1EEF97DB00E05A84 /* Frameworks */,
+				2C41C0BC2AB95C024BE6F6A1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1517,6 +1538,15 @@
 				04A0DE0A1EEF81A400464852 /* Info.plist */,
 			);
 			path = CreativityTests;
+			sourceTree = "<group>";
+		};
+		2C41C0BC2AB95C024BE6F6A1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */,
+				0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		A20DAF091EF2E31A008DBFA9 /* MembersView */ = {
@@ -1567,9 +1597,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04A0DE0D1EEF81A400464852 /* Build configuration list for PBXNativeTarget "Creativity" */;
 			buildPhases = (
+				F05B51CF6138D424CC05AE44 /* [CP] Check Pods Manifest.lock */,
 				04A0DDE71EEF81A400464852 /* Sources */,
 				04A0DDE81EEF81A400464852 /* Frameworks */,
 				04A0DDE91EEF81A400464852 /* Resources */,
+				9769C0B1DF5D6C304490C730 /* [CP] Embed Pods Frameworks */,
+				EBB4650CC91EC2727B7B3F52 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1788,6 +1821,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9769C0B1DF5D6C304490C730 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Creativity/Pods-Creativity-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBB4650CC91EC2727B7B3F52 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Creativity/Pods-Creativity-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F05B51CF6138D424CC05AE44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		04A0DDE71EEF81A400464852 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1804,6 +1885,7 @@
 				0490EEB31EEF977000E05A84 /* MJFoundation.m in Sources */,
 				0490EEAC1EEF977000E05A84 /* NSArray+MASAdditions.m in Sources */,
 				0490EEAE1EEF977000E05A84 /* View+MASAdditions.m in Sources */,
+				A20DAF371EF4363F008DBFA9 /* MSCellAccessory.m in Sources */,
 				0490EEC21EEF977000E05A84 /* SDWebImageDownloaderOperation.m in Sources */,
 				0490EECB1EEF977000E05A84 /* UIView+WebCacheOperation.m in Sources */,
 				A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */,
@@ -1834,6 +1916,7 @@
 				0490EEB81EEF977000E05A84 /* NSObject+MJCoding.m in Sources */,
 				0490EDD91EEF976F00E05A84 /* NSDate+Extension.m in Sources */,
 				0490EEBC1EEF977000E05A84 /* MKAnnotationView+WebCache.m in Sources */,
+				A20DAF361EF4363F008DBFA9 /* UIView+AccessViewController.m in Sources */,
 				0490EDE51EEF976F00E05A84 /* UIBarButtonItem+Item.m in Sources */,
 				0490F2501EEFB88C00E05A84 /* JMAttributeString.m in Sources */,
 				047FCF271EF3DF4700AD0C08 /* JMFilterSubView.m in Sources */,
@@ -2049,11 +2132,13 @@
 		};
 		04A0DE0E1EEF81A400464852 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5ATA948SQL;
 				GCC_PREFIX_HEADER = Creativity/Others/Creativity_Prefix.pch;
 				INFOPLIST_FILE = Creativity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.Creativity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2062,11 +2147,13 @@
 		};
 		04A0DE0F1EEF81A400464852 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5ATA948SQL;
 				GCC_PREFIX_HEADER = Creativity/Others/Creativity_Prefix.pch;
 				INFOPLIST_FILE = Creativity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.Creativity;
 				PRODUCT_NAME = "$(TARGET_NAME)";

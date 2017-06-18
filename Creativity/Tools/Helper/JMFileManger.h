@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface JMFileManger : NSObject
-
++ (void)clearCache:(NSString *)folderPath;
++ (BOOL)removeFileByPath:(NSString *)fileName;
 + (BOOL)creatDir:(NSString *)dirName;
 + (NSMutableArray *)getFileFromDir:(NSString *)dir bySuffix:(NSString *)suffix;
 @end

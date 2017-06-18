@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface JMGetGIFController : UIViewController
-@property (nonatomic, copy) NSString *folderPath;
+@property (nonatomic, copy) NSString *filePath;
 @property (nonatomic, strong) NSMutableArray *images;
 @property (nonatomic, assign) BOOL isHome;
 @end

@@ -96,7 +96,18 @@
 - (void)setModel:(JMHomeModel *)model
 {
     _model = model;
-    _classImage.image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+       
+        UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
+        //通知主线程刷新
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //回调或者说是通知主线程刷新，
+            _classImage.image = image;
+        });
+        
+    });
 }
 
 #pragma mark - 是否处于编辑状态

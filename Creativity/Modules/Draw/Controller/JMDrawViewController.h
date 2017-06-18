@@ -10,7 +10,6 @@
 
 @interface JMDrawViewController : JMBaseController
 @property (nonatomic, copy) NSString *folderPath;
-@property (nonatomic, assign) BOOL fromGif;
 - (void)creatGifNew;
 - (void)creatGif:(NSArray *)images;
 @end

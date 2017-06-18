@@ -46,5 +46,42 @@
     return pngs;
 }
 
+// 根据路径删除文件
++ (BOOL)removeFileByPath:(NSString *)fileName
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // 文件夹路径
+    NSString *pathDir = fileName;
+    
+    BOOL isDir               = NO;
+    BOOL existed               = [fileManager fileExistsAtPath:pathDir isDirectory:&isDir];
+    
+    // 文件夹不存在直接返回
+    if ( !(isDir == YES && existed == YES) ){
+        
+        return NO;
+        
+    }else{ // 文件夹存在
+        
+        return [fileManager removeItemAtPath:fileName error:nil];
+    }
+}
+
++ (void)clearCache:(NSString *)folderPath
+{
+    NSError *error;
+    NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
+    
+    for (NSString *dir in array) {
+        
+        NSArray *jsons = [JMFileManger getFileFromDir:[folderPath stringByAppendingPathComponent:dir] bySuffix:@"gif"];
+        
+        if (jsons.count == 0) {
+            
+            [[NSFileManager defaultManager] removeItemAtPath:[folderPath stringByAppendingPathComponent:dir] error:nil];
+        }
+    }
+}
 
 @end
