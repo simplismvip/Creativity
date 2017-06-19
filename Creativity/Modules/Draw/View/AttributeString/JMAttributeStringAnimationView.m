@@ -28,7 +28,7 @@
         self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
-        coverView.backgroundColor = JMBaseColor;
+        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
         coverView.layer.cornerRadius = 10;
         coverView.layer.masksToBounds = YES;
         [self addSubview:coverView];
@@ -36,7 +36,7 @@
         
         [UIView animateWithDuration:0.2 animations:^{
             
-            coverView.frame = CGRectMake(30, 120, kW-60, kW);
+            coverView.frame = CGRectMake(kW*0.15, 120, kW*0.7, kW);
             
         } completion:^(BOOL finished) {
             
@@ -48,7 +48,7 @@
 
 - (void)addAttributeStringAnimationView
 {
-    JMAttributeStringView *attribute = [[JMAttributeStringView alloc] initWithFrame:CGRectMake(10, 10, _coverView.width-20, _coverView.width)];
+    JMAttributeStringView *attribute = [[JMAttributeStringView alloc] initWithFrame:CGRectMake(10, 10, _coverView.width-20, _coverView.height-50)];
     [self.coverView insertSubview:attribute atIndex:0];
     attribute.fontname = ^(NSString *fontName, NSInteger fontType) {
      
@@ -58,8 +58,8 @@
     
     self.attribute = attribute;
     
-    JMFiltersView *filter = [[JMFiltersView alloc] initWithFrame:CGRectMake(10, _coverView.height-45, _coverView.width-20, 40)];
-    filter.tinColor = [UIColor whiteColor];
+    JMFiltersView *filter = [[JMFiltersView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attribute.frame), _coverView.width-20, 40)];
+    filter.tinColor = JMBaseColor;
     filter.titles = @[@{@"title":@"返回", @"image":@"navbar_close_icon_black"}, @{@"title":@"选择字体", @"image":@"emoji"}, @{@"title":@"字体样式", @"image":@"heart_32"}];
     filter.contentSize = CGSizeMake(filter.width*0.63, 30);
     filter.filter = ^(NSInteger type) {
@@ -84,14 +84,14 @@
 
 - (void)closeView
 {
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         
         _attribute.alpha = 0.0;
         _filter.alpha = 0.0;
         
     } completion:^(BOOL finished) {
         
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             
             _coverView.alpha = 0.0;
             

@@ -76,18 +76,14 @@
         
         cell.contentV.hidden = YES;
         cell.fontName.hidden = NO;
-        cell.fontShow.hidden = NO;
         
         cell.fontName.text = model.fontName;
-        cell.fontShow.text = @"YaoYao";
         cell.fontName.font = [UIFont fontWithName:model.fontName size:11];
-        cell.fontShow.font = [UIFont fontWithName:model.fontName size:16];
     
     }else {
     
         cell.contentV.hidden = NO;
         cell.fontName.hidden = YES;
-        cell.fontShow.hidden = YES;
         cell.contentV.type = indexPath.section;
     }
     

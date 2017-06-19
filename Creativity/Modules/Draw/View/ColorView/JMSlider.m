@@ -25,10 +25,10 @@
         sliderA.minimumValue=0.0f;
         sliderA.maximumValue=1.0f;
         
-        [sliderA setMinimumTrackImage:[UIImage imageNamed:@"likeYellowLine"] forState:UIControlStateNormal];
-        [sliderA setMaximumTrackImage:[UIImage imageNamed:@"greenLine"] forState:UIControlStateNormal];
-        [sliderA setThumbImage:[UIImage imageNamed:@"greenDot"] forState:UIControlStateHighlighted];
-        [sliderA setThumbImage:[UIImage imageNamed:@"greenDot"] forState:UIControlStateNormal];
+        [sliderA setMinimumTrackImage:[UIImage imageNamed:@"prgbar_unread"] forState:UIControlStateNormal];
+        [sliderA setMaximumTrackImage:[UIImage imageNamed:@"prgbar_read"] forState:UIControlStateNormal];
+        [sliderA setThumbImage:[UIImage imageNamed:@"prgbar_icon"] forState:UIControlStateHighlighted];
+        [sliderA setThumbImage:[UIImage imageNamed:@"prgbar_icon"] forState:UIControlStateNormal];
         
         // 滑块拖动时的事件
         [sliderA addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];

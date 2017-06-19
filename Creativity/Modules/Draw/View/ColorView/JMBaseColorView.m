@@ -151,14 +151,14 @@
             
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
             button.backgroundColor = color;
-            button.layer.cornerRadius = 14;
+            button.layer.cornerRadius = 15;
             button.layer.borderWidth = 1;
             button.layer.borderColor = JMTabViewBaseColor.CGColor;
             [self addSubview:button];
             [button addTarget:self action:@selector(chouseColor:) forControlEvents:(UIControlEventTouchUpInside)];
         }
         
-        self.contentSize = CGSizeMake(45*colors.count, self.height);
+        self.contentSize = CGSizeMake(35*colors.count, self.height);
     }
     return self;
 }
@@ -174,11 +174,11 @@
     
     int i = 0;
     CGFloat margin = 5.0;
-    CGFloat width = 40;
+    CGFloat width = 30;
     
     for (UIView *view in self.subviews) {
         
-        view.frame = CGRectMake(margin + (margin + width) * i, 2, 40, 40);
+        view.frame = CGRectMake(margin + (margin + width) * i, 0, 30, 30);
         i ++;
     }
 }

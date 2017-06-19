@@ -75,7 +75,6 @@
 {
     JMSubImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"emoji" forIndexPath:indexPath];
     cell.model = self.dataSource[indexPath.row];
-//    JMLog(@"%@--%@", cell.model.name, cell.model.size);
     return cell;
 }
 
@@ -112,19 +111,7 @@
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    JMSubImageModel *model = self.dataSource[indexPath.row];
-//    CGSize size = CGSizeFromString(model.size);
-    
     return CGSizeMake(48, 48);
-    
-//    if (size.width>80) {
-//        
-//        return CGSizeMake(48, 48);
-//        
-//    }else {
-//    
-//        return CGSizeMake(size.width*0.8, size.height*0.8);
-//    }
 }
 
 // 动态设置每个分区的EdgeInsets

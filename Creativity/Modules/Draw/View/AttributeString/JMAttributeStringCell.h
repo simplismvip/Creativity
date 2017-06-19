@@ -11,6 +11,5 @@
 @class JMAttributeStringContentView;
 @interface JMAttributeStringCell : UITableViewCell
 @property (nonatomic, weak) UILabel *fontName;
-@property (nonatomic, weak) UILabel *fontShow;
 @property (nonatomic, weak) JMAttributeStringContentView *contentV;
 @end

@@ -138,4 +138,11 @@
  *  @return 返回的图片文件
  */
 - (UIImage *)imageCompressForSize:(UIImage *)sourceImage targetSize:(CGSize)size;
+
+// 获取GIF信息
++ (UIImage *)jm_animatedGIFNamed:(NSString *)name;
+
++ (UIImage *)jm_animatedGIFWithData:(NSData *)data;
+
+- (UIImage *)jm_animatedImageByScalingAndCroppingToSize:(CGSize)size;
 @end

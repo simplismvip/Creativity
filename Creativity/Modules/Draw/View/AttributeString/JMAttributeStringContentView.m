@@ -8,6 +8,7 @@
 
 #import "JMAttributeStringContentView.h"
 #import "JMAttributeString.h"
+#import "NSString+Extension.h"
 
 @implementation JMAttributeStringContentView
 
@@ -16,7 +17,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -29,9 +30,11 @@
 
 - (void)drawRect:(CGRect)rect {
 
-    NSDictionary *dic = [JMAttributeString attributeString:_type color1:[UIColor redColor] color2:[UIColor blackColor] fontSize:18 fontName:@"AlNile"];
-    NSString *string = @"展示使用：      YaoYao";
-    CGRect rectA = CGRectMake(30, 10, self.width-20, self.width-20);
+    NSDictionary *dic = [JMAttributeString attributeString:_type color1:JMBaseColor color2:[UIColor whiteColor] fontSize:18 fontName:@"AlNile"];
+    NSString *string = @"Creativity -- GIF";
+    CGSize size = [string sizeWithFont:[UIFont fontWithName:@"AlNile" size:18.0]];
+    
+    CGRect rectA = CGRectMake(self.width/2-size.width/2, 10, size.width, size.height);
     [string drawInRect:rectA withAttributes:dic];
 }
 

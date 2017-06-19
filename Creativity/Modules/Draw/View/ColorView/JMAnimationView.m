@@ -28,15 +28,15 @@
         self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
-        coverView.backgroundColor = JMBaseColor;
-//        coverView.alpha = 0.5;
+        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
         coverView.layer.cornerRadius = 20;
         coverView.layer.masksToBounds = YES;
         [self addSubview:coverView];
         self.coverView = coverView;
+        
         //
         UIButton *close = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-        close.tintColor = [UIColor whiteColor];
+        close.tintColor = JMBaseColor;
         [close setImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"] forState:(UIControlStateNormal)];
         [close addTarget:self action:@selector(closeView:) forControlEvents:UIControlEventTouchUpInside];
         

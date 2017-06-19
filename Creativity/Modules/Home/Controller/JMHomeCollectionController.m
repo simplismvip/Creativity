@@ -21,7 +21,7 @@
 #import "UIImage+GIF.h"
 #import "JMGetGIFController.h"
 #import "Masonry.h"
-#import "FLAnimatedImageView+WebCache.h"
+#import "UIImage+JMImage.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
@@ -137,7 +137,7 @@ static NSString *const headerID = @"header";
     JMGetGIFController *draw = [[JMGetGIFController alloc] init];
     draw.filePath = model.folderPath;
     draw.isHome = YES;
-    UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
+    UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
     draw.images = [NSMutableArray arrayWithArray:image.images];
     [self.navigationController pushViewController:draw animated:YES];
 }
