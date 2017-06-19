@@ -229,7 +229,7 @@
 
     UIImage *centerImage = [UIImage imageNamed:@"ColorPalette.png"];
     CGFloat size_W = self.width;
-    [centerImage drawInRect:CGRectMake(0, 0, size_W, size_W)];
+    [centerImage drawInRect:CGRectMake(size_W*0.5-size_W*0.9/2, size_W*0.05, size_W*0.9, size_W*0.9)];
 }
 
 

@@ -8,10 +8,10 @@
 
 #import "JMHomeCollectionViewCell.h"
 #import "JMHomeModel.h"
-#import "UIImage+GIF.h"
+#import "FLAnimatedImageView+WebCache.h"
 
 @interface JMHomeCollectionViewCell ()
-@property (nonatomic, strong) UIImageView *classImage;
+@property (nonatomic, strong) FLAnimatedImageView *classImage;
 @property (nonatomic, strong) UIButton *deleteBtn;
 @property (nonatomic, strong) UIButton *shareBtn;
 
@@ -25,7 +25,7 @@
         
         self.backgroundColor = JMColor(251, 251, 251);
         
-        _classImage = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _classImage = [[FLAnimatedImageView alloc] init];
         [self.contentView addSubview:_classImage];
         
         _deleteBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
@@ -82,17 +82,23 @@
 {
     _model = model;
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-       
-        UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
-        //通知主线程刷新
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //回调或者说是通知主线程刷新，
-            _classImage.image = image;
-        });
-        
-    });
+    NSURL *url = [NSURL URLWithString:model.folderPath];
+    [_classImage sd_setImageWithURL:url];
+    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//       
+//        UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
+//        //通知主线程刷新
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            [_classImage sd_setImageWithURL:url1];
+//            
+//            //回调或者说是通知主线程刷新，
+//            _classImage.image = image;
+//        });
+//        
+//    });
 }
 
 #pragma mark - 是否处于编辑状态

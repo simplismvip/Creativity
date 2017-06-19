@@ -12,7 +12,7 @@
 #import "JMDrawViewController.h"
 #import "JMMainNavController.h"
 #import <UMMobClick/MobClick.h>
-#import "UIImage+GIF.h"
+#import "FLAnimatedImageView+WebCache.h"
 #import "JMFileManger.h"
 
 @interface JMGetGIFController ()
@@ -138,17 +138,20 @@
 
 - (void)showGif
 {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
-        UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            self.birdImage.image = image;
-        });
-        
-    });
+    NSURL *url = [NSURL URLWithString:self.filePath];
+    [self.birdImage sd_setImageWithURL:url];
+
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        
+//        [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
+//        UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            self.birdImage.image = image;
+//        });
+//        
+//    });
 }
 
 - (void)didReceiveMemoryWarning {
