@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^colorBlock)(UIColor *color);
-@interface JMBaseColorView : UIView
+@interface JMBaseColorView : UIScrollView
 @property (nonatomic, copy) colorBlock colorBlock;
 @end
