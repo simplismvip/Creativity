@@ -279,11 +279,17 @@ static NSString *const headerID = @"header";
         [_collection mas_makeConstraints:^(MASConstraintMaker *make) {
             
             make.edges.mas_equalTo(self.view);
-            
         }];
     }
     return _collection;
 }
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [_collection reloadData];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

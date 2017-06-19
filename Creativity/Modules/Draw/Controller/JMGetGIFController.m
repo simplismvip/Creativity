@@ -16,7 +16,7 @@
 #import "JMFileManger.h"
 
 @interface JMGetGIFController ()
-@property (nonatomic, weak) UIImageView *birdImage;
+@property (nonatomic, weak) FLAnimatedImageView *birdImage;
 @property (nonatomic, assign) CGFloat delayTime;
 @end
 
@@ -112,7 +112,7 @@
     }
     
     self.delayTime = 0.5;
-    UIImageView *birdImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height/2)];
+    FLAnimatedImageView *birdImage = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height/2)];
     [self.view addSubview:birdImage];
     self.birdImage = birdImage;
     
