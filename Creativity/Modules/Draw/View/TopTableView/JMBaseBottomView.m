@@ -14,7 +14,7 @@
 
 - (instancetype)initWithCount:(NSArray *)subViews
 {
-    JMBaseBottomView *bsae = [[JMBaseBottomView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, 44)];
+    JMBaseBottomView *bsae = [[JMBaseBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 44)];
     
     [UIView animateWithDuration:0.3 animations:^{
         

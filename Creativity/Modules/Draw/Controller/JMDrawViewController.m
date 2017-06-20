@@ -95,7 +95,8 @@
     
     [pView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.view);
-        make.width.height.mas_equalTo(self.view.width);
+        make.width.mas_equalTo(self.view.width);
+        make.height.mas_equalTo(self.view.width*1.2);
     }];
 }
 
@@ -114,7 +115,8 @@
         
         [pView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
-            make.width.height.mas_equalTo(self.view.width);
+            make.width.mas_equalTo(self.view.width);
+            make.height.mas_equalTo(self.view.width*1.2);
         }];
     }
 }

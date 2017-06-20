@@ -7,8 +7,8 @@
 //
 
 #import "JMFiltersView.h"
-#import "JMFilterSubView.h"
-
+#import "JMFilterItem.h"
+#import "JMFilterModel.h"
 @implementation JMFiltersView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -28,28 +28,22 @@
     
     for (int i = 0; i < titles.count; i++) {
         
-        NSDictionary *dic = titles[i];
-        
-        JMFilterSubView *subView = [[JMFilterSubView alloc] init];
-        subView.backgroundColor = [UIColor clearColor];
-        subView.image = [UIImage imageNamed:dic[@"image"]];
-        subView.title = dic[@"title"];
-        subView.tag = baseTag + i;
+        JMFilterModel *model = titles[i];
+        JMFilterItem *subView = [[JMFilterItem alloc] init];
+        subView.layer.borderColor = JMBaseColor.CGColor;
+        subView.layer.borderWidth = 1;
+        subView.image = [UIImage imageNamed:model.image];
+        subView.title = model.title;
+        subView.tag = 200 + i;
         if (_tinColor) {subView.tinColor = _tinColor;}
         [subView addTarget:self action:@selector(filterViewAction:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:subView];
     }
-    
 }
 
 - (void)filterViewAction:(UIButton *)sender
 {
-    if (self.filter) {
-        
-        self.filter(sender.tag - baseTag); 
-    }
-    
-    JMLog(@"%ld", sender.tag - baseTag);
+    if (self.filter) {self.filter(sender.tag-200);}
 }
 
 - (void)layoutSubviews
@@ -57,8 +51,8 @@
     [super layoutSubviews];
     NSInteger count = self.subviews.count;
     CGFloat m = 5;
-    CGFloat h = self.height;
-    CGFloat w = (self.contentSize.width - (count+1)*m)/count;
+    CGFloat h = self.bounds.size.height;
+    CGFloat w = (self.contentSize.width-(count+1)*m)/count;
     
     int index = 0;
     for (UIView *subView in self.subviews) {

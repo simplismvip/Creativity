@@ -1,19 +1,19 @@
 //
-//  JMFilterSubView.m
-//  YaoYao
+//  JMFilterItem.m
+//  JMAlertView
 //
-//  Created by JM Zhao on 2017/5/5.
-//  Copyright © 2017年 JunMingZhaoPra. All rights reserved.
+//  Created by JM Zhao on 2017/6/20.
+//  Copyright © 2017年 奕甲智能 Oneplus Smartware. All rights reserved.
 //
 
-#import "JMFilterSubView.h"
+#import "JMFilterItem.h"
 
-@interface JMFilterSubView ()
+@interface JMFilterItem ()
 @property (nonatomic, weak) UIButton *filterBtn;
 @property (nonatomic, weak) UILabel *btnTitle;
 @end
 
-@implementation JMFilterSubView
+@implementation JMFilterItem
 
 - (instancetype)init
 {
@@ -63,8 +63,8 @@
 {
     [super layoutSubviews];
     
-    _filterBtn.frame = CGRectMake(0, 0, self.width, self.height-10);
-    _btnTitle.frame = CGRectMake(0, CGRectGetMaxY(_filterBtn.frame), self.width, 10);
+    _filterBtn.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-12);
+    _btnTitle.frame = CGRectMake(0, CGRectGetMaxY(_filterBtn.frame), self.bounds.size.width, 10);
     
 }
 

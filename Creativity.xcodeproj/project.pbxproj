@@ -22,8 +22,6 @@
 		047FCF1D1EF3DCBD00AD0C08 /* JMSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCF111EF3DCBC00AD0C08 /* JMSlider.m */; };
 		047FCF201EF3DCDE00AD0C08 /* point.png in Resources */ = {isa = PBXBuildFile; fileRef = 047FCF1E1EF3DCDE00AD0C08 /* point.png */; };
 		047FCF211EF3DCDE00AD0C08 /* ColorPalette.png in Resources */ = {isa = PBXBuildFile; fileRef = 047FCF1F1EF3DCDE00AD0C08 /* ColorPalette.png */; };
-		047FCF241EF3DF0D00AD0C08 /* JMFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCF231EF3DF0D00AD0C08 /* JMFiltersView.m */; };
-		047FCF271EF3DF4700AD0C08 /* JMFilterSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCF261EF3DF4700AD0C08 /* JMFilterSubView.m */; };
 		0490EDD91EEF976F00E05A84 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC551EEF976F00E05A84 /* NSDate+Extension.m */; };
 		0490EDDA1EEF976F00E05A84 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC581EEF976F00E05A84 /* NSString+Base64.m */; };
 		0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490EC5A1EEF976F00E05A84 /* NSString+Emoji.m */; };
@@ -152,6 +150,11 @@
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
 		04A0DE091EEF81A400464852 /* CreativityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DE081EEF81A400464852 /* CreativityTests.m */; };
 		04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */; };
+		04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */; };
+		04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFD1EF904E500C8B24F /* JMFilterItem.m */; };
+		04E62D041EF904E500C8B24F /* JMFilterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFF1EF904E500C8B24F /* JMFilterModel.m */; };
+		04E62D051EF904E500C8B24F /* JMFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D011EF904E500C8B24F /* JMFiltersView.m */; };
+		04E62D0E1EF90B4D00C8B24F /* JMGetGIFBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D0D1EF90B4D00C8B24F /* JMGetGIFBottomView.m */; };
 		A20DAF131EF2E31A008DBFA9 /* JMMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */; };
 		A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */; };
 		A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */; };
@@ -224,10 +227,6 @@
 		047FCF111EF3DCBC00AD0C08 /* JMSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSlider.m; sourceTree = "<group>"; };
 		047FCF1E1EF3DCDE00AD0C08 /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point.png; sourceTree = "<group>"; };
 		047FCF1F1EF3DCDE00AD0C08 /* ColorPalette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ColorPalette.png; sourceTree = "<group>"; };
-		047FCF221EF3DF0D00AD0C08 /* JMFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFiltersView.h; sourceTree = "<group>"; };
-		047FCF231EF3DF0D00AD0C08 /* JMFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFiltersView.m; sourceTree = "<group>"; };
-		047FCF251EF3DF4700AD0C08 /* JMFilterSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFilterSubView.h; sourceTree = "<group>"; };
-		047FCF261EF3DF4700AD0C08 /* JMFilterSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFilterSubView.m; sourceTree = "<group>"; };
 		0490EC541EEF976F00E05A84 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		0490EC551EEF976F00E05A84 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		0490EC571EEF976F00E05A84 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
@@ -416,6 +415,16 @@
 		04A0DE0A1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseBottomView.h; sourceTree = "<group>"; };
 		04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseBottomView.m; sourceTree = "<group>"; };
+		04E62CFA1EF904E500C8B24F /* JMBaseFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseFiltersView.h; sourceTree = "<group>"; };
+		04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseFiltersView.m; sourceTree = "<group>"; };
+		04E62CFC1EF904E500C8B24F /* JMFilterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFilterItem.h; sourceTree = "<group>"; };
+		04E62CFD1EF904E500C8B24F /* JMFilterItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFilterItem.m; sourceTree = "<group>"; };
+		04E62CFE1EF904E500C8B24F /* JMFilterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFilterModel.h; sourceTree = "<group>"; };
+		04E62CFF1EF904E500C8B24F /* JMFilterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFilterModel.m; sourceTree = "<group>"; };
+		04E62D001EF904E500C8B24F /* JMFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFiltersView.h; sourceTree = "<group>"; };
+		04E62D011EF904E500C8B24F /* JMFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFiltersView.m; sourceTree = "<group>"; };
+		04E62D0C1EF90B4D00C8B24F /* JMGetGIFBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGetGIFBottomView.h; sourceTree = "<group>"; };
+		04E62D0D1EF90B4D00C8B24F /* JMGetGIFBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGetGIFBottomView.m; sourceTree = "<group>"; };
 		0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.release.xcconfig"; sourceTree = "<group>"; };
 		7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.debug.xcconfig"; sourceTree = "<group>"; };
 		923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Creativity.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -509,10 +518,6 @@
 		047FCF091EF3DCBC00AD0C08 /* ColorView */ = {
 			isa = PBXGroup;
 			children = (
-				047FCF251EF3DF4700AD0C08 /* JMFilterSubView.h */,
-				047FCF261EF3DF4700AD0C08 /* JMFilterSubView.m */,
-				047FCF221EF3DF0D00AD0C08 /* JMFiltersView.h */,
-				047FCF231EF3DF0D00AD0C08 /* JMFiltersView.m */,
 				047FCF1E1EF3DCDE00AD0C08 /* point.png */,
 				047FCF1F1EF3DCDE00AD0C08 /* ColorPalette.png */,
 				047FCF0A1EF3DCBC00AD0C08 /* JMAnimationView.h */,
@@ -1007,6 +1012,7 @@
 		0490F2121EEFA32900E05A84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04E62CF91EF904E500C8B24F /* FiltersView */,
 				A20F38861EF64902009E5E48 /* Others */,
 				A20DAF2B1EF42338008DBFA9 /* EmojisView */,
 				047FCEF91EF3DCBC00AD0C08 /* AttributeString */,
@@ -1088,6 +1094,23 @@
 				04A0DE0A1EEF81A400464852 /* Info.plist */,
 			);
 			path = CreativityTests;
+			sourceTree = "<group>";
+		};
+		04E62CF91EF904E500C8B24F /* FiltersView */ = {
+			isa = PBXGroup;
+			children = (
+				04E62D0C1EF90B4D00C8B24F /* JMGetGIFBottomView.h */,
+				04E62D0D1EF90B4D00C8B24F /* JMGetGIFBottomView.m */,
+				04E62CFA1EF904E500C8B24F /* JMBaseFiltersView.h */,
+				04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */,
+				04E62CFC1EF904E500C8B24F /* JMFilterItem.h */,
+				04E62CFD1EF904E500C8B24F /* JMFilterItem.m */,
+				04E62CFE1EF904E500C8B24F /* JMFilterModel.h */,
+				04E62CFF1EF904E500C8B24F /* JMFilterModel.m */,
+				04E62D001EF904E500C8B24F /* JMFiltersView.h */,
+				04E62D011EF904E500C8B24F /* JMFiltersView.m */,
+			);
+			path = FiltersView;
 			sourceTree = "<group>";
 		};
 		2C41C0BC2AB95C024BE6F6A1 /* Pods */ = {
@@ -1392,6 +1415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0490F2441EEFA32900E05A84 /* JMPaintView.m in Sources */,
+				04E62D041EF904E500C8B24F /* JMFilterModel.m in Sources */,
 				A20DAF271EF2E61E008DBFA9 /* JMTopBarModel.m in Sources */,
 				0490EDDC1EEF976F00E05A84 /* NSString+Extension.m in Sources */,
 				0490F1AE1EEF9C3900E05A84 /* JMHomeModel.m in Sources */,
@@ -1416,10 +1440,11 @@
 				0490EECE1EEF977000E05A84 /* SXHeadLine.m in Sources */,
 				0490EDDD1EEF976F00E05A84 /* NSString+Reglx.m in Sources */,
 				0490EDD91EEF976F00E05A84 /* NSDate+Extension.m in Sources */,
+				04E62D0E1EF90B4D00C8B24F /* JMGetGIFBottomView.m in Sources */,
 				A20DAF361EF4363F008DBFA9 /* UIView+AccessViewController.m in Sources */,
 				0490EDE51EEF976F00E05A84 /* UIBarButtonItem+Item.m in Sources */,
 				0490F2501EEFB88C00E05A84 /* JMAttributeString.m in Sources */,
-				047FCF271EF3DF4700AD0C08 /* JMFilterSubView.m in Sources */,
+				04E62D051EF904E500C8B24F /* JMFiltersView.m in Sources */,
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
 				047FCF141EF3DCBC00AD0C08 /* JMAttributeStringCell.m in Sources */,
 				0490F2591EEFC0C900E05A84 /* JMGifSetView.m in Sources */,
@@ -1428,7 +1453,6 @@
 				A20DAF181EF2E4B0008DBFA9 /* JMGestureButton.m in Sources */,
 				047FCF171EF3DCBC00AD0C08 /* JMAttributeStringView.m in Sources */,
 				A20F388C1EF64902009E5E48 /* JMPopView.m in Sources */,
-				047FCF241EF3DF0D00AD0C08 /* JMFiltersView.m in Sources */,
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */,
 				047FCF131EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.m in Sources */,
@@ -1441,6 +1465,7 @@
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
 				0490EED01EEF977000E05A84 /* UIColor+Separate.m in Sources */,
 				0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */,
+				04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */,
 				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,
 				0490F1E81EEF9E1900E05A84 /* SetTableViewCell.m in Sources */,
 				0490F2451EEFA32900E05A84 /* JMWriteView.m in Sources */,
@@ -1451,6 +1476,7 @@
 				0490EEA51EEF977000E05A84 /* Tool_FMDBModel.m in Sources */,
 				0490F1B01EEF9C3900E05A84 /* JMHomeCollectionViewCell.m in Sources */,
 				A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */,
+				04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */,
 				0490F2561EEFBE1B00E05A84 /* JMGetGIFController.m in Sources */,
 				0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */,
 				0490F2531EEFBC5C00E05A84 /* JMBaseController.m in Sources */,

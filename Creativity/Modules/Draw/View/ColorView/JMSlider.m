@@ -25,12 +25,10 @@
         sliderA.minimumValue=0.0f;
         sliderA.maximumValue=1.0f;
         
-        [sliderA setMinimumTrackImage:[UIImage imageNamed:@"prgbar_unread"] forState:UIControlStateNormal];
-        [sliderA setMaximumTrackImage:[UIImage imageNamed:@"prgbar_read"] forState:UIControlStateNormal];
-        [sliderA setThumbImage:[UIImage imageNamed:@"prgbar_icon"] forState:UIControlStateHighlighted];
-        [sliderA setThumbImage:[UIImage imageNamed:@"prgbar_icon"] forState:UIControlStateNormal];
-        
-        // 滑块拖动时的事件
+        [sliderA setMinimumTrackImage:[[UIImage imageNamed:@"prgbar_unread"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [sliderA setMaximumTrackImage:[[UIImage imageNamed:@"prgbar_read"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
+        [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateHighlighted];
+        [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
         [sliderA addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         [sliderA addTarget:self action:@selector(sliderDragUp:) forControlEvents:UIControlEventTouchUpInside];
         

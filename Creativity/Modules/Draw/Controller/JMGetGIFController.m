@@ -14,8 +14,9 @@
 #import <UMMobClick/MobClick.h>
 #import "JMFileManger.h"
 #import "UIImage+JMImage.h"
+#import "JMGetGIFBottomView.h"
 
-@interface JMGetGIFController ()
+@interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 @property (nonatomic, weak) UIImageView *birdImage;
 @property (nonatomic, assign) CGFloat delayTime;
 @end
@@ -45,7 +46,7 @@
 // 编辑完成
 - (void)Done:(UIBarButtonItem *)done
 {
-    [self creatGIF:nil];
+    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -85,35 +86,41 @@
     }
     
     self.delayTime = 0.5;
-    UIImageView *birdImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height/2)];
+    UIImageView *birdImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*1.2)];
+    birdImage.contentMode = UIViewContentModeScaleAspectFit;
+    birdImage.center = self.view.center;
+    birdImage.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:birdImage];
     self.birdImage = birdImage;
     
-    UISlider *slide = [[UISlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(birdImage.frame), self.view.width-60, 30)];
-    slide.value = 0.5;
-    [slide addTarget:self action:@selector(changeDelayTime:) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.view addSubview:slide];
+//    UISlider *slide = [[UISlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(birdImage.frame), self.view.width-60, 30)];
+//    slide.value = 0.5;
+//    [slide addTarget:self action:@selector(changeDelayTime:) forControlEvents:(UIControlEventTouchUpInside)];
+//    [self.view addSubview:slide];
+//    
+//    UIButton *video = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//    video.backgroundColor = [UIColor redColor];
+//    video.frame = CGRectMake(self.view.width/2-100-20, CGRectGetMaxY(slide.frame)+20, 100, 100);
+//    [video setTitle:@"导出GIF" forState:(UIControlStateNormal)];
+//    [video addTarget:self action:@selector(creatGIF:) forControlEvents:(UIControlEventTouchUpInside)];
+//    [self.view addSubview:video];
+//    
+//    UIButton *gif = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//    gif.backgroundColor = [UIColor redColor];
+//    gif.frame = CGRectMake(self.view.width/2+20, CGRectGetMaxY(slide.frame)+20, 100, 100);
+//    [gif setTitle:@"导出Video" forState:(UIControlStateNormal)];
+//    [gif addTarget:self action:@selector(creatVideo:) forControlEvents:(UIControlEventTouchUpInside)];
+//    [self.view addSubview:gif];
     
-    UIButton *video = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    video.backgroundColor = [UIColor redColor];
-    video.frame = CGRectMake(self.view.width/2-100-20, CGRectGetMaxY(slide.frame)+20, 100, 100);
-    [video setTitle:@"导出GIF" forState:(UIControlStateNormal)];
-    [video addTarget:self action:@selector(creatGIF:) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.view addSubview:video];
+    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithCount:@[@"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"]];
+    bsae.delegate = self;
+    [self.view addSubview:bsae];
     
-    UIButton *gif = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    gif.backgroundColor = [UIColor redColor];
-    gif.frame = CGRectMake(self.view.width/2+20, CGRectGetMaxY(slide.frame)+20, 100, 100);
-    [gif setTitle:@"导出Video" forState:(UIControlStateNormal)];
-    [gif addTarget:self action:@selector(creatVideo:) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.view addSubview:gif];
-}
-
-// 修改gif帧数
-- (void)changeDelayTime:(UISlider *)slider
-{
-    _delayTime = 1.0f - (slider.value*1.0+0.01);
-    [self showGif];
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        bsae.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height-74, [UIScreen mainScreen].bounds.size.width, 74);
+    }];
+    
 }
 
 - (void)showGif
@@ -121,9 +128,7 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
-        
         UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
         
             self.birdImage.image = image;
@@ -132,17 +137,40 @@
 }
 
 #pragma mark -----------生成文件------
-// 创建Gif文件
 - (void)creatGIF:(UIButton *)sender
 {
-    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[NSData dataWithContentsOfFile:self.filePath]] applicationActivities:nil];
+    
+    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
+        
+        if (IS_IPAD) {
+            
+            UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
+            if (popover){popover.sourceView = sender;popover.sourceRect = sender.bounds;}
+        }else{
+            activityViewController.popoverPresentationController.sourceView = self.view;
+        }
+    }
+    
+    [self presentViewController:activityViewController animated:YES completion:NULL];
 }
 
 // 创建Video文件
 - (void)creatVideo:(UIButton *)sender
 {
     [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
-    [JMMediaHelper saveImagesToVideoWithImages:_images andVideoPath:self.filePath completed:^(NSString *filePath) {
+    
+    NSMutableArray *paths = [NSMutableArray array];
+    for (UIImage *image in _images) {
+        
+        NSString *path = [NSString stringWithFormat:@"%@/%@.png", JMDocumentsPath, [JMHelper timerString]];
+        [paths addObject:path];
+        
+        NSData *data = UIImagePNGRepresentation(image);
+        [data writeToFile:path atomically:YES];
+    }
+    
+    [JMMediaHelper saveImagesToVideoWithImages:paths completed:^(NSString *filePath) {
         
         NSLog(@"成功--%@", filePath);
         
@@ -150,6 +178,18 @@
         
         NSLog(@"失败--%@", error);
     }];
+}
+
+#pragma mark -- JMBaseBottomViewDelegate
+- (void)didSelectRowAtIndexPath:(NSInteger)index
+{
+    NSLog(@"选中--%ld", index);
+}
+
+- (void)changeValue:(CGFloat)value
+{
+    _delayTime = value;
+    [self showGif];
 }
 
 - (void)didReceiveMemoryWarning {

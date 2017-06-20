@@ -67,7 +67,7 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     UIImage *first = [images firstObject];
     CGSize frameSize = first.size;
     
-    AVAssetWriter *videoWriter =[[AVAssetWriter alloc]initWithURL:[NSURL fileURLWithPath:videoPath]
+    AVAssetWriter *videoWriter =[[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:videoPath]
                                                          fileType:AVFileTypeQuickTimeMovie
                                                             error:&error];
     NSParameterAssert(videoWriter);

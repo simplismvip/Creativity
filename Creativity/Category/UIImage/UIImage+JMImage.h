@@ -130,6 +130,8 @@
 // 修改照片透明度
 - (UIImage *)imageByApplyingAlpha:(CGFloat)alpha;
 
+// 修改照片颜色
+- (UIImage *)imageWithColor:(UIColor *)color;
 /**
  *  生成缩略图
  *
@@ -145,4 +147,6 @@
 + (UIImage *)jm_animatedGIFWithData:(NSData *)data;
 
 - (UIImage *)jm_animatedImageByScalingAndCroppingToSize:(CGSize)size;
+
+
 @end

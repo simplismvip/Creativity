@@ -11,6 +11,7 @@
 #import "JMAttributeStringModel.h"
 #import "JMFiltersView.h"
 #import "JMAttributeString.h"
+#import "JMFilterModel.h"
 
 @interface JMAttributeStringAnimationView()
 @property (nonatomic, weak) UIView *coverView;
@@ -60,7 +61,18 @@
     
     JMFiltersView *filter = [[JMFiltersView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attribute.frame), _coverView.width-20, 40)];
     filter.tinColor = JMBaseColor;
-    filter.titles = @[@{@"title":@"返回", @"image":@"navbar_close_icon_black"}, @{@"title":@"选择字体", @"image":@"emoji"}, @{@"title":@"字体样式", @"image":@"heart_32"}];
+    
+    NSArray *array = @[@{@"title":@"返回", @"image":@"navbar_close_icon_black"}, @{@"title":@"选择字体", @"image":@"emoji"}, @{@"title":@"字体样式", @"image":@"heart_32"}];
+    NSMutableArray *arr = [NSMutableArray array];
+    for (NSDictionary *dic in array) {
+        
+        JMFilterModel *model = [[JMFilterModel alloc] init];
+        model.title = dic[@"title"];
+        model.image = dic[@"image"];
+        [arr addObject:model];
+    }
+
+    filter.titles = [arr copy];
     filter.contentSize = CGSizeMake(filter.width*0.63, 30);
     filter.filter = ^(NSInteger type) {
         
