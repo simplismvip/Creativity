@@ -273,33 +273,17 @@
         
         NSArray *imageArray = valueDic[@"imageName"];
         NSArray *titleArray = valueDic[@"showName"];
-        NSString *isColor = valueDic[@"color"];
         NSInteger type = [valueDic[@"type"] integerValue];
         NSMutableArray *rows = [NSMutableArray array];
         
-        if ([isColor isEqualToString:@"1"]) {
+        for (int i = 0; i < imageArray.count; i ++) {
             
-            NSArray *colors = valueDic[@"colorArr"];
-            for (int i = 0; i < imageArray.count; i ++) {
-                
-                JMBottomModel *model = [[JMBottomModel alloc] init];
-                model.title = titleArray[i];
-                model.image = imageArray[i];
-                model.backgroundColor = colors[i];
-                model.type = type;
-                [rows addObject:model];
-            }
-        }else{
-            
-            for (int i = 0; i < imageArray.count; i ++) {
-                
-                JMBottomModel *model = [[JMBottomModel alloc] init];
-                model.title = titleArray[i];
-                model.image = imageArray[i];
-                model.backgroundColor = nil;
-                model.type = type;
-                [rows addObject:model];
-            }
+            JMBottomModel *model = [[JMBottomModel alloc] init];
+            model.title = titleArray[i];
+            model.image = imageArray[i];
+            model.backgroundColor = nil;
+            model.type = type;
+            [rows addObject:model];
         }
         
         model.models = rows;

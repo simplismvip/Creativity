@@ -208,6 +208,7 @@
 		04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFA1EEF81A400464852 /* Assets.xcassets */; };
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
 		04A0DE091EEF81A400464852 /* CreativityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DE081EEF81A400464852 /* CreativityTests.m */; };
+		04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */; };
 		A20DAF131EF2E31A008DBFA9 /* JMMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */; };
 		A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */; };
 		A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */; };
@@ -514,6 +515,8 @@
 		04A0DE041EEF81A400464852 /* CreativityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreativityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DE081EEF81A400464852 /* CreativityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreativityTests.m; sourceTree = "<group>"; };
 		04A0DE0A1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseBottomView.h; sourceTree = "<group>"; };
+		04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseBottomView.m; sourceTree = "<group>"; };
 		0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.release.xcconfig"; sourceTree = "<group>"; };
 		7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.debug.xcconfig"; sourceTree = "<group>"; };
 		923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Creativity.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1270,6 +1273,8 @@
 				A20DAF211EF2E61E008DBFA9 /* JMTopBarModel.m */,
 				A20DAF221EF2E61E008DBFA9 /* JMTopTableView.h */,
 				A20DAF231EF2E61E008DBFA9 /* JMTopTableView.m */,
+				04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */,
+				04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */,
 			);
 			path = TopTableView;
 			sourceTree = "<group>";
@@ -1657,6 +1662,7 @@
 				A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */,
 				0490EDE71EEF976F00E05A84 /* UIView+Extension.m in Sources */,
 				047FCF191EF3DCBD00AD0C08 /* JMAttributeTextInputView.m in Sources */,
+				04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */,
 				0490F23E1EEFA32900E05A84 /* JMSubImageModel.m in Sources */,
 				047FCF1B1EF3DCBD00AD0C08 /* JMBaseColorView.m in Sources */,
 				0490EDE11EEF976F00E05A84 /* UINavigationBar+Awesome.m in Sources */,

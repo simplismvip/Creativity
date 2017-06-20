@@ -9,15 +9,14 @@
 #import "JMTopTableView.h"
 #import "JMBottomCell.h"
 #import "UIView+Extension.h"
-#import "JMBottomView.h"
 #import "JMTopBarModel.h"
 #import "JMBottomModel.h"
 #import "JMGestureButton.h"
 #import "JMHelper.h"
-#import "JMBottomView.h"
 #import "Masonry.h"
+#import "JMBaseBottomView.h"
 
-@interface JMTopTableView()<JMBottomViewDataSourceDelegate, JMBottomViewDelegate>
+@interface JMTopTableView()<JMBaseBottomViewDelegate>
 @property (nonatomic, assign) NSInteger section;
 @end
 
@@ -69,104 +68,21 @@
     }else{
     
         JMGestureButton *gesture = [JMGestureButton creatGestureButton];
-        JMBottomView *bottom = [[JMBottomView alloc] initWithFrame:CGRectMake(0, self.superview.height, self.superview.width, 44)];
-        [UIView animateWithDuration:0.1 animations:^{bottom.frame = CGRectMake(0, self.superview.height-44, self.superview.width, 44);}];
-        bottom.dataSource = self;
-        bottom.delegate = self;
-        bottom.section = self.section;
-        bottom.backgroundColor = JMColor(33, 33, 33);
-        [bottom reloadData];
-        [gesture addSubview:bottom];
-        
-        [bottom mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.mas_equalTo(gesture);
-            make.height.mas_equalTo(44);
-        }];
+        JMBaseBottomView *bsae = [[JMBaseBottomView alloc] initWithCount:tModel.models];
+        bsae.delegate = self;
+        [gesture addSubview:bsae];
     }
 }
 
-#pragma mark -- TopBarDataSourceDelegate
-- (NSUInteger)numberOfRows
+- (void)didSelectRowAtIndexPath:(NSInteger)index
 {
-    JMTopBarModel *tModel = self.dataSource[self.section];
-    return tModel.models.count;
-}
-
-- (NSUInteger)numberOfColumn
-{
-    JMTopBarModel *tModel = self.dataSource[self.section];
-    return tModel.column;
-}
-
-// 返回cell
-- (JMBottomCell *)tableView:(JMBottomView *)tableView index:(NSInteger)index
-{
-    JMBottomModel *bModel = [self.dataSource[self.section] models][index];
-    JMBottomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bottom"];
-    if (!cell) {cell = [[JMBottomCell alloc] init];}
-    
-    cell.isCellSelect = bModel.isSelect;
-    cell.cellImage = bModel.image;
-    cell.cellTitle = bModel.title;
-    if (bModel.backgroundColor) {
-        
-        cell.cellTintColor = [JMHelper getColor:bModel.backgroundColor];
-        
-    }else{
-    
-        cell.cellTintColor = JMColor(105, 105, 105);
-    }
-    
-    return cell;
-}
-
-#pragma mark -- TopBarDelegate
-- (void)tableView:(JMBottomView *)tableView didSelectRowAtIndex:(NSInteger)index
-{
-    if (self.section != 1) {
-        
-        [self select:tableView index:index];
-    }
-    
     if ([self.delegate respondsToSelector:@selector(topTableView:didSelectRowAtIndexPath:)]) {
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:tableView.section];
-        [self.delegate topTableView:tableView.section didSelectRowAtIndexPath:indexPath];
-    }
-}
-
-- (void)select:(JMBottomView *)tableView index:(NSInteger)index
-{
-    // 1> 先修改模型状态
-    NSArray *models = [self.dataSource[self.section] models];
-   
-    JMBottomModel *bmodel = models[index];
-    
-    for (JMBottomModel *bModel in models) {
+        JMGestureButton *ges = [JMGestureButton getGestureButton];
+        [ges removeFromSuperview];
         
-        if (bModel == bmodel) {
-            
-            bModel.isSelect = !bModel.isSelect;
-            
-        }else{
-        
-            bModel.isSelect = NO;
-        }
-    }
-    
-    // 2> 再修改cell状态
-    JMBottomCell *bCell = [tableView cellByIndex:index];
-    
-    for (JMBottomCell *cell in tableView.subviews) {
-        
-        if (cell == bCell) {
-            
-            cell.isCellSelect = !cell.isCellSelect;
-            
-        }else{
-        
-            cell.isCellSelect = NO;
-        }
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.section];
+        [self.delegate topTableView:self.section didSelectRowAtIndexPath:indexPath];
     }
 }
 
