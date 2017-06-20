@@ -68,15 +68,10 @@
     
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
-    JMTopTableView *topbar = [[JMTopTableView alloc] init];
+    JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, kH-44, kW, 44)];
     topbar.delegate = self;
     topbar.dataSource = _dataSource;
     [self.view addSubview:topbar];
-
-    [topbar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.mas_equalTo(self.view);
-        make.height.mas_equalTo(@44);
-    }];
 }
 
 - (void)creatGifNew

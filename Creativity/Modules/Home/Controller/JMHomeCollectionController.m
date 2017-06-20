@@ -86,23 +86,6 @@ static NSString *const headerID = @"header";
     [self.view addSubview:self.collection];
 }
 
-- (void)setItem:(UIBarButtonItem *)sender
-{
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMMeViewController alloc] init]];
-    [self presentViewController:Nav animated:YES completion:nil];
-}
-
-- (void)newItem:(UIBarButtonItem *)sender
-{
-    NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-    [JMFileManger creatDir:gifPath];
-    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-    draw.folderPath = gifPath;
-    [draw creatGifNew];
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-    [self presentViewController:Nav animated:YES completion:nil];
-}
-
 #pragma mark UICollectionViewDataSource,
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -222,11 +205,6 @@ static NSString *const headerID = @"header";
 }
 
 #pragma mark -- JMHomeCollectionViewCellDelegate
-- (void)showRoomMembers:(NSIndexPath *)indexPath currentPoint:(CGPoint)currentPoint
-{
-    
-}
-
 - (void)deleteByIndexPath:(NSIndexPath *)indexPath
 {
     [self.collection performBatchUpdates:^{
@@ -302,6 +280,23 @@ static NSString *const headerID = @"header";
     [_collection reloadData];
 }
 
+#pragma mark -- left right UIBarButtonItem
+- (void)setItem:(UIBarButtonItem *)sender
+{
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMMeViewController alloc] init]];
+    [self presentViewController:Nav animated:YES completion:nil];
+}
+
+- (void)newItem:(UIBarButtonItem *)sender
+{
+    NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+    [JMFileManger creatDir:gifPath];
+    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+    draw.folderPath = gifPath;
+    [draw creatGifNew];
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+    [self presentViewController:Nav animated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

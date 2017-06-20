@@ -16,22 +16,11 @@
 #import "Masonry.h"
 #import "JMBaseBottomView.h"
 
-@interface JMTopTableView()<JMBaseBottomViewDelegate>
+@interface JMTopTableView()<JMBaseBottomViewDelegate, JMGestureButtonDelegate>
 @property (nonatomic, assign) NSInteger section;
 @end
 
 @implementation JMTopTableView
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-        self.backgroundColor = [UIColor whiteColor];
-    }
-    
-    return self;
-}
 
 - (void)setDataSource:(NSMutableArray *)dataSource
 {
@@ -68,10 +57,25 @@
     }else{
     
         JMGestureButton *gesture = [JMGestureButton creatGestureButton];
+        gesture.delegate= self;
         JMBaseBottomView *bsae = [[JMBaseBottomView alloc] initWithCount:tModel.models];
         bsae.delegate = self;
         [gesture addSubview:bsae];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            
+            self.frame = CGRectMake(0, kH, kW, 44);
+        }];    
     }
+}
+
+- (void)didRemove
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        self.frame = CGRectMake(0, kH-44, kW, 44);
+        
+    }];
 }
 
 - (void)didSelectRowAtIndexPath:(NSInteger)index
@@ -79,7 +83,7 @@
     if ([self.delegate respondsToSelector:@selector(topTableView:didSelectRowAtIndexPath:)]) {
         
         JMGestureButton *ges = [JMGestureButton getGestureButton];
-        [ges removeFromSuperview];
+        [ges rem_GestureBtn:ges];
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.section];
         [self.delegate topTableView:self.section didSelectRowAtIndexPath:indexPath];

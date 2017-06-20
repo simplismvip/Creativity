@@ -13,7 +13,6 @@
 #define kButtonMargin 10
 #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 #define SCREEN_WIDTH  [[UIScreen mainScreen] bounds].size.width
-
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
 
 @interface JMAttributeTextInputView () <UITextViewDelegate>
@@ -77,7 +76,7 @@
     line.backgroundColor = RGBACOLOR(227, 228, 232, 1);
     [self addSubview:line];
     
-    self.textInput = [[UITextView alloc] initWithFrame:CGRectMake(5, (self.height - kInputHeight)/2, self.width - 10, 37)];;
+    self.textInput = [[UITextView alloc] initWithFrame:CGRectMake(10, (self.height - kInputHeight)/2, self.width - 60, 37)];;
     self.textInput.font = [UIFont systemFontOfSize:15];
     self.textInput.layer.cornerRadius = 5;
     self.textInput.layer.borderColor = RGBACOLOR(227, 228, 232, 1).CGColor;
@@ -88,7 +87,7 @@
     self.textInput.delegate = self;
     [self addSubview:self.textInput];
     
-    self.placeholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, (self.height - kInputHeight)/2, self.width - 10, 37)];
+    self.placeholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, (self.height - kInputHeight)/2, self.width - 70, 37)];
     self.placeholderLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     self.placeholderLabel.font = self.textInput.font;
     if (!self.placeholderLabel.text.length) {
@@ -96,8 +95,20 @@
     }
     [self addSubview:self.placeholderLabel];
     
+    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    button.frame = CGRectMake(CGRectGetMaxX(self.textInput.frame)+5, (self.height - kInputHeight)/2+2, 30, 30);
+    [button addTarget:self action:@selector(setFont:) forControlEvents:(UIControlEventTouchUpInside)];
+    [button setTintColor:[UIColor redColor]];
+    [button setImage:[UIImage imageNamed:@"input_font"] forState:(UIControlStateNormal)];
+    [self addSubview:button];
 }
 
+- (void)setFont:(UIButton *)sender
+{
+    
+    
+    [self endEditing:YES];
+}
 #pragma mark keyboardnotification
 - (void)keyboardWillShow:(NSNotification *)notification
 {

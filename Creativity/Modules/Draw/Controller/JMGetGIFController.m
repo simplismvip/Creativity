@@ -92,26 +92,7 @@
     birdImage.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:birdImage];
     self.birdImage = birdImage;
-    
-//    UISlider *slide = [[UISlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(birdImage.frame), self.view.width-60, 30)];
-//    slide.value = 0.5;
-//    [slide addTarget:self action:@selector(changeDelayTime:) forControlEvents:(UIControlEventTouchUpInside)];
-//    [self.view addSubview:slide];
-//    
-//    UIButton *video = [UIButton buttonWithType:(UIButtonTypeSystem)];
-//    video.backgroundColor = [UIColor redColor];
-//    video.frame = CGRectMake(self.view.width/2-100-20, CGRectGetMaxY(slide.frame)+20, 100, 100);
-//    [video setTitle:@"导出GIF" forState:(UIControlStateNormal)];
-//    [video addTarget:self action:@selector(creatGIF:) forControlEvents:(UIControlEventTouchUpInside)];
-//    [self.view addSubview:video];
-//    
-//    UIButton *gif = [UIButton buttonWithType:(UIButtonTypeSystem)];
-//    gif.backgroundColor = [UIColor redColor];
-//    gif.frame = CGRectMake(self.view.width/2+20, CGRectGetMaxY(slide.frame)+20, 100, 100);
-//    [gif setTitle:@"导出Video" forState:(UIControlStateNormal)];
-//    [gif addTarget:self action:@selector(creatVideo:) forControlEvents:(UIControlEventTouchUpInside)];
-//    [self.view addSubview:gif];
-    
+        
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithCount:@[@"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"]];
     bsae.delegate = self;
     [self.view addSubview:bsae];
@@ -178,12 +159,6 @@
         
         NSLog(@"失败--%@", error);
     }];
-}
-
-#pragma mark -- JMBaseBottomViewDelegate
-- (void)didSelectRowAtIndexPath:(NSInteger)index
-{
-    NSLog(@"选中--%ld", index);
 }
 
 - (void)changeValue:(CGFloat)value

@@ -6,8 +6,8 @@
 //  Copyright © 2017年 JMZhao. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "JMBaseController.h"
 
-@interface JMBuyProViewController : UIViewController
+@interface JMBuyProViewController : JMBaseController
 
 @end
