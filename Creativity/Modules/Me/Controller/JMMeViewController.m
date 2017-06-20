@@ -13,7 +13,8 @@
 #import "SetTableViewCell.h"
 #import "JMAccountHeaderFooter.h"
 #import "JMFileManger.h"
-#import "Masonry.h"
+#import "JMBuyProViewController.h"
+#import "JMMainNavController.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -60,7 +61,6 @@
     [setTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.edges.mas_equalTo(self.view);
-        
     }];
 }
 
@@ -114,6 +114,9 @@
     
     if (indexPath.section==0 && indexPath.row==0) {
        
+        JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
+        JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
+        [self presentViewController:nav animated:YES completion:nil];
         
     }else if (indexPath.section == 1 && indexPath.row==0){
     

@@ -155,6 +155,9 @@
 		04E62D041EF904E500C8B24F /* JMFilterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFF1EF904E500C8B24F /* JMFilterModel.m */; };
 		04E62D051EF904E500C8B24F /* JMFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D011EF904E500C8B24F /* JMFiltersView.m */; };
 		04E62D0E1EF90B4D00C8B24F /* JMGetGIFBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D0D1EF90B4D00C8B24F /* JMGetGIFBottomView.m */; };
+		04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D101EF91F0D00C8B24F /* JMBuyProViewController.m */; };
+		04E62D141EF9202500C8B24F /* JMProTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D131EF9202500C8B24F /* JMProTableViewCell.m */; };
+		04E62D171EF921F400C8B24F /* ProModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D161EF921F400C8B24F /* ProModel.m */; };
 		A20DAF131EF2E31A008DBFA9 /* JMMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */; };
 		A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */; };
 		A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */; };
@@ -425,6 +428,12 @@
 		04E62D011EF904E500C8B24F /* JMFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFiltersView.m; sourceTree = "<group>"; };
 		04E62D0C1EF90B4D00C8B24F /* JMGetGIFBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGetGIFBottomView.h; sourceTree = "<group>"; };
 		04E62D0D1EF90B4D00C8B24F /* JMGetGIFBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGetGIFBottomView.m; sourceTree = "<group>"; };
+		04E62D0F1EF91F0D00C8B24F /* JMBuyProViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBuyProViewController.h; sourceTree = "<group>"; };
+		04E62D101EF91F0D00C8B24F /* JMBuyProViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBuyProViewController.m; sourceTree = "<group>"; };
+		04E62D121EF9202500C8B24F /* JMProTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMProTableViewCell.h; sourceTree = "<group>"; };
+		04E62D131EF9202500C8B24F /* JMProTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMProTableViewCell.m; sourceTree = "<group>"; };
+		04E62D151EF921F400C8B24F /* ProModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProModel.h; sourceTree = "<group>"; };
+		04E62D161EF921F400C8B24F /* ProModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProModel.m; sourceTree = "<group>"; };
 		0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.release.xcconfig"; sourceTree = "<group>"; };
 		7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.debug.xcconfig"; sourceTree = "<group>"; };
 		923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Creativity.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -947,6 +956,8 @@
 			children = (
 				0490F1B41EEF9C4900E05A84 /* JMAboutUsController.h */,
 				0490F1B51EEF9C4900E05A84 /* JMAboutUsController.m */,
+				04E62D0F1EF91F0D00C8B24F /* JMBuyProViewController.h */,
+				04E62D101EF91F0D00C8B24F /* JMBuyProViewController.m */,
 				0490F1BC1EEF9C4900E05A84 /* JMMeViewController.h */,
 				0490F1BD1EEF9C4900E05A84 /* JMMeViewController.m */,
 			);
@@ -964,6 +975,8 @@
 				0490F1C81EEF9C4900E05A84 /* JMAccountHeaderFooter.m */,
 				0490F1E61EEF9E1900E05A84 /* SetTableViewCell.h */,
 				0490F1E71EEF9E1900E05A84 /* SetTableViewCell.m */,
+				04E62D121EF9202500C8B24F /* JMProTableViewCell.h */,
+				04E62D131EF9202500C8B24F /* JMProTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -973,6 +986,8 @@
 			children = (
 				0490F1E31EEF9DCB00E05A84 /* SetModel.h */,
 				0490F1E41EEF9DCB00E05A84 /* SetModel.m */,
+				04E62D151EF921F400C8B24F /* ProModel.h */,
+				04E62D161EF921F400C8B24F /* ProModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1445,9 +1460,11 @@
 				0490EDE51EEF976F00E05A84 /* UIBarButtonItem+Item.m in Sources */,
 				0490F2501EEFB88C00E05A84 /* JMAttributeString.m in Sources */,
 				04E62D051EF904E500C8B24F /* JMFiltersView.m in Sources */,
+				04E62D171EF921F400C8B24F /* ProModel.m in Sources */,
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
 				047FCF141EF3DCBC00AD0C08 /* JMAttributeStringCell.m in Sources */,
 				0490F2591EEFC0C900E05A84 /* JMGifSetView.m in Sources */,
+				04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
 				0490F1D71EEF9C4900E05A84 /* JMMeViewController.m in Sources */,
 				A20DAF181EF2E4B0008DBFA9 /* JMGestureButton.m in Sources */,
@@ -1465,6 +1482,7 @@
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
 				0490EED01EEF977000E05A84 /* UIColor+Separate.m in Sources */,
 				0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */,
+				04E62D141EF9202500C8B24F /* JMProTableViewCell.m in Sources */,
 				04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */,
 				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,
 				0490F1E81EEF9E1900E05A84 /* SetTableViewCell.m in Sources */,

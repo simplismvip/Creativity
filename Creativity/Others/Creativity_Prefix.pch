@@ -73,5 +73,6 @@
 #import "UIView+Extension.h"
 #import "StaticClass.h"
 #import "JMHelper.h"
+#import "Masonry.h"
 
 #endif
