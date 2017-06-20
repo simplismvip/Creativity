@@ -82,7 +82,7 @@
 {
     _model = model;
     
-    NSURL *url = [NSURL URLWithString:model.folderPath];
+    NSURL *url = [NSURL fileURLWithPath:model.folderPath];
     [_classImage sd_setImageWithURL:url];
     
 //    dispatch_async(dispatch_get_global_queue(0, 0), ^{

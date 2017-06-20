@@ -60,7 +60,7 @@
     self.bufferArray = [NSMutableArray array];
     self.points = [NSMutableArray array];
     self.backgroundColor = [UIColor whiteColor];
-    self.alpha = 0.5;
+//    self.alpha = 0.5;
 
 }
 

@@ -28,7 +28,7 @@
     
     // 设置背景颜色
     [navBar py_addToThemeColorPool:@"barTintColor"];
-    navBar.tintColor = JMColor(217, 51, 58);
+    navBar.tintColor = JMBaseColor;
     
     // 设置字体颜色
     NSDictionary *attr = @{

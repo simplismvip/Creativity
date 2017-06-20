@@ -29,18 +29,25 @@
         self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
-        coverView.backgroundColor = JMBaseColor;
+        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];;
         coverView.layer.cornerRadius = 10;
         coverView.layer.masksToBounds = YES;
         [self addSubview:coverView];
         self.coverView = coverView;
         
+        //
+        UIButton *close = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        close.tintColor = JMBaseColor;
+        [close setImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"] forState:(UIControlStateNormal)];
+        [close addTarget:self action:@selector(closeView:) forControlEvents:UIControlEventTouchUpInside];
+        
         [UIView animateWithDuration:0.2 animations:^{
             
-            coverView.frame = CGRectMake(30, 120, kW-60, kW);
+            coverView.frame = CGRectMake(kW*0.1, 120, kW*0.8, kH*0.6);
             
         } completion:^(BOOL finished) {
             
+            [coverView addSubview:close];
             [self addsubEmojiViews];
         }];
     }
@@ -49,7 +56,7 @@
 
 - (void)addsubEmojiViews
 {
-    JMSelectEmojiView *emojiView = [[JMSelectEmojiView alloc] initWithFrame:CGRectMake(10, 10, _coverView.width-20, _coverView.width)];
+    JMSelectEmojiView *emojiView = [[JMSelectEmojiView alloc] initWithFrame:CGRectMake(10, 0, _coverView.width-20, _coverView.height)];
     emojiView.modelBlock = ^(id model) {
         
         if (self.animationBlock) {
@@ -61,54 +68,22 @@
     [self.coverView insertSubview:emojiView atIndex:0];
     self.emojiView = emojiView;
     
-    JMFiltersView *filter = [[JMFiltersView alloc] initWithFrame:CGRectMake(10, _coverView.height-45, _coverView.width-20, 40)];
-    filter.tinColor = [UIColor whiteColor];
-    filter.titles = @[@{@"title":@"返回", @"image":@"close_icon_black"}, @{@"title":@"表情", @"image":@"emoji"}, @{@"title":@"心形", @"image":@"heart_32"}, @{@"title":@"搞笑", @"image":@"media_32"}, @{@"title":@"添加", @"image":@"moreInput"}];
-    filter.contentSize = CGSizeMake(filter.width*0.63, 30);
-    filter.filter = ^(NSInteger type) {
-        
-        NSMutableArray *data = [NSMutableArray array];
-        NSArray *emojis;
-        if (type == 0) {
-            
-            [self closeView];
-            
-        }else if (type == 1) {
-            
-            NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"json"];
-            emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
-            
-        }else if (type == 2) {
-            
-            NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emojis" ofType:@"json"];
-            emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
-        
-        
-        }else if (type == 3) {
-            
-            NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji_03" ofType:@"json"];
-            emojis = [JMHelper readJsonByPath:jsonPath][@"handwirte"];
-       
-        }else if (type == 4) {
-            
-            NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"alphaBate" ofType:@"json"];
-            emojis = [JMHelper readJsonByPath:jsonPath][@"alphabate"];
-        }
-        
-        for (NSDictionary *dic in emojis) {[data addObject:[JMSubImageModel objectWithDictionary:dic]];}
-        [emojiView reloadData:data];
-        
-    };
-    [self.coverView addSubview:filter];
-    self.filter = filter;
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"json"];
+    NSArray *emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
+    
+    NSMutableArray *data = [NSMutableArray array];
+    for (NSDictionary *dic in emojis) {[data addObject:[JMSubImageModel objectWithDictionary:dic]];}
+    [emojiView reloadData:data];
 }
 
-- (void)closeView
+- (void)closeView:(UIButton *)sender
 {
     [UIView animateWithDuration:0.4 animations:^{
         
         _emojiView.alpha = 0.0;
-        _filter.alpha = 0.0;
+        
+        sender.transform = CGAffineTransformMakeRotation(M_PI);
+        sender.transform = CGAffineTransformMakeScale(0.1, 0.1);
         
     } completion:^(BOOL finished) {
         
@@ -124,16 +99,6 @@
 }
 
 /*
- 
- {
- "资源":{
- "imageName":["pdf", "epub", "image", "txt"],
- "showName":["Pdf", "Epub", "Photo", "Txt"],
- "color":"0",
- "type":"6"
- }
- },
-
  
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

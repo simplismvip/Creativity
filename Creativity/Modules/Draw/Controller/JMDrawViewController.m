@@ -45,7 +45,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMDrawViewController"];
 }
 

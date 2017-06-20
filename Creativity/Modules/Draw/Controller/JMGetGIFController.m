@@ -12,11 +12,11 @@
 #import "JMDrawViewController.h"
 #import "JMMainNavController.h"
 #import <UMMobClick/MobClick.h>
-#import "FLAnimatedImageView+WebCache.h"
 #import "JMFileManger.h"
+#import "UIImage+JMImage.h"
 
 @interface JMGetGIFController ()
-@property (nonatomic, weak) FLAnimatedImageView *birdImage;
+@property (nonatomic, weak) UIImageView *birdImage;
 @property (nonatomic, assign) CGFloat delayTime;
 @end
 
@@ -25,6 +25,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMGetGIFController"];
 }
 
@@ -36,29 +37,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
+    
     [self configUI];
     [self showGif];
-}
-
-// 创建Gif文件
-- (void)creatGIF:(UIButton *)sender
-{
-    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
-}
-
-// 创建Video文件
-- (void)creatVideo:(UIButton *)sender
-{
-    [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
-    [JMMediaHelper saveImagesToVideoWithImages:_images andVideoPath:self.filePath completed:^(NSString *filePath) {
-        
-        NSLog(@"成功--%@", filePath);
-        
-    } andFailed:^(NSError *error) {
-        
-        NSLog(@"失败--%@", error);
-    }];
 }
 
 // 编辑完成
@@ -89,16 +70,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-// 修改gif帧数
-- (void)changeDelayTime:(UISlider *)slider
-{
-    _delayTime = 1.0f - (slider.value*1.0+0.01);
-    [self showGif];
-}
-
 - (void)configUI
 {
-    
     if (_isHome) {
     
         UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
@@ -112,7 +85,7 @@
     }
     
     self.delayTime = 0.5;
-    FLAnimatedImageView *birdImage = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height/2)];
+    UIImageView *birdImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height/2)];
     [self.view addSubview:birdImage];
     self.birdImage = birdImage;
     
@@ -136,22 +109,47 @@
     [self.view addSubview:gif];
 }
 
+// 修改gif帧数
+- (void)changeDelayTime:(UISlider *)slider
+{
+    _delayTime = 1.0f - (slider.value*1.0+0.01);
+    [self showGif];
+}
+
 - (void)showGif
 {
-    NSURL *url = [NSURL URLWithString:self.filePath];
-    [self.birdImage sd_setImageWithURL:url];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
+        
+        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+        
+            self.birdImage.image = image;
+        });
+    });
+}
 
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        
-//        [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
-//        UIImage *image = [UIImage sd_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//            self.birdImage.image = image;
-//        });
-//        
-//    });
+#pragma mark -----------生成文件------
+// 创建Gif文件
+- (void)creatGIF:(UIButton *)sender
+{
+    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
+}
+
+// 创建Video文件
+- (void)creatVideo:(UIButton *)sender
+{
+    [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
+    [JMMediaHelper saveImagesToVideoWithImages:_images andVideoPath:self.filePath completed:^(NSString *filePath) {
+        
+        NSLog(@"成功--%@", filePath);
+        
+    } andFailed:^(NSError *error) {
+        
+        NSLog(@"失败--%@", error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

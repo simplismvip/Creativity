@@ -23,18 +23,13 @@
         
         JMAttributeStringContentView *content = [[JMAttributeStringContentView alloc] init];
         [self addSubview:content];
-        content.backgroundColor = [UIColor clearColor];
         self.contentV = content;
         
         UILabel *fontName = [[UILabel alloc] init];
         [self addSubview:fontName];
-        fontName.textAlignment = NSTextAlignmentLeft;
+        fontName.textColor = [UIColor whiteColor];
+        fontName.textAlignment = NSTextAlignmentCenter;
         self.fontName = fontName;
-        
-        UILabel *fontShow = [[UILabel alloc] init];
-        [self addSubview:fontShow];
-        fontShow.textAlignment = NSTextAlignmentCenter;
-        self.fontShow = fontShow;
     }
     
     return self;
@@ -44,8 +39,7 @@
 {
     [super layoutSubviews];
     
-    _fontName.frame = CGRectMake(10, 0, self.width/2-10, self.height);
-    _fontShow.frame = CGRectMake(CGRectGetMaxX(_fontName.frame), 0, self.width/2, self.height);
+    _fontName.frame = self.bounds;
     _contentV.frame = self.bounds;
 }
 
