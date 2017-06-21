@@ -8,6 +8,8 @@
 
 #import "UIImage+JMImage.h"
 #import <ImageIO/ImageIO.h>
+#import "ImageUtil.h"
+#import "ColorMatrix.h"
 
 @implementation UIImage (JMImage)
 
@@ -509,5 +511,75 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
+// 照片滤镜
++ (UIImage *)returnImage:(NSInteger)index image:(UIImage *)oldImage
+{
+    UIImage *image;
+    switch (index) {
+        case 0:
+            
+            image = oldImage;
+            break;
+        case 1:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_lomo];
+            break;
+        case 2:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_heibai];
+            break;
+        case 3:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_huajiu];
+            break;
+        case 4:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_gete];
+            break;
+        case 5:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_ruise];
+            break;
+        case 6:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_danya];
+            break;
+        case 7:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_jiuhong];
+            break;
+        case 8:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_qingning];
+            break;
+        case 9:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_langman];
+            break;
+        case 10:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_guangyun];
+            break;
+        case 11:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_landiao];
+            break;
+        case 12:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_menghuan];
+            break;
+        case 13:
+            
+            image = [ImageUtil imageWithImage:oldImage withColorMatrix:colormatrix_yese];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return image;
+}
+
 
 @end

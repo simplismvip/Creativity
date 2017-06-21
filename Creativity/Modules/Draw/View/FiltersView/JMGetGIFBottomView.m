@@ -54,8 +54,8 @@
     }
 }
 
-#pragma mark -- JMBaseFiltersViewDelegate
-- (void)selectIndex:(NSInteger)index
+#pragma mark -- JMBaseFiltersViewDelegate 回调
+- (void)baseFiltersSelectIndex:(NSInteger)index
 {
     if ([self.delegate respondsToSelector:@selector(didSelectRowAtIndexPath:)]) {
         

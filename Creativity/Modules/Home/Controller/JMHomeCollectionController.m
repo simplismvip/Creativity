@@ -298,7 +298,7 @@ static NSString *const headerID = @"header";
 
 - (void)getImageFromLibrary
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择画板来源" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"选择画板来源" preferredStyle:(UIAlertControllerStyleActionSheet)];
     
     // 相机
     [alertController addAction:[UIAlertAction actionWithTitle:@"创作" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
@@ -310,7 +310,6 @@ static NSString *const headerID = @"header";
         [draw creatGifNew];
         JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
         [self presentViewController:Nav animated:YES completion:nil];
-        
     }]];
     
     // 相册
@@ -327,10 +326,13 @@ static NSString *const headerID = @"header";
             NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
             [JMFileManger creatDir:gifPath];
             draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-            draw.isHome = YES;
             draw.images = [photos mutableCopy];
-            [weakSelf.navigationController pushViewController:draw animated:YES];
+            JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
             
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             
+                [weakSelf presentViewController:Nav animated:YES completion:nil];
+            });
         }];
         
         [self presentViewController:_imagePickerVc animated:YES completion:nil];

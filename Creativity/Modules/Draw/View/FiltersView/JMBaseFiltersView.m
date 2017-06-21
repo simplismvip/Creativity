@@ -21,7 +21,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        NSArray *array = @[@{@"title":@"表情", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"心形", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"搞笑", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"添加", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"表情", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"心形", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"搞笑", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"添加", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"表情", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"心形", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"搞笑", @"image":@"navbar_emoticon_icon_black"}, @{@"title":@"添加", @"image":@"navbar_emoticon_icon_black"}];
+        NSArray *array = @[
+                      @{@"title":@"原图", @"image":@"FullSizeRender"},
+                      @{@"title":@"LOMO", @"image":@"FullSizeRender"},
+                      @{@"title":@"黑白", @"image":@"FullSizeRender"},
+                      @{@"title":@"复古", @"image":@"FullSizeRender"},
+                      @{@"title":@"哥特", @"image":@"FullSizeRender"},
+                      @{@"title":@"锐化", @"image":@"FullSizeRender"},
+                      @{@"title":@"淡雅", @"image":@"FullSizeRender"},
+                      @{@"title":@"酒红", @"image":@"FullSizeRender"},
+                      @{@"title":@"清宁", @"image":@"FullSizeRender"},
+                      @{@"title":@"浪漫", @"image":@"FullSizeRender"},
+                      @{@"title":@"光晕", @"image":@"FullSizeRender"},
+                      @{@"title":@"蓝调", @"image":@"FullSizeRender"},
+                      @{@"title":@"梦幻", @"image":@"FullSizeRender"},
+                      @{@"title":@"夜色", @"image":@"FullSizeRender"}
+                      ];
         
         NSMutableArray *arr = [NSMutableArray array];
         for (NSDictionary *dic in array) {
@@ -35,9 +50,9 @@
         JMFiltersView *filter = [[JMFiltersView alloc] init];
         filter.filter = ^(NSInteger type) {
          
-            if ([self.delegate respondsToSelector:@selector(selectIndex:)]) {
+            if ([self.delegate respondsToSelector:@selector(baseFiltersSelectIndex:)]) {
                 
-                [self.delegate selectIndex:type];
+                [self.delegate baseFiltersSelectIndex:type];
             }
         };
         

@@ -15,6 +15,8 @@
 #import "JMFileManger.h"
 #import "UIImage+JMImage.h"
 #import "JMGetGIFBottomView.h"
+//#import "ImageUtil.h"
+//#import "ColorMatrix.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 @property (nonatomic, weak) UIImageView *birdImage;
@@ -93,13 +95,11 @@
     [self.view addSubview:birdImage];
     self.birdImage = birdImage;
         
-    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithCount:@[@"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"]];
+    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithCount:@[@"color_32-1", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"]];
     bsae.delegate = self;
     [self.view addSubview:bsae];
     
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        bsae.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height-74, [UIScreen mainScreen].bounds.size.width, 74);
+    [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height-74, [UIScreen mainScreen].bounds.size.width, 74);
     }];
     
 }
@@ -167,12 +167,107 @@
     [self showGif];
 }
 
+- (void)didSelectRowAtIndexPath:(NSInteger)index
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:0] delayTime:_delayTime];
+        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            self.birdImage.image = image;
+        });
+    });
+}
+
+- (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
+{
+    NSMutableArray *newImages = [NSMutableArray array];
+//    for (UIImage *originImage in images) {
+//        
+//        UIImage *filterImage = [ImageUtil imageWithImage:originImage withColorMatrix:colormatrix_heibai];
+//        [newImages addObject:filterImage];
+//    }
+    return newImages;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
+ 
+ 
+ 
+ 
+ NSString *str = @"";
+ switch (index) {
+ case 0:
+ str = @"原图";
+ self.birdImage.image = [UIImage imageNamed:@"bianjitupian.png"];
+ break;
+ case 1:
+ str = @"LOMO";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_lomo];
+ break;
+ case 2:
+ str = @"黑白";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_heibai];
+ break;
+ case 3:
+ str = @"复古";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_huajiu];
+ break;
+ case 4:
+ str = @"哥特";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_gete];
+ break;
+ case 5:
+ str = @"锐化";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_ruise];
+ break;
+ case 6:
+ str = @"淡雅";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_danya];
+ break;
+ case 7:
+ str = @"酒红";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_jiuhong];
+ break;
+ case 8:
+ str = @"清宁";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_qingning];
+ break;
+ case 9:
+ str = @"浪漫";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_langman];
+ break;
+ case 10:
+ str = @"光晕";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_guangyun];
+ break;
+ case 11:
+ str = @"蓝调";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_landiao];
+ break;
+ case 12:
+ str = @"梦幻";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_menghuan];
+ break;
+ case 13:
+ str = @"夜色";
+ self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_yese];
+ break;
+ 
+ default:
+ break;
+ }
+
+ 
+ 
+ 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

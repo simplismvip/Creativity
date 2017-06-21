@@ -9,6 +9,8 @@
 #import "JMFiltersView.h"
 #import "JMFilterItem.h"
 #import "JMFilterModel.h"
+
+
 @implementation JMFiltersView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -30,12 +32,15 @@
         
         JMFilterModel *model = titles[i];
         JMFilterItem *subView = [[JMFilterItem alloc] init];
-        subView.layer.borderColor = JMBaseColor.CGColor;
-        subView.layer.borderWidth = 1;
-        subView.image = [UIImage imageNamed:model.image];
+        
+        UIImage *origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
+        UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
+
+        subView.image = newimage;
         subView.title = model.title;
         subView.tag = 200 + i;
-        if (_tinColor) {subView.tinColor = _tinColor;}
+        subView.tinColor = [UIColor whiteColor];
+//        if (_tinColor) {subView.tinColor = _tinColor;}
         [subView addTarget:self action:@selector(filterViewAction:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:subView];
     }

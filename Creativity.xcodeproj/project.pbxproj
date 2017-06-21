@@ -149,6 +149,12 @@
 		04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFA1EEF81A400464852 /* Assets.xcassets */; };
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
 		04A0DE091EEF81A400464852 /* CreativityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DE081EEF81A400464852 /* CreativityTests.m */; };
+		04B033AE1EFA153700A10D4C /* ImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A31EFA153700A10D4C /* ImageUtil.m */; };
+		04B033AF1EFA153700A10D4C /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A51EFA153700A10D4C /* UIImage+Alpha.m */; };
+		04B033B01EFA153700A10D4C /* UIImage+Cut.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A71EFA153700A10D4C /* UIImage+Cut.m */; };
+		04B033B11EFA153700A10D4C /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A91EFA153700A10D4C /* UIImage+Resize.m */; };
+		04B033B21EFA153700A10D4C /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033AB1EFA153700A10D4C /* UIImage+RoundedCorner.m */; };
+		04B033B31EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033AD1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m */; };
 		04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */; };
 		04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */; };
 		04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFD1EF904E500C8B24F /* JMFilterItem.m */; };
@@ -428,6 +434,19 @@
 		04A0DE041EEF81A400464852 /* CreativityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreativityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DE081EEF81A400464852 /* CreativityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreativityTests.m; sourceTree = "<group>"; };
 		04A0DE0A1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04B033A11EFA153700A10D4C /* ColorMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMatrix.h; sourceTree = "<group>"; };
+		04B033A21EFA153700A10D4C /* ImageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtil.h; sourceTree = "<group>"; };
+		04B033A31EFA153700A10D4C /* ImageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtil.m; sourceTree = "<group>"; };
+		04B033A41EFA153700A10D4C /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		04B033A51EFA153700A10D4C /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		04B033A61EFA153700A10D4C /* UIImage+Cut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Cut.h"; sourceTree = "<group>"; };
+		04B033A71EFA153700A10D4C /* UIImage+Cut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Cut.m"; sourceTree = "<group>"; };
+		04B033A81EFA153700A10D4C /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		04B033A91EFA153700A10D4C /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		04B033AA1EFA153700A10D4C /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		04B033AB1EFA153700A10D4C /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		04B033AC1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SplitImageIntoTwoParts.h"; sourceTree = "<group>"; };
+		04B033AD1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplitImageIntoTwoParts.m"; sourceTree = "<group>"; };
 		04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseBottomView.h; sourceTree = "<group>"; };
 		04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseBottomView.m; sourceTree = "<group>"; };
 		04E62CFA1EF904E500C8B24F /* JMBaseFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseFiltersView.h; sourceTree = "<group>"; };
@@ -672,6 +691,7 @@
 		0490EC781EEF976F00E05A84 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				04B033A01EFA153700A10D4C /* filter */,
 				A20F38AA1EF97CEF009E5E48 /* ImagePicker */,
 				0490EC941EEF976F00E05A84 /* images */,
 				0490ED461EEF976F00E05A84 /* LibPackage */,
@@ -1149,6 +1169,26 @@
 			path = CreativityTests;
 			sourceTree = "<group>";
 		};
+		04B033A01EFA153700A10D4C /* filter */ = {
+			isa = PBXGroup;
+			children = (
+				04B033A11EFA153700A10D4C /* ColorMatrix.h */,
+				04B033A21EFA153700A10D4C /* ImageUtil.h */,
+				04B033A31EFA153700A10D4C /* ImageUtil.m */,
+				04B033A41EFA153700A10D4C /* UIImage+Alpha.h */,
+				04B033A51EFA153700A10D4C /* UIImage+Alpha.m */,
+				04B033A61EFA153700A10D4C /* UIImage+Cut.h */,
+				04B033A71EFA153700A10D4C /* UIImage+Cut.m */,
+				04B033A81EFA153700A10D4C /* UIImage+Resize.h */,
+				04B033A91EFA153700A10D4C /* UIImage+Resize.m */,
+				04B033AA1EFA153700A10D4C /* UIImage+RoundedCorner.h */,
+				04B033AB1EFA153700A10D4C /* UIImage+RoundedCorner.m */,
+				04B033AC1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.h */,
+				04B033AD1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m */,
+			);
+			path = filter;
+			sourceTree = "<group>";
+		};
 		04E62CF91EF904E500C8B24F /* FiltersView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1536,6 +1576,7 @@
 				0490F2591EEFC0C900E05A84 /* JMGifSetView.m in Sources */,
 				04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
+				04B033B01EFA153700A10D4C /* UIImage+Cut.m in Sources */,
 				0490F1D71EEF9C4900E05A84 /* JMMeViewController.m in Sources */,
 				A20F38A91EF96662009E5E48 /* JMProHeaderView.m in Sources */,
 				A20DAF181EF2E4B0008DBFA9 /* JMGestureButton.m in Sources */,
@@ -1543,11 +1584,13 @@
 				A20F388C1EF64902009E5E48 /* JMPopView.m in Sources */,
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */,
+				04B033AE1EFA153700A10D4C /* ImageUtil.m in Sources */,
 				047FCF131EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.m in Sources */,
 				0490EDE41EEF976F00E05A84 /* UIAlertController+SYQAlterViewController.m in Sources */,
 				0490EECF1EEF977000E05A84 /* SXMarquee.m in Sources */,
 				0490F1AD1EEF9C3900E05A84 /* JMHomeCollectionController.m in Sources */,
 				A20DAF281EF2E61E008DBFA9 /* JMTopTableView.m in Sources */,
+				04B033AF1EFA153700A10D4C /* UIImage+Alpha.m in Sources */,
 				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,
 				A20DAF251EF2E61E008DBFA9 /* JMBottomModel.m in Sources */,
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
@@ -1557,6 +1600,7 @@
 				A20F38C61EF97CEF009E5E48 /* TZPhotoPreviewCell.m in Sources */,
 				04E62D141EF9202500C8B24F /* JMProTableViewCell.m in Sources */,
 				04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */,
+				04B033B21EFA153700A10D4C /* UIImage+RoundedCorner.m in Sources */,
 				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,
 				A20F38C51EF97CEF009E5E48 /* TZPhotoPickerController.m in Sources */,
 				0490F1E81EEF9E1900E05A84 /* SetTableViewCell.m in Sources */,
@@ -1577,6 +1621,7 @@
 				0490F23D1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m in Sources */,
 				0490EDDE1EEF976F00E05A84 /* NSObject+JMProperty.m in Sources */,
 				A20F38C41EF97CEF009E5E48 /* TZImagePickerController.m in Sources */,
+				04B033B11EFA153700A10D4C /* UIImage+Resize.m in Sources */,
 				0490EDE21EEF976F00E05A84 /* UINavigationBar+JMNavigationBar.m in Sources */,
 				0490F1B11EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */,
 				0490EECD1EEF977000E05A84 /* SXColorLabel.m in Sources */,
@@ -1599,6 +1644,7 @@
 				A20DAF261EF2E61E008DBFA9 /* JMBottomView.m in Sources */,
 				A20DAF241EF2E61E008DBFA9 /* JMBottomCell.m in Sources */,
 				0490F2371EEFA32900E05A84 /* JMDrawViewController.m in Sources */,
+				04B033B31EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

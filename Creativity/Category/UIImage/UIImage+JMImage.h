@@ -148,5 +148,5 @@
 
 - (UIImage *)jm_animatedImageByScalingAndCroppingToSize:(CGSize)size;
 
-
++ (UIImage *)returnImage:(NSInteger)index image:(UIImage *)oldImage;
 @end

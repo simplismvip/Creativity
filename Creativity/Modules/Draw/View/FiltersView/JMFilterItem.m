@@ -20,6 +20,11 @@
     self = [super init];
     if (self) {
         
+        self.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.layer.borderWidth = 2;
+        self.layer.cornerRadius = 5;
+        self.layer.masksToBounds = YES;
+        
         UIButton *filterBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [self addSubview:filterBtn];
         self.filterBtn = filterBtn;
@@ -55,7 +60,7 @@
 {
     _tinColor = tinColor;
     _btnTitle.textColor = tinColor;
-    _filterBtn.tintColor = tinColor;
+//    _filterBtn.tintColor = tinColor;
     
 }
 
