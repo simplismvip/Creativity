@@ -22,10 +22,14 @@
 #import "JMGetGIFController.h"
 #import "Masonry.h"
 #import "UIImage+JMImage.h"
+#import "TZImagePickerController.h"
+#import <Photos/Photos.h>
+#import "ZMView.h"
 
-@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate>
+@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, strong) JMHomeCollectionViewFlowLayout *collectionLayout;
+@property (nonatomic, strong) TZImagePickerController *imagePickerVc;
 
 // 是否处于编辑状态
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -289,13 +293,74 @@ static NSString *const headerID = @"header";
 
 - (void)newItem:(UIBarButtonItem *)sender
 {
-    NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-    [JMFileManger creatDir:gifPath];
-    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-    draw.folderPath = gifPath;
-    [draw creatGifNew];
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-    [self presentViewController:Nav animated:YES completion:nil];
+    [self getImageFromLibrary];
+}
+
+- (void)getImageFromLibrary
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择画板来源" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    
+    // 相机
+    [alertController addAction:[UIAlertAction actionWithTitle:@"创作" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        
+        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+        [JMFileManger creatDir:gifPath];
+        JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+        draw.folderPath = gifPath;
+        [draw creatGifNew];
+        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+        [self presentViewController:Nav animated:YES completion:nil];
+        
+    }]];
+    
+    // 相册
+    [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        
+        self.imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:15 delegate:self];
+        _imagePickerVc.allowPickingOriginalPhoto = YES;
+        _imagePickerVc.allowPickingVideo = NO;
+        
+        JMSelf(weakSelf);
+        [_imagePickerVc setDidFinishPickingPhotosWithInfosHandle:^(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto,NSArray<NSDictionary *> *infos){
+            
+            JMGetGIFController *draw = [[JMGetGIFController alloc] init];
+            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+            [JMFileManger creatDir:gifPath];
+            draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+            draw.isHome = YES;
+            draw.images = [photos mutableCopy];
+            [weakSelf.navigationController pushViewController:draw animated:YES];
+            
+        }];
+        
+        [self presentViewController:_imagePickerVc animated:YES completion:nil];
+        
+    }]];
+    
+    // 取消
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:nil]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    if (IS_IPAD) {
+        
+        UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+        
+        if (popover){
+            popover.sourceView = self.navigationController.navigationBar;
+            popover.sourceRect = self.navigationController.navigationBar.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        }
+    }
+}
+
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        
+        
+    });
 }
 
 - (void)didReceiveMemoryWarning {

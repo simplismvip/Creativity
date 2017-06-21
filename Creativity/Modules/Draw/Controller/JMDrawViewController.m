@@ -146,6 +146,19 @@
 
 - (void)rightTitleItem:(UIBarButtonItem *)sender
 {
+    JMGetGIFController *gif = [[JMGetGIFController alloc] init];
+    gif.filePath = [self.folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+    
+    NSMutableArray *images = [NSMutableArray array];
+    for (JMPaintView *memberView in self.subViews) {
+        
+        if (memberView.image) {
+            
+            [images addObject:memberView.image];
+        }
+    }
+    gif.images = images;
+//    [self.navigationController pushViewController:gif animated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -294,8 +307,12 @@
 
 - (void)moveCoverageAtIndexPath:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
-    [self.view exchangeSubviewAtIndex:fromIndex+1 withSubviewAtIndex:toIndex+1];
-    [self.subViews exchangeObjectAtIndex:fromIndex withObjectAtIndex:toIndex];
+    JMPaintView *from = self.subViews[fromIndex];
+    JMPaintView *to = self.subViews[toIndex];
+    [self.view insertSubview:from aboveSubview:to];
+    
+    [self.subViews removeObjectAtIndex:fromIndex];
+    [self.subViews insertObject:from atIndex:toIndex];
 }
 
 - (void)removeCoverageAtIndex:(NSInteger)index
