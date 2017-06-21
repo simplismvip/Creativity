@@ -121,12 +121,12 @@ static NSString *const headerID = @"header";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
-    JMGetGIFController *draw = [[JMGetGIFController alloc] init];
-    draw.filePath = model.folderPath;
-    draw.isHome = YES;
+    JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
+    GIF.filePath = model.folderPath;
     UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
-    draw.images = [NSMutableArray arrayWithArray:image.images];
-    [self.navigationController pushViewController:draw animated:YES];
+    GIF.delayTime = image.duration/image.images.count;
+    GIF.images = [NSMutableArray arrayWithArray:image.images];
+    [self.navigationController pushViewController:GIF animated:YES];
 }
 
 //
@@ -307,7 +307,7 @@ static NSString *const headerID = @"header";
         [JMFileManger creatDir:gifPath];
         JMDrawViewController *draw = [[JMDrawViewController alloc] init];
         draw.folderPath = gifPath;
-        [draw creatGifNew];
+        [draw addNewPaintView];
         JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
         [self presentViewController:Nav animated:YES completion:nil];
     }]];

@@ -11,5 +11,8 @@
 @interface JMGetGIFController : UIViewController
 @property (nonatomic, copy) NSString *filePath;
 @property (nonatomic, strong) NSMutableArray *images;
-@property (nonatomic, assign) BOOL isHome;
+@property (nonatomic, assign) CGFloat delayTime;
+
+// 点击完成从画图界面弹出
+- (void)dismissFromDrawViewController;
 @end

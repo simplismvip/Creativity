@@ -13,6 +13,8 @@
 - (void)changeValue:(CGFloat)value;
 @end
 @interface JMGetGIFBottomView : UIView
-- (instancetype)initWithCount:(NSArray *)subViews;
+
 @property (nonatomic, weak) id <JMGetGIFBottomViewDelegate>delegate;
+@property (nonatomic, weak) UISlider *sliderA;
+@property (nonatomic, strong) NSArray *subViews;
 @end

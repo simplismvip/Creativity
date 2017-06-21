@@ -33,7 +33,7 @@
 @property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, weak) JMPaintView *paintView;
 @property (nonatomic, weak) JMMembersView *memberView;
-
+@property (nonatomic, strong) JMGetGIFController *GIFController;
 @property (nonatomic, strong) NSMutableArray *subViews;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *memberViewData;
@@ -74,7 +74,8 @@
     [self.view addSubview:topbar];
 }
 
-- (void)creatGifNew
+// 从home界面弹出
+- (void)addNewPaintView
 {
     self.leftImage = @"navbar_close_icon_black";
     self.rightImage = @"navbar_next_icon_black";
@@ -86,7 +87,7 @@
     pView.paintImage = [StaticClass getPaintImage];
     self.paintView = pView;
     [self.view addSubview:pView];
-    [self.subViews addObject:pView];
+    [self.subViews insertObject:pView atIndex:0];
     
     [pView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.view);
@@ -95,8 +96,10 @@
     }];
 }
 
-- (void)creatGif:(NSArray *)images
+// 从getGIF界面弹出
+- (void)presentDrawViewController:(JMGetGIFController *)parentController images:(NSArray *)images
 {
+    self.GIFController = parentController;
     self.rightTitle = @"完成";
     
     [self.view addSubview:self.memberView];
@@ -106,7 +109,7 @@
         pView.image = image;
         self.paintView = pView;
         [self.view addSubview:pView];
-        [self.subViews addObject:pView];
+        [self.subViews insertObject:pView atIndex:0];
         
         [pView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
@@ -114,6 +117,22 @@
             make.height.mas_equalTo(self.view.width*1.2);
         }];
     }
+}
+
+// 完成按钮
+- (void)rightTitleItem:(UIBarButtonItem *)sender
+{
+    [self.GIFController.images removeAllObjects];
+    
+    for (JMPaintView *memberView in self.subViews) {
+        
+        if (memberView.image) {
+            
+            [self.GIFController.images addObject:memberView.image];
+        }
+    }
+    [self.GIFController dismissFromDrawViewController];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)setItem:(UIBarButtonItem *)sender
@@ -142,34 +161,6 @@
     
     gif.images = images;
     [self.navigationController pushViewController:gif animated:YES];
-}
-
-- (void)rightTitleItem:(UIBarButtonItem *)sender
-{
-    JMGetGIFController *gif = [[JMGetGIFController alloc] init];
-    gif.filePath = [self.folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-    
-    NSMutableArray *images = [NSMutableArray array];
-    for (JMPaintView *memberView in self.subViews) {
-        
-        if (memberView.image) {
-            
-            [images addObject:memberView.image];
-        }
-    }
-    gif.images = images;
-//    [self.navigationController pushViewController:gif animated:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)touchItem:(NSInteger)index
-{
-    [self.view bringSubviewToFront:self.subViews[index]];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -217,7 +208,21 @@
     if (bottomType == JMTopBarTypeAdd){
         
         [JMPopView popView:self.view title:title];
-        [self creatGifNew];
+        
+        JMPaintView *pView = [[JMPaintView alloc] init];
+        pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
+        pView.lineDash = [StaticClass getDashType];
+        pView.paintText = [StaticClass getPaintText];
+        pView.paintImage = [StaticClass getPaintImage];
+        self.paintView = pView;
+        [self.view addSubview:pView];
+        [self.subViews insertObject:pView atIndex:0];
+        
+        [pView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self.view);
+            make.width.mas_equalTo(self.view.width);
+            make.height.mas_equalTo(self.view.width*1.2);
+        }];
         
     }else if (bottomType == JMTopBarTypeLayerManger){
         

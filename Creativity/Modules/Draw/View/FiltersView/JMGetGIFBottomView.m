@@ -11,15 +11,35 @@
 #import "JMSlider.h"
 
 @interface JMGetGIFBottomView()<JMBaseFiltersViewDelegate>
-
+@property (nonatomic, strong) NSArray *dataArray;
 @end
 
 @implementation JMGetGIFBottomView
 
-- (instancetype)initWithCount:(NSArray *)subViews
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, 74)];
-    bsae.backgroundColor = JMColor(33, 33, 33);
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        self.backgroundColor = JMColor(33, 33, 33);
+        
+        UISlider *sliderA = [[UISlider alloc] init];
+        [sliderA setMinimumTrackImage:[[UIImage imageNamed:@"prgbar_unread"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [sliderA setMaximumTrackImage:[[UIImage imageNamed:@"prgbar_read"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
+        [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateHighlighted];
+        [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
+        [sliderA addTarget:self action:@selector(changerValues:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:sliderA];
+        self.sliderA = sliderA;
+        
+    }
+    return self;
+}
+
+- (void)setSubViews:(NSArray *)subViews
+{
+    _subViews = subViews;
+    
     int i = 0;
     for (NSString *icon in subViews) {
         
@@ -28,22 +48,9 @@
         [btn setTintColor:JMBaseColor];
         btn.tag = i+200;
         [btn addTarget:self action:@selector(select:) forControlEvents:(UIControlEventTouchUpInside)];
-        [bsae addSubview:btn];
+        [self addSubview:btn];
         i ++;
     }
-    
-    // 左右轨的图片
-    UISlider *sliderA=[[UISlider alloc] init];
-    sliderA.backgroundColor = [UIColor clearColor];
-    sliderA.value=0.5f;
-    [sliderA setMinimumTrackImage:[[UIImage imageNamed:@"prgbar_unread"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [sliderA setMaximumTrackImage:[[UIImage imageNamed:@"prgbar_read"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
-    [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateHighlighted];
-    [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
-    [sliderA addTarget:self action:@selector(changerValues:) forControlEvents:UIControlEventTouchUpInside];
-    [bsae addSubview:sliderA];
-    
-    return bsae;
 }
 
 - (void)changerValues:(UISlider *)slider

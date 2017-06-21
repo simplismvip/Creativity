@@ -15,12 +15,9 @@
 #import "JMFileManger.h"
 #import "UIImage+JMImage.h"
 #import "JMGetGIFBottomView.h"
-//#import "ImageUtil.h"
-//#import "ColorMatrix.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
-@property (nonatomic, weak) UIImageView *birdImage;
-@property (nonatomic, assign) CGFloat delayTime;
+@property (nonatomic, weak) UIImageView *imageView;
 @end
 
 @implementation JMGetGIFController
@@ -41,42 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configUI];
-    [self showGif];
-}
-
-// 编辑完成
-- (void)Done:(UIBarButtonItem *)done
-{
-    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)Editer:(UIBarButtonItem *)done
-{
-    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-    [draw creatGif:_images];
-    
-    // 删除GIF文件
-    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
-    draw.folderPath = [_filePath stringByReplacingOccurrencesOfString:string withString:@""];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-    [self presentViewController:Nav animated:YES completion:nil];
-}
-
-- (void)deleteBtn:(UIBarButtonItem *)done
-{
-    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
-    [JMFileManger removeFileByPath:[_filePath stringByReplacingOccurrencesOfString:string withString:@""]];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)configUI
-{
-    if (_isHome) {
-    
+    if (_delayTime>0) {
+        
         UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
         UIBarButtonItem *editer = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(Editer:)];
         self.navigationItem.rightBarButtonItems = @[right, editer];
@@ -87,32 +50,69 @@
         self.navigationItem.rightBarButtonItems = @[right];
     }
     
-    self.delayTime = 0.5;
-    UIImageView *birdImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*1.2)];
-    birdImage.contentMode = UIViewContentModeScaleAspectFit;
-    birdImage.center = self.view.center;
-    birdImage.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:birdImage];
-    self.birdImage = birdImage;
-        
-    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithCount:@[@"color_32-1", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*1.2)];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.center = self.view.center;
+    imageView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:imageView];
+    self.imageView = imageView;
+    
+    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
+    bsae.subViews = @[@"color_32-1", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"];
     bsae.delegate = self;
+    bsae.sliderA.value = _delayTime;
     [self.view addSubview:bsae];
+    [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
     
-    [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height-74, [UIScreen mainScreen].bounds.size.width, 74);
-    }];
-    
+    // 创建GIF文件
+    [self creatNewGIF:_filePath];
 }
 
-- (void)showGif
+// 创作选项弹出，保存第一次生成GIF文件
+- (void)Done:(UIBarButtonItem *)done
+{
+    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+// 1> 开始编辑
+- (void)Editer:(UIBarButtonItem *)done
+{
+    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+    [draw presentDrawViewController:self images:_images];
+    
+    // 删除GIF文件
+    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
+    draw.folderPath = [_filePath stringByReplacingOccurrencesOfString:string withString:@""];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+    [self presentViewController:Nav animated:YES completion:nil];
+}
+
+// 2> 编辑完成返回
+- (void)dismissFromDrawViewController
+{
+    [self creatNewGIF:_filePath];
+}
+
+// 编辑界面，删除GIF文件
+- (void)deleteBtn:(UIBarButtonItem *)done
+{
+    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
+    [JMFileManger removeFileByPath:[_filePath stringByReplacingOccurrencesOfString:string withString:@""]];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)creatNewGIF:(NSString *)GIFPath
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
-        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+        [JMMediaHelper makeAnimatedGIF:GIFPath images:_images delayTime:_delayTime];
+        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:GIFPath]];
         dispatch_async(dispatch_get_main_queue(), ^{
         
-            self.birdImage.image = image;
+            self.imageView.image = image;
         });
     });
 }
@@ -128,7 +128,9 @@
             
             UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
             if (popover){popover.sourceView = sender;popover.sourceRect = sender.bounds;}
+            
         }else{
+            
             activityViewController.popoverPresentationController.sourceView = self.view;
         }
     }
@@ -164,19 +166,19 @@
 - (void)changeValue:(CGFloat)value
 {
     _delayTime = value;
-    [self showGif];
+    [self creatNewGIF:_filePath];
 }
 
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:0] delayTime:_delayTime];
+        [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:index] delayTime:_delayTime];
         UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            self.birdImage.image = image;
+            self.imageView.image = image;
         });
     });
 }
@@ -184,11 +186,12 @@
 - (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
 {
     NSMutableArray *newImages = [NSMutableArray array];
-//    for (UIImage *originImage in images) {
-//        
-//        UIImage *filterImage = [ImageUtil imageWithImage:originImage withColorMatrix:colormatrix_heibai];
-//        [newImages addObject:filterImage];
-//    }
+    for (UIImage *originImage in images) {
+        NSLog(@"%@", NSStringFromCGSize(originImage.size));
+        UIImage *filterImage = [UIImage returnImage:type image:originImage];
+        NSLog(@"%@", NSStringFromCGSize(filterImage.size));
+        [newImages addObject:filterImage];
+    }
     return newImages;
 }
 
@@ -198,76 +201,7 @@
 }
 
 /*
- 
- 
- 
- 
- NSString *str = @"";
- switch (index) {
- case 0:
- str = @"原图";
- self.birdImage.image = [UIImage imageNamed:@"bianjitupian.png"];
- break;
- case 1:
- str = @"LOMO";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_lomo];
- break;
- case 2:
- str = @"黑白";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_heibai];
- break;
- case 3:
- str = @"复古";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_huajiu];
- break;
- case 4:
- str = @"哥特";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_gete];
- break;
- case 5:
- str = @"锐化";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_ruise];
- break;
- case 6:
- str = @"淡雅";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_danya];
- break;
- case 7:
- str = @"酒红";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_jiuhong];
- break;
- case 8:
- str = @"清宁";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_qingning];
- break;
- case 9:
- str = @"浪漫";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_langman];
- break;
- case 10:
- str = @"光晕";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_guangyun];
- break;
- case 11:
- str = @"蓝调";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_landiao];
- break;
- case 12:
- str = @"梦幻";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_menghuan];
- break;
- case 13:
- str = @"夜色";
- self.birdImage.image = [ImageUtil imageWithImage:[UIImage imageNamed:@"bianjitupian.png"] withColorMatrix:colormatrix_yese];
- break;
- 
- default:
- break;
- }
 
- 
- 
- 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

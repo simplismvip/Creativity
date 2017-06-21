@@ -149,7 +149,6 @@ static void changeRGBA(int *red,int *green,int *blue,int *alpha, const float* f)
 	CGImageRef imageRef = CGImageCreate(w, h, bitsPerComponent, bitsPerPixel, bytesPerRow,colorSpaceRef, bitmapInfo, provider, NULL, NO, renderingIntent);//创建要输出的图像
 	
 	UIImage *myImage = [UIImage imageWithCGImage:imageRef];
-	
 	CFRelease(imageRef);
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);

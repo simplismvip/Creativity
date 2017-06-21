@@ -40,6 +40,7 @@
         [self addSubview:_showAndHide];
         
         UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(getEditer:)];
+        ges.minimumPressDuration = 1;
         [self addGestureRecognizer:ges];
     }
     

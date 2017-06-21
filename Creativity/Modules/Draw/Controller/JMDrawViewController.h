@@ -8,8 +8,9 @@
 
 #import "JMBaseController.h"
 
+@class JMGetGIFController;
 @interface JMDrawViewController : JMBaseController
 @property (nonatomic, copy) NSString *folderPath;
-- (void)creatGifNew;
-- (void)creatGif:(NSArray *)images;
+- (void)addNewPaintView;
+- (void)presentDrawViewController:(JMGetGIFController *)parentController images:(NSArray *)images;
 @end
