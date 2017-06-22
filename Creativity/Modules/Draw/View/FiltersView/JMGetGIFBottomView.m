@@ -81,22 +81,32 @@
 // 弹出子菜单
 - (void)select:(UIButton *)selectCell
 {
-    JMBaseFiltersView *filter = [[JMBaseFiltersView alloc] initWithFrame:CGRectMake(0, kH, self.width, 100)];
-    filter.delegate = self;
-    
-    [UIView animateWithDuration:0.3 animations:^{
+    if (selectCell.tag == 200) {
         
-        self.frame = CGRectMake(0, kH, self.width, 74);
+        JMBaseFiltersView *filter = [[JMBaseFiltersView alloc] initWithFrame:CGRectMake(0, kH, self.width, 100)];
+        filter.delegate = self;
         
-    } completion:^(BOOL finished) {
-     
         [UIView animateWithDuration:0.3 animations:^{
             
-            filter.frame = CGRectMake(0, kH-100, self.width, 100);
+            self.frame = CGRectMake(0, kH, self.width, 74);
+            
+        } completion:^(BOOL finished) {
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                
+                filter.frame = CGRectMake(0, kH-100, self.width, 100);
+            }];
         }];
-    }];
+        
+        [self.superview addSubview:filter];
+        
+    }else{
     
-    [self.superview addSubview:filter];
+        if ([self.delegate respondsToSelector:@selector(didSelectRowAtIndexPath:)]) {
+            
+            [self.delegate didSelectRowAtIndexPath:selectCell.tag - 200];
+        }
+    }
 }
 
 - (void)layoutSubviews

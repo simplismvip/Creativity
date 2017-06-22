@@ -58,7 +58,7 @@
     self.imageView = imageView;
     
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
-    bsae.subViews = @[@"color_32-1", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"];
+    bsae.subViews = @[@"color_32-1", @"navbar_video_icon_disabled_black", @"gif_32px_1136116", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"];
     bsae.delegate = self;
     bsae.sliderA.value = _delayTime;
     [self.view addSubview:bsae];
@@ -138,31 +138,6 @@
     [self presentViewController:activityViewController animated:YES completion:NULL];
 }
 
-// 创建Video文件
-- (void)creatVideo:(UIButton *)sender
-{
-    [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
-    
-    NSMutableArray *paths = [NSMutableArray array];
-    for (UIImage *image in _images) {
-        
-        NSString *path = [NSString stringWithFormat:@"%@/%@.png", JMDocumentsPath, [JMHelper timerString]];
-        [paths addObject:path];
-        
-        NSData *data = UIImagePNGRepresentation(image);
-        [data writeToFile:path atomically:YES];
-    }
-    
-    [JMMediaHelper saveImagesToVideoWithImages:paths completed:^(NSString *filePath) {
-        
-        NSLog(@"成功--%@", filePath);
-        
-    } andFailed:^(NSError *error) {
-        
-        NSLog(@"失败--%@", error);
-    }];
-}
-
 - (void)changeValue:(CGFloat)value
 {
     _delayTime = value;
@@ -171,16 +146,50 @@
 
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    if (index == 0) {
         
-        [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:index] delayTime:_delayTime];
-        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
-            self.imageView.image = image;
+            [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:index] delayTime:_delayTime];
+            UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.imageView.image = image;
+            });
         });
-    });
+    }else if (index == 1){
+    
+        [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
+        
+        NSMutableArray *paths = [NSMutableArray array];
+        for (UIImage *image in _images) {
+            
+            NSString *path = [NSString stringWithFormat:@"%@/%@.png", JMDocumentsPath, [JMHelper timerString]];
+            [paths addObject:path];
+            
+            NSData *data = UIImagePNGRepresentation(image);
+            [data writeToFile:path atomically:YES];
+        }
+        
+        [JMMediaHelper saveImagesToVideoWithImages:paths completed:^(NSString *filePath) {
+            
+            NSLog(@"成功--%@", filePath);
+            
+        } andFailed:^(NSError *error) {
+            
+            NSLog(@"失败--%@", error);
+        }];
+        
+    }else if (index == 2){
+        
+        [self creatNewGIF:_filePath];
+        
+    }else if (index == 3){
+        
+        
+        
+    }
 }
 
 - (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
@@ -197,6 +206,9 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+#ifdef DEBUG
+    NSLog(@"%s", __FUNCTION__);
+#endif
     // Dispose of any resources that can be recreated.
 }
 

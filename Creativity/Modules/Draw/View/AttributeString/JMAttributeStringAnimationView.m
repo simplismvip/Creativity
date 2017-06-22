@@ -62,7 +62,7 @@
     JMFiltersView *filter = [[JMFiltersView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attribute.frame), _coverView.width-20, 40)];
     filter.tinColor = JMBaseColor;
     
-    NSArray *array = @[@{@"title":@"返回", @"image":@"navbar_close_icon_black"}, @{@"title":@"选择字体", @"image":@"emoji"}, @{@"title":@"字体样式", @"image":@"heart_32"}];
+    NSArray *array = @[@{@"title":@"返回", @"image":@"navbar_close_icon_black"}, @{@"title":@"选择字体", @"image":@"navbar_close_icon_black"}, @{@"title":@"字体样式", @"image":@"navbar_close_icon_black"}];
     NSMutableArray *arr = [NSMutableArray array];
     for (NSDictionary *dic in array) {
         

@@ -163,13 +163,6 @@
     [self.navigationController pushViewController:gif animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-    JMLog(@"内存警告 -- didReceiveMemoryWarning");
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)dealloc
 {
     JMLog(@"JMDrawViewController - 销毁");
@@ -392,6 +385,13 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+#ifdef DEBUG
+    NSLog(@"%s", __FUNCTION__);
+#endif
+    // Dispose of any resources that can be recreated.
+}
 
 /*
  NSInteger row = indexPath.row;

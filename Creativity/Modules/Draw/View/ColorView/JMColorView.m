@@ -88,7 +88,7 @@
     CGPoint currentPoint = [touch locationInView:self];
     CGFloat chassRadius = self.width*0.45;
     CGFloat absDistanceX = fabs(currentPoint.x - self.center.x);
-    CGFloat absDistanceY = fabs(currentPoint.y - self.center.y);
+    CGFloat absDistanceY = fabs(currentPoint.y - self.width*0.45);
     CGFloat currentToPointRadius = sqrtf(absDistanceX *absDistanceX + absDistanceY *absDistanceY);
     
     if (currentToPointRadius < chassRadius) {
@@ -106,9 +106,9 @@
 {
     UITouch *touch = [touches anyObject];
     CGPoint currentPoint = [touch locationInView:self];
-    CGFloat chassisRadius = self.width*0.45;
+    CGFloat chassisRadius = self.width*0.42;
     CGFloat absDistanceX = (currentPoint.x - self.center.x);
-    CGFloat absDistanceY = (currentPoint.y - self.center.y);
+    CGFloat absDistanceY = (currentPoint.y - self.width*0.45);
     CGFloat currentTopointRadius = sqrtf(absDistanceX * absDistanceX + absDistanceY *absDistanceY);
     
     if (currentTopointRadius <chassisRadius) {
@@ -214,14 +214,14 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    CGFloat y = self.width;
+    CGFloat y = self.width*0.9;
     CGFloat w = self.width/4;
     
     _r_RGB.frame = CGRectMake(0, y, w, 30);
     _g_RGB.frame = CGRectMake(CGRectGetMaxX(_r_RGB.frame), y, w, 30);
     _b_RGB.frame = CGRectMake(CGRectGetMaxX(_g_RGB.frame), y, w, 30);
     _a_ALPHA.frame = CGRectMake(CGRectGetMaxX(_b_RGB.frame), y, w, 30);
-    _baseColorView.frame = CGRectMake(0, CGRectGetMaxY(_a_ALPHA.frame), y, 30);
+    _baseColorView.frame = CGRectMake(0, CGRectGetMaxY(_a_ALPHA.frame), self.width, 30);
     _point.frame = CGRectMake(100, 100, 30, 30);
 }
 
@@ -229,7 +229,7 @@
 
     UIImage *centerImage = [UIImage imageNamed:@"ColorPalette.png"];
     CGFloat size_W = self.width;
-    [centerImage drawInRect:CGRectMake(size_W*0.5-size_W*0.9/2, 0, size_W*0.9, size_W*0.9)];
+    [centerImage drawInRect:CGRectMake(size_W*0.05, 0, size_W*0.9, size_W*0.9)];
 }
 
 

@@ -56,7 +56,7 @@
 
 - (void)addsubColorViews
 {
-    JMColorView *colorView = [[JMColorView alloc] initWithFrame:CGRectMake(15, 10, _coverView.width-30, _coverView.width+30)];
+    JMColorView *colorView = [[JMColorView alloc] initWithFrame:CGRectMake(15, 10, _coverView.width-30, _coverView.height-80)];
     colorView.colorBlock = ^(UIColor *color) {
         
         [StaticClass setColor:color];
@@ -65,7 +65,7 @@
     [self.coverView insertSubview:colorView atIndex:0];
     self.colorView = colorView;
     
-    JMSlider *fontSize = [[JMSlider alloc] initWithFrame:CGRectMake(30, _coverView.height-60, kW-120, 20)];
+    JMSlider *fontSize = [[JMSlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(colorView.frame), kW-120, 35)];
     fontSize.sValue = [StaticClass getLineWidth];
     fontSize.alpha = 0.0;
     fontSize.value = ^(JMSlider *value) {
@@ -77,7 +77,7 @@
     [self.coverView addSubview:fontSize];
     self.fontSize = fontSize;
     
-    JMSlider *alphaView = [[JMSlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(fontSize.frame), kW-120, 20)];
+    JMSlider *alphaView = [[JMSlider alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(fontSize.frame), kW-120, 35)];
     alphaView.sValue = [StaticClass getAlpha];
     alphaView.alpha = 0.0;
     alphaView.value = ^(JMSlider *value) {
