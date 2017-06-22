@@ -25,6 +25,18 @@ typedef void(^SaveVideoFailed)(NSError *error);
 
 + (NSURL *)makeAnimatedGIF:(NSString *)path images:(NSArray *)images delayTime:(CGFloat)delayTime;
 +(void)saveImagesToVideoWithImages:(NSArray *)images andVideoPath:(NSString *)videoPath completed:(SaveVideoCompleted)completed andFailed:(SaveVideoFailed)failedBlock;
+
+/**
+ *
+ *  将图片数组合成一段视频
+ *
+ *  @param images    照片数组
+ *  @param inputPath   写入视频路径
+ *  @param fps    视频时长
+ *  @param block     完成的回调
+ */
++ (void)compressImages:(NSArray <UIImage *> *)images inputPath:(NSString *)inputPath fps:(CGFloat)fps completion:(void(^)(NSURL *outurl))block;
+
 /**
  *
  *  将图片数组合成一段视频

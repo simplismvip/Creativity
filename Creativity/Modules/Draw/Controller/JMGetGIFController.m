@@ -15,6 +15,7 @@
 #import "JMFileManger.h"
 #import "UIImage+JMImage.h"
 #import "JMGetGIFBottomView.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 @property (nonatomic, weak) UIImageView *imageView;
@@ -160,25 +161,22 @@
         });
     }else if (index == 1){
     
-        [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
-        
-        NSMutableArray *paths = [NSMutableArray array];
-        for (UIImage *image in _images) {
-            
-            NSString *path = [NSString stringWithFormat:@"%@/%@.png", JMDocumentsPath, [JMHelper timerString]];
-            [paths addObject:path];
-            
-            NSData *data = UIImagePNGRepresentation(image);
-            [data writeToFile:path atomically:YES];
-        }
-        
-        [JMMediaHelper saveImagesToVideoWithImages:paths completed:^(NSString *filePath) {
-            
-            NSLog(@"成功--%@", filePath);
-            
-        } andFailed:^(NSError *error) {
-            
-            NSLog(@"失败--%@", error);
+        NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
+        [JMMediaHelper compressImages:_images inputPath:videoPath fps:_delayTime completion:^(NSURL *outurl) {
+         
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeVideoAtPathToSavedPhotosAlbum:outurl completionBlock:^(NSURL *assetURL, NSError *error) {
+               
+                if (error) {
+                
+                    NSLog(@"Save video fail:%@",error);
+                    
+                } else {
+                
+                    [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+                    NSLog(@"Save video succeed.");
+                }
+            }];
         }];
         
     }else if (index == 2){
@@ -187,9 +185,12 @@
         
     }else if (index == 3){
         
-        
-        
     }
+}
+
+- (void)savideoSuccess
+{
+    NSLog(@"保存成功");
 }
 
 - (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type

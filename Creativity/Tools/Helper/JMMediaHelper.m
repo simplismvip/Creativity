@@ -11,7 +11,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AVFoundation/AVFoundation.h>
 #import <CoreVideo/CoreVideo.h>
-#import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #include <ifaddrs.h>
 #include <arpa/inet.h>
@@ -44,6 +43,197 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     
     CFRelease(destination);
     return fileURL;
+}
+
++ (UIImage *)croppedImage:(UIImage *)image bounds:(CGRect)bounds
+{
+    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], bounds);
+    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return croppedImage;
+}
+
++ (UIImage *)clipImage:(UIImage *)image ScaleWithsize:(CGSize)asize
+{
+    UIImage *newimage;
+    if (nil == image) {
+        newimage = nil;
+    }
+    else{
+        CGSize oldsize = image.size;
+        CGRect rect;
+        if (asize.width/asize.height > oldsize.width/oldsize.height) {
+            rect.size.width = asize.width;
+            rect.size.height = asize.width*oldsize.height/oldsize.width;
+            rect.origin.x = 0;
+            rect.origin.y = (asize.height - rect.size.height)/2;
+        }
+        else{
+            rect.size.width = asize.height*oldsize.width/oldsize.height;
+            rect.size.height = asize.height;
+            rect.origin.x = (asize.width - rect.size.width)/2;
+            rect.origin.y = 0;
+        }
+        UIGraphicsBeginImageContext(asize);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextClipToRect(context, CGRectMake(0, 0, asize.width, asize.height));
+        CGContextSetFillColorWithColor(context, [[UIColor clearColor] CGColor]);
+        UIRectFill(CGRectMake(0, 0, asize.width, asize.height));//clear background
+        [image drawInRect:rect];
+        newimage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    return newimage;
+}
+
++ (CVPixelBufferRef )pixelBufferFromCGImage:(CGImageRef)image size:(CGSize)size duration:(int)duration
+{
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey, nil];
+    CVPixelBufferRef pxbuffer = NULL;
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, size.width, size.height, kCVPixelFormatType_32ARGB, (__bridge CFDictionaryRef) options, &pxbuffer);
+    
+    NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
+    
+    CVPixelBufferLockBaseAddress(pxbuffer, 0);
+    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
+    NSParameterAssert(pxdata != NULL);
+    
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(pxdata, size.width, size.height, 8, 4*size.width, rgbColorSpace, kCGImageAlphaPremultipliedFirst);
+    NSParameterAssert(context);
+    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(context);
+    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
+    
+    return pxbuffer;
+}
+
+
+/*
+ 帧率  X 总照片数 = 总时间 = 每张照片时间 * 实际照片数
+ 
+ 每张照片时间 * 实际照片数 = 总时间
+ 
+ 总照片数 =  每张照片时间 * 实际照片数 / 帧率
+ 
+ 每样照片各几张 =  总照片数 / 实际照片数 = 每张照片时间 * 实际照片数 / 帧率 / 实际照片数 = 每张照片时间 * 帧率
+ */
+
+/**
+ *  多张图片合成视频
+ *
+ */
++ (void)compressImages:(NSArray <UIImage *> *)images inputPath:(NSString *)inputPath fps:(CGFloat)fps completion:(void(^)(NSURL *outurl))block
+{
+    if (images.count<2) {return;}
+    
+    CGFloat duration;
+    int framess;
+    if (fps>0) {
+        duration = images.count * fps;
+        framess = 1/fps;
+    }else {
+        duration = images.count * 0.8;
+        framess = (int)1/0.8;
+    }
+    
+    
+    //先裁剪图片
+    NSMutableArray *imageArray = [NSMutableArray array];
+    for (UIImage *image in images)
+    {
+        CGRect rect = CGRectMake(0, 0,image.size.width, image.size.height);
+        if (rect.size.width < rect.size.height)
+        {
+            rect.origin.y = (rect.size.height - rect.size.width)/2;
+            rect.size.height = rect.size.width;
+        }else
+        {
+            rect.origin.x = (rect.size.width - rect.size.height)/2;
+            rect.size.width = rect.size.height;
+        }
+        
+        //裁剪
+        UIImage *newImage = [self croppedImage:image bounds:rect];
+        
+        // 缩放
+        UIImage *finalImage = [self clipImage:newImage ScaleWithsize:CGSizeMake(640, 640)];
+        [imageArray addObject:finalImage];
+    }
+    
+    NSURL *exportUrl = [NSURL fileURLWithPath:inputPath];
+    CGSize size = CGSizeMake(640,640);//定义视频的大小
+    __block AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:exportUrl fileType:AVFileTypeQuickTimeMovie error:nil];
+    
+    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:AVVideoCodecH264, AVVideoCodecKey,
+                                   [NSNumber numberWithInt:size.width], AVVideoWidthKey,
+                                   [NSNumber numberWithInt:size.height], AVVideoHeightKey, nil];
+    AVAssetWriterInput *writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
+    
+    NSDictionary *sourcePixelBufferAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:kCVPixelFormatType_32ARGB], kCVPixelBufferPixelFormatTypeKey, nil];
+    
+    AVAssetWriterInputPixelBufferAdaptor *adaptor = [AVAssetWriterInputPixelBufferAdaptor
+                                                     assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput sourcePixelBufferAttributes:sourcePixelBufferAttributesDictionary];
+    NSParameterAssert(writerInput);
+    NSParameterAssert([videoWriter canAddInput:writerInput]);
+    
+    if ([videoWriter canAddInput:writerInput])
+        NSLog(@"");
+    else
+        NSLog(@"");
+    
+    [videoWriter addInput:writerInput];
+    [videoWriter startWriting];
+    [videoWriter startSessionAtSourceTime:kCMTimeZero];
+    
+    //合成多张图片为一个视频文件
+    dispatch_queue_t dispatchQueue = dispatch_queue_create("mediaInputQueue", NULL);
+    
+    int __block frame = 0;
+    [writerInput requestMediaDataWhenReadyOnQueue:dispatchQueue usingBlock:^{
+        while ([writerInput isReadyForMoreMediaData])
+        {
+            if(++frame > duration * framess)
+            {
+                [writerInput markAsFinished];
+                if(videoWriter.status == AVAssetWriterStatusWriting){
+                    NSCondition *cond = [[NSCondition alloc] init];
+                    [cond lock];
+                    [videoWriter finishWritingWithCompletionHandler:^{
+                        [cond lock];
+                        [cond signal];
+                        [cond unlock];
+                    }];
+                    [cond wait];
+                    [cond unlock];
+                    !block?:block(exportUrl);
+                }
+                break;
+            }
+            CVPixelBufferRef buffer = NULL;
+            
+            int idx = (int)(frame/framess * images.count/duration);
+            if (idx >= images.count) {
+                idx = (int)(images.count - 1);
+            }
+            buffer = (CVPixelBufferRef)[self.class pixelBufferFromCGImage:[[imageArray objectAtIndex:idx] CGImage] size:size duration:duration];
+            if (buffer)
+            {
+                if(![adaptor appendPixelBuffer:buffer withPresentationTime:CMTimeMake(frame, framess)])
+                {
+                    NSLog(@"fail");
+                }else
+                {
+                    NSLog(@"success:%d",frame);
+                }
+                CFRelease(buffer);
+            }
+        }
+    }];
+    
 }
 
 +(void)saveImagesToVideoWithImages:(NSArray *)paths completed:(SaveVideoCompleted)completed andFailed:(SaveVideoFailed)failedBlock{
@@ -163,7 +353,7 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     
     NSDictionary *videoSettings =[NSDictionary dictionaryWithObjectsAndKeys:AVVideoCodecH264,AVVideoCodecKey,
                                   [NSNumber numberWithInt:frameSize.width],AVVideoWidthKey,
-                                  [NSNumber numberWithInt:frameSize.height],AVVideoHeightKey,nil];
+                                  [NSNumber numberWithInt:frameSize.height],AVVideoHeightKey, [NSNumber numberWithFloat:1.0],AVVideoMaxKeyFrameIntervalDurationKey,nil];
     AVAssetWriterInput *writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
     
     NSDictionary*sourcePixelBufferAttributesDictionary =[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:kCVPixelFormatType_32ARGB],kCVPixelBufferPixelFormatTypeKey,nil];
