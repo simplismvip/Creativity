@@ -24,7 +24,7 @@ typedef void(^SaveVideoFailed)(NSError *error);
  */
 
 + (NSURL *)makeAnimatedGIF:(NSString *)path images:(NSArray *)images delayTime:(CGFloat)delayTime;
-+(void)saveImagesToVideoWithImages:(NSArray *)images andVideoPath:(NSString *)videoPath completed:(SaveVideoCompleted)completed andFailed:(SaveVideoFailed)failedBlock;
++(void)saveImagesToVideoWithImages:(NSArray *)images fps:(NSInteger)fps andVideoPath:(NSString *)videoPath completed:(SaveVideoCompleted)completed andFailed:(SaveVideoFailed)failedBlock;
 
 /**
  *

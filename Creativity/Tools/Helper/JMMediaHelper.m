@@ -25,7 +25,7 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
 {
     NSUInteger const kFrameCount = images.count;
     NSDictionary *fileProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFLoopCount: @0,}};
-    NSDictionary *frameProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFDelayTime: [NSNumber numberWithFloat:delayTime],}};
+    NSDictionary *frameProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFDelayTime: [NSNumber numberWithFloat:delayTime]}};
     
     NSURL *fileURL = [NSURL fileURLWithPath:path];
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)fileURL, kUTTypeGIF, kFrameCount, NULL);
@@ -243,14 +243,10 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
                             andFailed:failedBlock];
 }
 
-+(void)saveImagesToVideoWithImages:(NSArray *)images andVideoPath:(NSString *)videoPath completed:(SaveVideoCompleted)completed andFailed:(SaveVideoFailed)failedBlock
++(void)saveImagesToVideoWithImages:(NSArray *)images fps:(NSInteger)fps andVideoPath:(NSString *)videoPath completed:(SaveVideoCompleted)completed andFailed:(SaveVideoFailed)failedBlock
 {
     //数据为空就不需要了
     if(!images && images.count == 0) return;
-    
-    long long timeString = [[NSDate date] timeIntervalSince1970];
-    NSString *fileName = [NSString stringWithFormat:@"video%llu.mp4",timeString];
-
     unlink([videoPath UTF8String]);
     
     __block NSError *error = nil;
@@ -292,23 +288,26 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
         while([writerInput isReadyForMoreMediaData]){
             if(++frame >= [images count] ){
                 [writerInput markAsFinished];
-                [videoWriter finishWritingWithCompletionHandler:^{
-                    [self addAudioToFileAtPath:videoPath andAudioPath:nil Success:^(NSString *filePath) {
-                        if(completed){
-                            completed(filePath);
-                        }
-                    } failed:^(NSError *error) {
-                        if(failedBlock)
-                            failedBlock(error);
+                if(videoWriter.status == AVAssetWriterStatusWriting){
+                    NSCondition *cond = [[NSCondition alloc] init];
+                    [cond lock];
+                    [videoWriter finishWritingWithCompletionHandler:^{
+                        [cond lock];
+                        [cond signal];
+                        [cond unlock];
                     }];
-                }];
+                    [cond wait];
+                    [cond unlock];
+                    
+                    !completed?:completed(videoPath);
+                }
                 break;
             }
             
-            UIImage *info = [images objectAtIndex:frame]; // [UIImage imageWithContentsOfFile:[images objectAtIndex:frame]];
+            UIImage *info = [images objectAtIndex:frame];
             CVPixelBufferRef buffer = [self pixelBufferFromCGImage:info.CGImage size:frameSize];
             if (buffer){
-                if(![adaptor appendPixelBuffer:buffer withPresentationTime:CMTimeMake(frame,24)]){
+                if(![adaptor appendPixelBuffer:buffer withPresentationTime:CMTimeMake(frame,fps)]){
                     if(failedBlock)
                         failedBlock(error);
                     CFRelease(buffer);

@@ -141,6 +141,8 @@
 
 - (void)changeValue:(CGFloat)value
 {
+    NSLog(@"%f", value);
+    
     _delayTime = value;
     [self creatNewGIF:_filePath];
 }
@@ -159,25 +161,57 @@
                 self.imageView.image = image;
             });
         });
+        
     }else if (index == 1){
     
-        NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
-        [JMMediaHelper compressImages:_images inputPath:videoPath fps:_delayTime completion:^(NSURL *outurl) {
-         
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            [library writeVideoAtPathToSavedPhotosAlbum:outurl completionBlock:^(NSURL *assetURL, NSError *error) {
-               
-                if (error) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+        
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            
+            NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
+            
+            [JMMediaHelper saveImagesToVideoWithImages:_images fps:_delayTime*10 andVideoPath:videoPath completed:^(NSString *filePath) {
                 
-                    NSLog(@"Save video fail:%@",error);
-                    
-                } else {
+                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:filePath] completionBlock:^(NSURL *assetURL, NSError *error) {
+
+                    if (error) {
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+
+                            [hud hideAnimated:YES];
+                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                            hud.mode = MBProgressHUDModeCustomView;
+                            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"]];
+                            hud.square = YES;
+                            hud.label.text = @"失败";
+                            [hud hideAnimated:YES afterDelay:1.f];
+                        });
+
+                    } else {
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+
+                            [hud hideAnimated:YES];
+                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                            hud.mode = MBProgressHUDModeCustomView;
+                            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
+                            hud.square = YES;
+                            hud.label.text = @"完成";
+                            [hud hideAnimated:YES afterDelay:1.f];
+                            [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+                            
+                        });
+                    }
+                }];
                 
-                    [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
-                    NSLog(@"Save video succeed.");
-                }
+            } andFailed:^(NSError *error) {
+                
+                NSLog(@"fail");
             }];
-        }];
+        });
         
     }else if (index == 2){
         
@@ -186,11 +220,6 @@
     }else if (index == 3){
         
     }
-}
-
-- (void)savideoSuccess
-{
-    NSLog(@"保存成功");
 }
 
 - (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
@@ -212,6 +241,11 @@
 #endif
     // Dispose of any resources that can be recreated.
 }
+
+//            [JMMediaHelper compressImages:_images inputPath:videoPath fps:_delayTime completion:^(NSURL *outurl) {
+//
+
+//            }];
 
 /*
 

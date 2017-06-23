@@ -57,7 +57,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(changeValue:)]) {
         
-        [self.delegate changeValue:(1.0f - (slider.value*1.0+0.01))];
+        [self.delegate changeValue:(1.0f - (slider.value*1.0+0.1))];
     }
 }
 
