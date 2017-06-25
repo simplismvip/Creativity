@@ -11,6 +11,8 @@
 @protocol JMGetGIFBottomViewDelegate <NSObject>
 - (void)didSelectRowAtIndexPath:(NSInteger)index;
 - (void)changeValue:(CGFloat)value;
+- (void)changeValueSerial:(CGFloat)progress;
+
 @end
 @interface JMGetGIFBottomView : UIView
 

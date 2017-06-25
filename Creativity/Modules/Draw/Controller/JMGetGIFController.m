@@ -16,9 +16,11 @@
 #import "UIImage+JMImage.h"
 #import "JMGetGIFBottomView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "JMFilterItem.h"
+#import "JMButtom.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
-@property (nonatomic, weak) UIImageView *imageView;
+@property (nonatomic, weak) UIButton *showFps;
 @end
 
 @implementation JMGetGIFController
@@ -39,6 +41,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
+    bsae.subViews = @[@"color_32-1", @"navbar_video_icon_disabled_black", @"gif_32px_1136116", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"];
+    bsae.delegate = self;
+    bsae.sliderA.value = _delayTime;
+    [self.view addSubview:bsae];
+    [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
+
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*1.2)];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.center = self.view.center;
+    imageView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:imageView];
+    self.imageView = imageView;
+    
+    JMButtom *showFps = [[JMButtom alloc] init];
+    showFps.layer.cornerRadius = 10;
+    [showFps setImage:[[UIImage imageNamed:@"ellopse_32"] imageWithColor:JMBaseColor] forState:(UIControlStateNormal)];
+    showFps.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    showFps.titleLabel.textColor = [UIColor whiteColor];
+    showFps.frame = CGRectMake(0, 0, 100, 100);
+    showFps.center = self.view.center;
+    showFps.hidden = YES;
+    showFps.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
+    [self.view addSubview:showFps];
+    self.showFps = showFps;
+    
     if (_delayTime>0) {
         
         UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
@@ -49,30 +77,16 @@
         
         UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
         self.navigationItem.rightBarButtonItems = @[right];
+        
+        // 创建GIF文件
+        [self creatNewGIF:_filePath];
     }
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*1.2)];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageView.center = self.view.center;
-    imageView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:imageView];
-    self.imageView = imageView;
-    
-    JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
-    bsae.subViews = @[@"color_32-1", @"navbar_video_icon_disabled_black", @"gif_32px_1136116", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"];
-    bsae.delegate = self;
-    bsae.sliderA.value = _delayTime;
-    [self.view addSubview:bsae];
-    [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
-    
-    // 创建GIF文件
-    [self creatNewGIF:_filePath];
 }
 
 // 创作选项弹出，保存第一次生成GIF文件
 - (void)Done:(UIBarButtonItem *)done
 {
-    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
+    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:(1.0-_delayTime)];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -91,7 +105,7 @@
     [self presentViewController:Nav animated:YES completion:nil];
 }
 
-// 2> 编辑完成返回
+// JMDrawViewController点击编辑界面完成返回JMGetGIFController界面
 - (void)dismissFromDrawViewController
 {
     [self creatNewGIF:_filePath];
@@ -109,7 +123,7 @@
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        [JMMediaHelper makeAnimatedGIF:GIFPath images:_images delayTime:_delayTime];
+        [JMMediaHelper makeAnimatedGIF:GIFPath images:_images delayTime:(1.0-_delayTime)];
         UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:GIFPath]];
         dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -139,12 +153,27 @@
     [self presentViewController:activityViewController animated:YES completion:NULL];
 }
 
+#pragma mark -- JMGetGIFBottomViewDelegate
 - (void)changeValue:(CGFloat)value
 {
     NSLog(@"%f", value);
     
     _delayTime = value;
     [self creatNewGIF:_filePath];
+    [UIView animateWithDuration:.5 animations:^{
+        
+        _showFps.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        
+    } completion:^(BOOL finished) {
+        _showFps.hidden = YES;
+        _showFps.transform = CGAffineTransformMakeScale(1, 1);
+    }];
+}
+
+- (void)changeValueSerial:(CGFloat)progress
+{
+    _showFps.hidden = NO;
+    [self.showFps setTitle:[NSString stringWithFormat:@"%ld Fps", (NSInteger)(10*progress+1)] forState:(UIControlStateNormal)];
 }
 
 - (void)didSelectRowAtIndexPath:(NSInteger)index
@@ -153,7 +182,7 @@
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
-            [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:index] delayTime:_delayTime];
+            [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:index] delayTime:(1.0-_delayTime)];
             UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -172,7 +201,7 @@
             
             NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
             
-            [JMMediaHelper saveImagesToVideoWithImages:_images fps:_delayTime*10 andVideoPath:videoPath completed:^(NSString *filePath) {
+            [JMMediaHelper saveImagesToVideoWithImages:_images fps:(10*_delayTime+1) andVideoPath:videoPath completed:^(NSString *filePath) {
                 
                 ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
                 [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:filePath] completionBlock:^(NSURL *assetURL, NSError *error) {

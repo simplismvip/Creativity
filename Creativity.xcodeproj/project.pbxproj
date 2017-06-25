@@ -164,6 +164,11 @@
 		04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D101EF91F0D00C8B24F /* JMBuyProViewController.m */; };
 		04E62D141EF9202500C8B24F /* JMProTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D131EF9202500C8B24F /* JMProTableViewCell.m */; };
 		04E62D171EF921F400C8B24F /* ProModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62D161EF921F400C8B24F /* ProModel.m */; };
+		A20BE8901EFE07980083DBF1 /* JMLicenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE88F1EFE07980083DBF1 /* JMLicenceController.m */; };
+		A20BE8931EFE07EE0083DBF1 /* JMLicenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE8921EFE07EE0083DBF1 /* JMLicenceCell.m */; };
+		A20BE8961EFE09AB0083DBF1 /* JMLicenceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE8951EFE09AB0083DBF1 /* JMLicenceModel.m */; };
+		A20BE8991EFE0CDB0083DBF1 /* JMss.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE8981EFE0CDB0083DBF1 /* JMss.m */; };
+		A20BE89C1EFE18B20083DBF1 /* JMLicenceViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE89B1EFE18B20083DBF1 /* JMLicenceViewModel.m */; };
 		A20DAF131EF2E31A008DBFA9 /* JMMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */; };
 		A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */; };
 		A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */; };
@@ -468,6 +473,16 @@
 		0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.release.xcconfig"; sourceTree = "<group>"; };
 		7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Creativity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Creativity/Pods-Creativity.debug.xcconfig"; sourceTree = "<group>"; };
 		923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Creativity.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20BE88E1EFE07980083DBF1 /* JMLicenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLicenceController.h; sourceTree = "<group>"; };
+		A20BE88F1EFE07980083DBF1 /* JMLicenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLicenceController.m; sourceTree = "<group>"; };
+		A20BE8911EFE07EE0083DBF1 /* JMLicenceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLicenceCell.h; sourceTree = "<group>"; };
+		A20BE8921EFE07EE0083DBF1 /* JMLicenceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLicenceCell.m; sourceTree = "<group>"; };
+		A20BE8941EFE09AB0083DBF1 /* JMLicenceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLicenceModel.h; sourceTree = "<group>"; };
+		A20BE8951EFE09AB0083DBF1 /* JMLicenceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLicenceModel.m; sourceTree = "<group>"; };
+		A20BE8971EFE0CDB0083DBF1 /* JMss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMss.h; sourceTree = "<group>"; };
+		A20BE8981EFE0CDB0083DBF1 /* JMss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMss.m; sourceTree = "<group>"; };
+		A20BE89A1EFE18B20083DBF1 /* JMLicenceViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLicenceViewModel.h; sourceTree = "<group>"; };
+		A20BE89B1EFE18B20083DBF1 /* JMLicenceViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLicenceViewModel.m; sourceTree = "<group>"; };
 		A20DAF0C1EF2E31A008DBFA9 /* JMMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMemberModel.h; sourceTree = "<group>"; };
 		A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMemberModel.m; sourceTree = "<group>"; };
 		A20DAF0E1EF2E31A008DBFA9 /* JMMembersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMembersCell.h; sourceTree = "<group>"; };
@@ -1016,6 +1031,8 @@
 				04E62D101EF91F0D00C8B24F /* JMBuyProViewController.m */,
 				0490F1BC1EEF9C4900E05A84 /* JMMeViewController.h */,
 				0490F1BD1EEF9C4900E05A84 /* JMMeViewController.m */,
+				A20BE88E1EFE07980083DBF1 /* JMLicenceController.h */,
+				A20BE88F1EFE07980083DBF1 /* JMLicenceController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1035,6 +1052,8 @@
 				04E62D131EF9202500C8B24F /* JMProTableViewCell.m */,
 				A20F38A71EF96662009E5E48 /* JMProHeaderView.h */,
 				A20F38A81EF96662009E5E48 /* JMProHeaderView.m */,
+				A20BE8911EFE07EE0083DBF1 /* JMLicenceCell.h */,
+				A20BE8921EFE07EE0083DBF1 /* JMLicenceCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1046,6 +1065,12 @@
 				0490F1E41EEF9DCB00E05A84 /* SetModel.m */,
 				04E62D151EF921F400C8B24F /* ProModel.h */,
 				04E62D161EF921F400C8B24F /* ProModel.m */,
+				A20BE8941EFE09AB0083DBF1 /* JMLicenceModel.h */,
+				A20BE8951EFE09AB0083DBF1 /* JMLicenceModel.m */,
+				A20BE89A1EFE18B20083DBF1 /* JMLicenceViewModel.h */,
+				A20BE89B1EFE18B20083DBF1 /* JMLicenceViewModel.m */,
+				A20BE8971EFE0CDB0083DBF1 /* JMss.h */,
+				A20BE8981EFE0CDB0083DBF1 /* JMss.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1344,6 +1369,7 @@
 		04A0DDE31EEF81A400464852 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = JM;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = JMZhao;
 				TargetAttributes = {
@@ -1546,6 +1572,7 @@
 				047FCF1C1EF3DCBD00AD0C08 /* JMColorView.m in Sources */,
 				A20F38C91EF97CEF009E5E48 /* UIView+Layout.m in Sources */,
 				A20F388B1EF64902009E5E48 /* JMButtom.m in Sources */,
+				A20BE8901EFE07980083DBF1 /* JMLicenceController.m in Sources */,
 				A20DAF371EF4363F008DBFA9 /* MSCellAccessory.m in Sources */,
 				A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */,
 				0490EEA21EEF977000E05A84 /* JMFmdbModel.m in Sources */,
@@ -1594,6 +1621,7 @@
 				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,
 				A20DAF251EF2E61E008DBFA9 /* JMBottomModel.m in Sources */,
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
+				A20BE8931EFE07EE0083DBF1 /* JMLicenceCell.m in Sources */,
 				0490EED01EEF977000E05A84 /* UIColor+Separate.m in Sources */,
 				A20F38C21EF97CEF009E5E48 /* TZImageManager.m in Sources */,
 				0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */,
@@ -1604,9 +1632,11 @@
 				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,
 				A20F38C51EF97CEF009E5E48 /* TZPhotoPickerController.m in Sources */,
 				0490F1E81EEF9E1900E05A84 /* SetTableViewCell.m in Sources */,
+				A20BE8961EFE09AB0083DBF1 /* JMLicenceModel.m in Sources */,
 				0490F2451EEFA32900E05A84 /* JMWriteView.m in Sources */,
 				A20F38CA1EF97CEF009E5E48 /* ZMView.m in Sources */,
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
+				A20BE8991EFE0CDB0083DBF1 /* JMss.m in Sources */,
 				04A0DDF01EEF81A400464852 /* main.m in Sources */,
 				0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */,
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,
@@ -1621,6 +1651,7 @@
 				0490F23D1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m in Sources */,
 				0490EDDE1EEF976F00E05A84 /* NSObject+JMProperty.m in Sources */,
 				A20F38C41EF97CEF009E5E48 /* TZImagePickerController.m in Sources */,
+				A20BE89C1EFE18B20083DBF1 /* JMLicenceViewModel.m in Sources */,
 				04B033B11EFA153700A10D4C /* UIImage+Resize.m in Sources */,
 				0490EDE21EEF976F00E05A84 /* UINavigationBar+JMNavigationBar.m in Sources */,
 				0490F1B11EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */,

@@ -24,14 +24,17 @@
         self.backgroundColor = JMColor(33, 33, 33);
         
         UISlider *sliderA = [[UISlider alloc] init];
+        sliderA.minimumValue = 0.01;
+        sliderA.maximumValue = 0.99;
         [sliderA setMinimumTrackImage:[[UIImage imageNamed:@"prgbar_unread"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
         [sliderA setMaximumTrackImage:[[UIImage imageNamed:@"prgbar_read"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
         [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateHighlighted];
         [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
         [sliderA addTarget:self action:@selector(changerValues:) forControlEvents:UIControlEventTouchUpInside];
+        [sliderA addTarget:self action:@selector(changeValueSerial:) forControlEvents:(UIControlEventValueChanged)];
+        
         [self addSubview:sliderA];
         self.sliderA = sliderA;
-        
     }
     return self;
 }
@@ -57,7 +60,16 @@
 {
     if ([self.delegate respondsToSelector:@selector(changeValue:)]) {
         
-        [self.delegate changeValue:(1.0f - (slider.value*1.0+0.1))];
+        //  end
+        [self.delegate changeValue:slider.value];
+    }
+}
+
+- (void)changeValueSerial:(UISlider *)slider
+{
+    if ([self.delegate respondsToSelector:@selector(changeValueSerial:)]) {
+        
+        [self.delegate changeValueSerial:slider.value];
     }
 }
 
@@ -122,9 +134,13 @@
             view.frame = CGRectMake(i*w, 30, w, self.bounds.size.height-30);
             i ++;
             
-        }else if ([view isKindOfClass:[UIView class]]){
+        }else if ([view isKindOfClass:[UISlider class]]){
             
             view.frame = CGRectMake(30, 0, self.bounds.size.width-60, 30);
+            
+        }else if ([view isKindOfClass:[UILabel class]]){
+            
+            view.frame = CGRectMake(0, CGRectGetMinY(_sliderA.frame)-15, 28, 15);
         }
     }
 }

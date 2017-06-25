@@ -121,11 +121,12 @@ static NSString *const headerID = @"header";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
+    UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
     JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
     GIF.filePath = model.folderPath;
-    UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
     GIF.delayTime = image.duration/image.images.count;
     GIF.images = [NSMutableArray arrayWithArray:image.images];
+    GIF.imageView.image = image;
     [self.navigationController pushViewController:GIF animated:YES];
 }
 

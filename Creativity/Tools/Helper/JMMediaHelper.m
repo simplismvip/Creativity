@@ -21,8 +21,11 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
 
 @implementation JMMediaHelper
 
+// delayTime = duration/images.count --> fps = 1/delayTime *
 + (NSURL *)makeAnimatedGIF:(NSString *)path images:(NSArray *)images delayTime:(CGFloat)delayTime
 {
+    CGFloat preCount = delayTime/images.count;
+    
     NSUInteger const kFrameCount = images.count;
     NSDictionary *fileProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFLoopCount: @0,}};
     NSDictionary *frameProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFDelayTime: [NSNumber numberWithFloat:delayTime]}};
@@ -243,6 +246,8 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
                             andFailed:failedBlock];
 }
 
+// fps = frame/s, duration = images.count/*fps
+
 +(void)saveImagesToVideoWithImages:(NSArray *)images fps:(NSInteger)fps andVideoPath:(NSString *)videoPath completed:(SaveVideoCompleted)completed andFailed:(SaveVideoFailed)failedBlock
 {
     //数据为空就不需要了
@@ -307,7 +312,7 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
             UIImage *info = [images objectAtIndex:frame];
             CVPixelBufferRef buffer = [self pixelBufferFromCGImage:info.CGImage size:frameSize];
             if (buffer){
-                if(![adaptor appendPixelBuffer:buffer withPresentationTime:CMTimeMake(frame,fps)]){
+                if(![adaptor appendPixelBuffer:buffer withPresentationTime:CMTimeMake(frame,(int)fps)]){
                     if(failedBlock)
                         failedBlock(error);
                     CFRelease(buffer);

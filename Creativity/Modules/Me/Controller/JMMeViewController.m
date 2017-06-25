@@ -15,6 +15,7 @@
 #import "JMFileManger.h"
 #import "JMBuyProViewController.h"
 #import "JMMainNavController.h"
+#import "JMLicenceController.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -131,6 +132,8 @@
         
     }else if (indexPath.section==2 && indexPath.row==0) {
         
+        JMLicenceController *about = [[JMLicenceController alloc] init];
+        [self.navigationController pushViewController:about animated:YES];
         
     }else if (indexPath.section==2 && indexPath.row==1) {
     

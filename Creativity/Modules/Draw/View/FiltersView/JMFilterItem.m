@@ -68,8 +68,8 @@
 {
     [super layoutSubviews];
     
-    _filterBtn.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-12);
-    _btnTitle.frame = CGRectMake(0, CGRectGetMaxY(_filterBtn.frame), self.bounds.size.width, 10);
+    _filterBtn.frame = CGRectMake(0, 0, self.width, self.height-12);
+    _btnTitle.frame = CGRectMake(0, CGRectGetMaxY(_filterBtn.frame), self.width, 10);
     
 }
 
