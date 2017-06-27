@@ -21,6 +21,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        // @[@"CIPhotoEffectNoir", @"CIPhotoEffectTransfer", @"CIPhotoEffectTonal", @"CIPhotoEffectProcess", @"CIPhotoEffectMono", @"CIPhotoEffectInstant", @"CIPhotoEffectFade", @"CIPhotoEffectChrome", @"CIMaskToAlpha", @"CIColorPosterize", @"CIColorInvert", @"CIWhitePointAdjust", @"CISRGBToneCurveToLinear", @"CILinearToSRGBToneCurve"];
+        
         NSArray *array = @[
                       @{@"title":@"原图", @"image":@"FullSizeRender"},
                       @{@"title":@"LOMO", @"image":@"FullSizeRender"},
@@ -35,7 +37,23 @@
                       @{@"title":@"光晕", @"image":@"FullSizeRender"},
                       @{@"title":@"蓝调", @"image":@"FullSizeRender"},
                       @{@"title":@"梦幻", @"image":@"FullSizeRender"},
-                      @{@"title":@"夜色", @"image":@"FullSizeRender"}
+                      @{@"title":@"夜色", @"image":@"FullSizeRender"},
+                      
+                      @{@"title":@"Noir", @"image":@"FullSizeRender"},
+                      @{@"title":@"Transfer", @"image":@"FullSizeRender"},
+                      @{@"title":@"Tonal", @"image":@"FullSizeRender"},
+                      @{@"title":@"Process", @"image":@"FullSizeRender"},
+                      @{@"title":@"Mono", @"image":@"FullSizeRender"},
+                      @{@"title":@"Instant", @"image":@"FullSizeRender"},
+                      @{@"title":@"Fade", @"image":@"FullSizeRender"},
+                      @{@"title":@"Chrome", @"image":@"FullSizeRender"},
+                      @{@"title":@"Alpha", @"image":@"FullSizeRender"},
+                      @{@"title":@"Posterize", @"image":@"FullSizeRender"},
+                      @{@"title":@"Invert", @"image":@"FullSizeRender"},
+                      @{@"title":@"Adjust", @"image":@"FullSizeRender"},
+                      @{@"title":@"Linear", @"image":@"FullSizeRender"},
+                      @{@"title":@"Curve", @"image":@"FullSizeRender"}
+                      
                       ];
         
         NSMutableArray *arr = [NSMutableArray array];
@@ -58,7 +76,7 @@
         
         filter.tinColor = [UIColor redColor];
         filter.titles = [arr copy];
-        filter.contentSize = CGSizeMake(70*12, 65);
+        filter.contentSize = CGSizeMake(70*array.count, 65);
         [self addSubview:filter];
         self.filter = filter;
         

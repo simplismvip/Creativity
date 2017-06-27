@@ -91,8 +91,7 @@
     
     [pView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.view);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(self.view.width*1.2);
+        make.width.height.mas_equalTo(self.view.width);
     }];
 }
 
@@ -113,8 +112,7 @@
         
         [pView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
-            make.width.mas_equalTo(self.view.width);
-            make.height.mas_equalTo(self.view.width*1.2);
+            make.width.height.mas_equalTo(self.view.width);
         }];
     }
 }
@@ -153,10 +151,13 @@
     NSMutableArray *images = [NSMutableArray array];
     for (JMPaintView *memberView in self.subViews) {
         
-        if (memberView.image) {
+        UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
+        [images addObject:imageNew];
         
-            [images addObject:memberView.image];
-        }
+//        if (memberView.image) {
+//        
+//            [images addObject:memberView.image];
+//        }
     }
     
     gif.images = images;
@@ -213,8 +214,8 @@
         
         [pView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
-            make.width.mas_equalTo(self.view.width);
-            make.height.mas_equalTo(self.view.width*1.2);
+            make.width.height.mas_equalTo(self.view.width);
+            // make.height.mas_equalTo(self.view.width*1.2);
         }];
         
     }else if (bottomType == JMTopBarTypeLayerManger){

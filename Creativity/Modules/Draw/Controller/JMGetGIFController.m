@@ -48,8 +48,8 @@
     [self.view addSubview:bsae];
     [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
 
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*1.2)];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.center = self.view.center;
     imageView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:imageView];
@@ -176,20 +176,24 @@
     [self.showFps setTitle:[NSString stringWithFormat:@"%ld Fps", (NSInteger)(10*progress+1)] forState:(UIControlStateNormal)];
 }
 
+- (void)filtersDidSelectRowAtIndexPath:(NSInteger)index
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        _images = [self filters:_images type:index];
+        [JMMediaHelper makeAnimatedGIF:self.filePath images:[_images copy] delayTime:(1.0-_delayTime)];
+        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            self.imageView.image = image;
+        });
+    });
+}
+
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
     if (index == 0) {
-        
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            
-            [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:index] delayTime:(1.0-_delayTime)];
-            UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                self.imageView.image = image;
-            });
-        });
         
     }else if (index == 1){
     
@@ -254,12 +258,31 @@
 - (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
 {
     NSMutableArray *newImages = [NSMutableArray array];
-    for (UIImage *originImage in images) {
-        NSLog(@"%@", NSStringFromCGSize(originImage.size));
-        UIImage *filterImage = [UIImage returnImage:type image:originImage];
-        NSLog(@"%@", NSStringFromCGSize(filterImage.size));
-        [newImages addObject:filterImage];
+    
+    if (type<14) {
+       
+        for (UIImage *originImage in images) {
+            NSLog(@"%@", NSStringFromCGSize(originImage.size));
+            UIImage *filterImage = [UIImage returnImage:type image:originImage];
+            NSLog(@"%@", NSStringFromCGSize(filterImage.size));
+            [newImages addObject:filterImage];
+        }
+    }else{
+    
+        for (UIImage *originImage in images) {
+            
+            NSLog(@"%@", NSStringFromCGSize(originImage.size));
+            UIImage *filterImage = [images.firstObject defaultFilter:type-14];
+            
+            NSData *data = UIImageJPEGRepresentation(filterImage, 0.5);
+            [data writeToFile:[NSString stringWithFormat:@"/Users/mac/Desktop/home/%ld.jpg", type-14] atomically:YES];
+            
+            NSLog(@"%@", NSStringFromCGSize(filterImage.size));
+            
+            [newImages addObject:filterImage];
+        }
     }
+    
     return newImages;
 }
 

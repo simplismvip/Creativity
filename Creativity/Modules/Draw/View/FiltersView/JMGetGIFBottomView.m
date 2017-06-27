@@ -78,7 +78,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(didSelectRowAtIndexPath:)]) {
         
-        [self.delegate didSelectRowAtIndexPath:index];
+        [self.delegate filtersDidSelectRowAtIndexPath:index];
     }
 }
 

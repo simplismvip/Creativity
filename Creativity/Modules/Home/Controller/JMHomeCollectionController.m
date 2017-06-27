@@ -25,6 +25,7 @@
 #import "TZImagePickerController.h"
 #import <Photos/Photos.h>
 #import "ZMView.h"
+#import "JMGifView.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
@@ -327,7 +328,20 @@ static NSString *const headerID = @"header";
             NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
             [JMFileManger creatDir:gifPath];
             draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-            draw.images = [photos mutableCopy];
+            
+            NSMutableArray *newImages = [NSMutableArray array];
+            for (UIImage *image in photos) {
+                
+                JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.width)];
+                gif.backgroundColor = [UIColor whiteColor];
+                gif.image = image;
+                UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.width)];
+                
+//                [weakSelf newImage:image];
+                [newImages addObject:image];
+            }
+            
+            draw.images = [newImages mutableCopy];
             JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -364,6 +378,31 @@ static NSString *const headerID = @"header";
         
         
     });
+}
+
+- (UIImage *)newImage:(UIImage *)oldImage
+{
+    CGFloat rate = oldImage.size.width/oldImage.size.height;
+    CGFloat w = kW;
+    CGFloat h = kH;
+    
+    UIImage *imageNew;
+    if (rate>1) {
+        
+        // w > h
+        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w/rate)];
+        
+    }else if (rate<1){
+        
+        // w < h
+        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w*rate, w)];
+        
+    }else{
+        // w == h
+        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w)];
+    }
+    
+    return imageNew;
 }
 
 - (void)didReceiveMemoryWarning {

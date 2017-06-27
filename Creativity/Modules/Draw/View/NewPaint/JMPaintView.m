@@ -156,7 +156,6 @@
     // 记录数据
     NSString *point = NSStringFromCGPoint(startPoint);
     [self.points addObject:point];
-    
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event

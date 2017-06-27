@@ -40,7 +40,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     [view.layer renderInContext:ctx];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    CGImageRef imagRef = CGImageCreateWithImageInRect([newImage CGImage], CGRectMake(0, 37*kScale, rect.size.width*kScale, rect.size.height*kScale)); // 需要乘以屏幕分辨率
+    CGImageRef imagRef = CGImageCreateWithImageInRect([newImage CGImage], CGRectMake(0, 0, rect.size.width*kScale, rect.size.height*kScale));// 需要乘以屏幕分辨率
     UIImage *nImage = [UIImage imageWithCGImage:imagRef];
     CGImageRelease(imagRef);
     UIGraphicsEndImageContext();
@@ -581,5 +581,16 @@
     return image;
 }
 
+- (UIImage *)defaultFilter:(NSInteger)index
+{
+    NSArray *filters = @[@"CIPhotoEffectNoir", @"CIPhotoEffectTransfer", @"CIPhotoEffectTonal", @"CIPhotoEffectProcess", @"CIPhotoEffectMono", @"CIPhotoEffectInstant", @"CIPhotoEffectFade", @"CIPhotoEffectChrome", @"CIMaskToAlpha", @"CIColorPosterize", @"CIColorInvert", @"CIWhitePointAdjust", @"CISRGBToneCurveToLinear", @"CILinearToSRGBToneCurve"];
+    
+    CIImage *ci = [CIImage imageWithData:UIImagePNGRepresentation(self)];
+    CIFilter *filte = [CIFilter filterWithName:filters[index]];
+    [filte setValue:ci forKey:kCIInputImageKey];
+    UIImage *newImage = [UIImage imageWithCIImage:filte.outputImage];
+    
+    return newImage;
+}
 
 @end

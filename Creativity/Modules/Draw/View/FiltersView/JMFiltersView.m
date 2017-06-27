@@ -33,14 +33,21 @@
         JMFilterModel *model = titles[i];
         JMFilterItem *subView = [[JMFilterItem alloc] init];
         
-        UIImage *origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
+        UIImage *origin;
+        
+        if (i< 14) {
+        
+            origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
+        }else{
+        
+            origin = [[UIImage imageNamed:model.image] defaultFilter:i-14];
+        }
+        
         UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
-
         subView.image = newimage;
         subView.title = model.title;
         subView.tag = 200 + i;
         subView.tinColor = [UIColor whiteColor];
-//        if (_tinColor) {subView.tinColor = _tinColor;}
         [subView addTarget:self action:@selector(filterViewAction:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:subView];
     }
