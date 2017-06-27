@@ -178,14 +178,26 @@
 
 - (void)filtersDidSelectRowAtIndexPath:(NSInteger)index
 {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         
-        _images = [self filters:_images type:index];
+        NSMutableArray *newImages = [NSMutableArray array];
+        for (UIImage *originImage in _images) {
+            
+            UIImage *filterImage = [UIImage returnImage:index image:originImage];
+            [newImages addObject:filterImage];
+        }
+        
+        _images = newImages;
         [JMMediaHelper makeAnimatedGIF:self.filePath images:[_images copy] delayTime:(1.0-_delayTime)];
         UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
+            [hud hideAnimated:YES];
             self.imageView.image = image;
         });
     });
@@ -258,32 +270,17 @@
 - (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
 {
     NSMutableArray *newImages = [NSMutableArray array];
-    
-    if (type<14) {
-       
-        for (UIImage *originImage in images) {
-            NSLog(@"%@", NSStringFromCGSize(originImage.size));
-            UIImage *filterImage = [UIImage returnImage:type image:originImage];
-            NSLog(@"%@", NSStringFromCGSize(filterImage.size));
-            [newImages addObject:filterImage];
-        }
-    }else{
-    
-        for (UIImage *originImage in images) {
-            
-            NSLog(@"%@", NSStringFromCGSize(originImage.size));
-            UIImage *filterImage = [images.firstObject defaultFilter:type-14];
-            
-            NSData *data = UIImageJPEGRepresentation(filterImage, 0.5);
-            [data writeToFile:[NSString stringWithFormat:@"/Users/mac/Desktop/home/%ld.jpg", type-14] atomically:YES];
-            
-            NSLog(@"%@", NSStringFromCGSize(filterImage.size));
-            
-            [newImages addObject:filterImage];
-        }
+    for (UIImage *originImage in images) {
+        
+        UIImage *filterImage = [UIImage returnImage:type image:originImage];
+        [newImages addObject:filterImage];
     }
-    
     return newImages;
+}
+
+- (void)dealloc
+{
+    NSLog(@"JMGetGIFController 销毁");
 }
 
 - (void)didReceiveMemoryWarning {

@@ -121,14 +121,37 @@ static NSString *const headerID = @"header";
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMHomeModel *model = self.dataSource[indexPath.row];
-    UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
-    JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
-    GIF.filePath = model.folderPath;
-    GIF.delayTime = image.duration/image.images.count;
-    GIF.images = [NSMutableArray arrayWithArray:image.images];
-    GIF.imageView.image = image;
-    [self.navigationController pushViewController:GIF animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        
+        JMHomeModel *model = self.dataSource[indexPath.row];
+        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
+        JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
+        GIF.filePath = model.folderPath;
+        GIF.delayTime = image.duration/image.images.count;
+        
+        NSMutableArray *newImages = [NSMutableArray array];
+        for (UIImage *ima in image.images) {
+            
+            JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+            gif.backgroundColor = [UIColor whiteColor];
+            gif.image = ima;
+            UIImage *newIma = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
+            [newImages addObject:newIma];
+        }
+        
+        GIF.images = newImages;
+        GIF.imageView.image = image;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [hud hideAnimated:YES];
+            [self.navigationController pushViewController:GIF animated:YES];
+        });
+    });
 }
 
 //
@@ -317,7 +340,7 @@ static NSString *const headerID = @"header";
     // 相册
     [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
         
-        self.imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:15 delegate:self];
+        self.imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:50 delegate:self];
         _imagePickerVc.allowPickingOriginalPhoto = YES;
         _imagePickerVc.allowPickingVideo = NO;
         
@@ -334,10 +357,9 @@ static NSString *const headerID = @"header";
                 
                 JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.width)];
                 gif.backgroundColor = [UIColor whiteColor];
-                gif.image = image;
+                NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
+                gif.image = [UIImage imageWithData:imageData];
                 UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.width)];
-                
-//                [weakSelf newImage:image];
                 [newImages addObject:image];
             }
             

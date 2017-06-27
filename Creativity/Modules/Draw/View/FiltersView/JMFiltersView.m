@@ -33,16 +33,7 @@
         JMFilterModel *model = titles[i];
         JMFilterItem *subView = [[JMFilterItem alloc] init];
         
-        UIImage *origin;
-        
-        if (i< 14) {
-        
-            origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
-        }else{
-        
-            origin = [[UIImage imageNamed:model.image] defaultFilter:i-14];
-        }
-        
+        UIImage *origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
         UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
         subView.image = newimage;
         subView.title = model.title;

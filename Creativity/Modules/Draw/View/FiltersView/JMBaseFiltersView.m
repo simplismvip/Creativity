@@ -37,22 +37,22 @@
                       @{@"title":@"光晕", @"image":@"FullSizeRender"},
                       @{@"title":@"蓝调", @"image":@"FullSizeRender"},
                       @{@"title":@"梦幻", @"image":@"FullSizeRender"},
-                      @{@"title":@"夜色", @"image":@"FullSizeRender"},
+                      @{@"title":@"夜色", @"image":@"FullSizeRender"}
                       
-                      @{@"title":@"Noir", @"image":@"FullSizeRender"},
-                      @{@"title":@"Transfer", @"image":@"FullSizeRender"},
-                      @{@"title":@"Tonal", @"image":@"FullSizeRender"},
-                      @{@"title":@"Process", @"image":@"FullSizeRender"},
-                      @{@"title":@"Mono", @"image":@"FullSizeRender"},
-                      @{@"title":@"Instant", @"image":@"FullSizeRender"},
-                      @{@"title":@"Fade", @"image":@"FullSizeRender"},
-                      @{@"title":@"Chrome", @"image":@"FullSizeRender"},
-                      @{@"title":@"Alpha", @"image":@"FullSizeRender"},
-                      @{@"title":@"Posterize", @"image":@"FullSizeRender"},
-                      @{@"title":@"Invert", @"image":@"FullSizeRender"},
-                      @{@"title":@"Adjust", @"image":@"FullSizeRender"},
-                      @{@"title":@"Linear", @"image":@"FullSizeRender"},
-                      @{@"title":@"Curve", @"image":@"FullSizeRender"}
+//                      @{@"title":@"Noir", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Transfer", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Tonal", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Process", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Mono", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Instant", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Fade", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Chrome", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Alpha", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Posterize", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Invert", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Adjust", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Linear", @"image":@"FullSizeRender"},
+//                      @{@"title":@"Curve", @"image":@"FullSizeRender"}
                       
                       ];
         
