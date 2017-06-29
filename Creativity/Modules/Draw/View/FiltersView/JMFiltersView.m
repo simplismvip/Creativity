@@ -35,12 +35,10 @@
         
         UIImage *origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
         UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
-
         subView.image = newimage;
         subView.title = model.title;
         subView.tag = 200 + i;
         subView.tinColor = [UIColor whiteColor];
-//        if (_tinColor) {subView.tinColor = _tinColor;}
         [subView addTarget:self action:@selector(filterViewAction:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:subView];
     }

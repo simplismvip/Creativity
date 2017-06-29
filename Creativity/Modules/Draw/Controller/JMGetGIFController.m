@@ -49,8 +49,8 @@
     [self.view addSubview:bsae];
     [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
 
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*1.2)];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.center = self.view.center;
     imageView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:imageView];
@@ -177,20 +177,36 @@
     [self.showFps setTitle:[NSString stringWithFormat:@"%ld Fps", (NSInteger)(10*progress+1)] forState:(UIControlStateNormal)];
 }
 
+- (void)filtersDidSelectRowAtIndexPath:(NSInteger)index
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        
+        NSMutableArray *newImages = [NSMutableArray array];
+        for (UIImage *originImage in _images) {
+            
+            UIImage *filterImage = [UIImage returnImage:index image:originImage];
+            [newImages addObject:filterImage];
+        }
+        
+        _images = newImages;
+        [JMMediaHelper makeAnimatedGIF:self.filePath images:[_images copy] delayTime:(1.0-_delayTime)];
+        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [hud hideAnimated:YES];
+            self.imageView.image = image;
+        });
+    });
+}
+
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
     if (index == 0) {
-        
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            
-            [JMMediaHelper makeAnimatedGIF:self.filePath images:[self filters:_images type:index] delayTime:(1.0-_delayTime)];
-            UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                self.imageView.image = image;
-            });
-        });
         
     }else if (index == 1){
     
@@ -256,12 +272,16 @@
 {
     NSMutableArray *newImages = [NSMutableArray array];
     for (UIImage *originImage in images) {
-        NSLog(@"%@", NSStringFromCGSize(originImage.size));
+        
         UIImage *filterImage = [UIImage returnImage:type image:originImage];
-        NSLog(@"%@", NSStringFromCGSize(filterImage.size));
         [newImages addObject:filterImage];
     }
     return newImages;
+}
+
+- (void)dealloc
+{
+    NSLog(@"JMGetGIFController 销毁");
 }
 
 - (void)didReceiveMemoryWarning {

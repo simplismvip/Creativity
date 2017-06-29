@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JMGifView : UIView
-
+@property (nonatomic, strong) UIImage *image;
 @end
