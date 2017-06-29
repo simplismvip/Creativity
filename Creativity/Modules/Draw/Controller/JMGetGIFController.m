@@ -38,6 +38,7 @@
     [MobClick endLogPageView:@"JMGetGIFController"];
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

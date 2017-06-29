@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @class JMLicenceModel;
+@class JMLicenceViewModel;
 @interface JMLicenceCell : UITableViewCell
 @property (nonatomic, strong) JMLicenceModel *model;
+@property (nonatomic, strong) JMLicenceViewModel *viewModel;
 @end

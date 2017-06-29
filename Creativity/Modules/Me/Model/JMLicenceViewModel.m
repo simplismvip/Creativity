@@ -16,17 +16,17 @@
 {
     _model = model;
     
-    CGSize copyrightFrame = [model.copyright sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW];
+    CGSize copyrightFrame = [model.copyright sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW-20];
     _copyrightFrame = copyrightFrame.height;
     
     
-    CGSize sizeLower = [model.lower sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW];
+    CGSize sizeLower = [model.lower sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW-20];
     _lowerFrame = sizeLower.height;
     
-    CGSize sizeUpper = [model.upper sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW];
+    CGSize sizeUpper = [model.upper sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW-20];
     _upperFrame = sizeUpper.height;
     
-    CGSize sizeAboveCopyright = [model.aboveCopyright sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW];
+    CGSize sizeAboveCopyright = [model.aboveCopyright sizeWithFont:[UIFont systemFontOfSize:15] maxW:kW-20];
     _aboveCopyrightFrame = sizeAboveCopyright.height;
     _cellFrame = _copyrightFrame+_lowerFrame+_upperFrame+_aboveCopyrightFrame;
     

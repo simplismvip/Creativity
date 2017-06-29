@@ -126,8 +126,8 @@ static NSString *const headerID = @"header";
     GIF.filePath = model.folderPath;
     GIF.delayTime = image.duration/image.images.count;
     GIF.images = [NSMutableArray arrayWithArray:image.images];
-    GIF.imageView.image = image;
     [self.navigationController pushViewController:GIF animated:YES];
+    GIF.imageView.image = image;
 }
 
 //

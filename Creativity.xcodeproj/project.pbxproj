@@ -167,7 +167,6 @@
 		A20BE8901EFE07980083DBF1 /* JMLicenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE88F1EFE07980083DBF1 /* JMLicenceController.m */; };
 		A20BE8931EFE07EE0083DBF1 /* JMLicenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE8921EFE07EE0083DBF1 /* JMLicenceCell.m */; };
 		A20BE8961EFE09AB0083DBF1 /* JMLicenceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE8951EFE09AB0083DBF1 /* JMLicenceModel.m */; };
-		A20BE8991EFE0CDB0083DBF1 /* JMss.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE8981EFE0CDB0083DBF1 /* JMss.m */; };
 		A20BE89C1EFE18B20083DBF1 /* JMLicenceViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20BE89B1EFE18B20083DBF1 /* JMLicenceViewModel.m */; };
 		A20DAF131EF2E31A008DBFA9 /* JMMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0D1EF2E31A008DBFA9 /* JMMemberModel.m */; };
 		A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */; };
@@ -479,8 +478,6 @@
 		A20BE8921EFE07EE0083DBF1 /* JMLicenceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLicenceCell.m; sourceTree = "<group>"; };
 		A20BE8941EFE09AB0083DBF1 /* JMLicenceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLicenceModel.h; sourceTree = "<group>"; };
 		A20BE8951EFE09AB0083DBF1 /* JMLicenceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLicenceModel.m; sourceTree = "<group>"; };
-		A20BE8971EFE0CDB0083DBF1 /* JMss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMss.h; sourceTree = "<group>"; };
-		A20BE8981EFE0CDB0083DBF1 /* JMss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMss.m; sourceTree = "<group>"; };
 		A20BE89A1EFE18B20083DBF1 /* JMLicenceViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLicenceViewModel.h; sourceTree = "<group>"; };
 		A20BE89B1EFE18B20083DBF1 /* JMLicenceViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLicenceViewModel.m; sourceTree = "<group>"; };
 		A20DAF0C1EF2E31A008DBFA9 /* JMMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMemberModel.h; sourceTree = "<group>"; };
@@ -1069,8 +1066,6 @@
 				A20BE8951EFE09AB0083DBF1 /* JMLicenceModel.m */,
 				A20BE89A1EFE18B20083DBF1 /* JMLicenceViewModel.h */,
 				A20BE89B1EFE18B20083DBF1 /* JMLicenceViewModel.m */,
-				A20BE8971EFE0CDB0083DBF1 /* JMss.h */,
-				A20BE8981EFE0CDB0083DBF1 /* JMss.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1636,7 +1631,6 @@
 				0490F2451EEFA32900E05A84 /* JMWriteView.m in Sources */,
 				A20F38CA1EF97CEF009E5E48 /* ZMView.m in Sources */,
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
-				A20BE8991EFE0CDB0083DBF1 /* JMss.m in Sources */,
 				04A0DDF01EEF81A400464852 /* main.m in Sources */,
 				0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */,
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,

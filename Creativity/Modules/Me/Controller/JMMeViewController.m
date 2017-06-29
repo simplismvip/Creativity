@@ -111,11 +111,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // SetModel *model = self.dataSource[indexPath.section][indexPath.row];
+     SetModel *model = self.dataSource[indexPath.section][indexPath.row];
     
     if (indexPath.section==0 && indexPath.row==0) {
        
         JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
+        pro.title = model.title;
         JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
         [self presentViewController:nav animated:YES completion:nil];
         
@@ -132,12 +133,14 @@
         
     }else if (indexPath.section==2 && indexPath.row==0) {
         
-        JMLicenceController *about = [[JMLicenceController alloc] init];
+        JMAboutUsController *about = [[JMAboutUsController alloc] init];
+        about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
         
     }else if (indexPath.section==2 && indexPath.row==1) {
-    
-        JMAboutUsController *about = [[JMAboutUsController alloc] init];
+        
+        JMLicenceController *about = [[JMLicenceController alloc] init];
+        about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
     }
 }

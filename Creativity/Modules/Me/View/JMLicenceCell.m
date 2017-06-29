@@ -8,6 +8,7 @@
 
 #import "JMLicenceCell.h"
 #import "JMLicenceModel.h"
+#import "JMLicenceViewModel.h"
 
 @interface JMLicenceCell ()
 @property (nonatomic, weak) UILabel *abovecopyright;
@@ -21,6 +22,8 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         UILabel *copyright = [[UILabel alloc] init];
         copyright.numberOfLines = 0;
@@ -50,22 +53,23 @@
     return self;
 }
 
-- (void)setModel:(JMLicenceModel *)model
+- (void)setViewModel:(JMLicenceViewModel *)viewModel
 {
-    _model = model;
-    _copyright.text = model.copyright;
-    _lower.text = model.lower;
-    _abovecopyright.text = model.aboveCopyright;
-    _upper.text = model.upper;
+    _viewModel = viewModel;
+    _copyright.text = viewModel.model.copyright;
+    _lower.text = viewModel.model.lower;
+    _abovecopyright.text = viewModel.model.aboveCopyright;
+    _upper.text = viewModel.model.upper;
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _copyright.frame = CGRectMake(10, 0, self.width-20, self.height);
-    _lower.frame = CGRectMake(10, 0, self.width-20, self.height);
-    _abovecopyright.frame = CGRectMake(10, 0, self.width-20, self.height);
-    _upper.frame = CGRectMake(10, 0, self.width-20, self.height);
+    
+    _copyright.frame = CGRectMake(10, 0, self.width-20, _viewModel.copyrightFrame);
+    _lower.frame = CGRectMake(10, CGRectGetMaxY(_copyright.frame)+20, self.width-20, _viewModel.lowerFrame);
+    _abovecopyright.frame = CGRectMake(10, CGRectGetMaxY(_lower.frame)+20, self.width-20, _viewModel.aboveCopyrightFrame);
+    _upper.frame = CGRectMake(10, CGRectGetMaxY(_abovecopyright.frame)+20, self.width-20, _viewModel.upperFrame);
 }
 
 - (void)awakeFromNib {

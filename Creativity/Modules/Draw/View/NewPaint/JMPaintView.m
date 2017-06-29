@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UserDefaultTools.h"
 #import "StaticClass.h"
+#import "UIImage+JMImage.h"
 
 #define PARTIAL_REDRAW  0
 
@@ -67,7 +68,29 @@
 #pragma mark - Drawing
 - (void)drawRect:(CGRect)rect
 {
-    [self.image drawInRect:self.bounds];
+    CGFloat rate = self.image.size.width/self.image.size.height;
+    
+    if (self.image.size.width>self.width) {
+        
+        CGFloat imageHeight = self.width/rate;
+        
+        if (imageHeight>self.height) {
+            
+            self.image = [self.image compressOriginalImage:self.image toSize:CGSizeMake(self.height*rate, self.height)];
+            
+        }else{
+        
+            self.image = [self.image compressOriginalImage:self.image toSize:CGSizeMake(self.width, self.width/rate)];
+        }
+        
+        
+    }else{
+    
+        
+    }
+    
+    CGRect imageRect = CGRectMake((self.width-self.image.size.width)/2, (self.height-self.image.size.height)/2, self.image.size.width, self.image.size.height);
+    [self.image drawInRect:imageRect];
     [self.currentTool draw];
 }
 
@@ -82,7 +105,8 @@
         for (id<JMPaintTool> tool in self.pathArray) {[tool draw];}
     }else {
         
-        [self.image drawInRect:self.bounds];
+        CGRect imageRect = CGRectMake((self.width-self.image.size.width)/2, (self.height-self.image.size.height)/2, self.image.size.width, self.image.size.height);
+        [self.image drawInRect:imageRect];
         [self.currentTool draw];
     }
     
