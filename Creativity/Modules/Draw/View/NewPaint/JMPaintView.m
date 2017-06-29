@@ -68,9 +68,9 @@
 #pragma mark - Drawing
 - (void)drawRect:(CGRect)rect
 {
-    self.image = [self newImage:_image];
-    CGRect imageRect = CGRectMake((self.width-self.image.size.width)/2, (self.height-self.image.size.height)/2, self.image.size.width, self.image.size.height);
-    [self.image drawInRect:imageRect];
+    // self.image = [self newImage:_image];
+    // CGRect imageRect = CGRectMake((self.width-self.image.size.width)/2, (self.height-self.image.size.height)/2, self.image.size.width, self.image.size.height);
+    [self.image drawInRect:self.bounds];
     [self.currentTool draw];
 }
 

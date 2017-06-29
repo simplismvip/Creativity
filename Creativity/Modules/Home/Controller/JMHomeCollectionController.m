@@ -30,7 +30,6 @@
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, strong) JMHomeCollectionViewFlowLayout *collectionLayout;
-@property (nonatomic, strong) TZImagePickerController *imagePickerVc;
 
 // 是否处于编辑状态
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -340,10 +339,10 @@ static NSString *const headerID = @"header";
     // 相册
     [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
         
-        self.imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:50 delegate:self];
-        _imagePickerVc.allowPickingOriginalPhoto = YES;
-        _imagePickerVc.allowPickingVideo = NO;
-        [self presentViewController:_imagePickerVc animated:YES completion:nil];
+        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:50 delegate:self];
+        imagePickerVc.allowPickingOriginalPhoto = YES;
+        imagePickerVc.allowPickingVideo = NO;
+        [self presentViewController:imagePickerVc animated:YES completion:nil];
         
     }]];
     

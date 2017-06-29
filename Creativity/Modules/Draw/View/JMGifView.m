@@ -24,24 +24,24 @@
     CGFloat w = self.width;
     CGFloat h = self.height;
     
-    UIImage *imageNew;
+    CGSize imageSize;
     if (rate>1) {
         
         // w > h
-        imageNew = [_image compressOriginalImage:_image toSize:CGSizeMake(w, w/rate)];
+        imageSize = CGSizeMake(w, w/rate);
         
     }else if (rate<1){
         
         // w < h
-        imageNew = [_image compressOriginalImage:_image toSize:CGSizeMake(w*rate, w)];
+        imageSize = CGSizeMake(w*rate, w);
         
     }else{
         // w == h
-        imageNew = [_image compressOriginalImage:_image toSize:CGSizeMake(w, w)];
+        imageSize = CGSizeMake(w, w);
     }
     
-    CGRect imageRect = CGRectMake(w/2-imageNew.size.width/2, h/2-imageNew.size.height/2, imageNew.size.width, imageNew.size.height);
-    [imageNew drawInRect:imageRect];
+    CGRect imageRect = CGRectMake(w/2-imageSize.width/2, h/2-imageSize.height/2, imageSize.width, imageSize.height);
+    [_image drawInRect:imageRect];
 }
 
 @end

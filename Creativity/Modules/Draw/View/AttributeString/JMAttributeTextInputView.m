@@ -7,6 +7,7 @@
 //
 
 #import "JMAttributeTextInputView.h"
+#import "JMAttributeStringView.h"
 
 //输入框高度
 #define kInputHeight 37
@@ -29,6 +30,10 @@
 /***当前键盘是否可见*/
 @property (nonatomic,assign) BOOL keyboardIsVisiable;
 @property (nonatomic,assign) CGFloat origin_y;
+
+@property (nonatomic, weak) JMAttributeStringView *attribute;
+
+@property (nonatomic, assign) BOOL isSelect;
 @end
 
 @implementation JMAttributeTextInputView
@@ -39,7 +44,7 @@
     if (self) {
         
         self.origin_y = frame.origin.y;
-        
+        self.isSelect = YES;
         [self initView];
         [self setupSubviews];
         [self addEventListening];
@@ -49,7 +54,7 @@
 
 - (void)initView
 {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = JMColor(65, 65, 65);
     if (!self.textViewMaxLine || self.textViewMaxLine == 0) {
         self.textViewMaxLine = 4;
     }
@@ -76,19 +81,21 @@
     line.backgroundColor = RGBACOLOR(227, 228, 232, 1);
     [self addSubview:line];
     
-    self.textInput = [[UITextView alloc] initWithFrame:CGRectMake(10, (self.height - kInputHeight)/2, self.width - 60, 37)];;
+    self.textInput = [[UITextView alloc] initWithFrame:CGRectMake(10, (self.height - kInputHeight)/2, self.width - 70, 37)];
     self.textInput.font = [UIFont systemFontOfSize:15];
-    self.textInput.layer.cornerRadius = 5;
-    self.textInput.layer.borderColor = RGBACOLOR(227, 228, 232, 1).CGColor;
+    self.textInput.backgroundColor = JMColor(65, 65, 65);
+    self.textInput.layer.cornerRadius = 9;
+    self.textInput.layer.borderColor = JMBaseColor.CGColor;
     self.textInput.layer.borderWidth = 1;
     self.textInput.layer.masksToBounds = YES;
     self.textInput.returnKeyType = UIReturnKeySend;
+    self.textInput.keyboardAppearance = UIKeyboardAppearanceDark;
     self.textInput.enablesReturnKeyAutomatically = YES;
     self.textInput.delegate = self;
     [self addSubview:self.textInput];
     
     self.placeholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, (self.height - kInputHeight)/2, self.width - 70, 37)];
-    self.placeholderLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    self.placeholderLabel.textColor = JMBaseColor;// [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     self.placeholderLabel.font = self.textInput.font;
     if (!self.placeholderLabel.text.length) {
         self.placeholderLabel.text = @" ";
@@ -96,18 +103,33 @@
     [self addSubview:self.placeholderLabel];
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button.frame = CGRectMake(CGRectGetMaxX(self.textInput.frame)+5, (self.height - kInputHeight)/2+2, 30, 30);
-    [button addTarget:self action:@selector(setFont:) forControlEvents:(UIControlEventTouchUpInside)];
+    button.frame = CGRectMake(CGRectGetMaxX(self.textInput.frame)+10, (self.height - kInputHeight)/2, 37, 37);
+    [button addTarget:self action:@selector(fontAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [button setTintColor:[UIColor redColor]];
-    [button setImage:[UIImage imageNamed:@"input_font"] forState:(UIControlStateNormal)];
+    [button setImage:[UIImage imageNamed:@"textNote"] forState:(UIControlStateNormal)];
     [self addSubview:button];
 }
 
-- (void)setFont:(UIButton *)sender
+- (void)fontAction:(UIButton *)sender
 {
+    if (_isSelect) {
+        
+        _textInput.inputView = self.attribute;
+        [_textInput becomeFirstResponder];
+        [_textInput reloadInputViews];
+        [sender setTitle:@"完成" forState:(UIControlStateNormal)];
+        [sender setImage:nil forState:(UIControlStateNormal)];
+        
+    }else{
     
+        _textInput.inputView = nil;
+        [_textInput becomeFirstResponder];
+        [_textInput reloadInputViews];
+        [sender setTitle:@"" forState:(UIControlStateNormal)];
+        [sender setImage:[UIImage imageNamed:@"textNote"] forState:(UIControlStateNormal)];
+    }
     
-    [self endEditing:YES];
+    _isSelect = !_isSelect;
 }
 #pragma mark keyboardnotification
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -194,10 +216,29 @@
     [self endEditing:YES];
 }
 
+- (JMAttributeStringView *)attribute
+{
+    if (!_attribute) {
+        
+        JMAttributeStringView *attribute = [[JMAttributeStringView alloc] initWithFrame:CGRectMake(0, 0, self.width, 258)];
+        attribute.fontname = ^(NSString *fontName, NSInteger fontType) {
+            
+            NSLog(@"name %@--type %ld", fontName, fontType);
+            
+            // if (fontName) {if (self.attributeString) {self.attributeString(fontName);}}
+            // if (fontType<10) {[StaticClass setFontType:fontType];}
+        };
+        self.attribute = attribute;
+    }
+    
+    return _attribute;
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -15,6 +15,7 @@
 
 @interface JMAttributeStringView()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, weak) UIView *background;
 @end
 
 @implementation JMAttributeStringView
@@ -24,6 +25,15 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        
+        
+        
+        UIView *background = [[UIView alloc] initWithFrame:CGRectMake(10, 0, self.width-20, 1)];
+        background.backgroundColor = JMColorRGBA(217, 51, 58, 0.5);
+        [self addSubview:background];
+        self.background = background;
+        
+        self.backgroundColor = JMColor(65, 65, 65);
         self.dataArray = [JMHelper systemFont];
         [self creatTableView];
     }
@@ -32,7 +42,7 @@
 
 - (void)creatTableView
 {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.bounds style:(UITableViewStylePlain)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 1, self.width, self.height-1) style:(UITableViewStylePlain)];
     [tableView registerClass:[JMAttributeStringCell class] forCellReuseIdentifier:@"cell"];
     tableView.delegate = self;
     tableView.dataSource = self;
