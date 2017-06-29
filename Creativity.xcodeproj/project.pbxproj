@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04654A581F04ADDA008D0B27 /* JMAttributeScrollBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */; };
+		04654A5B1F04DF14008D0B27 /* JMFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A5A1F04DF14008D0B27 /* JMFrameView.m */; };
+		04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A601F04F760008D0B27 /* JMWebProgressView.m */; };
+		04654A641F04F7B1008D0B27 /* JMBaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */; };
+		04654A671F050264008D0B27 /* DeviceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A661F050264008D0B27 /* DeviceHelper.m */; };
 		047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE61EF26E5700AD0C08 /* JMHelper.m */; };
 		047FCEEA1EF26E5700AD0C08 /* JMFileManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE81EF26E5700AD0C08 /* JMFileManger.m */; };
 		047FCEF01EF3777000AD0C08 /* JMMediaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEEF1EF3777000AD0C08 /* JMMediaHelper.m */; };
-		047FCF131EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEFD1EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.m */; };
 		047FCF141EF3DCBC00AD0C08 /* JMAttributeStringCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEFF1EF3DCBC00AD0C08 /* JMAttributeStringCell.m */; };
 		047FCF151EF3DCBC00AD0C08 /* JMAttributeStringContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCF011EF3DCBC00AD0C08 /* JMAttributeStringContentView.m */; };
 		047FCF161EF3DCBC00AD0C08 /* JMAttributeStringModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCF031EF3DCBC00AD0C08 /* JMAttributeStringModel.m */; };
@@ -224,14 +228,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04654A561F04ADDA008D0B27 /* JMAttributeScrollBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeScrollBaseView.h; sourceTree = "<group>"; };
+		04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAttributeScrollBaseView.m; sourceTree = "<group>"; };
+		04654A591F04DF14008D0B27 /* JMFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFrameView.h; sourceTree = "<group>"; };
+		04654A5A1F04DF14008D0B27 /* JMFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFrameView.m; sourceTree = "<group>"; };
+		04654A5F1F04F760008D0B27 /* JMWebProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMWebProgressView.h; sourceTree = "<group>"; };
+		04654A601F04F760008D0B27 /* JMWebProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMWebProgressView.m; sourceTree = "<group>"; };
+		04654A621F04F7B1008D0B27 /* JMBaseWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseWebViewController.h; sourceTree = "<group>"; };
+		04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseWebViewController.m; sourceTree = "<group>"; };
+		04654A651F050264008D0B27 /* DeviceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceHelper.h; sourceTree = "<group>"; };
+		04654A661F050264008D0B27 /* DeviceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceHelper.m; sourceTree = "<group>"; };
 		047FCEE51EF26E5700AD0C08 /* JMHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHelper.h; sourceTree = "<group>"; };
 		047FCEE61EF26E5700AD0C08 /* JMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHelper.m; sourceTree = "<group>"; };
 		047FCEE71EF26E5700AD0C08 /* JMFileManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFileManger.h; sourceTree = "<group>"; };
 		047FCEE81EF26E5700AD0C08 /* JMFileManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFileManger.m; sourceTree = "<group>"; };
 		047FCEEE1EF3777000AD0C08 /* JMMediaHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMediaHelper.h; sourceTree = "<group>"; };
 		047FCEEF1EF3777000AD0C08 /* JMMediaHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMediaHelper.m; sourceTree = "<group>"; };
-		047FCEFC1EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeStringAnimationView.h; sourceTree = "<group>"; };
-		047FCEFD1EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAttributeStringAnimationView.m; sourceTree = "<group>"; };
 		047FCEFE1EF3DCBC00AD0C08 /* JMAttributeStringCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeStringCell.h; sourceTree = "<group>"; };
 		047FCEFF1EF3DCBC00AD0C08 /* JMAttributeStringCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAttributeStringCell.m; sourceTree = "<group>"; };
 		047FCF001EF3DCBC00AD0C08 /* JMAttributeStringContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeStringContentView.h; sourceTree = "<group>"; };
@@ -574,8 +586,6 @@
 		047FCEF91EF3DCBC00AD0C08 /* AttributeString */ = {
 			isa = PBXGroup;
 			children = (
-				047FCEFC1EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.h */,
-				047FCEFD1EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.m */,
 				047FCEFE1EF3DCBC00AD0C08 /* JMAttributeStringCell.h */,
 				047FCEFF1EF3DCBC00AD0C08 /* JMAttributeStringCell.m */,
 				047FCF001EF3DCBC00AD0C08 /* JMAttributeStringContentView.h */,
@@ -584,6 +594,8 @@
 				047FCF031EF3DCBC00AD0C08 /* JMAttributeStringModel.m */,
 				047FCF041EF3DCBC00AD0C08 /* JMAttributeStringView.h */,
 				047FCF051EF3DCBC00AD0C08 /* JMAttributeStringView.m */,
+				04654A561F04ADDA008D0B27 /* JMAttributeScrollBaseView.h */,
+				04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */,
 				047FCF071EF3DCBC00AD0C08 /* JMAttributeTextInputView.h */,
 				047FCF081EF3DCBC00AD0C08 /* JMAttributeTextInputView.m */,
 			);
@@ -933,6 +945,8 @@
 				0490F24F1EEFB88C00E05A84 /* JMAttributeString.m */,
 				0490F24B1EEFB7CF00E05A84 /* StaticClass.h */,
 				0490F24C1EEFB7CF00E05A84 /* StaticClass.m */,
+				04654A651F050264008D0B27 /* DeviceHelper.h */,
+				04654A661F050264008D0B27 /* DeviceHelper.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1030,6 +1044,10 @@
 				0490F1BD1EEF9C4900E05A84 /* JMMeViewController.m */,
 				A20BE88E1EFE07980083DBF1 /* JMLicenceController.h */,
 				A20BE88F1EFE07980083DBF1 /* JMLicenceController.m */,
+				04654A5F1F04F760008D0B27 /* JMWebProgressView.h */,
+				04654A601F04F760008D0B27 /* JMWebProgressView.m */,
+				04654A621F04F7B1008D0B27 /* JMBaseWebViewController.h */,
+				04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1285,6 +1303,8 @@
 				A20F38881EF64902009E5E48 /* JMButtom.m */,
 				A20F38891EF64902009E5E48 /* JMPopView.h */,
 				A20F388A1EF64902009E5E48 /* JMPopView.m */,
+				04654A591F04DF14008D0B27 /* JMFrameView.h */,
+				04654A5A1F04DF14008D0B27 /* JMFrameView.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -1583,7 +1603,9 @@
 				047FCF1D1EF3DCBD00AD0C08 /* JMSlider.m in Sources */,
 				047FCEEA1EF26E5700AD0C08 /* JMFileManger.m in Sources */,
 				0490EEA11EEF977000E05A84 /* JMFmdbManger.m in Sources */,
+				04654A671F050264008D0B27 /* DeviceHelper.m in Sources */,
 				0490EECE1EEF977000E05A84 /* SXHeadLine.m in Sources */,
+				04654A641F04F7B1008D0B27 /* JMBaseWebViewController.m in Sources */,
 				0490EDDD1EEF976F00E05A84 /* NSString+Reglx.m in Sources */,
 				0490EDD91EEF976F00E05A84 /* NSDate+Extension.m in Sources */,
 				A20F38C11EF97CEF009E5E48 /* TZAssetModel.m in Sources */,
@@ -1607,8 +1629,8 @@
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */,
 				04B033AE1EFA153700A10D4C /* ImageUtil.m in Sources */,
-				047FCF131EF3DCBC00AD0C08 /* JMAttributeStringAnimationView.m in Sources */,
 				0490EDE41EEF976F00E05A84 /* UIAlertController+SYQAlterViewController.m in Sources */,
+				04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */,
 				0490EECF1EEF977000E05A84 /* SXMarquee.m in Sources */,
 				0490F1AD1EEF9C3900E05A84 /* JMHomeCollectionController.m in Sources */,
 				A20DAF281EF2E61E008DBFA9 /* JMTopTableView.m in Sources */,
@@ -1639,6 +1661,7 @@
 				A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */,
 				04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */,
 				0490F2561EEFBE1B00E05A84 /* JMGetGIFController.m in Sources */,
+				04654A5B1F04DF14008D0B27 /* JMFrameView.m in Sources */,
 				0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */,
 				0490F2531EEFBC5C00E05A84 /* JMBaseController.m in Sources */,
 				0490F1E51EEF9DCB00E05A84 /* SetModel.m in Sources */,
@@ -1659,6 +1682,7 @@
 				0490EDE31EEF976F00E05A84 /* UIViewController+BackButtonHandler.m in Sources */,
 				A20DAF311EF42338008DBFA9 /* JMSelectEmojiView.m in Sources */,
 				A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */,
+				04654A581F04ADDA008D0B27 /* JMAttributeScrollBaseView.m in Sources */,
 				0490EDE71EEF976F00E05A84 /* UIView+Extension.m in Sources */,
 				047FCF191EF3DCBD00AD0C08 /* JMAttributeTextInputView.m in Sources */,
 				A20F38C81EF97CEF009E5E48 /* TZVideoPlayerController.m in Sources */,

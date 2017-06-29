@@ -45,15 +45,6 @@
                         "type":"7"
 					}
 			},
-            
-            {
-                "文字":{
-                        "imageName":["fontSize"],
-                        "showName":["文字"],
-                        "color":"0",
-                        "type":"7"
-                    }
-            },
                 
             {
                 "颜色":{

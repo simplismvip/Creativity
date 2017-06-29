@@ -32,7 +32,7 @@
     ProModel *model1 = [[ProModel alloc] init];
     model1.image = @"pro_color";
     model1.title = @"多种多样滤镜";
-    model1.subTitle = @"多种多样滤镜创造更多有趣图片";
+    model1.subTitle = @"无限制使用全部滤镜";
     [self.dataArray addObject:model1];
     
     ProModel *model2 = [[ProModel alloc] init];
@@ -40,6 +40,12 @@
     model2.title = @"删除广告";
     model2.subTitle = @"享受无广告的乐趣";
     [self.dataArray addObject:model2];
+    
+    ProModel *model3 = [[ProModel alloc] init];
+    model3.image = @"pro_AD";
+    model3.title = @"无限制";
+    model3.subTitle = @"无限制照片张数";
+    [self.dataArray addObject:model3];
     
     self.rightTitle = @"完成";
     self.leftTitle = @"恢复购买目录";
@@ -72,9 +78,7 @@
     proView.backgroundColor = JMColor(65, 65, 65);
     proView.separatorColor = proView.backgroundColor;
     proView.showsVerticalScrollIndicator = NO;
-    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){
-        proView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){proView.cellLayoutMarginsFollowReadableWidth = NO;}
     [self.view addSubview:proView];
     self.proView = proView;
     
@@ -111,7 +115,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (self.view.height - self.view.width*0.8-84)/3;
+    return (self.view.height - self.view.width*0.8-84)/4;
 }
 
 - (void)didReceiveMemoryWarning {

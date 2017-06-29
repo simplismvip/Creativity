@@ -45,7 +45,7 @@
     cell.leftImage.image = [UIImage imageWithTemplateName:model.icon];
     cell.textTitle.text = model.title;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMColor(220, 103, 91)];
+    cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMBaseColor];
     return cell;
 }
 

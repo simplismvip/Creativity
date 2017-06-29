@@ -16,7 +16,6 @@
 #import "JMHelper.h"
 #import "JMMembersView.h"
 #import "JMAttributeTextInputView.h"
-#import "JMAttributeStringAnimationView.h"
 #import "JMAnimationView.h"
 #import "JMEmojiAnimationView.h"
 #import "JMSubImageModel.h"
@@ -145,23 +144,41 @@
 
 - (void)newItem:(UIBarButtonItem *)sender
 {
-    JMGetGIFController *gif = [[JMGetGIFController alloc] init];
-    gif.filePath = [self.folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+    if (self.subViews.count>2) {
     
-    NSMutableArray *images = [NSMutableArray array];
-    for (JMPaintView *memberView in self.subViews) {
+        JMGetGIFController *gif = [[JMGetGIFController alloc] init];
+        gif.filePath = [self.folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
         
-        UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
-        [images addObject:imageNew];
+        NSMutableArray *images = [NSMutableArray array];
+        for (JMPaintView *memberView in self.subViews) {
+            
+            UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
+            [images addObject:imageNew];
+            
+            //        if (memberView.image) {
+            //
+            //            [images addObject:memberView.image];
+            //        }
+        }
         
-//        if (memberView.image) {
-//        
-//            [images addObject:memberView.image];
-//        }
+        gif.images = images;
+        [self.navigationController pushViewController:gif animated:YES];
+    }else{
+    
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"生成Gif/Video所需照片必须大于1" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        if (IS_IPAD) {
+            
+            UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+            if (popover){
+                popover.sourceView = self.navigationController.navigationBar;
+                popover.sourceRect = self.navigationController.navigationBar.bounds;
+                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            }
+        }
     }
-    
-    gif.images = images;
-    [self.navigationController pushViewController:gif animated:YES];
 }
 
 - (void)dealloc
@@ -249,7 +266,7 @@
         }else if (row == 6){
             
             JMSelf(ws);
-            JMAttributeTextInputView *attribute = [[JMAttributeTextInputView alloc] initWithFrame:CGRectMake(0,self.view.height, self.view.width, 50)];
+            JMAttributeTextInputView *attribute = [[JMAttributeTextInputView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 44)];
             attribute.textViewMaxLine = 5;
             attribute.placeholderLabel.text = @"请输入...";
             attribute.inputAttribute = ^(NSString *sendContent) {ws.paintView.paintText = sendContent;[StaticClass setPaintText:sendContent];};
@@ -287,15 +304,6 @@
         
         NSLog(@"添加图片");
         
-    }else if (bottomType == JMTopBarTypeFontSet){
-        
-        NSLog(@"文字设置");
-        JMAttributeStringAnimationView *animation = [[JMAttributeStringAnimationView alloc] initWithFrame:self.view.bounds];
-        animation.alpha = 0.0;
-        animation.attributeString = ^(NSString *fontName) {[StaticClass setFontName:fontName];};
-        [self.view addSubview:animation];
-        [UIView animateWithDuration:0.3 animations:^{animation.alpha = 1.0;}];
-    
     }else if (bottomType == JMTopBarTypeColor){
         
         JMAnimationView *animation = [[JMAnimationView alloc] initWithFrame:self.view.bounds];

@@ -367,29 +367,48 @@ static NSString *const headerID = @"header";
 #pragma mark -- TZImagePickerControllerDelegate
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
 {
-    JMGetGIFController *draw = [[JMGetGIFController alloc] init];
-    NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-    [JMFileManger creatDir:gifPath];
-    draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-    
-    NSMutableArray *newImages = [NSMutableArray array];
-    for (UIImage *image in photos) {
+    if (photos.count> 2) {
+      
+        JMGetGIFController *draw = [[JMGetGIFController alloc] init];
+        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+        [JMFileManger creatDir:gifPath];
+        draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
         
-        JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-        gif.backgroundColor = [UIColor whiteColor];
-        NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
-        gif.image = [UIImage imageWithData:imageData];
-        UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
-        [newImages addObject:image];
+        NSMutableArray *newImages = [NSMutableArray array];
+        for (UIImage *image in photos) {
+            
+            JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+            gif.backgroundColor = [UIColor whiteColor];
+            NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
+            gif.image = [UIImage imageWithData:imageData];
+            UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
+            [newImages addObject:image];
+        }
+        
+        draw.images = [newImages mutableCopy];
+        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self presentViewController:Nav animated:YES completion:nil];
+        });
+    
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"生成Gif/Video所需照片必须大于1" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        if (IS_IPAD) {
+            
+            UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+            if (popover){
+                popover.sourceView = self.navigationController.navigationBar;
+                popover.sourceRect = self.navigationController.navigationBar.bounds;
+                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            }
+        }
+
     }
-    
-    draw.images = [newImages mutableCopy];
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self presentViewController:Nav animated:YES completion:nil];
-    });
 }
 
 - (UIImage *)newImage:(UIImage *)oldImage

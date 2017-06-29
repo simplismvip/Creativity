@@ -8,6 +8,7 @@
 
 #import "JMPaintTools.h"
 #import "StaticClass.h"
+#import "NSString+Extension.h"
 
 CGPoint midPoint(CGPoint p1, CGPoint p2)
 {
@@ -504,8 +505,9 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
 - (void)draw
 {
     NSDictionary *dic = [JMAttributeString attributeString:self.type color1:self.linesColor color2:[UIColor blackColor] fontSize:self.fontSize+20.0 fontName:self.fontName];
-    CGPoint point = CGPointMake(_lastPoint.x-self.linesOffSet*2, _lastPoint.y-self.linesOffSet*0.5);
-    [self.drawText drawAtPoint:point withAttributes:dic];
+    
+    CGSize size = [self.drawText sizeWithFont:[UIFont fontWithName:self.fontName size:self.fontSize+20.0] maxW:kW-40];
+    [self.drawText drawInRect:CGRectMake(_lastPoint.x-size.height*0.7, _lastPoint.y-size.width*0.7, kW-40, size.height) withAttributes:dic];
 }
 
 // 矩阵操作

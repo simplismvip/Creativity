@@ -15,7 +15,6 @@
 
 @interface JMAttributeStringView()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, weak) UIView *background;
 @end
 
 @implementation JMAttributeStringView
@@ -25,40 +24,28 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.backgroundColor = JMColor(31, 31, 31);
         
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) style:(UITableViewStylePlain)];
+        [tableView registerClass:[JMAttributeStringCell class] forCellReuseIdentifier:@"cell"];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.sectionHeaderHeight = 0;
+        tableView.sectionFooterHeight = 0;
+        tableView.backgroundColor = [UIColor clearColor];
+        tableView.separatorColor = tableView.backgroundColor;
+        if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){tableView.cellLayoutMarginsFollowReadableWidth = NO;}
+        [self addSubview:tableView];
+        self.tableView = tableView;
         
-        
-        UIView *background = [[UIView alloc] initWithFrame:CGRectMake(10, 0, self.width-20, 1)];
-        background.backgroundColor = JMColorRGBA(217, 51, 58, 0.5);
-        [self addSubview:background];
-        self.background = background;
-        
-        self.backgroundColor = JMColor(65, 65, 65);
-        self.dataArray = [JMHelper systemFont];
-        [self creatTableView];
     }
     return self;
-}
-
-- (void)creatTableView
-{
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 1, self.width, self.height-1) style:(UITableViewStylePlain)];
-    [tableView registerClass:[JMAttributeStringCell class] forCellReuseIdentifier:@"cell"];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.sectionHeaderHeight = 0;
-    tableView.sectionFooterHeight = 0;
-    tableView.backgroundColor = [UIColor clearColor];
-    tableView.separatorColor = tableView.backgroundColor;
-    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){tableView.cellLayoutMarginsFollowReadableWidth = NO;}
-    [self addSubview:tableView];
-    self.tableView = tableView;
 }
 
 - (void)setDataArray:(NSMutableArray *)dataArray
 {
     _dataArray = dataArray;
-    [self.tableView reloadData];
+    [_tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -88,7 +75,7 @@
         cell.fontName.hidden = NO;
         
         cell.fontName.text = model.fontName;
-        cell.fontName.font = [UIFont fontWithName:model.fontName size:11];
+        cell.fontName.font = [UIFont fontWithName:model.fontName size:14];
     
     }else {
     
@@ -118,18 +105,11 @@
     }
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 15;
-//}
-
-//#pragma mark -- headerView
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    NSMutableDictionary *sections = self.dataArray[section];
-//    return sections.allKeys.firstObject;
-//}
-
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    _tableView.frame = CGRectMake(0, 0, self.width, self.height);
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

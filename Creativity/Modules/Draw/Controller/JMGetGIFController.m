@@ -18,9 +18,11 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "JMFilterItem.h"
 #import "JMButtom.h"
+#import "JMFrameView.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 @property (nonatomic, weak) UIButton *showFps;
+@property (nonatomic, weak) JMFrameView *frameView;
 @end
 
 @implementation JMGetGIFController
@@ -38,9 +40,14 @@
     [MobClick endLogPageView:@"JMGetGIFController"];
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    JMFrameView *frameView = [[JMFrameView alloc] initWithFrame:CGRectMake(10, 84, kW-20, 40)];
+    frameView.images = _images;
+    frameView.delayTimer = _delayTime;
+    [self.view addSubview:frameView];
+    self.frameView = frameView;
     
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
     bsae.subViews = @[@"color_32-1", @"navbar_video_icon_disabled_black", @"gif_32px_1136116", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"];
@@ -160,6 +167,8 @@
     NSLog(@"%f", value);
     
     _delayTime = value;
+    _frameView.delayTimer = 1-value;
+    
     [self creatNewGIF:_filePath];
     [UIView animateWithDuration:.5 animations:^{
         
@@ -233,7 +242,7 @@
                             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"]];
                             hud.square = YES;
                             hud.label.text = @"失败";
-                            [hud hideAnimated:YES afterDelay:1.f];
+                            [hud hideAnimated:YES afterDelay:1.5f];
                         });
 
                     } else {
@@ -246,7 +255,7 @@
                             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
                             hud.square = YES;
                             hud.label.text = @"完成";
-                            [hud hideAnimated:YES afterDelay:1.f];
+                            [hud hideAnimated:YES afterDelay:1.5f];
                             [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
                             
                         });
@@ -282,6 +291,8 @@
 - (void)dealloc
 {
     NSLog(@"JMGetGIFController 销毁");
+    
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"JMFrameViewStopTimer" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

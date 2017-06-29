@@ -7,10 +7,11 @@
 //
 
 #import "JMAttributeTextInputView.h"
-#import "JMAttributeStringView.h"
+#import "JMAttributeScrollBaseView.h"
+#import "StaticClass.h"
 
 //输入框高度
-#define kInputHeight 37
+#define kInputHeight 35
 #define kButtonMargin 10
 #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 #define SCREEN_WIDTH  [[UIScreen mainScreen] bounds].size.width
@@ -30,9 +31,7 @@
 /***当前键盘是否可见*/
 @property (nonatomic,assign) BOOL keyboardIsVisiable;
 @property (nonatomic,assign) CGFloat origin_y;
-
-@property (nonatomic, weak) JMAttributeStringView *attribute;
-
+@property (nonatomic, strong) JMAttributeScrollBaseView *baseAttribute;
 @property (nonatomic, assign) BOOL isSelect;
 @end
 
@@ -54,7 +53,7 @@
 
 - (void)initView
 {
-    self.backgroundColor = JMColor(65, 65, 65);
+    self.backgroundColor = [UIColor whiteColor];
     if (!self.textViewMaxLine || self.textViewMaxLine == 0) {
         self.textViewMaxLine = 4;
     }
@@ -81,11 +80,11 @@
     line.backgroundColor = RGBACOLOR(227, 228, 232, 1);
     [self addSubview:line];
     
-    self.textInput = [[UITextView alloc] initWithFrame:CGRectMake(10, (self.height - kInputHeight)/2, self.width - 70, 37)];
+    self.textInput = [[UITextView alloc] initWithFrame:CGRectMake(10, (self.height - kInputHeight)/2, self.width - 65, kInputHeight)];
     self.textInput.font = [UIFont systemFontOfSize:15];
-    self.textInput.backgroundColor = JMColor(65, 65, 65);
+    self.textInput.backgroundColor = [UIColor whiteColor];
     self.textInput.layer.cornerRadius = 9;
-    self.textInput.layer.borderColor = JMBaseColor.CGColor;
+    self.textInput.layer.borderColor = RGBACOLOR(227, 228, 232, 0.5).CGColor;
     self.textInput.layer.borderWidth = 1;
     self.textInput.layer.masksToBounds = YES;
     self.textInput.returnKeyType = UIReturnKeySend;
@@ -94,8 +93,8 @@
     self.textInput.delegate = self;
     [self addSubview:self.textInput];
     
-    self.placeholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, (self.height - kInputHeight)/2, self.width - 70, 37)];
-    self.placeholderLabel.textColor = JMBaseColor;// [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    self.placeholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, (self.height - kInputHeight)/2, self.width - 65, kInputHeight)];
+    self.placeholderLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     self.placeholderLabel.font = self.textInput.font;
     if (!self.placeholderLabel.text.length) {
         self.placeholderLabel.text = @" ";
@@ -103,7 +102,7 @@
     [self addSubview:self.placeholderLabel];
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button.frame = CGRectMake(CGRectGetMaxX(self.textInput.frame)+10, (self.height - kInputHeight)/2, 37, 37);
+    button.frame = CGRectMake(CGRectGetMaxX(self.textInput.frame)+10, (self.height - kInputHeight)/2, 32, 32);
     [button addTarget:self action:@selector(fontAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [button setTintColor:[UIColor redColor]];
     [button setImage:[UIImage imageNamed:@"textNote"] forState:(UIControlStateNormal)];
@@ -114,7 +113,7 @@
 {
     if (_isSelect) {
         
-        _textInput.inputView = self.attribute;
+        _textInput.inputView = self.baseAttribute;
         [_textInput becomeFirstResponder];
         [_textInput reloadInputViews];
         [sender setTitle:@"完成" forState:(UIControlStateNormal)];
@@ -216,22 +215,26 @@
     [self endEditing:YES];
 }
 
-- (JMAttributeStringView *)attribute
+- (JMAttributeScrollBaseView *)baseAttribute
 {
-    if (!_attribute) {
+    if (!_baseAttribute) {
         
-        JMAttributeStringView *attribute = [[JMAttributeStringView alloc] initWithFrame:CGRectMake(0, 0, self.width, 258)];
-        attribute.fontname = ^(NSString *fontName, NSInteger fontType) {
+        JMAttributeScrollBaseView *baseAttribute = [[JMAttributeScrollBaseView alloc] initWithFrame:CGRectMake(0, 0, self.width, 258)];
+        baseAttribute.attributeFontset = ^(NSString *fontName, NSInteger fontType) {
             
-            NSLog(@"name %@--type %ld", fontName, fontType);
+            if (fontName) {
+                
+                [StaticClass setFontName:fontName];
+            }else{
             
-            // if (fontName) {if (self.attributeString) {self.attributeString(fontName);}}
-            // if (fontType<10) {[StaticClass setFontType:fontType];}
+                [StaticClass setFontType:fontType];
+            }
         };
-        self.attribute = attribute;
+        
+        self.baseAttribute = baseAttribute;
     }
     
-    return _attribute;
+    return _baseAttribute;
 }
 
 - (void)dealloc

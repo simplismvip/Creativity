@@ -16,6 +16,7 @@
 #import "JMBuyProViewController.h"
 #import "JMMainNavController.h"
 #import "JMLicenceController.h"
+#import "JMBaseWebViewController.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -95,10 +96,12 @@
     }else if (section == 1){
     
         headView.name.text = @"关于";
-        
-    }else{
+    }else if (section == 2){
     
         headView.name.text = @"支持中心";
+    }else{
+    
+        headView.name.text = @"作者开发的其他应用";
     }
     
     return headView;
@@ -122,55 +125,41 @@
         
     }else if (indexPath.section == 1 && indexPath.row==0){
     
+        JMBaseWebViewController *drawVC = [[JMBaseWebViewController alloc] init];
+        drawVC.urlString = @"https://github.com/simplismvip/Creativity";
+        [self.navigationController pushViewController:drawVC animated:YES];
         
     }else if (indexPath.section == 1 && indexPath.row==1){
         
-        [self customerFeedback];
-        
-    }else if (indexPath.section == 1 && indexPath.row==2){
-        
-        [JMFileManger clearCache:JMDocumentsPath];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            
+            [JMFileManger clearCache:JMDocumentsPath];
+            sleep(1.);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [hud hideAnimated:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
+                hud.square = YES;
+                hud.label.text = @"成功";
+                [hud hideAnimated:YES afterDelay:1.5f];
+            });
+        });
         
     }else if (indexPath.section==2 && indexPath.row==0) {
         
-        JMAboutUsController *about = [[JMAboutUsController alloc] init];
+        JMLicenceController *about = [[JMLicenceController alloc] init];
         about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
         
     }else if (indexPath.section==2 && indexPath.row==1) {
         
-        JMLicenceController *about = [[JMLicenceController alloc] init];
+        JMAboutUsController *about = [[JMAboutUsController alloc] init];
         about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
     }
-}
-
-// 用户反馈
-- (void)customerFeedback
-{
-    NSMutableString *mailUrl = [[NSMutableString alloc] init];
-    
-    //添加收件人
-    NSArray *toRecipients = [NSArray arrayWithObject: @"simplismvip@163.com"];
-    [mailUrl appendFormat:@"mailto:%@", [toRecipients componentsJoinedByString:@","]];
-    
-    //添加抄送
-    NSArray *ccRecipients = [NSArray arrayWithObjects:@"simplismvip@163.com", nil];
-    [mailUrl appendFormat:@"?cc=%@", [ccRecipients componentsJoinedByString:@","]];
-    
-    //添加密送
-    NSArray *bccRecipients = [NSArray arrayWithObjects:@"simplismvip@163.com", nil];
-    [mailUrl appendFormat:@"&bcc=%@", [bccRecipients componentsJoinedByString:@","]];
-    
-    // 添加主题
-    [mailUrl appendString:@"&subject=用户反馈"];
-    
-    //添加邮件内容
-    [mailUrl appendString:@"&body=<b>Hello</b> 在这里添加内容 !"];
-    
-    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<> "].invertedSet;
-    NSString *email = [mailUrl stringByAddingPercentEncodingWithAllowedCharacters:set];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
 }
 
 - (void)didReceiveMemoryWarning {

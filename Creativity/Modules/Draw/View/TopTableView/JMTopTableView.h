@@ -13,7 +13,6 @@ typedef enum : NSUInteger {
     JMTopBarTypePaint,
     JMTopBarTypeClear,
     JMTopBarTypeNote,
-    JMTopBarTypeFontSet,
     JMTopBarTypeColor
 } JMBottomType;
 

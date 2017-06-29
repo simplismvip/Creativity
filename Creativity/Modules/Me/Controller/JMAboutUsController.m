@@ -7,6 +7,7 @@
 //
 
 #import "JMAboutUsController.h"
+#import "MSCellAccessory.h"
 
 @interface JMAboutUsController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UIView *titleView;
@@ -30,16 +31,23 @@
     UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.width/2-35, self.view.height*0.17, 70, 70)];
     logo.layer.cornerRadius = 16;
     logo.layer.masksToBounds = YES;
-    logo.image = [UIImage imageNamed:@"logo"];
+    logo.image = [UIImage imageNamed:@"text"];
     [self.view addSubview:logo];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width/2-80, CGRectGetMaxY(logo.frame)+5, 160, 30)];
-    label.text = @"Yao Yao";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(logo.frame)+5, self.view.width, 30)];
+    label.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
     label.textAlignment = 1;
     label.font = [UIFont systemFontOfSize:14.0];
     CAGradientLayer *layer = [CAGradientLayer layer];
     layer.frame = label.frame;
     [self.view addSubview:label];
+    
+    UILabel *version = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(label.frame)+5, self.view.width, 30)];
+    version.text = [NSString stringWithFormat:@"Version : %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    version.textAlignment = 1;
+    version.textColor = JMColor(170, 170, 170);
+    version.font = [UIFont fontWithName:@"GujaratiSangamMN-Bold" size:16];
+    [self.view addSubview:version];
     
     UIColor *color1 = [self randColor];
     UIColor *color2 = [self randColor];
@@ -52,16 +60,14 @@
     layer.mask = label.layer;
     label.frame = layer.bounds;
     
-    UITableView *tabView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.height*0.4, self.view.width, 132) style:(UITableViewStylePlain)];
+    UITableView *tabView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(version.frame)+20, self.view.width, 132) style:(UITableViewStylePlain)];
     tabView.scrollEnabled = NO;
     [tabView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"aboutCell"];
     tabView.delegate = self;
     tabView.dataSource = self;
-    tabView.backgroundColor = JMTabViewBaseColor;
+    tabView.separatorColor = tabView.backgroundColor;
     [self.view addSubview:tabView];
-    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){
-        tabView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){tabView.cellLayoutMarginsFollowReadableWidth = NO;}
 }
 
 #pragma mark -- UITableViewDelegate, UITableViewDataSource
@@ -85,6 +91,7 @@
     cell.textLabel.text = self.memberArray[indexPath.row];
     cell.textLabel.textColor = JMColor(55, 55, 55);
     cell.textLabel.font = [UIFont systemFontOfSize:14.0];
+    cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMBaseColor];
     return cell;
 }
 
@@ -121,8 +128,15 @@
     // 添加主题
     [mailUrl appendString:@"&subject=用户反馈"];
     
-    //添加邮件内容
-    [mailUrl appendString:@"&body=<b>Hello</b> 在这里添加内容 !"];
+    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+    NSString *sysVersion= [[UIDevice currentDevice] systemVersion];
+    NSString *device = [[UIDevice currentDevice] model];
+    NSString *buildID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString *appVersionID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    
+    NSString *emailString = [NSString stringWithFormat:@"&body=<b>应用名称: %@, 设备类型: %@, 系统版本: %@, build版本: %@, app版本: %@</b>", appName, device, sysVersion, buildID, appVersionID];
+    [mailUrl appendString:emailString];
+    
     
     NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<> "].invertedSet;
     NSString *email = [mailUrl stringByAddingPercentEncodingWithAllowedCharacters:set];
