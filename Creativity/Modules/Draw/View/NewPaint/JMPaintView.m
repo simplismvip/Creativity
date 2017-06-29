@@ -68,30 +68,34 @@
 #pragma mark - Drawing
 - (void)drawRect:(CGRect)rect
 {
-    CGFloat rate = self.image.size.width/self.image.size.height;
-    
-    if (self.image.size.width>self.width) {
-        
-        CGFloat imageHeight = self.width/rate;
-        
-        if (imageHeight>self.height) {
-            
-            self.image = [self.image compressOriginalImage:self.image toSize:CGSizeMake(self.height*rate, self.height)];
-            
-        }else{
-        
-            self.image = [self.image compressOriginalImage:self.image toSize:CGSizeMake(self.width, self.width/rate)];
-        }
-        
-        
-    }else{
-    
-        
-    }
-    
+    self.image = [self newImage:_image];
     CGRect imageRect = CGRectMake((self.width-self.image.size.width)/2, (self.height-self.image.size.height)/2, self.image.size.width, self.image.size.height);
     [self.image drawInRect:imageRect];
     [self.currentTool draw];
+}
+
+- (UIImage *)newImage:(UIImage *)oldImage
+{
+    CGFloat rate = oldImage.size.width/oldImage.size.height;
+    CGFloat w = kW;
+    
+    UIImage *imageNew;
+    if (rate>1) {
+        
+        // w > h
+        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w/rate)];
+        
+    }else if (rate<1){
+        
+        // w < h
+        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w*rate, w)];
+        
+    }else{
+        // w == h
+        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w)];
+    }
+    
+    return imageNew;
 }
 
 - (void)updateCacheImage:(BOOL)redraw

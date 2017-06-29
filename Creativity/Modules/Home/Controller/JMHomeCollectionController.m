@@ -343,35 +343,6 @@ static NSString *const headerID = @"header";
         self.imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:50 delegate:self];
         _imagePickerVc.allowPickingOriginalPhoto = YES;
         _imagePickerVc.allowPickingVideo = NO;
-        
-        JMSelf(weakSelf);
-        [_imagePickerVc setDidFinishPickingPhotosWithInfosHandle:^(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto,NSArray<NSDictionary *> *infos){
-            
-            JMGetGIFController *draw = [[JMGetGIFController alloc] init];
-            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-            [JMFileManger creatDir:gifPath];
-            draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-            
-            NSMutableArray *newImages = [NSMutableArray array];
-            for (UIImage *image in photos) {
-                
-                JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.width)];
-                gif.backgroundColor = [UIColor whiteColor];
-                NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
-                gif.image = [UIImage imageWithData:imageData];
-                UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.width)];
-                [newImages addObject:image];
-            }
-            
-            draw.images = [newImages mutableCopy];
-            JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-             
-                [weakSelf presentViewController:Nav animated:YES completion:nil];
-            });
-        }];
-        
         [self presentViewController:_imagePickerVc animated:YES completion:nil];
         
     }]];
@@ -393,12 +364,32 @@ static NSString *const headerID = @"header";
     }
 }
 
+
+#pragma mark -- TZImagePickerControllerDelegate
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
 {
+    JMGetGIFController *draw = [[JMGetGIFController alloc] init];
+    NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+    [JMFileManger creatDir:gifPath];
+    draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+    
+    NSMutableArray *newImages = [NSMutableArray array];
+    for (UIImage *image in photos) {
+        
+        JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+        gif.backgroundColor = [UIColor whiteColor];
+        NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
+        gif.image = [UIImage imageWithData:imageData];
+        UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
+        [newImages addObject:image];
+    }
+    
+    draw.images = [newImages mutableCopy];
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        
-        
+        [self presentViewController:Nav animated:YES completion:nil];
     });
 }
 
@@ -406,7 +397,6 @@ static NSString *const headerID = @"header";
 {
     CGFloat rate = oldImage.size.width/oldImage.size.height;
     CGFloat w = kW;
-    CGFloat h = kH;
     
     UIImage *imageNew;
     if (rate>1) {
