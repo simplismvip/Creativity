@@ -68,34 +68,33 @@
 #pragma mark - Drawing
 - (void)drawRect:(CGRect)rect
 {
-    // self.image = [self newImage:_image];
-    // CGRect imageRect = CGRectMake((self.width-self.image.size.width)/2, (self.height-self.image.size.height)/2, self.image.size.width, self.image.size.height);
-    [self.image drawInRect:self.bounds];
+    [self.image drawInRect:[self newImage:_image]];
     [self.currentTool draw];
 }
 
-- (UIImage *)newImage:(UIImage *)oldImage
+- (CGRect)newImage:(UIImage *)oldImage
 {
-    CGFloat rate = oldImage.size.width/oldImage.size.height;
-    CGFloat w = kW;
+    CGFloat rate = _image.size.width/_image.size.height;
+    CGFloat w = self.bounds.size.width;
+    CGFloat h = self.bounds.size.height;
     
-    UIImage *imageNew;
+    CGSize imageSize;
     if (rate>1) {
         
         // w > h
-        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w/rate)];
+        imageSize = CGSizeMake(w, w/rate);
         
     }else if (rate<1){
         
         // w < h
-        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w*rate, w)];
+        imageSize = CGSizeMake(w*rate, w);
         
     }else{
         // w == h
-        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w)];
+        imageSize = CGSizeMake(w, w);
     }
     
-    return imageNew;
+    return CGRectMake(w/2-imageSize.width/2, h/2-imageSize.height/2, imageSize.width, imageSize.height);
 }
 
 - (void)updateCacheImage:(BOOL)redraw
@@ -109,8 +108,7 @@
         for (id<JMPaintTool> tool in self.pathArray) {[tool draw];}
     }else {
         
-        CGRect imageRect = CGRectMake((self.width-self.image.size.width)/2, (self.height-self.image.size.height)/2, self.image.size.width, self.image.size.height);
-        [self.image drawInRect:imageRect];
+        [self.image drawInRect:[self newImage:_image]];
         [self.currentTool draw];
     }
     

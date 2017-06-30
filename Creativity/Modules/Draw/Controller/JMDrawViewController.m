@@ -24,10 +24,11 @@
 #import "JMTopBarModel.h"
 #import "JMBottomModel.h"
 #import "Masonry.h"
+#import <UShareUI/UShareUI.h>
 
 #define kMargin 10.0
 
-@interface JMDrawViewController ()<JMTopTableViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface JMDrawViewController ()<JMTopTableViewDelegate,UMSocialShareMenuViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, weak) JMPaintView *paintView;
@@ -71,6 +72,25 @@
     topbar.delegate = self;
     topbar.dataSource = _dataSource;
     [self.view addSubview:topbar];
+    
+    UIButton *shareBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    shareBtn.tintColor = JMBaseColor;
+    shareBtn.layer.borderColor = JMColor(51, 51, 51).CGColor;
+    shareBtn.layer.borderWidth = 2;
+    shareBtn.backgroundColor = JMColor(31, 31, 31);
+    shareBtn.layer.cornerRadius = 22;
+    shareBtn.layer.masksToBounds = YES;
+    [shareBtn setImage:[UIImage imageWithTemplateName:@"navbar_share_icon_black"] forState:(UIControlStateNormal)];
+    shareBtn.frame = CGRectMake(10, CGRectGetMinY(topbar.frame)-74, 44, 44);
+    [shareBtn addTarget:self action:@selector(shareCurrentImage:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:shareBtn];
+    
+    //设置用户自定义的平台
+    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_QQ),
+                                               @(UMSocialPlatformType_Sina),]];
+    
+    // 设置分享面板的显示和隐藏的代理回调
+    [UMSocialUIManager setShareMenuViewDelegate:self];
 }
 
 // 从home界面弹出
@@ -125,7 +145,7 @@
         
         if (memberView.image) {
             
-            [self.GIFController.images addObject:memberView.image];
+            [self.GIFController.images addObject:[memberView.image imageWithWaterMask]];
         }
     }
     [self.GIFController dismissFromDrawViewController];
@@ -154,11 +174,6 @@
             
             UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
             [images addObject:imageNew];
-            
-            //        if (memberView.image) {
-            //
-            //            [images addObject:memberView.image];
-            //        }
         }
         
         gif.images = images;
@@ -168,22 +183,8 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"生成Gif/Video所需照片必须大于1" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
-        
-        if (IS_IPAD) {
-            
-            UIPopoverPresentationController *popover = alertController.popoverPresentationController;
-            if (popover){
-                popover.sourceView = self.navigationController.navigationBar;
-                popover.sourceRect = self.navigationController.navigationBar.bounds;
-                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
-            }
-        }
+        [self configiPad:alertController];
     }
-}
-
-- (void)dealloc
-{
-    JMLog(@"JMDrawViewController - 销毁");
 }
 
 - (JMMembersView *)memberView
@@ -209,7 +210,6 @@
     if (tModel.models.count == 1) {
         
         title = tModel.title;
-        
     }else{
     
         JMBottomModel *bModel = [_dataSource[indexPath.section] models][row];
@@ -219,12 +219,12 @@
     if (bottomType == JMTopBarTypeAdd){
         
         [JMPopView popView:self.view title:title];
-        
         JMPaintView *pView = [[JMPaintView alloc] init];
         pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
         pView.lineDash = [StaticClass getDashType];
         pView.paintText = [StaticClass getPaintText];
         pView.paintImage = [StaticClass getPaintImage];
+        
         self.paintView = pView;
         [self.view addSubview:pView];
         [self.subViews insertObject:pView atIndex:0];
@@ -302,7 +302,21 @@
         [StaticClass setFillType:_paintView.isFill];
     }else if (bottomType == JMTopBarTypeNote && row==2){
         
-        NSLog(@"添加图片");
+        if ([_paintView canUndo]) {
+        
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"此时添加图片将清除当前画板内容" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"依然添加" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+                
+                [self getImageFromLibrary];
+            }]];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"取消添加" style:(UIAlertActionStyleDefault) handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
+            [self configiPad:alertController];
+        }else{
+        
+            [self getImageFromLibrary];
+        }
         
     }else if (bottomType == JMTopBarTypeColor){
         
@@ -355,19 +369,8 @@
     
     // 取消
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:nil]];
-    
     [self presentViewController:alertController animated:YES completion:nil];
-    
-    if (IS_IPAD) {
-        
-        UIPopoverPresentationController *popover = alertController.popoverPresentationController;
-        
-        if (popover){
-            popover.sourceView = self.navigationController.navigationBar;
-            popover.sourceRect = self.navigationController.navigationBar.bounds;
-            popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
-        }
-    }
+    [self configiPad:alertController];
 }
 
 #pragma mark -- 初始化图片选择器
@@ -384,14 +387,95 @@
 #pragma mark -- UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0) {
     
+    JMPaintView *pView = self.subViews.firstObject;
+    pView.image = image;
+    [pView setNeedsDisplay];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 //添加代码，处理选中图像又取消的情况
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     
-    JMLog(@"取消选中");
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)shareCurrentImage:(UIButton *)sender
+{
+    JMPaintView *pView = self.subViews.firstObject;
+    
+    if (pView.image) {
+    
+        [self showBottomCircleView:[pView.image imageWithWaterMask]];
+    }else{
+        UIImage *image = [UIImage imageWithCaptureView:pView rect:CGRectMake(0, 0, kW, kW)];
+        [self showBottomCircleView:[image imageWithWaterMask]];
+    }
+}
+
+// 这个比较好
+- (void)showBottomCircleView:(id)shareImage
+{
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        
+        [self shareImageAndTextToPlatformType:platformType shareImage:shareImage];
+    }];
+}
+
+//分享图片和文字
+- (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
+{
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    
+    //创建图片内容对象
+    UMShareImageObject *shareObject = [[UMShareImageObject alloc] init];
+    shareObject.thumbImage = [UIImage imageNamed:@"logo"];
+    shareObject.shareImage = shareImage;
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            UMSocialLogInfo(@"************Share fail with error %@*********",error);
+        }else{
+            if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                UMSocialShareResponse *resp = data;
+                //分享结果消息
+                UMSocialLogInfo(@"response message is %@",resp.message);
+                //第三方原始返回的数据
+                UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                
+            }else{
+                UMSocialLogInfo(@"response data is %@",data);
+            }
+        }
+    }];
+}
+
+- (void)configiPad:(UIAlertController *)alertController
+{
+    if (IS_IPAD) {
+        
+        UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+        
+        if (popover){
+            popover.sourceView = self.navigationController.navigationBar;
+            popover.sourceRect = self.navigationController.navigationBar.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        }
+    }
+}
+
+- (void)dealloc
+{
+#ifdef DEBUG
+    NSLog(@"JMDrawViewController销毁 %s", __FUNCTION__);
+#endif
 }
 
 - (void)didReceiveMemoryWarning {

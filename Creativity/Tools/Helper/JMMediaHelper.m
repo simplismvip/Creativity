@@ -257,22 +257,16 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     UIImage *first = [images firstObject];
     CGSize frameSize = first.size;
     
-    AVAssetWriter *videoWriter =[[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:videoPath]
-                                                         fileType:AVFileTypeQuickTimeMovie
-                                                            error:&error];
+    AVAssetWriter *videoWriter =[[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:videoPath] fileType:AVFileTypeQuickTimeMovie error:&error];
     NSParameterAssert(videoWriter);
-    if(error)
-        NSLog(@"error =%@", [error localizedDescription]);
+    if(error) NSLog(@"error =%@", [error localizedDescription]);
     
-    NSDictionary *videoSettings =[NSDictionary dictionaryWithObjectsAndKeys:AVVideoCodecH264,AVVideoCodecKey,
-                                  [NSNumber numberWithInt:frameSize.width],AVVideoWidthKey,
-                                  [NSNumber numberWithInt:frameSize.height],AVVideoHeightKey,nil];
+    NSDictionary *videoSettings =[NSDictionary dictionaryWithObjectsAndKeys:AVVideoCodecH264,AVVideoCodecKey, [NSNumber numberWithInt:frameSize.width],AVVideoWidthKey,[NSNumber numberWithInt:frameSize.height],AVVideoHeightKey,nil];
     AVAssetWriterInput *writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
     
     NSDictionary*sourcePixelBufferAttributesDictionary =[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:kCVPixelFormatType_32ARGB],kCVPixelBufferPixelFormatTypeKey,nil];
     
-    AVAssetWriterInputPixelBufferAdaptor __block *adaptor =[AVAssetWriterInputPixelBufferAdaptor
-                                                            assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput sourcePixelBufferAttributes:sourcePixelBufferAttributesDictionary];
+    AVAssetWriterInputPixelBufferAdaptor __block *adaptor =[AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput sourcePixelBufferAttributes:sourcePixelBufferAttributesDictionary];
     NSParameterAssert(writerInput);
     NSParameterAssert([videoWriter canAddInput:writerInput]);
     
@@ -414,17 +408,9 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
 
 +(CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image size:(CGSize)size{
     CGSize frameSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             @YES, kCVPixelBufferCGImageCompatibilityKey,
-                             @YES, kCVPixelBufferCGBitmapContextCompatibilityKey,
-                             nil];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: @YES, kCVPixelBufferCGImageCompatibilityKey, @YES, kCVPixelBufferCGBitmapContextCompatibilityKey, nil];
     CVPixelBufferRef pxbuffer = NULL;
-    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault,
-                                          frameSize.width,
-                                          frameSize.height,
-                                          pixelFormatType,
-                                          (__bridge CFDictionaryRef)options,
-                                          &pxbuffer);
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, frameSize.width, frameSize.height, pixelFormatType, (__bridge CFDictionaryRef)options, &pxbuffer);
     NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
     
     CVPixelBufferLockBaseAddress(pxbuffer, 0);
@@ -437,18 +423,10 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     NSUInteger bitsPerComponent = 8;
     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(pxbuffer);
     
-    CGContextRef context = CGBitmapContextCreate(pxdata,
-                                                 frameSize.width,
-                                                 frameSize.height,
-                                                 bitsPerComponent,
-                                                 bytesPerRow,
-                                                 rgbColorSpace,
-                                                 bitmapInfo);
-    
+    CGContextRef context = CGBitmapContextCreate(pxdata, frameSize.width, frameSize.height, bitsPerComponent, bytesPerRow, rgbColorSpace, bitmapInfo);
     CGContextDrawImage(context, CGRectMake(0, 0, frameSize.width, frameSize.height), image);
     CGColorSpaceRelease(rgbColorSpace);
     CGContextRelease(context);
-    
     CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
     
     return pxbuffer;
