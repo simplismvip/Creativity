@@ -50,7 +50,7 @@
     self.frameView = frameView;
     
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
-    bsae.subViews = @[@"color_32-1", @"navbar_video_icon_disabled_black", @"gif_32px_1136116", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black", @"navbar_emoticon_icon_black"];
+    bsae.subViews = @[@"filter", @"navbar_video_icon_disabled_black", @"gif", @"cut_32", @"turn_Left", @"turn_Right"];
     bsae.delegate = self;
     bsae.sliderA.value = _delayTime;
     [self.view addSubview:bsae];
@@ -140,26 +140,6 @@
     });
 }
 
-#pragma mark -----------生成文件------
-- (void)creatGIF:(UIButton *)sender
-{
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[NSData dataWithContentsOfFile:self.filePath]] applicationActivities:nil];
-    
-    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
-        
-        if (IS_IPAD) {
-            
-            UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
-            if (popover){popover.sourceView = sender;popover.sourceRect = sender.bounds;}
-            
-        }else{
-            
-            activityViewController.popoverPresentationController.sourceView = self.view;
-        }
-    }
-    
-    [self presentViewController:activityViewController animated:YES completion:NULL];
-}
 
 #pragma mark -- JMGetGIFBottomViewDelegate
 - (void)changeValue:(CGFloat)value

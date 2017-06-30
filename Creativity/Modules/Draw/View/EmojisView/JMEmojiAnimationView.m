@@ -16,7 +16,6 @@
 @property (nonatomic, weak) JMFiltersView *filter;
 @property (nonatomic, weak) JMSelectEmojiView *emojiView;
 @property (nonatomic, weak) UIView *coverView;
-
 @end
 
 @implementation JMEmojiAnimationView
@@ -29,7 +28,7 @@
         self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
-        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];;
+        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
         coverView.layer.cornerRadius = 10;
         coverView.layer.masksToBounds = YES;
         [self addSubview:coverView];
@@ -57,20 +56,11 @@
 - (void)addsubEmojiViews
 {
     JMSelectEmojiView *emojiView = [[JMSelectEmojiView alloc] initWithFrame:CGRectMake(10, 0, _coverView.width-20, _coverView.height)];
-    emojiView.modelBlock = ^(id model) {
-        
-        if (self.animationBlock) {
-            
-            self.animationBlock(model);
-        }
-    };
-    
+    emojiView.modelBlock = ^(id model) {if (self.animationBlock) {self.animationBlock(model);}};
     [self.coverView insertSubview:emojiView atIndex:0];
     self.emojiView = emojiView;
-    
     NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"json"];
     NSArray *emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
-    
     NSMutableArray *data = [NSMutableArray array];
     for (NSDictionary *dic in emojis) {[data addObject:[JMSubImageModel objectWithDictionary:dic]];}
     [emojiView reloadData:data];
@@ -81,7 +71,6 @@
     [UIView animateWithDuration:0.4 animations:^{
         
         _emojiView.alpha = 0.0;
-        
         sender.transform = CGAffineTransformMakeRotation(M_PI);
         sender.transform = CGAffineTransformMakeScale(0.1, 0.1);
         

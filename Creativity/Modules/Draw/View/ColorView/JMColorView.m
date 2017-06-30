@@ -30,30 +30,30 @@
         self.backgroundColor = [UIColor clearColor];
         
         UILabel *r_RGB = [[UILabel alloc] init];
-        r_RGB.font = [UIFont systemFontOfSize:11.0];
-        r_RGB.textColor = JMTabViewBaseColor;
+        r_RGB.font = [UIFont systemFontOfSize:9.0];
+        r_RGB.textColor = JMBaseColor;
         r_RGB.textAlignment = NSTextAlignmentCenter;
         [self addSubview:r_RGB];
         self.r_RGB = r_RGB;
         
         UILabel *g_RGB = [[UILabel alloc] init];
-        g_RGB.font = [UIFont systemFontOfSize:11.0];
-        g_RGB.textColor = JMTabViewBaseColor;
+        g_RGB.font = [UIFont systemFontOfSize:9.0];
+        g_RGB.textColor = JMBaseColor;
         g_RGB.textAlignment = NSTextAlignmentCenter;
         [self addSubview:g_RGB];
         self.g_RGB = g_RGB;
         
         UILabel *b_RGB = [[UILabel alloc] init];
-        b_RGB.font = [UIFont systemFontOfSize:11.0];
-        b_RGB.textColor = JMTabViewBaseColor;
+        b_RGB.font = [UIFont systemFontOfSize:9.0];
+        b_RGB.textColor = JMBaseColor;
         b_RGB.textAlignment = NSTextAlignmentCenter;
         [self addSubview:b_RGB];
         self.b_RGB = b_RGB;
         
         UILabel *a_ALPHA = [[UILabel alloc] init];
-        a_ALPHA.text = [NSString stringWithFormat:@"A：%.2f", [StaticClass getAlpha]];
-        a_ALPHA.font = [UIFont systemFontOfSize:11.0];
-        a_ALPHA.textColor = JMTabViewBaseColor;
+        a_ALPHA.text = [NSString stringWithFormat:@"Alpha：%.1f", [StaticClass getAlpha]];
+        a_ALPHA.font = [UIFont systemFontOfSize:9.0];
+        a_ALPHA.textColor = JMBaseColor;
         a_ALPHA.textAlignment = NSTextAlignmentCenter;
         [self addSubview:a_ALPHA];
         self.a_ALPHA = a_ALPHA;
@@ -132,9 +132,9 @@
     int G = components[1] * 255;
     int B = components[2] * 255;
     
-    _r_RGB.text = [NSString stringWithFormat:@"R：%d",R];
-    _g_RGB.text = [NSString stringWithFormat:@"G：%d",G];
-    _b_RGB.text = [NSString stringWithFormat:@"B：%d",B];
+    _r_RGB.text = [NSString stringWithFormat:@"Red：%d",R];
+    _g_RGB.text = [NSString stringWithFormat:@"Green：%d",G];
+    _b_RGB.text = [NSString stringWithFormat:@"Blue：%d",B];
 }
 
 - (UIColor *)getPixelColorAtLocation:(CGPoint)point
@@ -180,8 +180,8 @@
     size_t pixelsWide = self.bounds.size.width;
     size_t pixelsHigh = self.bounds.size.height;
     
-    bitmapBytesPerRow = (pixelsWide * 4);
-    bitmapByteCount = (bitmapBytesPerRow * pixelsHigh);
+    bitmapBytesPerRow = (int)(pixelsWide * 4);
+    bitmapByteCount = (int)(bitmapBytesPerRow * pixelsHigh);
     
     colorSpace = CGColorSpaceCreateDeviceRGB();
     if (colorSpace == NULL){
@@ -208,7 +208,7 @@
 - (void)setColor_Alpha:(NSString *)color_Alpha
 {
     _color_Alpha = color_Alpha;
-    _a_ALPHA.text = color_Alpha;
+    _a_ALPHA.text = [NSString stringWithFormat:@"Alpha：%@", color_Alpha];
 }
 
 - (void)layoutSubviews

@@ -24,7 +24,6 @@
 #import "UIImage+JMImage.h"
 #import "TZImagePickerController.h"
 #import <Photos/Photos.h>
-#import "ZMView.h"
 #import "JMGifView.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate>
@@ -106,7 +105,8 @@ static NSString *const headerID = @"header";
     JMHomeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionID forIndexPath:indexPath];
     cell.model = self.dataSource[indexPath.row];
 //    cell.inEditState = _inEditState;
-//    cell.delegate = self;
+    cell.delegate = self;
+    cell.collection = collectionView;
     
     return cell;
 }
@@ -151,26 +151,6 @@ static NSString *const headerID = @"header";
             [self.navigationController pushViewController:GIF animated:YES];
         });
     });
-}
-
-//
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
-{
-    if([NSStringFromSelector(action) isEqualToString:@"copy:"]){
-        
-        [_collection performBatchUpdates:^{
-            
-            JMHomeModel *homeModel = self.dataSource[indexPath.section][indexPath.row];
-            [[NSFileManager defaultManager] removeItemAtPath:[JMDocumentsPath stringByAppendingPathComponent:homeModel.folderPath] error:nil];
-            
-            [self.collection deleteItemsAtIndexPaths:@[indexPath]];
-            [self.dataSource[indexPath.section] removeObjectAtIndex:indexPath.row];
-            
-        } completion:nil];
-        
-    }else if([NSStringFromSelector(action) isEqualToString:@"paste:"]){
-        
-    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -255,7 +235,28 @@ static NSString *const headerID = @"header";
 
 - (void)share:(NSIndexPath *)indexPath
 {
+    JMHomeModel *model = self.dataSource[indexPath.row];
     
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[NSData dataWithContentsOfFile:model.folderPath]] applicationActivities:nil];
+    
+    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
+        
+        if (IS_IPAD) {
+            
+            UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
+            
+            if (popover){
+                popover.sourceView = self.navigationController.navigationBar;
+                popover.sourceRect = self.navigationController.navigationBar.bounds;
+                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            }
+        }else{
+        
+            activityViewController.popoverPresentationController.sourceView = self.view;
+        }
+    }
+    
+    [self presentViewController:activityViewController animated:YES completion:NULL];
 }
 
 #pragma mark -- ClassListCollectionCellDelegate
@@ -342,13 +343,13 @@ static NSString *const headerID = @"header";
         TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:50 delegate:self];
         imagePickerVc.allowPickingOriginalPhoto = YES;
         imagePickerVc.allowPickingVideo = NO;
+//        imagePickerVc.
         [self presentViewController:imagePickerVc animated:YES completion:nil];
         
     }]];
     
     // 取消
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:nil]];
-    
     [self presentViewController:alertController animated:YES completion:nil];
     
     if (IS_IPAD) {
@@ -362,7 +363,6 @@ static NSString *const headerID = @"header";
         }
     }
 }
-
 
 #pragma mark -- TZImagePickerControllerDelegate
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
@@ -409,30 +409,6 @@ static NSString *const headerID = @"header";
         }
 
     }
-}
-
-- (UIImage *)newImage:(UIImage *)oldImage
-{
-    CGFloat rate = oldImage.size.width/oldImage.size.height;
-    CGFloat w = kW;
-    
-    UIImage *imageNew;
-    if (rate>1) {
-        
-        // w > h
-        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w/rate)];
-        
-    }else if (rate<1){
-        
-        // w < h
-        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w*rate, w)];
-        
-    }else{
-        // w == h
-        imageNew = [oldImage compressOriginalImage:oldImage toSize:CGSizeMake(w, w)];
-    }
-    
-    return imageNew;
 }
 
 - (void)didReceiveMemoryWarning {

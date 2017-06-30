@@ -8,8 +8,9 @@
 
 #import "JMAboutUsController.h"
 #import "MSCellAccessory.h"
+#import <UShareUI/UShareUI.h>
 
-@interface JMAboutUsController ()<UITableViewDelegate, UITableViewDataSource>
+@interface JMAboutUsController ()<UITableViewDelegate, UITableViewDataSource, UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UIView *titleView;
 @property (nonatomic, weak) UITableView *tabView;
 @property (nonatomic, strong) NSArray *memberArray;
@@ -24,6 +25,13 @@
     self.view.backgroundColor = JMColor(240, 240, 240);
     self.memberArray = @[@"用户反馈", @"给应用评分", @"分享给朋友"];
     [self setUI];
+    
+    //设置用户自定义的平台
+    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_QQ),
+                                               @(UMSocialPlatformType_Sina),]];
+    
+    // 设置分享面板的显示和隐藏的代理回调
+    [UMSocialUIManager setShareMenuViewDelegate:self];
 }
 
 - (void)setUI
@@ -103,8 +111,10 @@
         
     }else if (indexPath.row == 1){
     
-    }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.apple.com/gb/app/yi-dong-cai-bian/id391945719?mt=8"]];
         
+    }else{
+        [self showBottomCircleView:nil];
     }
 }
 
@@ -150,6 +160,41 @@
     CGFloat g = arc4random_uniform(256) / 255.0;
     CGFloat b = arc4random_uniform(256) / 255.0;
     return [UIColor colorWithRed:r green:g blue:b alpha:1];
+}
+
+// 这个比较好
+- (void)showBottomCircleView:(id)shareImage
+{
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        
+        [self shareWebPageToPlatformType:platformType];
+    }];
+}
+
+- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
+{
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    
+    //创建网页内容对象
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"分享标题" descr:@"分享内容描述" thumImage:[UIImage imageNamed:@"icon"]];
+    //设置网页地址
+    shareObject.webpageUrl =@"http://mobile.umeng.com/social";
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            NSLog(@"************Share fail with error %@*********",error);
+        }else{
+            NSLog(@"response data is %@",data);
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

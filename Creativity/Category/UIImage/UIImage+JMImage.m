@@ -593,4 +593,30 @@
     return newImage;
 }
 
+- (UIImage *)imageWithWaterMask
+{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 4.0)
+    {
+        UIGraphicsBeginImageContextWithOptions([self size], NO, 0.0); // 0.0 for scale means "scale for device's main screen".
+    }
+#else
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 4.0)
+    {
+        UIGraphicsBeginImageContext([self size]);
+    }
+#endif
+    //原图
+    [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
+    
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont fontWithName:@"GujaratiSangamMN-Bold" size:16], NSForegroundColorAttributeName:JMBaseColor};
+    NSString *appName = [NSString stringWithFormat:@"From: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"]];
+    [appName drawInRect:CGRectMake(20, self.size.height-40, self.size.width-20, 30) withAttributes:dic];
+    
+    UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newPic; 
+}
+
+
 @end

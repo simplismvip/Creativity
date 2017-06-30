@@ -28,7 +28,7 @@
         self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
-        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
         coverView.layer.cornerRadius = 20;
         coverView.layer.masksToBounds = YES;
         [self addSubview:coverView];
@@ -56,7 +56,7 @@
 
 - (void)addsubColorViews
 {
-    JMColorView *colorView = [[JMColorView alloc] initWithFrame:CGRectMake(15, 10, _coverView.width-30, _coverView.height-80)];
+    JMColorView *colorView = [[JMColorView alloc] initWithFrame:CGRectMake(15, 10, _coverView.width-30, _coverView.height-90)];
     colorView.colorBlock = ^(UIColor *color) {
         
         [StaticClass setColor:color];
@@ -83,7 +83,7 @@
     alphaView.value = ^(JMSlider *value) {
         
         [StaticClass setAlpha:value.sValue];
-        colorView.color_Alpha = [NSString stringWithFormat:@"%.2f", value.sValue];
+        colorView.color_Alpha = [NSString stringWithFormat:@"%.1f", value.sValue];
     };
     
     [self.coverView addSubview:alphaView];
