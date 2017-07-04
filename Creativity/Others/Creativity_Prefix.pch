@@ -37,7 +37,7 @@
 
 // @[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]
 
-#define kSetArray @[@[@{@"title":@"获取Pro", @"icon":@"text",@"accessoryType":@"1"}], @[@{@"title":@"帮助中心", @"icon":@"text",@"accessoryType":@"1"}, @{@"title":@"清空缓存", @"icon":@"text",@"accessoryType":@"1"}], @[@{@"title":@"软件许可", @"icon":@"text",@"accessoryType":@"0"}, @{@"title":@"关于我们", @"icon":@"text",@"accessoryType":@"1"}], @[@{@"title":@"私密相册", @"icon":@"text",@"accessoryType":@"0"}, @{@"title":@"滤镜相册", @"icon":@"text",@"accessoryType":@"1"}, @{@"title":@"GIF Viewer", @"icon":@"text",@"accessoryType":@"1"}]];
+#define kSetArray @[@[@{@"title":@"获取Pro", @"icon":@"text",@"accessoryType":@"1"}], @[@{@"title":@"帮助中心", @"icon":@"text",@"accessoryType":@"1"}, @{@"title":@"清空缓存", @"icon":@"text",@"accessoryType":@"1"}], @[@{@"title":@"软件许可", @"icon":@"text",@"accessoryType":@"0"}, @{@"title":@"关于我们", @"icon":@"text",@"accessoryType":@"1"}], @[@{@"title":@"私密相册", @"icon":@"icon-29",@"accessoryType":@"0"}, @{@"title":@"滤镜相册", @"icon":@"text",@"accessoryType":@"1"}, @{@"title":@"GIF Viewer", @"icon":@"text",@"accessoryType":@"1"}]];
 
 // 颜色
 #define JMCellBackground JMColor(239, 239, 239)
