@@ -449,7 +449,7 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
         
     }else {
     
-        CGFloat scare = [StaticClass getLineWidth] / 10.0;
+        CGFloat scare = _linesWidth / 10.0;
         UIImage *image = [[UIImage imageNamed:self.drawImage] imageByApplyingAlpha:_linesAlpha];
         UIImage *newImage = [image compressOriginalImage:image toSize:CGSizeMake(image.size.width*scare, image.size.height*scare)];
         CGPoint point = CGPointMake(_lastPoint.x-newImage.size.width/2, _lastPoint.y-newImage.size.height/2);
@@ -477,6 +477,7 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
 
 #pragma mark 文字绘制
 #import "JMAttributeString.h"
+#import "UIColor+Separate.h"
 @interface JMPaintToolText()
 @property (nonatomic, assign) CGPoint firstPoint;
 @property (nonatomic, assign) CGPoint lastPoint;
@@ -504,10 +505,10 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
 
 - (void)draw
 {
-    NSDictionary *dic = [JMAttributeString attributeString:self.type color1:self.linesColor color2:[UIColor blackColor] fontSize:self.fontSize+20.0 fontName:self.fontName];
+    NSDictionary *dic = [JMAttributeString attributeString:self.type color1:[UIColor colorWithRed:_linesColor.red green:_linesColor.green blue:_linesColor.blue alpha:_linesAlpha] color2:JMColorRGBA(100, 100, 100, _linesAlpha) fontSize:self.fontSize+20.0 fontName:self.fontName];
     
     CGSize size = [self.drawText sizeWithFont:[UIFont fontWithName:self.fontName size:self.fontSize+20.0] maxW:kW-40];
-    [self.drawText drawInRect:CGRectMake(_lastPoint.x-size.height*0.7, _lastPoint.y-size.width*0.7, kW-40, size.height) withAttributes:dic];
+    [self.drawText drawInRect:CGRectMake(_lastPoint.x-size.width*0.7, _lastPoint.y-size.height, kW-40, size.height) withAttributes:dic];
 }
 
 // 矩阵操作

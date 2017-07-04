@@ -609,9 +609,9 @@
     //原图
     [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
     
-    NSDictionary *dic = @{NSFontAttributeName:[UIFont fontWithName:@"GujaratiSangamMN-Bold" size:16], NSForegroundColorAttributeName:JMBaseColor};
-    NSString *appName = [NSString stringWithFormat:@"From: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"]];
-    [appName drawInRect:CGRectMake(20, self.size.height-40, self.size.width-20, 30) withAttributes:dic];
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont fontWithName:@"Noteworthy-Light" size:11], NSForegroundColorAttributeName:JMColorRGBA(100, 100, 100, 0.8)};
+    NSString *appName = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] lowercaseString]];
+    [appName drawInRect:CGRectMake(10, self.size.height-20, self.size.width-20, 20) withAttributes:dic];
     
     UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

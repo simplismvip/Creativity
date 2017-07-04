@@ -104,7 +104,6 @@ static NSString *const headerID = @"header";
 {
     JMHomeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionID forIndexPath:indexPath];
     cell.model = self.dataSource[indexPath.row];
-//    cell.inEditState = _inEditState;
     cell.delegate = self;
     cell.collection = collectionView;
     
@@ -142,12 +141,11 @@ static NSString *const headerID = @"header";
             [newImages addObject:newIma];
         }
         
-        GIF.images = newImages;
-        GIF.imageView.image = image;
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [hud hideAnimated:YES];
+            GIF.images = newImages;
+            GIF.imagefromHome = image;
             [self.navigationController pushViewController:GIF animated:YES];
         });
     });
@@ -325,14 +323,15 @@ static NSString *const headerID = @"header";
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"选择画板来源" preferredStyle:(UIAlertControllerStyleActionSheet)];
     
-    // 相机
+    // 创作
     [alertController addAction:[UIAlertAction actionWithTitle:@"创作" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
         
         NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
         [JMFileManger creatDir:gifPath];
+        
         JMDrawViewController *draw = [[JMDrawViewController alloc] init];
         draw.folderPath = gifPath;
-        [draw addNewPaintView];
+        [draw initPaintBoard:nil images:nil];
         JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
         [self presentViewController:Nav animated:YES completion:nil];
     }]];
@@ -343,7 +342,6 @@ static NSString *const headerID = @"header";
         TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:50 delegate:self];
         imagePickerVc.allowPickingOriginalPhoto = YES;
         imagePickerVc.allowPickingVideo = NO;
-//        imagePickerVc.
         [self presentViewController:imagePickerVc animated:YES completion:nil];
         
     }]];

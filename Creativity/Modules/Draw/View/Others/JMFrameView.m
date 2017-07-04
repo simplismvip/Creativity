@@ -23,6 +23,14 @@
         
         self.delayTimer = 0.8;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopTimer) name:@"JMFrameViewStopTimer" object:nil];
+        
+        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(12, 0, 8, self.height)];
+        leftView.backgroundColor = JMBaseColor;
+        [self addSubview:leftView];
+        
+        UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(self.width-20, 0, 8, self.height)];
+        rightView.backgroundColor = JMBaseColor;
+        [self addSubview:rightView];
     }
     return self;
 }
@@ -45,13 +53,13 @@
     _images = images;
     
     int i = 0;
-    CGFloat w = (self.width/images.count);
-    
+    CGFloat margin = 20;
+    CGFloat w = (self.width-margin*2)/images.count;
     for (UIImage *image in images) {
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         [self addSubview:imageView];
-        imageView.frame = CGRectMake(w*i, 1, w, self.height-2);
+        imageView.frame = CGRectMake(margin+w*i, 1, w, self.height-2);
         i ++;
     }
     

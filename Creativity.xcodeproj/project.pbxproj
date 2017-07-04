@@ -586,6 +586,7 @@
 		047FCEF91EF3DCBC00AD0C08 /* AttributeString */ = {
 			isa = PBXGroup;
 			children = (
+				0490F20D1EEFA32900E05A84 /* Model */,
 				047FCEFE1EF3DCBC00AD0C08 /* JMAttributeStringCell.h */,
 				047FCEFF1EF3DCBC00AD0C08 /* JMAttributeStringCell.m */,
 				047FCF001EF3DCBC00AD0C08 /* JMAttributeStringContentView.h */,
@@ -1092,7 +1093,6 @@
 			isa = PBXGroup;
 			children = (
 				0490F1FD1EEFA32900E05A84 /* Controller */,
-				0490F20D1EEFA32900E05A84 /* Model */,
 				0490F2121EEFA32900E05A84 /* View */,
 			);
 			path = Draw;
@@ -1117,7 +1117,8 @@
 				0490F2101EEFA32900E05A84 /* JMSubImageModel.h */,
 				0490F2111EEFA32900E05A84 /* JMSubImageModel.m */,
 			);
-			path = Model;
+			name = Model;
+			path = ../../Model;
 			sourceTree = "<group>";
 		};
 		0490F2121EEFA32900E05A84 /* View */ = {

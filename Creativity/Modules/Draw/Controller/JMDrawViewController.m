@@ -32,7 +32,6 @@
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, weak) JMPaintView *paintView;
-@property (nonatomic, weak) JMMembersView *memberView;
 @property (nonatomic, strong) JMGetGIFController *GIFController;
 @property (nonatomic, strong) NSMutableArray *subViews;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -89,45 +88,44 @@
     [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_QQ),
                                                @(UMSocialPlatformType_Sina),]];
     
-    // 设置分享面板的显示和隐藏的代理回调
     [UMSocialUIManager setShareMenuViewDelegate:self];
 }
 
-// 从home界面弹出
-- (void)addNewPaintView
+- (void)initPaintBoard:(JMGetGIFController *)parentController images:(NSArray *)images
 {
-    self.leftImage = @"navbar_close_icon_black";
-    self.rightImage = @"navbar_next_icon_black";
-    
-    JMPaintView *pView = [[JMPaintView alloc] init];
-    pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
-    pView.lineDash = [StaticClass getDashType];
-    pView.paintText = [StaticClass getPaintText];
-    pView.paintImage = [StaticClass getPaintImage];
-    self.paintView = pView;
-    [self.view addSubview:pView];
-    [self.subViews insertObject:pView atIndex:0];
-    
-    [pView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(self.view);
-        make.width.height.mas_equalTo(self.view.width);
-    }];
-}
-
-// 从getGIF界面弹出
-- (void)presentDrawViewController:(JMGetGIFController *)parentController images:(NSArray *)images
-{
-    self.GIFController = parentController;
-    self.rightTitle = @"完成";
-    
-    [self.view addSubview:self.memberView];
-    for (UIImage *image in images) {
+    if (parentController) {
         
+        self.GIFController = parentController;
+        self.rightTitle = @"完成";
+        
+        for (UIImage *image in images) {
+            
+            JMPaintView *pView = [[JMPaintView alloc] init];
+            pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
+            pView.lineDash = [StaticClass getDashType];
+            pView.paintText = [StaticClass getPaintText];
+            pView.paintImage = [StaticClass getPaintImage];
+            pView.image = image;
+            self.paintView = pView;
+            [self.view addSubview:pView];
+            [self.subViews addObject:pView];
+            
+            [pView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.mas_equalTo(self.view);
+                make.width.height.mas_equalTo(self.view.width);
+            }];
+        }
+    }else{
+        self.leftImage = @"navbar_close_icon_black";
+        self.rightImage = @"navbar_next_icon_black";
         JMPaintView *pView = [[JMPaintView alloc] init];
-        pView.image = image;
+        pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
+        pView.lineDash = [StaticClass getDashType];
+        pView.paintText = [StaticClass getPaintText];
+        pView.paintImage = [StaticClass getPaintImage];
         self.paintView = pView;
         [self.view addSubview:pView];
-        [self.subViews insertObject:pView atIndex:0];
+        [self.subViews addObject:pView];
         
         [pView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
@@ -136,32 +134,27 @@
     }
 }
 
-// 完成按钮
-- (void)rightTitleItem:(UIBarButtonItem *)sender
-{
-    [self.GIFController.images removeAllObjects];
-    
-    for (JMPaintView *memberView in self.subViews) {
-        
-        if (memberView.image) {
-            
-            [self.GIFController.images addObject:[memberView.image imageWithWaterMask]];
-        }
-    }
-    [self.GIFController dismissFromDrawViewController];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)setItem:(UIBarButtonItem *)sender
 {
-//    JMmemberViewView *memberView = self.memberViewView;
-//    UIImage *image = [UIImage imageWithCaptureView:self.view rect:memberView.frame];
-//    UIImage *thubim = [image imageCompressForSize:image targetSize:CGSizeMake(64, 106)];
-//    NSData *data = UIImageJPEGRepresentation(thubim, 0.1);
-//    
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+// 完成按钮
+- (void)rightTitleItem:(UIBarButtonItem *)sender
+{
+    NSMutableArray *images = [NSMutableArray array];
+    for (JMPaintView *memberView in self.subViews) {
+        
+        UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
+        [images addObject:imageNew];
+    }
+    
+    [self.GIFController.images removeAllObjects];
+    self.GIFController.imagesFromDrawVC = images;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark -- 进入getGIF界面
 - (void)newItem:(UIBarButtonItem *)sender
 {
     if (self.subViews.count>2) {
@@ -176,7 +169,7 @@
             [images addObject:imageNew];
         }
         
-        gif.images = images;
+        gif.imagesFromDrawVC = images;
         [self.navigationController pushViewController:gif animated:YES];
     }else{
     
@@ -185,19 +178,6 @@
         [self presentViewController:alertController animated:YES completion:nil];
         [self configiPad:alertController];
     }
-}
-
-- (JMMembersView *)memberView
-{
-    if (!_memberView) {
-        
-        JMMembersView *memberView = [[JMMembersView alloc] initWithFrame:CGRectMake(0, 44+kMargin, self.view.width, 44)];
-        memberView.backgroundColor = [UIColor grayColor];
-        [self.view addSubview:memberView];
-        self.memberView = memberView;
-    }
-    
-    return _memberView;
 }
 
 #pragma mark -- ****************JMTopTableViewDelegate
@@ -227,7 +207,7 @@
         
         self.paintView = pView;
         [self.view addSubview:pView];
-        [self.subViews insertObject:pView atIndex:0];
+        [self.subViews addObject:pView];
         
         [pView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
@@ -239,9 +219,6 @@
         
         [JMPopView popView:self.view title:title];
         [JMMembersView initMemberDataArray:self.subViews isEditer:NO addDelegate:self];
-        
-    }else if (bottomType == JMTopBarTypeAdd && row==2){
-        
         
     }else if (bottomType == JMTopBarTypePaint){
         
@@ -393,7 +370,7 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-//添加代码，处理选中图像又取消的情况
+// 添加代码，处理选中图像又取消的情况
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -404,7 +381,7 @@
     JMPaintView *pView = self.subViews.firstObject;
     
     if (pView.image) {
-    
+        
         [self showBottomCircleView:[pView.image imageWithWaterMask]];
     }else{
         UIImage *image = [UIImage imageWithCaptureView:pView rect:CGRectMake(0, 0, kW, kW)];
@@ -445,8 +422,10 @@
         }else{
             if ([data isKindOfClass:[UMSocialShareResponse class]]) {
                 UMSocialShareResponse *resp = data;
+                
                 //分享结果消息
                 UMSocialLogInfo(@"response message is %@",resp.message);
+                
                 //第三方原始返回的数据
                 UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
                 

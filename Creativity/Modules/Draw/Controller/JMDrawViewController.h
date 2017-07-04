@@ -11,6 +11,7 @@
 @class JMGetGIFController;
 @interface JMDrawViewController : JMBaseController
 @property (nonatomic, copy) NSString *folderPath;
-- (void)addNewPaintView;
-- (void)presentDrawViewController:(JMGetGIFController *)parentController images:(NSArray *)images;
+// - (void)addNewPaintView;
+// - (void)presentDrawViewController:(JMGetGIFController *)parentController images:(NSArray *)images;
+- (void)initPaintBoard:(JMGetGIFController *)parentController images:(NSArray *)images;
 @end

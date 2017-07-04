@@ -14,6 +14,9 @@
 @property (nonatomic, assign) CGFloat delayTime;
 @property (nonatomic, weak) UIImageView *imageView;
 
+@property (nonatomic, weak) UIImage *imagefromHome;
+@property (nonatomic, strong) NSMutableArray *imagesFromDrawVC;
+
 // 点击完成从画图界面弹出
 - (void)dismissFromDrawViewController;
 @end

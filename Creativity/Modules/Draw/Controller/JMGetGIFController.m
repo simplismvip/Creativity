@@ -40,15 +40,34 @@
     [MobClick endLogPageView:@"JMGetGIFController"];
 }
 
+- (UIImageView *)imageView
+{
+    if (!_imageView) {
+        
+        // 中部imageview展示
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+        imageView.center = self.view.center;
+        imageView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:imageView];
+        self.imageView = imageView;
+    }
+    
+    return _imageView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 顶部动画显示
     JMFrameView *frameView = [[JMFrameView alloc] initWithFrame:CGRectMake(10, 84, kW-20, 40)];
     frameView.images = _images;
     frameView.delayTimer = _delayTime;
+    frameView.layer.borderColor = JMBaseColor.CGColor;
+    frameView.layer.borderWidth = 3;
     [self.view addSubview:frameView];
     self.frameView = frameView;
     
+    // 底部菜单显示
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
     bsae.subViews = @[@"filter", @"navbar_video_icon_disabled_black", @"gif", @"cut_32", @"turn_Left", @"turn_Right"];
     bsae.delegate = self;
@@ -56,13 +75,7 @@
     [self.view addSubview:bsae];
     [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
 
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-//    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageView.center = self.view.center;
-    imageView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:imageView];
-    self.imageView = imageView;
-    
+    // 滑动slider时显示帧数
     JMButtom *showFps = [[JMButtom alloc] init];
     showFps.layer.cornerRadius = 10;
     [showFps setImage:[[UIImage imageNamed:@"ellopse_32"] imageWithColor:JMBaseColor] forState:(UIControlStateNormal)];
@@ -74,21 +87,29 @@
     showFps.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
     [self.view addSubview:showFps];
     self.showFps = showFps;
+}
+
+#pragma mark -- drawVC界面进入
+- (void)setImagesFromDrawVC:(NSMutableArray *)imagesFromDrawVC
+{
+    _imagesFromDrawVC = imagesFromDrawVC;
+    _images = imagesFromDrawVC;
     
-    if (_delayTime>0) {
-        
-        UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
-        UIBarButtonItem *editer = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(Editer:)];
-        self.navigationItem.rightBarButtonItems = @[right, editer];
-        
-    }else{
-        
-        UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
-        self.navigationItem.rightBarButtonItems = @[right];
-        
-        // 创建GIF文件
-        [self creatNewGIF:_filePath];
-    }
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
+    self.navigationItem.rightBarButtonItems = @[right];
+    
+    // 创建GIF文件
+    [self creatNewGIF:_filePath];
+}
+
+#pragma mark -- home界面进入
+- (void)setImagefromHome:(UIImage *)imagefromHome
+{
+    _imagefromHome = imagefromHome;
+    self.imageView.image = imagefromHome;
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
+    UIBarButtonItem *editer = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(Editer:)];
+    self.navigationItem.rightBarButtonItems = @[right, editer];
 }
 
 // 创作选项弹出，保存第一次生成GIF文件
@@ -102,7 +123,7 @@
 - (void)Editer:(UIBarButtonItem *)done
 {
     JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-    [draw presentDrawViewController:self images:_images];
+    [draw initPaintBoard:self images:_images];
     
     // 删除GIF文件
     NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
@@ -111,12 +132,6 @@
     [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
     [self presentViewController:Nav animated:YES completion:nil];
-}
-
-// JMDrawViewController点击编辑界面完成返回JMGetGIFController界面
-- (void)dismissFromDrawViewController
-{
-    [self creatNewGIF:_filePath];
 }
 
 // 编辑界面，删除GIF文件
@@ -139,7 +154,6 @@
         });
     });
 }
-
 
 #pragma mark -- JMGetGIFBottomViewDelegate
 - (void)changeValue:(CGFloat)value
@@ -267,6 +281,8 @@
     }
     return newImages;
 }
+
+
 
 - (void)dealloc
 {
