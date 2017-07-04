@@ -618,5 +618,4 @@
     return newPic; 
 }
 
-
 @end

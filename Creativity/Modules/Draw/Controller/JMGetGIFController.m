@@ -19,8 +19,12 @@
 #import "JMFilterItem.h"
 #import "JMButtom.h"
 #import "JMFrameView.h"
+#import "NSTimer+JMAddition.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
+{
+    NSTimer *_aniTimer;
+}
 @property (nonatomic, weak) UIButton *showFps;
 @property (nonatomic, weak) JMFrameView *frameView;
 @end
@@ -69,7 +73,7 @@
     
     // 底部菜单显示
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
-    bsae.subViews = @[@"filter", @"navbar_video_icon_disabled_black", @"gif", @"cut_32", @"turn_Left", @"turn_Right"];
+    bsae.subViews = @[@"filter", @"navbar_video_icon_disabled_black", @"gif", @"navbar_pause_icon_black", @"turn_Left", @"turn_Right"];
     bsae.delegate = self;
     bsae.sliderA.value = _delayTime;
     [self.view addSubview:bsae];
@@ -87,6 +91,13 @@
     showFps.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
     [self.view addSubview:showFps];
     self.showFps = showFps;
+    
+    // _aniTimer = [NSTimer scheduledTimerWithTimeInterval:_delayTime target:self selector:@selector(setNextImage) userInfo:nil repeats:YES];
+}
+
+- (void)setNextImage
+{
+    _imageView.image = _images.firstObject;
 }
 
 #pragma mark -- drawVC界面进入
@@ -251,7 +262,6 @@
                             hud.label.text = @"完成";
                             [hud hideAnimated:YES afterDelay:1.5f];
                             [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
-                            
                         });
                     }
                 }];
@@ -264,13 +274,42 @@
         
     }else if (index == 2){
         
-        [self creatNewGIF:_filePath];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+        
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            
+            [JMMediaHelper makeAnimatedGIF:_filePath images:_images delayTime:(1.0-_delayTime)];
+            UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:_filePath]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [hud hideAnimated:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
+                hud.square = YES;
+                hud.label.text = @"完成";
+                [hud hideAnimated:YES afterDelay:1.5f];
+                self.imageView.image = image;
+            });
+        });
         
     }else if (index == 3){
         
+        [_aniTimer pause];
+        
+    }else if (index == 4){
+        
+        _imageView.transform = CGAffineTransformMakeScale(-1, 1);
+        
+    }else if (index == 5){
+    
+        _imageView.transform = CGAffineTransformMakeScale(1, -1);
     }
 }
 
+#pragma mark -- 添加滤镜
 - (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
 {
     NSMutableArray *newImages = [NSMutableArray array];
@@ -282,13 +321,10 @@
     return newImages;
 }
 
-
-
 - (void)dealloc
 {
     NSLog(@"JMGetGIFController 销毁");
-    
-     [[NSNotificationCenter defaultCenter] postNotificationName:@"JMFrameViewStopTimer" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"JMFrameViewStopTimer" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

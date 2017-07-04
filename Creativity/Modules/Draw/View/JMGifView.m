@@ -10,6 +10,16 @@
 
 @implementation JMGifView
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        self.backgroundColor = [UIColor whiteColor];
+    }
+    return self;
+}
+
 - (void)setImage:(UIImage *)image
 {
     _image = image;

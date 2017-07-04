@@ -17,6 +17,4 @@
 @property (nonatomic, weak) UIImage *imagefromHome;
 @property (nonatomic, strong) NSMutableArray *imagesFromDrawVC;
 
-// 点击完成从画图界面弹出
-- (void)dismissFromDrawViewController;
 @end

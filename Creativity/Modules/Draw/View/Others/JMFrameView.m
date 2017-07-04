@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.delayTimer = 0.8;
+        _delayTimer = 0.8;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopTimer) name:@"JMFrameViewStopTimer" object:nil];
         
         UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(12, 0, 8, self.height)];
@@ -39,13 +39,6 @@
 {
     _delayTimer = delayTimer;
     _base = _delayTimer;
-    
-    [_timer invalidate];
-    _timer = nil;
-    
-    _timer = [NSTimer scheduledTimerWithTimeInterval:_delayTimer target:self selector:@selector(changeLocation) userInfo:nil repeats:YES];
-    
-    NSLog(@"%f", delayTimer);
 }
 
 - (void)setImages:(NSArray *)images
@@ -67,21 +60,45 @@
     view.backgroundColor = [UIColor redColor];
     [self addSubview:view];
     self.view = view;
+    
+    [_timer invalidate];
+    _timer = nil;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:_delayTimer*_images.count+0.5 target:self selector:@selector(changeLocation) userInfo:nil repeats:YES];
+    
+    [UIView animateWithDuration:_delayTimer*_images.count animations:^{
+        
+        _view.frame = CGRectMake(self.width-20, 1, 5, self.height-2);
+        
+    } completion:^(BOOL finished) {
+        
+        _view.frame = CGRectMake(20, 1, 5, self.height-2);
+    }];
 }
 
 - (void)changeLocation
 {
-    CGFloat x = _delayTimer*(self.width/_images.count);
+    [UIView animateWithDuration:_delayTimer*_images.count animations:^{
+        
+        _view.frame = CGRectMake(self.width-20, 1, 5, self.height-2);
+        
+    } completion:^(BOOL finished) {
+        
+        _view.frame = CGRectMake(20, 1, 5, self.height-2);
+    }];
     
-    if (x<self.width+5) {
-    
-        _view.frame = CGRectMake(x, 1, 5, self.height-2);
-    }else{
-    
-        _delayTimer = _base;
-    }
-    
-    _delayTimer += _base;
+//    CGFloat x = _delayTimer*(self.width/_images.count);
+//    if (x<self.width+5) {
+//    
+//        [UIView animateWithDuration:_delayTimer*_images.count animations:^{
+//         
+//            _view.frame = CGRectMake(x-6, 1, 5, self.height-2);
+//        }];
+//    }else{
+//    
+//        _delayTimer = _base;
+//    }
+//    
+//    _delayTimer += _base;
 }
 
 - (void)stopTimer

@@ -376,14 +376,13 @@ static NSString *const headerID = @"header";
         for (UIImage *image in photos) {
             
             JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-            gif.backgroundColor = [UIColor whiteColor];
-            NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
-            gif.image = [UIImage imageWithData:imageData];
+            // NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
+            gif.image = image; // [UIImage imageWithData:imageData];
             UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
             [newImages addObject:image];
         }
         
-        draw.images = [newImages mutableCopy];
+        draw.imagesFromDrawVC = newImages;
         JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -405,7 +404,6 @@ static NSString *const headerID = @"header";
                 popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
             }
         }
-
     }
 }
 
