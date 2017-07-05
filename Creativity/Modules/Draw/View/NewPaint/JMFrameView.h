@@ -11,4 +11,6 @@
 @interface JMFrameView : UIView
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, assign) CGFloat delayTimer;
+- (void)pauseAnimation;
+- (void)restartAnimation;
 @end

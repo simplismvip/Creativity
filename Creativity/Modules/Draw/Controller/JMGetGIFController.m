@@ -25,10 +25,12 @@
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 {
     NSTimer *_aniTimer;
+    BOOL _pause;
 }
 @property (nonatomic, weak) UIButton *showFps;
 @property (nonatomic, weak) JMFrameView *frameView;
 @property (nonatomic, weak) JMGIFAnimationView *animationView;
+@property (nonatomic, weak) JMGetGIFBottomView *bsae;
 @end
 
 @implementation JMGetGIFController
@@ -63,6 +65,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _pause = NO;
+    
     // 顶部动画显示
     JMFrameView *frameView = [[JMFrameView alloc] initWithFrame:CGRectMake(10, 84, kW-20, 40)];
     frameView.images = _images;
@@ -78,6 +82,7 @@
     bsae.delegate = self;
     bsae.sliderA.value = _delayTime;
     [self.view addSubview:bsae];
+    self.bsae = bsae;
     [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
 
     // 滑动slider时显示帧数
@@ -152,14 +157,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)creatNewGIF:(NSString *)GIFPath
-{
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        [JMMediaHelper makeAnimatedGIF:GIFPath images:_images delayTime:(1.0-_delayTime)];
-    });
-}
-
 #pragma mark -- JMGetGIFBottomViewDelegate
 - (void)changeValue:(CGFloat)value
 {
@@ -213,9 +210,7 @@
 
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
-    if (index == 0) {
-        
-    }else if (index == 1){
+    if (index == 1){
     
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
@@ -288,7 +283,21 @@
         
     }else if (index == 3){
         
-        [_animationView pauseAnimation];
+        UIButton *btn = [self.bsae viewWithTag:index+200];
+        
+        if (_pause) {
+        
+            [btn setImage:[UIImage imageNamed:@"navbar_pause_icon_black"] forState:(UIControlStateNormal)];
+            [_animationView restartAnimation];
+            [_frameView restartAnimation];
+        }else {
+        
+            [btn setImage:[UIImage imageNamed:@"navbar_play_icon"] forState:(UIControlStateNormal)];
+            [_animationView pauseAnimation];
+            [_frameView pauseAnimation];
+        }
+        
+        _pause = !_pause;
         
     }else if (index == 4){
         

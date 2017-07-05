@@ -7,11 +7,11 @@
 //
 
 #import "JMFrameView.h"
+#import "NSTimer+JMAddition.h"
 
 @interface JMFrameView()
 @property (nonatomic, weak) UIView *view;
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, assign) CGFloat base;
 @end
 
 @implementation JMFrameView
@@ -31,14 +31,33 @@
         UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(self.width-20, 0, 8, self.height)];
         rightView.backgroundColor = JMBaseColor;
         [self addSubview:rightView];
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 1, 5, self.height-2)];
+        view.backgroundColor = [UIColor redColor];
+        [self addSubview:view];
+        self.view = view;
     }
+    
     return self;
 }
 
 - (void)setDelayTimer:(CGFloat)delayTimer
 {
     _delayTimer = delayTimer;
-    _base = _delayTimer;
+    
+    [_timer invalidate];
+    _timer = nil;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:_delayTimer*_images.count+0.5 target:self selector:@selector(changeLocation) userInfo:nil repeats:YES];
+}
+
+- (void)pauseAnimation
+{
+    [_timer pause];
+}
+
+- (void)restartAnimation
+{
+    [_timer resume];
 }
 
 - (void)setImages:(NSArray *)images
@@ -55,24 +74,6 @@
         imageView.frame = CGRectMake(margin+w*i, 1, w, self.height-2);
         i ++;
     }
-    
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 1, 5, self.height-2)];
-    view.backgroundColor = [UIColor redColor];
-    [self addSubview:view];
-    self.view = view;
-    
-    [_timer invalidate];
-    _timer = nil;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:_delayTimer*_images.count+0.5 target:self selector:@selector(changeLocation) userInfo:nil repeats:YES];
-    
-    [UIView animateWithDuration:_delayTimer*_images.count animations:^{
-        
-        _view.frame = CGRectMake(self.width-20, 1, 5, self.height-2);
-        
-    } completion:^(BOOL finished) {
-        
-        _view.frame = CGRectMake(20, 1, 5, self.height-2);
-    }];
 }
 
 - (void)changeLocation

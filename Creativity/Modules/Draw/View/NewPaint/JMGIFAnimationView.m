@@ -15,7 +15,6 @@
 @property (nonatomic, weak) UIImageView *imageView;
 @end
 
-
 @implementation JMGIFAnimationView
 
 - (instancetype)initWithFrame:(CGRect)frame
