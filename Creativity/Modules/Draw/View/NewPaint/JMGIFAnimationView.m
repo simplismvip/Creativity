@@ -45,7 +45,7 @@
 {
     if (_index < self.imageSource.count) {
     
-        NSLog(@"%ld", _index);
+        if (self.frameChange) {self.frameChange(_index);}
         _imageView.image = self.imageSource[_index];
         _index += 1;
     }else{

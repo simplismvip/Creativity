@@ -55,6 +55,11 @@
         JMGIFAnimationView *aniView = [[JMGIFAnimationView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
         aniView.backgroundColor = [UIColor whiteColor];
         aniView.center = self.view.center;
+        aniView.frameChange = ^(NSInteger index) {
+            
+            [_frameView refrashLocation:index];
+        };
+        
         [self.view insertSubview:aniView belowSubview:_showFps];
         self.animationView = aniView;
     }
@@ -70,7 +75,6 @@
     // 顶部动画显示
     JMFrameView *frameView = [[JMFrameView alloc] initWithFrame:CGRectMake(10, 84, kW-20, 40)];
     frameView.images = _images;
-    frameView.delayTimer = _delayTime;
     frameView.layer.borderColor = JMBaseColor.CGColor;
     frameView.layer.borderWidth = 3;
     [self.view addSubview:frameView];
@@ -163,8 +167,7 @@
     NSLog(@"%f", value);
     
     _delayTime = value;
-    _frameView.delayTimer = 1-value;
-    _animationView.delayer = _frameView.delayTimer;
+    _animationView.delayer = 1-value;
     
     [UIView animateWithDuration:.8 animations:^{
         
@@ -289,12 +292,10 @@
         
             [btn setImage:[UIImage imageNamed:@"navbar_pause_icon_black"] forState:(UIControlStateNormal)];
             [_animationView restartAnimation];
-            [_frameView restartAnimation];
         }else {
         
             [btn setImage:[UIImage imageNamed:@"navbar_play_icon"] forState:(UIControlStateNormal)];
             [_animationView pauseAnimation];
-            [_frameView pauseAnimation];
         }
         
         _pause = !_pause;

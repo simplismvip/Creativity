@@ -8,6 +8,7 @@
 
 #import "JMFrameView.h"
 #import "NSTimer+JMAddition.h"
+#define kMargin 20
 
 @interface JMFrameView()
 @property (nonatomic, weak) UIView *view;
@@ -21,9 +22,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _delayTimer = 0.8;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopTimer) name:@"JMFrameViewStopTimer" object:nil];
-        
         UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(12, 0, 8, self.height)];
         leftView.backgroundColor = JMBaseColor;
         [self addSubview:leftView];
@@ -33,7 +31,7 @@
         [self addSubview:rightView];
         
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 1, 5, self.height-2)];
-        view.backgroundColor = [UIColor redColor];
+        view.backgroundColor = JMBaseColor;
         [self addSubview:view];
         self.view = view;
     }
@@ -41,77 +39,36 @@
     return self;
 }
 
-- (void)setDelayTimer:(CGFloat)delayTimer
-{
-    _delayTimer = delayTimer;
-    
-    [_timer invalidate];
-    _timer = nil;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:_delayTimer*_images.count+0.5 target:self selector:@selector(changeLocation) userInfo:nil repeats:YES];
-}
-
-- (void)pauseAnimation
-{
-    [_timer pause];
-}
-
-- (void)restartAnimation
-{
-    [_timer resume];
-}
-
 - (void)setImages:(NSArray *)images
 {
     _images = images;
     
     int i = 0;
-    CGFloat margin = 20;
-    CGFloat w = (self.width-margin*2)/images.count;
+    CGFloat w = (self.width-kMargin*2)/images.count;
     for (UIImage *image in images) {
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         [self addSubview:imageView];
-        imageView.frame = CGRectMake(margin+w*i, 1, w, self.height-2);
+        imageView.frame = CGRectMake(kMargin+w*i, 1, w, self.height-2);
         i ++;
     }
 }
 
-- (void)changeLocation
+// 更新位置
+- (void)refrashLocation:(NSInteger)index
 {
-    [UIView animateWithDuration:_delayTimer*_images.count animations:^{
-        
-        _view.frame = CGRectMake(self.width-20, 1, 5, self.height-2);
-        
-    } completion:^(BOOL finished) {
-        
-        _view.frame = CGRectMake(20, 1, 5, self.height-2);
-    }];
+    CGFloat w = (20+(self.width-kMargin*2)/_images.count)*index;
+    _view.frame = CGRectMake(w, 1, 5, self.height-2);
     
-//    CGFloat x = _delayTimer*(self.width/_images.count);
-//    if (x<self.width+5) {
-//    
-//        [UIView animateWithDuration:_delayTimer*_images.count animations:^{
-//         
-//            _view.frame = CGRectMake(x-6, 1, 5, self.height-2);
-//        }];
-//    }else{
-//    
-//        _delayTimer = _base;
-//    }
-//    
-//    _delayTimer += _base;
-}
-
-- (void)stopTimer
-{
-    [_timer invalidate];
-    _timer = nil;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        
+//        _view.frame = CGRectMake(self.width-20, 1, 5, self.height-2);
+//    }];
 }
 
 - (void)dealloc
 {
     NSLog(@"JMFrameView 销毁");
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"JMFrameViewStopTimer" object:nil];
 }
 
 /*

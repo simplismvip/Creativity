@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^frameChange)(NSInteger index);
 @interface JMGIFAnimationView : UIView
 @property (nonatomic, strong) NSArray *imageSource;
 @property (nonatomic, assign) CGFloat delayer;
+@property (nonatomic, copy) frameChange frameChange;
 - (void)startAnimation:(NSTimeInterval)timeInterval;
 - (void)pauseAnimation;
 - (void)restartAnimation;
