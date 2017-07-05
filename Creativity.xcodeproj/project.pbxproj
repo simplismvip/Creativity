@@ -12,6 +12,7 @@
 		04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A601F04F760008D0B27 /* JMWebProgressView.m */; };
 		04654A641F04F7B1008D0B27 /* JMBaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */; };
 		04654A671F050264008D0B27 /* DeviceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A661F050264008D0B27 /* DeviceHelper.m */; };
+		047F57311F0CBF660045D3ED /* JMGIFAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F57301F0CBF660045D3ED /* JMGIFAnimationView.m */; };
 		047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE61EF26E5700AD0C08 /* JMHelper.m */; };
 		047FCEEA1EF26E5700AD0C08 /* JMFileManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE81EF26E5700AD0C08 /* JMFileManger.m */; };
 		047FCEF01EF3777000AD0C08 /* JMMediaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEEF1EF3777000AD0C08 /* JMMediaHelper.m */; };
@@ -238,6 +239,8 @@
 		04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseWebViewController.m; sourceTree = "<group>"; };
 		04654A651F050264008D0B27 /* DeviceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceHelper.h; sourceTree = "<group>"; };
 		04654A661F050264008D0B27 /* DeviceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceHelper.m; sourceTree = "<group>"; };
+		047F572F1F0CBF660045D3ED /* JMGIFAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGIFAnimationView.h; sourceTree = "<group>"; };
+		047F57301F0CBF660045D3ED /* JMGIFAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGIFAnimationView.m; sourceTree = "<group>"; };
 		047FCEE51EF26E5700AD0C08 /* JMHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHelper.h; sourceTree = "<group>"; };
 		047FCEE61EF26E5700AD0C08 /* JMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHelper.m; sourceTree = "<group>"; };
 		047FCEE71EF26E5700AD0C08 /* JMFileManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFileManger.h; sourceTree = "<group>"; };
@@ -1149,6 +1152,8 @@
 				0490F2581EEFC0C900E05A84 /* JMGifSetView.m */,
 				0490F25A1EEFC0E600E05A84 /* JMGifView.h */,
 				0490F25B1EEFC0E600E05A84 /* JMGifView.m */,
+				047F572F1F0CBF660045D3ED /* JMGIFAnimationView.h */,
+				047F57301F0CBF660045D3ED /* JMGIFAnimationView.m */,
 			);
 			path = NewPaint;
 			sourceTree = "<group>";
@@ -1634,6 +1639,7 @@
 				04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */,
 				0490EECF1EEF977000E05A84 /* SXMarquee.m in Sources */,
 				0490F1AD1EEF9C3900E05A84 /* JMHomeCollectionController.m in Sources */,
+				047F57311F0CBF660045D3ED /* JMGIFAnimationView.m in Sources */,
 				A20DAF281EF2E61E008DBFA9 /* JMTopTableView.m in Sources */,
 				04B033AF1EFA153700A10D4C /* UIImage+Alpha.m in Sources */,
 				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,

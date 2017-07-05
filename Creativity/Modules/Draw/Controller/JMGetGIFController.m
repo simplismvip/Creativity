@@ -20,6 +20,7 @@
 #import "JMButtom.h"
 #import "JMFrameView.h"
 #import "NSTimer+JMAddition.h"
+#import "JMGIFAnimationView.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 {
@@ -27,6 +28,7 @@
 }
 @property (nonatomic, weak) UIButton *showFps;
 @property (nonatomic, weak) JMFrameView *frameView;
+@property (nonatomic, weak) JMGIFAnimationView *animationView;
 @end
 
 @implementation JMGetGIFController
@@ -44,19 +46,18 @@
     [MobClick endLogPageView:@"JMGetGIFController"];
 }
 
-- (UIImageView *)imageView
+- (JMGIFAnimationView *)animationView
 {
-    if (!_imageView) {
+    if (!_animationView) {
         
-        // 中部imageview展示
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-        imageView.center = self.view.center;
-        imageView.backgroundColor = [UIColor whiteColor];
-        [self.view addSubview:imageView];
-        self.imageView = imageView;
+        JMGIFAnimationView *aniView = [[JMGIFAnimationView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+        aniView.backgroundColor = [UIColor whiteColor];
+        aniView.center = self.view.center;
+        [self.view insertSubview:aniView belowSubview:_showFps];
+        self.animationView = aniView;
     }
     
-    return _imageView;
+    return _animationView;
 }
 
 - (void)viewDidLoad {
@@ -91,33 +92,31 @@
     showFps.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
     [self.view addSubview:showFps];
     self.showFps = showFps;
-    
-    // _aniTimer = [NSTimer scheduledTimerWithTimeInterval:_delayTime target:self selector:@selector(setNextImage) userInfo:nil repeats:YES];
 }
 
-- (void)setNextImage
+- (void)setImages:(NSMutableArray *)images
 {
-    _imageView.image = _images.firstObject;
+    _images = images;
+    self.animationView.imageSource = [images copy];
+    _animationView.delayer = _delayTime;
 }
 
 #pragma mark -- drawVC界面进入
 - (void)setImagesFromDrawVC:(NSMutableArray *)imagesFromDrawVC
 {
     _imagesFromDrawVC = imagesFromDrawVC;
-    _images = imagesFromDrawVC;
+    self.images = imagesFromDrawVC;
     
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
     self.navigationItem.rightBarButtonItems = @[right];
-    
-    // 创建GIF文件
-    [self creatNewGIF:_filePath];
 }
 
 #pragma mark -- home界面进入
-- (void)setImagefromHome:(UIImage *)imagefromHome
+- (void)setImagesFromHomeVC:(NSMutableArray *)imagesFromHomeVC
 {
-    _imagefromHome = imagefromHome;
-    self.imageView.image = imagefromHome;
+    _imagesFromHomeVC = imagesFromHomeVC;
+    self.images = imagesFromHomeVC;
+    
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
     UIBarButtonItem *editer = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(Editer:)];
     self.navigationItem.rightBarButtonItems = @[right, editer];
@@ -158,11 +157,6 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         [JMMediaHelper makeAnimatedGIF:GIFPath images:_images delayTime:(1.0-_delayTime)];
-        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:GIFPath]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-        
-            self.imageView.image = image;
-        });
     });
 }
 
@@ -173,15 +167,18 @@
     
     _delayTime = value;
     _frameView.delayTimer = 1-value;
+    _animationView.delayer = _frameView.delayTimer;
     
-    [self creatNewGIF:_filePath];
-    [UIView animateWithDuration:.5 animations:^{
+    [UIView animateWithDuration:.8 animations:^{
         
         _showFps.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        _showFps.alpha = 0.0;
         
     } completion:^(BOOL finished) {
-        _showFps.hidden = YES;
+        
         _showFps.transform = CGAffineTransformMakeScale(1, 1);
+        _showFps.hidden = YES;
+        _showFps.alpha = 1.0;
     }];
 }
 
@@ -206,14 +203,10 @@
             [newImages addObject:filterImage];
         }
         
-        _images = newImages;
-        [JMMediaHelper makeAnimatedGIF:self.filePath images:[_images copy] delayTime:(1.0-_delayTime)];
-        UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:self.filePath]];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [hud hideAnimated:YES];
-            self.imageView.image = image;
+            self.images = newImages;
         });
     });
 }
@@ -281,7 +274,6 @@
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
             [JMMediaHelper makeAnimatedGIF:_filePath images:_images delayTime:(1.0-_delayTime)];
-            UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:_filePath]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [hud hideAnimated:YES];
@@ -291,34 +283,21 @@
                 hud.square = YES;
                 hud.label.text = @"完成";
                 [hud hideAnimated:YES afterDelay:1.5f];
-                self.imageView.image = image;
             });
         });
         
     }else if (index == 3){
         
-        [_aniTimer pause];
+        [_animationView pauseAnimation];
         
     }else if (index == 4){
         
-        _imageView.transform = CGAffineTransformMakeScale(-1, 1);
+        // _imageView.transform = CGAffineTransformMakeScale(-1, 1);
         
     }else if (index == 5){
     
-        _imageView.transform = CGAffineTransformMakeScale(1, -1);
+        // _imageView.transform = CGAffineTransformMakeScale(1, -1);
     }
-}
-
-#pragma mark -- 添加滤镜
-- (NSMutableArray *)filters:(NSMutableArray *)images type:(NSInteger)type
-{
-    NSMutableArray *newImages = [NSMutableArray array];
-    for (UIImage *originImage in images) {
-        
-        UIImage *filterImage = [UIImage returnImage:type image:originImage];
-        [newImages addObject:filterImage];
-    }
-    return newImages;
 }
 
 - (void)dealloc
@@ -334,11 +313,6 @@
 #endif
     // Dispose of any resources that can be recreated.
 }
-
-//            [JMMediaHelper compressImages:_images inputPath:videoPath fps:_delayTime completion:^(NSURL *outurl) {
-//
-
-//            }];
 
 /*
 

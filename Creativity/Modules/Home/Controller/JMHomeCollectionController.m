@@ -144,8 +144,7 @@ static NSString *const headerID = @"header";
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [hud hideAnimated:YES];
-            GIF.images = newImages;
-            GIF.imagefromHome = image;
+            GIF.imagesFromHomeVC = newImages;
             [self.navigationController pushViewController:GIF animated:YES];
         });
     });
@@ -376,8 +375,7 @@ static NSString *const headerID = @"header";
         for (UIImage *image in photos) {
             
             JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-            // NSData *imageData = [image compressOriginalImage:image toMaxDataSizeKBytes:1024*100];
-            gif.image = image; // [UIImage imageWithData:imageData];
+            gif.image = image;
             UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
             [newImages addObject:image];
         }
