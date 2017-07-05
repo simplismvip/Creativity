@@ -168,7 +168,7 @@
             UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
             [images addObject:imageNew];
         }
-        
+        gif.delayTime = 0.5;
         gif.imagesFromDrawVC = images;
         [self.navigationController pushViewController:gif animated:YES];
     }else{

@@ -380,6 +380,7 @@ static NSString *const headerID = @"header";
             [newImages addObject:image];
         }
         
+        draw.delayTime = 0.5;
         draw.imagesFromDrawVC = newImages;
         JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
         

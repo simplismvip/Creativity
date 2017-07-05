@@ -29,11 +29,6 @@
         UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(self.width-20, 0, 8, self.height)];
         rightView.backgroundColor = JMBaseColor;
         [self addSubview:rightView];
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 1, 5, self.height-2)];
-        view.backgroundColor = JMBaseColor;
-        [self addSubview:view];
-        self.view = view;
     }
     
     return self;
@@ -52,18 +47,22 @@
         imageView.frame = CGRectMake(kMargin+w*i, 1, w, self.height-2);
         i ++;
     }
+    
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = JMBaseColor;
+    [self addSubview:view];
+    self.view = view;
 }
 
 // 更新位置
 - (void)refrashLocation:(NSInteger)index
 {
-    CGFloat w = (20+(self.width-kMargin*2)/_images.count)*index;
-    _view.frame = CGRectMake(w, 1, 5, self.height-2);
     
-//    [UIView animateWithDuration:0.3 animations:^{
-//        
-//        _view.frame = CGRectMake(self.width-20, 1, 5, self.height-2);
-//    }];
+    [UIView animateWithDuration:0.1 animations:^{
+        
+        CGFloat w = kMargin*1.5+(self.width-kMargin*2)/_images.count*index;
+        _view.frame = CGRectMake(w, 1, 5, self.height-2);
+    }];
 }
 
 - (void)dealloc
