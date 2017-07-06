@@ -31,14 +31,14 @@
 
 @interface JMDrawViewController ()<JMTopTableViewDelegate,UMSocialShareMenuViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak) UILabel *timeLabel;
-@property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, weak) JMPaintView *paintView;
+@property (nonatomic, weak) JMSlider *slider;
+@property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, strong) JMGetGIFController *GIFController;
 @property (nonatomic, strong) NSMutableArray *subViews;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *memberViewData;
 @property (nonatomic, strong) NSMutableArray *memberViewBuff;
-@property (nonatomic, weak) JMSlider *slider;
 @end
 
 @implementation JMDrawViewController
@@ -73,6 +73,7 @@
     slider.value = ^(JMSlider *value) {ws.paintView.alpha = value.sValue;};
     [self.view addSubview:slider];
     self.slider = slider;
+    
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
     JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, kH-44, kW, 44)];

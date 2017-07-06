@@ -2,7 +2,7 @@
 	"topBar" : [
 
 		  	{
-		  		"添加":{
+		  		"navbar_plus_icon_black":{
 		  				"imageName":["coverage_32"],
 						"showName":["添加"],
 						"color":"0",
@@ -11,7 +11,7 @@
 			},
                 
             {
-                "图层":{
+                "navbar_delete_icon_black":{
                     "imageName":["coverage_32"],
                     "showName":["图层"],
                     "color":"0",
@@ -20,7 +20,7 @@
             },
 
 		  	{
-		  		"画笔":{
+		  		"navbar_note_icon_disabled_white":{
 		  				"imageName":["cave_32", "line_32", "arrow_32", "rect_32", "ellopse_32", "navbar_emoticon_icon_black", "textNote"],
 						"showName":["曲线", "直线", "箭头", "矩形", "椭圆", "表情", "文字"],
 						"color":"0",
@@ -29,7 +29,7 @@
 			},
 
 		  	{
-		  		"撤销":{
+		  		"navbar_eraser_icon_black":{
 		  				"imageName":["arrow_back", "claerAll", "arrow_go"],
 						"showName":["取消", "清空", "恢复"], 
 						"color":"0",
@@ -38,7 +38,7 @@
 			},
 
 		  	{
-		  		"注释":{
+		  		"navbar_delete_icon_black":{
 		  				"imageName":["dashLine", "fill_32", "image"],
 						"showName":["虚线", "填充", "照片"],
 						"color":"0",
@@ -47,7 +47,7 @@
 			},
                 
             {
-                "颜色":{
+                "navbar_palette_icon_black":{
                         "imageName":["color_32-1"],
                         "showName":["颜色"],
                         "color":"0",

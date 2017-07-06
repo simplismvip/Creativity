@@ -78,7 +78,7 @@
     NSMutableArray *thubImage = [NSMutableArray array];
     for (UIImage *imageView in _images) {
         
-        UIImage *image = [imageView compressOriginalImage:imageView toSize:CGSizeMake(32, 32)];
+        UIImage *image = [imageView compressOriginalImage:imageView toSize:CGSizeMake(64, 64)];
         [thubImage addObject:image];
     }
     

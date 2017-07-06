@@ -30,10 +30,10 @@
     for (JMTopBarModel *model in dataSource) {
         
         UIButton *btn = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [btn setTitle:model.title forState:(UIControlStateNormal)];
-        [btn setImage:[UIImage imageNamed:model.image] forState:(UIControlStateNormal)];
+//        [btn setTitle:model.title forState:(UIControlStateNormal)];
+        [btn setImage:[UIImage imageNamed:model.title] forState:(UIControlStateNormal)];
         btn.backgroundColor = JMColor(33, 33, 33);
-        [btn setTintColor:[UIColor whiteColor]];
+        [btn setTintColor:JMBaseColor];
         btn.tag = i+baseTag;
         [btn addTarget:self action:@selector(topBarAction:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:btn];
@@ -53,11 +53,10 @@
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:self.section];
             [self.delegate topTableView:self.section didSelectRowAtIndexPath:indexPath];
         }
-        
     }else{
-    
         JMGestureButton *gesture = [JMGestureButton creatGestureButton];
-        gesture.delegate= self;
+        gesture.delegate = self;
+        
         JMBaseBottomView *bsae = [[JMBaseBottomView alloc] initWithCount:tModel.models];
         bsae.delegate = self;
         [gesture addSubview:bsae];
@@ -72,9 +71,7 @@
 - (void)didRemove
 {
     [UIView animateWithDuration:0.2 animations:^{
-        
         self.frame = CGRectMake(0, kH-44, kW, 44);
-        
     }];
 }
 
@@ -84,7 +81,6 @@
         
         JMGestureButton *ges = [JMGestureButton getGestureButton];
         [ges rem_GestureBtn:ges];
-        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.section];
         [self.delegate topTableView:self.section didSelectRowAtIndexPath:indexPath];
     }
@@ -95,7 +91,7 @@
     [super layoutSubviews];
     
     int i = 0;
-    CGFloat w = self.width/self.dataSource.count;
+    CGFloat w = self.width/_dataSource.count;
     for (UIView *view in self.subviews) {
         
         view.frame = CGRectMake(i*w, 0, w, self.height);
