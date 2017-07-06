@@ -129,7 +129,7 @@ static NSString *const headerID = @"header";
         UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
         JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
         GIF.filePath = model.folderPath;
-        GIF.delayTime = image.duration/image.images.count;
+        GIF.delayTime = 2-image.duration/image.images.count;
         
         NSMutableArray *newImages = [NSMutableArray array];
         for (UIImage *ima in image.images) {

@@ -25,6 +25,7 @@
 #import "JMBottomModel.h"
 #import "Masonry.h"
 #import <UShareUI/UShareUI.h>
+#import "JMSlider.h"
 
 #define kMargin 10.0
 
@@ -37,6 +38,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *memberViewData;
 @property (nonatomic, strong) NSMutableArray *memberViewBuff;
+@property (nonatomic, weak) JMSlider *slider;
 @end
 
 @implementation JMDrawViewController
@@ -65,6 +67,12 @@
     self.memberViewData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
     
+    JMSlider *slider = [[JMSlider alloc] initWithFrame:CGRectMake(10, (self.view.height/2-self.view.width/2+64)*0.5-15, self.view.width-20, 30)];
+    slider.slider.value = 1.0;
+    JMSelf(ws);
+    slider.value = ^(JMSlider *value) {ws.paintView.alpha = value.sValue;};
+    [self.view addSubview:slider];
+    self.slider = slider;
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
     JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, kH-44, kW, 44)];
@@ -149,7 +157,6 @@
         [images addObject:imageNew];
     }
     
-    [self.GIFController.images removeAllObjects];
     self.GIFController.imagesFromDrawVC = images;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -198,6 +205,7 @@
     
     if (bottomType == JMTopBarTypeAdd){
         
+        _slider.slider.value = 1.0;
         [JMPopView popView:self.view title:title];
         JMPaintView *pView = [[JMPaintView alloc] init];
         pView.drawType = (JMPaintToolType)[StaticClass getPaintType];

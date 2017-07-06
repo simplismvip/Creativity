@@ -73,6 +73,7 @@
 #import "UIView+Extension.h"
 #import "StaticClass.h"
 #import "JMHelper.h"
+#import "JMBuyHelper.h"
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 #endif

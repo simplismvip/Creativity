@@ -16,4 +16,5 @@ typedef void(^frameChange)(NSInteger index);
 - (void)startAnimation:(NSTimeInterval)timeInterval;
 - (void)pauseAnimation;
 - (void)restartAnimation;
+- (void)stopAnimation;
 @end

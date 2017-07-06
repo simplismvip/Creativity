@@ -24,8 +24,8 @@
         self.backgroundColor = JMColor(33, 33, 33);
         
         UISlider *sliderA = [[UISlider alloc] init];
-        sliderA.minimumValue = 0.01;
-        sliderA.maximumValue = 0.99;
+        sliderA.minimumValue = 0.5;
+        sliderA.maximumValue = 2.0;
         [sliderA setMinimumTrackImage:[[UIImage imageNamed:@"prgbar_unread"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
         [sliderA setMaximumTrackImage:[[UIImage imageNamed:@"prgbar_read"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
         [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateHighlighted];

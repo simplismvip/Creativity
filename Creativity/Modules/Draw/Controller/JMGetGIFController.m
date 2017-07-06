@@ -74,7 +74,15 @@
     
     // 顶部动画显示
     JMFrameView *frameView = [[JMFrameView alloc] initWithFrame:CGRectMake(10, 84, kW-20, 40)];
-    frameView.images = _images;
+    
+    NSMutableArray *thubImage = [NSMutableArray array];
+    for (UIImage *imageView in _images) {
+        
+        UIImage *image = [imageView compressOriginalImage:imageView toSize:CGSizeMake(32, 32)];
+        [thubImage addObject:image];
+    }
+    
+    frameView.images = thubImage;
     frameView.layer.borderColor = JMBaseColor.CGColor;
     frameView.layer.borderWidth = 3;
     [self.view addSubview:frameView];
@@ -134,7 +142,7 @@
 // 创作选项弹出，保存第一次生成GIF文件
 - (void)Done:(UIBarButtonItem *)done
 {
-    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:(1.0-_delayTime)];
+    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -151,6 +159,9 @@
     [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
     [self presentViewController:Nav animated:YES completion:nil];
+    
+    // 停止动画
+//    [_animationView stopAnimation];
 }
 
 // 编辑界面，删除GIF文件
@@ -166,8 +177,8 @@
 {
     NSLog(@"%f", value);
     
-    _delayTime = value;
-    _animationView.delayer = 1-value;
+    _delayTime = 2-value;
+    _animationView.delayer = 2-value;
     
     [UIView animateWithDuration:.8 animations:^{
         
@@ -183,9 +194,9 @@
 }
 
 - (void)changeValueSerial:(CGFloat)progress
-{
+{    
     _showFps.hidden = NO;
-    [self.showFps setTitle:[NSString stringWithFormat:@"%ld Fps", (NSInteger)(10*progress+1)] forState:(UIControlStateNormal)];
+    [self.showFps setTitle:[NSString stringWithFormat:@"%ld 秒", (NSInteger)(progress*_images.count)] forState:(UIControlStateNormal)];
 }
 
 - (void)filtersDidSelectRowAtIndexPath:(NSInteger)index
@@ -211,6 +222,7 @@
     });
 }
 
+// 总时间 = 张数 * 每张时间, fps = 1/每张时间
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
     if (index == 1){
@@ -223,7 +235,8 @@
             
             NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
             
-            [JMMediaHelper saveImagesToVideoWithImages:_images fps:(10*_delayTime+1) andVideoPath:videoPath completed:^(NSString *filePath) {
+            // 总时间
+            [JMMediaHelper saveImagesToVideoWithImages:_images fps:1/_delayTime andVideoPath:videoPath completed:^(NSString *filePath) {
                 
                 ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
                 [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:filePath] completionBlock:^(NSURL *assetURL, NSError *error) {
@@ -271,7 +284,7 @@
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
-            [JMMediaHelper makeAnimatedGIF:_filePath images:_images delayTime:(1.0-_delayTime)];
+            [JMMediaHelper makeAnimatedGIF:_filePath images:_images delayTime:_delayTime];
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [hud hideAnimated:YES];

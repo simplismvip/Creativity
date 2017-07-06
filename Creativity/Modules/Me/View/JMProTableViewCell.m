@@ -22,7 +22,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = JMColor(65, 65, 65);
+        self.backgroundColor = JMColor(41, 41, 41);
         
         UIImageView *leftImage = [[UIImageView alloc] init];
         [self.contentView addSubview:leftImage];
@@ -50,9 +50,9 @@
 {
     [super layoutSubviews];
     
-    _leftImage.frame = CGRectMake(20, 15, self.height-30, self.height-30);
-    _textTitle.frame = CGRectMake(CGRectGetMaxX(_leftImage.frame)+20, 15, self.width*0.6, self.height/3);
-    _subTitle.frame = CGRectMake(CGRectGetMaxX(_leftImage.frame)+20, CGRectGetMaxY(_textTitle.frame), self.width*0.6, self.height/3);
+    _leftImage.frame = CGRectMake(10, 15, self.height-30, self.height-30);
+    _textTitle.frame = CGRectMake(CGRectGetMaxX(_leftImage.frame)+10, 15, self.width*0.6, self.height/3);
+    _subTitle.frame = CGRectMake(CGRectGetMaxX(_leftImage.frame)+10, CGRectGetMaxY(_textTitle.frame), self.width-CGRectGetMaxX(_leftImage.frame)-20, self.height/3);
 }
 
 - (void)setModel:(ProModel *)model

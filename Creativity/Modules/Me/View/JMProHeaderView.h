@@ -14,5 +14,6 @@
 
 @end
 @interface JMProHeaderView : UIView
+- (void)refruseView;
 @property (nonatomic, weak) id <JMProHeaderViewDelegate>delegate;
 @end

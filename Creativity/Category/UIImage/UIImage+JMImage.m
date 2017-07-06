@@ -595,27 +595,23 @@
 
 - (UIImage *)imageWithWaterMask
 {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 4.0)
-    {
+    if ([JMBuyHelper isVip]) {
+        
+        return self;
+    }else{
+    
         UIGraphicsBeginImageContextWithOptions([self size], NO, 0.0); // 0.0 for scale means "scale for device's main screen".
+        
+        // 原图
+        [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
+        NSDictionary *dic = @{NSFontAttributeName:[UIFont fontWithName:@"Noteworthy-Light" size:11], NSForegroundColorAttributeName:JMColorRGBA(100, 100, 100, 0.8)};
+        NSString *appName = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] lowercaseString]];
+        [appName drawInRect:CGRectMake(10, self.size.height-20, self.size.width-20, 20) withAttributes:dic];
+        
+        UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return newPic;
     }
-#else
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 4.0)
-    {
-        UIGraphicsBeginImageContext([self size]);
-    }
-#endif
-    //原图
-    [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
-    
-    NSDictionary *dic = @{NSFontAttributeName:[UIFont fontWithName:@"Noteworthy-Light" size:11], NSForegroundColorAttributeName:JMColorRGBA(100, 100, 100, 0.8)};
-    NSString *appName = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] lowercaseString]];
-    [appName drawInRect:CGRectMake(10, self.size.height-20, self.size.width-20, 20) withAttributes:dic];
-    
-    UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newPic; 
 }
 
 @end

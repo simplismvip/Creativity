@@ -96,6 +96,7 @@
     }else if (section == 1){
     
         headView.name.text = @"关于";
+        
     }else if (section == 2){
     
         headView.name.text = @"支持中心";

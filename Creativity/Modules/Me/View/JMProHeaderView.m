@@ -22,7 +22,6 @@
     if (self) {
         
         UILabel *frist = [[UILabel alloc] init];
-        frist.text = @"升级到专业版";
         frist.textColor = JMBaseColor;
         frist.textAlignment = NSTextAlignmentCenter;
         frist.font = [UIFont systemFontOfSize:26];
@@ -30,7 +29,6 @@
         self.frist = frist;
         
         UILabel *sec = [[UILabel alloc] init];
-        sec.text = @"请将应用升级到专业版，享受到更多功能优惠。";
         sec.textAlignment = NSTextAlignmentCenter;
         sec.textColor = [UIColor whiteColor];
         sec.font = [UIFont systemFontOfSize:16];
@@ -43,9 +41,22 @@
         button.layer.cornerRadius = 20;
         [button addTarget:self action:@selector(buyPro:) forControlEvents:(UIControlEventTouchUpInside)];
         [button setTintColor:[UIColor redColor]];
-        [button setTitle:@"¥12.00购买专业版" forState:(UIControlStateNormal)];
         [self addSubview:button];
         self.button = button;
+        
+        if ([JMBuyHelper isVip]) {
+            
+            frist.text = @"尊敬的付费用户";
+            sec.text = @"您可以使用全部功能创建有趣的视频和GIF动画";
+            button.userInteractionEnabled = NO;
+            [button setTitle:@"VIP用户" forState:(UIControlStateNormal)];
+            
+        }else{
+        
+            frist.text = @"升级到专业版";
+            sec.text = @"请将应用升级到专业版，享受到更多功能优惠。";
+            [button setTitle:@"¥12.00购买专业版" forState:(UIControlStateNormal)];
+        }
     }
     return self;
 }
@@ -56,6 +67,14 @@
         
         [self.delegate buyPro];
     }
+}
+
+- (void)refruseView
+{
+    _frist.text = @"尊敬的付费用户";
+    _sec.text = @"您可以使用全部功能创建有趣的视频和GIF动画";
+    _button.userInteractionEnabled = NO;
+    [_button setTitle:@"VIP用户" forState:(UIControlStateNormal)];
 }
 
 - (void)layoutSubviews

@@ -57,7 +57,6 @@
 // 更新位置
 - (void)refrashLocation:(NSInteger)index
 {
-    
     [UIView animateWithDuration:0.1 animations:^{
         
         CGFloat w = kMargin*1.5+(self.width-kMargin*2)/_images.count*index;

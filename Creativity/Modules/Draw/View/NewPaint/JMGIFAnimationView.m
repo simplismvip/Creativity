@@ -68,6 +68,12 @@
     [_timer resume];
 }
 
+- (void)stopAnimation
+{
+    [_timer invalidate];
+    _timer = nil;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];

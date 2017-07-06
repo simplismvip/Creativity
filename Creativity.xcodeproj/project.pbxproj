@@ -15,6 +15,8 @@
 		047F57531F0CF5140045D3ED /* JMFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F57521F0CF5140045D3ED /* JMFrameView.m */; };
 		047F57581F0CF51D0045D3ED /* JMGifSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F57551F0CF51D0045D3ED /* JMGifSetView.m */; };
 		047F57591F0CF51D0045D3ED /* JMGifView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F57571F0CF51D0045D3ED /* JMGifView.m */; };
+		047F575C1F0DE05F0045D3ED /* JMBuyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F575B1F0DE05F0045D3ED /* JMBuyHelper.m */; };
+		047F575F1F0DE1420045D3ED /* JMUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F575E1F0DE1420045D3ED /* JMUserDefault.m */; };
 		047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE61EF26E5700AD0C08 /* JMHelper.m */; };
 		047FCEEA1EF26E5700AD0C08 /* JMFileManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEE81EF26E5700AD0C08 /* JMFileManger.m */; };
 		047FCEF01EF3777000AD0C08 /* JMMediaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 047FCEEF1EF3777000AD0C08 /* JMMediaHelper.m */; };
@@ -245,6 +247,11 @@
 		047F57551F0CF51D0045D3ED /* JMGifSetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGifSetView.m; sourceTree = "<group>"; };
 		047F57561F0CF51D0045D3ED /* JMGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGifView.h; sourceTree = "<group>"; };
 		047F57571F0CF51D0045D3ED /* JMGifView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGifView.m; sourceTree = "<group>"; };
+		047F575A1F0DE05F0045D3ED /* JMBuyHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBuyHelper.h; sourceTree = "<group>"; };
+		047F575B1F0DE05F0045D3ED /* JMBuyHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBuyHelper.m; sourceTree = "<group>"; };
+		047F575D1F0DE1420045D3ED /* JMUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUserDefault.h; sourceTree = "<group>"; };
+		047F575E1F0DE1420045D3ED /* JMUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUserDefault.m; sourceTree = "<group>"; };
+		047F57601F0E1A180045D3ED /* JMNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMNote.h; sourceTree = "<group>"; };
 		047FCEE51EF26E5700AD0C08 /* JMHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHelper.h; sourceTree = "<group>"; };
 		047FCEE61EF26E5700AD0C08 /* JMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHelper.m; sourceTree = "<group>"; };
 		047FCEE71EF26E5700AD0C08 /* JMFileManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFileManger.h; sourceTree = "<group>"; };
@@ -915,6 +922,7 @@
 				0490EDCD1EEF976F00E05A84 /* AppDelegate.h */,
 				0490EDCE1EEF976F00E05A84 /* AppDelegate.m */,
 				0490EDCF1EEF976F00E05A84 /* Creativity_Prefix.pch */,
+				047F57601F0E1A180045D3ED /* JMNote.h */,
 				0490EDD01EEF976F00E05A84 /* UserDefaultTools.h */,
 				0490EDD11EEF976F00E05A84 /* UserDefaultTools.m */,
 				0490EDD21EEF976F00E05A84 /* ViewController.h */,
@@ -941,12 +949,16 @@
 				A20DAF171EF2E4B0008DBFA9 /* JMGestureButton.m */,
 				047FCEE51EF26E5700AD0C08 /* JMHelper.h */,
 				047FCEE61EF26E5700AD0C08 /* JMHelper.m */,
+				047F575A1F0DE05F0045D3ED /* JMBuyHelper.h */,
+				047F575B1F0DE05F0045D3ED /* JMBuyHelper.m */,
 				047FCEEE1EF3777000AD0C08 /* JMMediaHelper.h */,
 				047FCEEF1EF3777000AD0C08 /* JMMediaHelper.m */,
 				047FCEE71EF26E5700AD0C08 /* JMFileManger.h */,
 				047FCEE81EF26E5700AD0C08 /* JMFileManger.m */,
 				0490F24E1EEFB88C00E05A84 /* JMAttributeString.h */,
 				0490F24F1EEFB88C00E05A84 /* JMAttributeString.m */,
+				047F575D1F0DE1420045D3ED /* JMUserDefault.h */,
+				047F575E1F0DE1420045D3ED /* JMUserDefault.m */,
 				0490F24B1EEFB7CF00E05A84 /* StaticClass.h */,
 				0490F24C1EEFB7CF00E05A84 /* StaticClass.m */,
 				04654A651F050264008D0B27 /* DeviceHelper.h */,
@@ -1658,6 +1670,7 @@
 				A20BE8961EFE09AB0083DBF1 /* JMLicenceModel.m in Sources */,
 				0490F2451EEFA32900E05A84 /* JMWriteView.m in Sources */,
 				A20F38CA1EF97CEF009E5E48 /* ZMView.m in Sources */,
+				047F575C1F0DE05F0045D3ED /* JMBuyHelper.m in Sources */,
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
 				04A0DDF01EEF81A400464852 /* main.m in Sources */,
 				0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */,
@@ -1667,6 +1680,7 @@
 				A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */,
 				04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */,
 				0490F2561EEFBE1B00E05A84 /* JMGetGIFController.m in Sources */,
+				047F575F1F0DE1420045D3ED /* JMUserDefault.m in Sources */,
 				0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */,
 				0490F2531EEFBC5C00E05A84 /* JMBaseController.m in Sources */,
 				0490F1E51EEF9DCB00E05A84 /* SetModel.m in Sources */,
