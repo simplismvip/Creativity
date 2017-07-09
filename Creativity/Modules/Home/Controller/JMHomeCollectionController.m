@@ -25,8 +25,10 @@
 #import "TZImagePickerController.h"
 #import <Photos/Photos.h>
 #import "JMGifView.h"
+#import "JMPhotosAlertView.h"
+#import "JMPhotosController.h"
 
-@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate>
+@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate, JMPhotosAlertViewDelegate, JMPhotosControllerDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, strong) JMHomeCollectionViewFlowLayout *collectionLayout;
 
@@ -307,19 +309,114 @@ static NSString *const headerID = @"header";
 }
 
 #pragma mark -- left right UIBarButtonItem
-- (void)setItem:(UIBarButtonItem *)sender
+- (void)leftImageAction:(UIBarButtonItem *)sender
 {
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:[[JMMeViewController alloc] init]];
     [self presentViewController:Nav animated:YES completion:nil];
 }
 
-- (void)newItem:(UIBarButtonItem *)sender
+- (void)rightImageAction:(UIBarButtonItem *)sender
 {
-    [self getImageFromLibrary];
+//    [self getImageFromLibrary];
+    
+    JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 80+44*6)];
+    alert.delegate = self;
+    UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
+    UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
+    [window addSubview:backView];
+    [backView addSubview:alert];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+        alert.frame = CGRectMake(0, self.view.bounds.size.height-(40+44*6), self.view.bounds.size.width, 40+44*6);
+    }];
+    
 }
 
+
+- (void)photoFromSource:(NSInteger)sourceType
+{
+    if (sourceType == 200) {
+        
+        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+        [JMFileManger creatDir:gifPath];
+        
+        JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+        draw.folderPath = gifPath;
+        [draw initPaintBoard:nil images:nil];
+        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+        [self presentViewController:Nav animated:YES completion:nil];
+        
+    }else if (sourceType == 201){
+    
+        
+    }else if (sourceType == 202){
+        
+        
+    }else if (sourceType == 203){
+        
+        
+    }else if (sourceType == 204){
+        
+        
+    }
+    
+    JMPhotosController *photos = [[JMPhotosController alloc] init];
+    photos.delegate = self;
+    JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)pickerPhotosSuccess:(NSArray *)photos
+{
+    if (photos.count> 2) {
+        
+        JMGetGIFController *draw = [[JMGetGIFController alloc] init];
+        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+        [JMFileManger creatDir:gifPath];
+        draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+        
+        NSMutableArray *newImages = [NSMutableArray array];
+        for (UIImage *image in photos) {
+            
+            JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+            gif.image = image;
+            UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
+            [newImages addObject:image];
+        }
+        
+        draw.delayTime = 0.5;
+        draw.imagesFromDrawVC = newImages;
+        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self presentViewController:Nav animated:YES completion:nil];
+        });
+        
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"生成Gif/Video所需照片必须大于1" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        if (IS_IPAD) {
+            
+            UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+            if (popover){
+                popover.sourceView = self.navigationController.navigationBar;
+                popover.sourceRect = self.navigationController.navigationBar.bounds;
+                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            }
+        }
+    }
+}
+
+
+// //////////////////////////////////
 - (void)getImageFromLibrary
 {
+    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"选择画板来源" preferredStyle:(UIAlertControllerStyleActionSheet)];
     
     // 创作

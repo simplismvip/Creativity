@@ -9,7 +9,11 @@
 #import "TZImageManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "TZAssetModel.h"
-#import "TZImagePickerController.h"
+
+#define iOS7Later ([UIDevice currentDevice].systemVersion.floatValue >= 7.0f)
+#define iOS8Later ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
+#define iOS9Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
+#define iOS9_1Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.1f)
 
 @interface TZImageManager ()
 @property (nonatomic, strong) ALAssetsLibrary *assetLibrary;

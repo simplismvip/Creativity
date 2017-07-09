@@ -13,7 +13,9 @@ typedef enum : NSUInteger {
     TZAssetModelMediaTypePhoto = 0,
     TZAssetModelMediaTypeLivePhoto,
     TZAssetModelMediaTypeVideo,
-    TZAssetModelMediaTypeAudio
+    TZAssetModelMediaTypeAudio,
+    TZAssetModelMediaTypeBursts, // 连拍快照
+    TZAssetModelMediaTypeGIF
 } TZAssetModelMediaType;
 
 @class PHAsset;

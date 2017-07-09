@@ -30,7 +30,7 @@
     [self setUI];
 }
 
-- (void)rightTitleItem:(UIBarButtonItem *)sender
+- (void)rightTitleAction:(UIBarButtonItem *)sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

@@ -19,25 +19,25 @@
     
 }
 
-- (void)setItem:(UIBarButtonItem *)sender
+- (void)leftImageAction:(UIBarButtonItem *)sender
 {
     
     
 }
 
-- (void)newItem:(UIBarButtonItem *)sender
+- (void)rightImageAction:(UIBarButtonItem *)sender
 {
     
     
 }
 
-- (void)leftTitleItem:(UIBarButtonItem *)sender
+- (void)leftTitleAction:(UIBarButtonItem *)sender
 {
     
     
 }
 
-- (void)rightTitleItem:(UIBarButtonItem *)sender
+- (void)rightTitleAction:(UIBarButtonItem *)sender
 {
     
     
@@ -48,7 +48,7 @@
 - (void)setLeftImage:(NSString *)leftImage
 {
     _leftImage = leftImage;
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:leftImage] style:(UIBarButtonItemStyleDone) target:self action:@selector(setItem:)];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:leftImage] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftImageAction:)];
     self.navigationItem.leftBarButtonItem = left;
 }
 
@@ -56,14 +56,14 @@
 - (void)setRightImage:(NSString *)rightImage
 {
     _rightImage = rightImage;
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:rightImage] style:(UIBarButtonItemStyleDone) target:self action:@selector(newItem:)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:rightImage] style:(UIBarButtonItemStyleDone) target:self action:@selector(rightImageAction:)];
     self.navigationItem.rightBarButtonItem = right;
 }
 
 - (void)setLeftTitle:(NSString *)leftTitle
 {
     _leftTitle = leftTitle;
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithTitle:leftTitle style:(UIBarButtonItemStyleDone) target:self action:@selector(leftTitleItem:)];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithTitle:leftTitle style:(UIBarButtonItemStyleDone) target:self action:@selector(leftTitleAction:)];
     self.navigationItem.leftBarButtonItem = left;
 }
 
@@ -71,7 +71,7 @@
 {
     _rightTitle = rightTitle;
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:rightTitle style:(UIBarButtonItemStyleDone) target:self action:@selector(rightTitleItem:)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:rightTitle style:(UIBarButtonItemStyleDone) target:self action:@selector(rightTitleAction:)];
     self.navigationItem.rightBarButtonItem = right;
 }
 

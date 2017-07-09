@@ -143,13 +143,13 @@
     }
 }
 
-- (void)setItem:(UIBarButtonItem *)sender
+- (void)leftImageAction:(UIBarButtonItem *)sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 // 完成按钮
-- (void)rightTitleItem:(UIBarButtonItem *)sender
+- (void)rightTitleAction:(UIBarButtonItem *)sender
 {
     NSMutableArray *images = [NSMutableArray array];
     for (JMPaintView *memberView in self.subViews) {
@@ -163,7 +163,7 @@
 }
 
 #pragma mark -- 进入getGIF界面
-- (void)newItem:(UIBarButtonItem *)sender
+- (void)rightImageAction:(UIBarButtonItem *)sender
 {
     if (self.subViews.count>2) {
     

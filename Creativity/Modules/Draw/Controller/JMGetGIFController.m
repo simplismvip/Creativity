@@ -236,7 +236,7 @@
             NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
             
             // 总时间
-            [JMMediaHelper saveImagesToVideoWithImages:_images fps:1/_delayTime andVideoPath:videoPath completed:^(NSString *filePath) {
+            [JMMediaHelper saveImagesToVideoWithImages:_images fps:1/_delayTime+1 andVideoPath:videoPath completed:^(NSString *filePath) {
                 
                 ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
                 [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:filePath] completionBlock:^(NSURL *assetURL, NSError *error) {
