@@ -23,6 +23,8 @@
 {
     if ([super initWithFrame:frame]) {
         
+//        self.layer.cornerRadius = 5;
+//        self.layer.masksToBounds = YES;
         self.backgroundColor = JMColor(251, 251, 251);
         
         _classImage = [[FLAnimatedImageView alloc] init];

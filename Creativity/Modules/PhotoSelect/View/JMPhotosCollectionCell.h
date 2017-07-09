@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMPhotosModel;
 @interface JMPhotosCollectionCell : UICollectionViewCell
 - (void)selec:(BOOL)isSelect Index:(NSInteger)index;
 @property (nonatomic, assign) BOOL isSelect;
+@property (nonatomic, strong) JMPhotosModel *model;
 @end

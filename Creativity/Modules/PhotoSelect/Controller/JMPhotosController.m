@@ -37,6 +37,10 @@ static NSString *const collectionID = @"cell";
     for (int i = 0; i < 30; i ++) {
         
         JMPhotosModel *model = [[JMPhotosModel alloc] init];
+        model.isSelect = NO;
+        model.index = 0;
+//        model.image = [UIImage imageNamed:@"text"];
+        model.isHide = YES;
         [_dataSource addObject:model];
     }
     
@@ -124,8 +128,7 @@ static NSString *const collectionID = @"cell";
 {
     JMPhotosCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionID forIndexPath:indexPath];
     JMPhotosModel *model = self.dataSource[indexPath.row];
-    [cell selec:cell.isSelect Index:model.index];
-    
+    cell.model = model;
     return cell;
 }
 
@@ -134,20 +137,33 @@ static NSString *const collectionID = @"cell";
 {
     JMPhotosCollectionCell *cell = (JMPhotosCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
     JMPhotosModel *model = self.dataSource[indexPath.row];
-    [cell selec:!cell.isSelect Index:_selectSource.count];
+    model.isSelect = !cell.isSelect;
+    model.isHide = !model.isHide;
     
-    if (cell.isSelect) {
+    if (!cell.isSelect) {
         
         [self.selectSource addObject:model];
-        model.index = _selectSource.count;
         
     }else{
-    
+        
+        for (JMPhotosModel *model_old in _selectSource) {
+            
+            if (model_old.index > model.index) {
+                
+                model_old.index = model_old.index-1;
+            }
+        }
+        
+        if (model.index < _selectSource.count ) {
+            
+            [collectionView reloadData];
+        }
         
         [self.selectSource removeObject:model];
-        model.index = 0;
     }
     
+    model.index = _selectSource.count;
+    cell.model = model;
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

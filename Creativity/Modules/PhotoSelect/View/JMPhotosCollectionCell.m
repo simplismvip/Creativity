@@ -7,6 +7,7 @@
 //
 
 #import "JMPhotosCollectionCell.h"
+#import "JMPhotosModel.h"
 
 @interface JMPhotosCollectionCell()
 @property (nonatomic, strong) UIImageView *classImage;
@@ -54,6 +55,15 @@
     _isSelect = isSelect;
     _className.hidden = !isSelect;
     _className.text = [NSString stringWithFormat:@"%ld", index];
+}
+
+- (void)setModel:(JMPhotosModel *)model
+{
+    _model = model;
+    _classImage.image = model.image;
+    _className.text = [NSString stringWithFormat:@"%ld", model.index];
+    _className.hidden = model.isHide;
+    _isSelect = model.isSelect;
 }
 
 @end
