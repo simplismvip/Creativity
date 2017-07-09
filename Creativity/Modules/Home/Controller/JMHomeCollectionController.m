@@ -27,6 +27,8 @@
 #import "JMGifView.h"
 #import "JMPhotosAlertView.h"
 #import "JMPhotosController.h"
+#import "TZImageManager.h"
+#import "TZAssetModel.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate, JMPhotosAlertViewDelegate, JMPhotosControllerDelegate>
 @property (nonatomic, strong) UICollectionView *collection;
@@ -193,24 +195,6 @@ static NSString *const headerID = @"header";
     [self.collection reloadData];
 }
 
-- (void)leftSwitchEditerStatus
-{
-    // 点击了管理
-    if (!self.inEditState) {
-        
-        self.inEditState = YES;
-        self.collection.allowsSelection = NO;
-        
-    } else { // 点击了完成
-        
-        self.inEditState = NO;
-        self.collection.allowsSelection = YES;
-    }
-    
-    // 进入或退出编辑状态
-    [self.collectionLayout setInEditState:self.inEditState];
-}
-
 #pragma mark -- JMHomeCollectionViewCellDelegate
 - (void)deleteByIndexPath:(NSIndexPath *)indexPath
 {
@@ -256,28 +240,6 @@ static NSString *const headerID = @"header";
     }
     
     [self presentViewController:activityViewController animated:YES completion:NULL];
-}
-
-#pragma mark -- ClassListCollectionCellDelegate
-- (void)didChangeEditState:(BOOL)inEditState
-{
-    self.inEditState = inEditState;
-    for (JMHomeCollectionViewCell *cell in self.collection.visibleCells) {
-        
-        cell.inEditState = inEditState;
-    }
-}
-
-// 改变数据源中model的位置
-- (void)moveItemAtIndexPath:(NSIndexPath *)formPath toIndexPath:(NSIndexPath *)toPath
-{
-    JMHomeModel *model = self.dataSource[formPath.row];
-    
-    // 先把移动的这个model移除
-    [self.dataSource removeObject:model];
-    
-    // 再把这个移动的model插入到相应的位置
-    [self.dataSource insertObject:model atIndex:toPath.row];
 }
 
 - (UICollectionView *)collection
@@ -332,11 +294,22 @@ static NSString *const headerID = @"header";
         alert.frame = CGRectMake(0, self.view.bounds.size.height-(40+44*6), self.view.bounds.size.width, 40+44*6);
     }];
     
+    if ([[TZImageManager manager] authorizationStatusAuthorized]) {
+        
+        [[TZImageManager manager] getAllAlbums:YES allowPickingImage:YES completion:^(NSArray<TZAlbumModel *> *models) {
+            
+            
+            
+        }];
+    }
+    
 }
-
 
 - (void)photoFromSource:(NSInteger)sourceType
 {
+    JMPhotosController *photos = [[JMPhotosController alloc] init];
+    photos.delegate = self;
+
     if (sourceType == 200) {
         
         NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
@@ -350,6 +323,14 @@ static NSString *const headerID = @"header";
         
     }else if (sourceType == 201){
     
+        [[TZImageManager manager] getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+            
+            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+                
+                photos.models = models;
+            }];
+            
+        }];
         
     }else if (sourceType == 202){
         
@@ -362,10 +343,95 @@ static NSString *const headerID = @"header";
         
     }
     
-    JMPhotosController *photos = [[JMPhotosController alloc] init];
-    photos.delegate = self;
     JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+// 获取连拍快照
+- (void)getBursts:(NSArray<TZAlbumModel *> *)models
+{
+    for (TZAlbumModel *model in models) {
+        
+        if ([model.name isEqualToString:@"Bursts"]) {
+            
+            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+                
+                for (TZAssetModel *model in models) {
+                    
+                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+                        
+                        NSLog(@"%@--------%@", photo, info);
+                        
+                    }];
+                }
+            }];
+        }
+    }
+    
+}
+
+// 获取livePhotos
+- (void)getLivePhotos:(NSArray<TZAlbumModel *> *)models
+{
+    for (TZAlbumModel *model in models) {
+        
+        if ([model.name isEqualToString:@"Bursts"]) {
+            
+            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+                
+                for (TZAssetModel *model in models) {
+                    
+                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+                        
+                        NSLog(@"%@--------%@", photo, info);
+                        
+                    }];
+                }
+            }];
+        }
+    }
+}
+
+// 获取GIF
+- (void)getGIF:(NSArray<TZAlbumModel *> *)models
+{
+    for (TZAlbumModel *model in models) {
+        
+        if ([model.name isEqualToString:@"微博动图"]) {
+            
+            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+                
+                for (TZAssetModel *model in models) {
+                    
+                    NSLog(@"%@-/-%@", (PHAsset *)model.asset, model.timeLength);
+                    [[TZImageManager manager] getOriginalPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info) {
+                        
+                        NSLog(@"%@--------%@", photo, info);
+                        
+                    }];
+                }
+            }];
+        }
+    }
+}
+
+// 获取所有照片
+- (void)getAllPhotos:(NSArray<TZAlbumModel *> *)models
+{
+    for (TZAlbumModel *model in models) {
+        
+        [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+            
+            for (TZAssetModel *model in models) {
+                
+                [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+                    
+                    NSLog(@"%@--------%@", photo, info);
+                    
+                }];
+            }
+        }];
+    }
 }
 
 - (void)pickerPhotosSuccess:(NSArray *)photos

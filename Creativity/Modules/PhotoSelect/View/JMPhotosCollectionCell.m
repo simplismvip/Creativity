@@ -7,7 +7,8 @@
 //
 
 #import "JMPhotosCollectionCell.h"
-#import "JMPhotosModel.h"
+#import "TZAssetModel.h"
+#import "TZImageManager.h"
 
 @interface JMPhotosCollectionCell()
 @property (nonatomic, strong) UIImageView *classImage;
@@ -57,13 +58,20 @@
     _className.text = [NSString stringWithFormat:@"%ld", index];
 }
 
-- (void)setModel:(JMPhotosModel *)model
+- (void)setModel:(TZAssetModel *)model
 {
     _model = model;
-    _classImage.image = model.image;
+    
     _className.text = [NSString stringWithFormat:@"%ld", model.index];
     _className.hidden = model.isHide;
     _isSelect = model.isSelect;
+    
+    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+        
+        _classImage.image = photo;
+        
+        NSLog(@"%@----获取相册所有照片----%@", photo, info);
+    }];
 }
 
 @end

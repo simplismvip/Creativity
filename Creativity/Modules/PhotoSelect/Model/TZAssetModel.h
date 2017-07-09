@@ -31,6 +31,12 @@ typedef enum : NSUInteger {
 + (instancetype)modelWithAsset:(id)asset type:(TZAssetModelMediaType)type;
 + (instancetype)modelWithAsset:(id)asset type:(TZAssetModelMediaType)type timeLength:(NSString *)timeLength;
 
+// 
+@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, assign) BOOL isSelect;
+@property (nonatomic, assign) BOOL isHide;
+
 @end
 
 

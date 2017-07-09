@@ -9,11 +9,12 @@
 #import "JMPhotosController.h"
 #import "JMPhotosLayout.h"
 #import "JMPhotosCollectionCell.h"
-#import "JMPhotosModel.h"
+// #import "JMPhotosModel.h"
+#import "TZAssetModel.h"
 
 @interface JMPhotosController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collection;
-@property (nonatomic, strong) NSMutableArray *dataSource;
+//@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *selectSource;
 @end
 
@@ -31,18 +32,7 @@ static NSString *const collectionID = @"cell";
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.dataSource = [NSMutableArray array];
     self.selectSource = [NSMutableArray array];
-    
-    for (int i = 0; i < 30; i ++) {
-        
-        JMPhotosModel *model = [[JMPhotosModel alloc] init];
-        model.isSelect = NO;
-        model.index = 0;
-//        model.image = [UIImage imageNamed:@"text"];
-        model.isHide = YES;
-        [_dataSource addObject:model];
-    }
     
     [self.view addSubview:self.collection];
     
@@ -95,7 +85,6 @@ static NSString *const collectionID = @"cell";
     
 }
 
-
 #pragma mark -- collectionView 方法
 - (UICollectionView *)collection
 {
@@ -121,13 +110,13 @@ static NSString *const collectionID = @"cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.dataSource.count;
+    return self.models.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMPhotosCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionID forIndexPath:indexPath];
-    JMPhotosModel *model = self.dataSource[indexPath.row];
+    TZAssetModel *model = self.models[indexPath.row];
     cell.model = model;
     return cell;
 }
@@ -136,7 +125,7 @@ static NSString *const collectionID = @"cell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMPhotosCollectionCell *cell = (JMPhotosCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    JMPhotosModel *model = self.dataSource[indexPath.row];
+    TZAssetModel *model = self.models[indexPath.row];
     model.isSelect = !cell.isSelect;
     model.isHide = !model.isHide;
     
@@ -146,7 +135,8 @@ static NSString *const collectionID = @"cell";
         
     }else{
         
-        for (JMPhotosModel *model_old in _selectSource) {
+        // 如果取消选择的照片indx小于选中数组元素index，说明取消的是中间个数，对大于数量之行减1
+        for (TZAssetModel *model_old in _selectSource) {
             
             if (model_old.index > model.index) {
                 
@@ -154,6 +144,7 @@ static NSString *const collectionID = @"cell";
             }
         }
         
+        // 如果取消选择的照片inde小于选中数组元素个数，说明取消的是中间个数，需要重新刷新界面
         if (model.index < _selectSource.count ) {
             
             [collectionView reloadData];

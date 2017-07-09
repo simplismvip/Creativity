@@ -18,4 +18,5 @@
 
 @interface JMPhotosController : JMBaseController
 @property (nonatomic, weak) id <JMPhotosControllerDelegate>delegate;
+@property (nonatomic, strong) NSArray *models;
 @end

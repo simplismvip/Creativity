@@ -16,7 +16,7 @@
     if (self) {
         
         self.backgroundColor = [UIColor clearColor];
-        NSArray *array = @[@"本地创建", @"连拍快照", @"相册", @"livePhotos", @"GIF", @"取消"];
+        NSArray *array = @[@"本地创建", @"相册", @"连拍快照", @"livePhotos", @"GIF", @"取消"];
         
         int i = 0;
         for (NSString *name in array) {
