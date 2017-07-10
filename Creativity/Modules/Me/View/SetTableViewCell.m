@@ -22,8 +22,8 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         UIImageView *leftImage = [[UIImageView alloc] init];
-        [leftImage setTintColor:JMColor(125, 125, 125)];
         [self.contentView addSubview:leftImage];
+        leftImage.tintColor = JMBaseColor;
         self.leftImage = leftImage;
         
         UILabel *textTitle = [[UILabel alloc] init];
@@ -42,7 +42,15 @@
     static NSString *ID = @"baseCell";
     SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {cell = [[SetTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
-    cell.leftImage.image = [UIImage imageWithTemplateName:model.icon];
+    
+    if (indexPath.section == 3) {
+    
+        cell.leftImage.image = [UIImage imageNamed:model.icon];
+    }else{
+    
+        cell.leftImage.image = [UIImage imageWithTemplateName:model.icon];
+    }
+    
     cell.textTitle.text = model.title;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMBaseColor];

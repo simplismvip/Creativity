@@ -37,11 +37,6 @@
     self.rightTitle = @"完成";
 }
 
-- (void)rightTitleAction:(UIBarButtonItem *)sender
-{
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)setUI
 {
     self.title = @"设置";
@@ -91,11 +86,11 @@
     
     if (section == 0) {
     
-        headView.name.text = @"Creativity Pro";
+        headView.name.text = @"升级VIP";
         
     }else if (section == 1){
     
-        headView.name.text = @"关于";
+        headView.name.text = @"关于我们";
         
     }else if (section == 2){
     
@@ -110,7 +105,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 44;
+    return 35;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -162,6 +157,12 @@
         [self.navigationController pushViewController:about animated:YES];
     }
 }
+
+- (void)rightTitleAction:(UIBarButtonItem *)sender
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
