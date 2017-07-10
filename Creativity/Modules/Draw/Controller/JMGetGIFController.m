@@ -142,7 +142,6 @@
 // 创作选项弹出，保存第一次生成GIF文件
 - (void)Done:(UIBarButtonItem *)done
 {
-    [JMMediaHelper makeAnimatedGIF:self.filePath images:_images delayTime:_delayTime];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 

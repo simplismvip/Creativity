@@ -9,7 +9,5 @@
 #import "JMBaseController.h"
 
 @interface JMHomeCollectionController : JMBaseController
-- (void)refreshData;
-//- (void)leftSwitchEditerStatus;
-@property (nonatomic, copy) NSString *key;
+
 @end

@@ -11,7 +11,6 @@
 #import "JMHomeCollectionViewCell.h"
 #import "JMHomeCollectionReusableView.h"
 #import "JMHomeCollectionViewFlowLayout.h"
-#import "NSObject+JMProperty.h"
 #import "JMMeViewController.h"
 #import "JMMainNavController.h"
 #import "JMDrawViewController.h"
@@ -30,50 +29,20 @@
 #import "TZImageManager.h"
 #import "TZAssetModel.h"
 
-@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewFlowLayoutDelegate, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate, JMPhotosAlertViewDelegate, JMPhotosControllerDelegate>
-@property (nonatomic, strong) UICollectionView *collection;
-@property (nonatomic, strong) JMHomeCollectionViewFlowLayout *collectionLayout;
-
-// 是否处于编辑状态
+@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate, JMPhotosAlertViewDelegate, JMPhotosControllerDelegate>
+@property (nonatomic, weak) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, assign) BOOL inEditState;
 @end
 
 @implementation JMHomeCollectionController
 
 static NSString *const collectionID = @"cell";
-static NSString *const footerID = @"footer";
-static NSString *const headerID = @"header";
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSError *error;
     
-    self.dataSource = [NSMutableArray array];
-    NSArray *dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:JMDocumentsPath error:&error];
-    
-    for (NSString *path in dirs) {
-        
-        if (![path isEqualToString:@".DS_Store"]) {
-            
-            NSString *pngPath = [JMDocumentsPath stringByAppendingPathComponent:path];
-            NSArray *pngs = [JMFileManger getFileFromDir:pngPath bySuffix:@"gif"];
-            
-            if (pngs.count>0) {
-                
-                NSDictionary *dic = @{
-                                      @"folderPath":pngs.firstObject,
-                                      @"creatDate":[JMHelper timestamp:path],
-                                      @"size":@"1024"
-                                      };
-                
-                JMHomeModel *model = [JMHomeModel objectWithDictionary:dic];
-                [self.dataSource addObject:model];
-            }
-        }
-    }
-    
+    self.dataSource = [JMFileManger homeModels];
     [self.collection reloadData];
 }
 
@@ -83,14 +52,29 @@ static NSString *const headerID = @"header";
     [self.dataSource removeAllObjects];
 }
 
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [_collection reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.key = @"001";
     self.title = @"我的动画";
     self.leftImage = @"toolbar_setting_icon_black";
     self.rightImage = @"navbar_plus_icon_black";
-    [self.view addSubview:self.collection];
+    
+    JMHomeCollectionViewFlowLayout *collectionLayout = [[JMHomeCollectionViewFlowLayout alloc] init];
+    UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:collectionLayout];
+    [self.view addSubview:collection];
+    [collection registerClass:[JMHomeCollectionViewCell class] forCellWithReuseIdentifier:collectionID];
+    collection.backgroundColor = JMColor(41, 41, 41);
+    collection.dataSource = self;
+    collection.delegate = self;
+    collection.showsVerticalScrollIndicator = NO;
+    [collection mas_makeConstraints:^(MASConstraintMaker *make) {make.edges.mas_equalTo(self.view);}];
+    self.collection = collection;
 }
 
 #pragma mark UICollectionViewDataSource,
@@ -110,16 +94,10 @@ static NSString *const headerID = @"header";
     cell.model = self.dataSource[indexPath.row];
     cell.delegate = self;
     cell.collection = collectionView;
-    
     return cell;
 }
 
 #pragma mark UICollectionViewDelegate
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -168,43 +146,7 @@ static NSString *const headerID = @"header";
     return 5;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath
-{
-    
-}
-
-#pragma mark -- 私有方法
-- (void)refreshData
-{
-    [self.collection reloadData];
-}
-
 #pragma mark -- JMHomeCollectionViewCellDelegate
-- (void)deleteByIndexPath:(NSIndexPath *)indexPath
-{
-    [self.collection performBatchUpdates:^{
-        
-        JMHomeModel *homeModel = self.dataSource[indexPath.section][indexPath.row];
-        [[NSFileManager defaultManager] removeItemAtPath:[JMDocumentsPath stringByAppendingPathComponent:homeModel.folderPath] error:nil];
-        
-        [self.collection deleteItemsAtIndexPaths:@[indexPath]];
-        [self.dataSource removeObjectAtIndex:indexPath.row];
-        
-        
-    } completion:^(BOOL finished) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.collection reloadData];
-        });
-    }];
-}
-
 - (void)share:(NSIndexPath *)indexPath
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
@@ -231,34 +173,6 @@ static NSString *const headerID = @"header";
     [self presentViewController:activityViewController animated:YES completion:NULL];
 }
 
-- (UICollectionView *)collection
-{
-    if (!_collection)
-    {
-        self.collectionLayout = [[JMHomeCollectionViewFlowLayout alloc] init];
-        self.collectionLayout.delegate = self;
-        self.collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_collectionLayout];
-        [_collection registerClass:[JMHomeCollectionViewCell class] forCellWithReuseIdentifier:collectionID];
-        _collection.backgroundColor = JMColor(41, 41, 41);
-        _collection.dataSource = self;
-        _collection.delegate = self;
-        _collection.showsVerticalScrollIndicator = NO;
-        [self.view addSubview:_collection];
-        
-        [_collection mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.edges.mas_equalTo(self.view);
-        }];
-    }
-    return _collection;
-}
-
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    [_collection reloadData];
-}
-
 #pragma mark -- left right UIBarButtonItem
 - (void)leftImageAction:(UIBarButtonItem *)sender
 {
@@ -268,7 +182,7 @@ static NSString *const headerID = @"header";
 
 - (void)rightImageAction:(UIBarButtonItem *)sender
 {
-    JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 80+44*6)];
+    JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
     alert.delegate = self;
     UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
     UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
@@ -278,7 +192,7 @@ static NSString *const headerID = @"header";
     [UIView animateWithDuration:0.3 animations:^{
         
         backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-        alert.frame = CGRectMake(0, self.view.bounds.size.height-(40+44*6), self.view.bounds.size.width, 40+44*6);
+        alert.frame = CGRectMake(0, kH-(12+alertHeight*4), kW, 12+alertHeight*4);
     }];
 }
 
@@ -301,50 +215,50 @@ static NSString *const headerID = @"header";
         
     }else if (sourceType == 201){
     
-        photos.type = ImageTypePhoto;
-        [[TZImageManager manager] getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+        
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
-            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+            photos.type = ImageTypePhoto;
+            [[TZImageManager manager] getAllAlbumPhotosCompletion:^(NSArray<TZAssetModel *> *models) {
                 
                 photos.models = models;
             }];
-        }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [hud hideAnimated:YES];
+                photos.title = @"相机胶卷";
+                JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+                [self presentViewController:nav animated:YES completion:nil];
+            });
+        });
         
     }else if (sourceType == 202){
-    
-        photos.type = ImageTypePhotoLivePhoto;
         
-    }else if (sourceType == 203){
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
         
-        photos.type = ImageTypePhotoBursts;
-        
-    }else if (sourceType == 204){
-        
-        photos.type = ImageTypePhotoGIF;
-        [[TZImageManager manager] getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
-            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
-                
-                NSMutableArray *gifs = [NSMutableArray array];
-                for (TZAssetModel *model in models) {
-                    
-                    NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
-                    [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        PHAssetResource *resource = obj;
-                        if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
-                            
-                            [gifs addObject:model];
-                        }
-                    }];
-                }
-                
-                photos.models = [gifs copy];
+            photos.type = ImageTypePhotoGIF;
+            [[TZImageManager manager] getAllGifCompletion:^(NSMutableArray<TZAssetModel *> *models) {
+            
+                photos.models = [models copy];
             }];
-        }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [hud hideAnimated:YES];
+                photos.title = @"GIF相册";
+                JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+                [self presentViewController:nav animated:YES completion:nil];
+            });
+        });
     }
-    
-    JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
-    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark -- JMPhotosControllerDelegate
@@ -372,15 +286,8 @@ static NSString *const headerID = @"header";
             draw.delayTime = 0.5;
             draw.imagesFromDrawVC = images;
             JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-            
             [self presentViewController:Nav animated:YES completion:nil];
         });
-        
-    }else if (model.type == TZAssetModelMediaTypeLivePhoto){
-    
-        
-    }else if (model.type == TZAssetModelMediaTypeBursts){
-        
         
     }else if (model.type == TZAssetModelMediaTypeGIF){
         
@@ -388,18 +295,9 @@ static NSString *const headerID = @"header";
         JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
         NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
         [JMFileManger creatDir:gifPath];
-        GIF.filePath = gifPath;
+        GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
         GIF.delayTime = 2-model.image.duration/model.image.images.count;
-        
-        NSMutableArray *newImages = [NSMutableArray array];
-        for (UIImage *ima in model.image.images) {
-            
-            JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-            gif.image = ima;
-            UIImage *newIma = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
-            [newImages addObject:newIma];
-        }
-        GIF.imagesFromHomeVC = newImages;
+        GIF.imagesFromHomeVC = [model.image.images mutableCopy];
         [self.navigationController pushViewController:GIF animated:YES];
     }
 }
@@ -413,71 +311,6 @@ static NSString *const headerID = @"header";
 }
 
 /*
- 
- // 获取连拍快照
- - (void)getBursts:(NSArray<TZAlbumModel *> *)models
- {
- for (TZAlbumModel *model in models) {
- 
- if ([model.name isEqualToString:@"Bursts"]) {
- 
- [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
- 
- for (TZAssetModel *model in models) {
- 
- //                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
- //
- //                        NSLog(@"%@----Bursts----%@", photo, info);
- //                    }];
- 
- NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
- [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
- PHAssetResource *resource = obj;
- NSLog(@"---Bursts---%@", resource.uniformTypeIdentifier);
- 
- //                        if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
- //
- //                            NSLog(@"---微博动图---%@", resource.uniformTypeIdentifier);
- //                        }
- }];
- }
- }];
- }
- }
- }
- 
- // 获取livePhotos
- - (void)getLivePhotos:(NSArray<TZAlbumModel *> *)models
- {
- for (TZAlbumModel *model in models) {
- 
- if ([model.name isEqualToString:@"Live Photos"]) {
- 
- [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
- 
- for (TZAssetModel *model in models) {
- 
- NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
- [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
- PHAssetResource *resource = obj;
- NSLog(@"---Live Photos---%@", resource.uniformTypeIdentifier);
- 
- //                        if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
- //
- //                            NSLog(@"------%@", resource.uniformTypeIdentifier);
- //                        }
- }];
- 
- //                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
- //
- //                        NSLog(@"%@----Live Photos----%@", photo, info);
- //
- //                    }];
- }
- }];
- }
- }
- }
  
 #pragma mark - Navigation
 

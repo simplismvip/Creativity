@@ -206,23 +206,38 @@
     
     if (bottomType == JMTopBarTypeAdd){
         
-        _slider.slider.value = 1.0;
-        [JMPopView popView:self.view title:title];
-        JMPaintView *pView = [[JMPaintView alloc] init];
-        pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
-        pView.lineDash = [StaticClass getDashType];
-        pView.paintText = [StaticClass getPaintText];
-        pView.paintImage = [StaticClass getPaintImage];
+        if (self.subViews.count<11) {
+            
+            _slider.slider.value = 1.0;
+            [JMPopView popView:self.view title:title];
+            JMPaintView *pView = [[JMPaintView alloc] init];
+            pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
+            pView.lineDash = [StaticClass getDashType];
+            pView.paintText = [StaticClass getPaintText];
+            pView.paintImage = [StaticClass getPaintImage];
+            
+            self.paintView = pView;
+            [self.view addSubview:pView];
+            [self.subViews addObject:pView];
+            
+            [pView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.mas_equalTo(self.view);
+                make.width.height.mas_equalTo(self.view.width);
+                // make.height.mas_equalTo(self.view.width*1.2);
+            }];
+        }else{
         
-        self.paintView = pView;
-        [self.view addSubview:pView];
-        [self.subViews addObject:pView];
-        
-        [pView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(self.view);
-            make.width.height.mas_equalTo(self.view.width);
-            // make.height.mas_equalTo(self.view.width*1.2);
-        }];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"非VIP最多添加10张照片" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+            
+            UIAlertAction *buyVip = [UIAlertAction actionWithTitle:@"获取VIP" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                
+                [JMBuyHelper getVip];
+            }];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"取消添加" style:(UIAlertActionStyleDefault) handler:nil]];
+            [alertController addAction:buyVip];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
         
     }else if (bottomType == JMTopBarTypeLayerManger){
         

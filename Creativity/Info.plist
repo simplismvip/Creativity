@@ -10,11 +10,9 @@
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
-			<string>GIF</string>
+			<string></string>
 			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.compuserve.gif</string>
-			</array>
+			<array/>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -131,37 +129,19 @@
 	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
+			<array/>
 			<key>UTTypeDescription</key>
-			<string>GIF</string>
+			<string></string>
 			<key>UTTypeIdentifier</key>
-			<string>com.compuserve.gif</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>gif</string>
-				</array>
-			</dict>
+			<string></string>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
+			<array/>
 			<key>UTTypeDescription</key>
-			<string>gif</string>
+			<string></string>
 			<key>UTTypeIdentifier</key>
 			<string>com.compuserve.gif</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>GIF</string>
-				</array>
-			</dict>
 		</dict>
 	</array>
 </dict>

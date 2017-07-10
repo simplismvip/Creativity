@@ -636,4 +636,41 @@
     return img;
 }
 
+
+#pragma mark -- 新添加的方法
+- (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion
+{
+    [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+        
+        [self getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+            
+            NSMutableArray *gifs = [NSMutableArray array];
+            for (TZAssetModel *model in models) {
+                
+                NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
+                [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    PHAssetResource *resource = obj;
+                    if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+                        
+                        [gifs addObject:model];
+                    }
+                }];
+            }
+            
+            if (completion) {completion(gifs);}
+        }];
+    }];
+}
+
+- (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion
+{
+    [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+        
+        [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+            
+            if (completion) {completion(models);}
+        }];
+    }];
+}
+
 @end

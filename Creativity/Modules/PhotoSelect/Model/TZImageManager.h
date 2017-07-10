@@ -49,4 +49,9 @@
 - (void)getAllGifCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *gifData))gifData;
 // - (void)getAllLivePhotosCompletion:(void (^)(TZAlbumModel *))completion;
 
+// 获取相册GIF图片
+- (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion;
+
+- (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
+
 @end

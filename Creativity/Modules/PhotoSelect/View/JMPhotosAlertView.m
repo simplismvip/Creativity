@@ -16,21 +16,21 @@
     if (self) {
         
         self.backgroundColor = [UIColor clearColor];
-        NSArray *array = @[@"画板", @"相册", @"连拍快照", @"livePhotos", @"GIF", @"取消"];
+        NSArray *array = @[@"画板", @"相册", @"GIF", @"取消"];
         
         int i = 0;
         for (NSString *name in array) {
             
             UIButton *btn = [UIButton buttonWithType:(UIButtonTypeSystem)];
             btn.tag = i + 200;
-            btn.layer.borderColor = [UIColor redColor].CGColor;
-            btn.layer.borderWidth = 1;
-            btn.layer.cornerRadius = 8;
-            btn.layer.masksToBounds = YES;
+//            btn.layer.borderColor = JMColor(230, 230, 230).CGColor;
+//            btn.layer.borderWidth = 1;
+//            btn.layer.cornerRadius = 10;
+//            btn.layer.masksToBounds = YES;
             
             [btn setTitle:name forState:(UIControlStateNormal)];
-            btn.backgroundColor = [UIColor whiteColor];
-            [btn setTintColor:[UIColor redColor]];
+            btn.backgroundColor = JMColor(100, 100, 100);
+            [btn setTintColor:[UIColor whiteColor]];
             [btn addTarget:self action:@selector(btnTargenAction:) forControlEvents:(UIControlEventTouchUpInside)];
             [self addSubview:btn];
             i ++;
@@ -47,7 +47,6 @@
             
             [self.delegate photoFromSource:sender.tag];
         }
-        
     }
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -66,10 +65,12 @@
     [super layoutSubviews];
     
     int i = 0;
-    CGFloat margin = 4;
     for (UIView *view in self.subviews) {
         
-        view.frame = CGRectMake(20, margin+(44+margin)*i, self.bounds.size.width-40, 44);
+        CGFloat y;
+        if (i<3) {y = (alertHeight+1)*i;
+        }else{y = self.height-alertHeight;}
+        view.frame = CGRectMake(0, y, kW, alertHeight);
         i ++;
     }
 }

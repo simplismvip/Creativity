@@ -13,6 +13,7 @@
 #define layerBaseTag 900
 #define ellipseBaseTag 800
 #define clearBaseTag 700
+#define alertHeight 50
 
 #define JMNameFount [UIFont systemFontOfSize:13]
 #define JMTimeFount [UIFont systemFontOfSize:12]

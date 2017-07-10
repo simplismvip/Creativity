@@ -23,10 +23,7 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
 // delayTime = duration/images.count --> fps = 1/delayTime *
 + (NSURL *)makeAnimatedGIF:(NSString *)path images:(NSArray *)images delayTime:(CGFloat)delayTime
 {
-    CGFloat preCount = delayTime*images.count;
-    NSLog(@"preCount = %f", preCount);
-    
-    
+//    CGFloat preCount = delayTime*images.count;
     NSUInteger const kFrameCount = images.count;
     NSDictionary *fileProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFLoopCount: @0,}};
     NSDictionary *frameProperties = @{(__bridge id)kCGImagePropertyGIFDictionary:@{(__bridge id)kCGImagePropertyGIFDelayTime: [NSNumber numberWithFloat:delayTime]}};
@@ -37,6 +34,7 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     
     for (UIImage *imagePath in images) {
         
+        NSLog(@"imagePath = %@", NSStringFromCGSize(imagePath.size));
         CGImageDestinationAddImage(destination, imagePath.CGImage, (__bridge CFDictionaryRef)frameProperties);
     }
     

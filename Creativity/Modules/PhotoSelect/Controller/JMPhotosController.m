@@ -11,6 +11,8 @@
 #import "JMPhotosCollectionCell.h"
 #import "TZAssetModel.h"
 #import "TZImageManager.h"
+#import "JMBuyHelper.h"
+
 @interface JMPhotosController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collection;
@@ -111,6 +113,7 @@ static NSString *const collectionID = @"cell";
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    JMSelf(ws);
     if (self.type == ImageTypePhoto) {
         
         JMPhotosCollectionCell *cell = (JMPhotosCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -121,8 +124,26 @@ static NSString *const collectionID = @"cell";
         
         if (!cell.isSelect) {
             
-            model.image = cell.classImage.image;
-            [self.selectSource addObject:model];
+            if (_selectSource.count<21) {
+            
+                model.image = cell.classImage.image;
+                [self.selectSource addObject:model];
+                model.index = _selectSource.count;
+                cell.model = model;
+            }else{
+            
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"非VIP最多添加20张照片" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+                
+                UIAlertAction *buyVip = [UIAlertAction actionWithTitle:@"获取VIP" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [JMBuyHelper getVip];
+                }];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"取消添加" style:(UIAlertActionStyleDefault) handler:nil]];
+                [alertController addAction:buyVip];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }
+            
         }else{
             // 如果取消选择的照片indx小于选中数组元素index，说明取消的是中间个数，对大于数量之行减1
             for (TZAssetModel *model_old in _selectSource) {
@@ -134,10 +155,9 @@ static NSString *const collectionID = @"cell";
             if (model.index < _selectSource.count ) {[collectionView reloadData];}
             model.image = nil;
             [self.selectSource removeObject:model];
+            model.index = _selectSource.count;
+            cell.model = model;
         }
-        
-        model.index = _selectSource.count;
-        cell.model = model;
         
     }else if (self.type == 1){
     
@@ -156,11 +176,11 @@ static NSString *const collectionID = @"cell";
         [self.selectSource addObject:model];
         [[TZImageManager manager] getAllGifCompletion:model gifData:^(NSData *gifData) {
             
-            if ([self.delegate respondsToSelector:@selector(pickerPhotosSuccess:)]) {
+            if ([ws.delegate respondsToSelector:@selector(pickerPhotosSuccess:)]) {
             
                 model.image = [UIImage jm_animatedGIFWithData:gifData];
-                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-                [self.delegate pickerPhotosSuccess:_selectSource];
+                [ws.navigationController dismissViewControllerAnimated:YES completion:nil];
+                [ws.delegate pickerPhotosSuccess:_selectSource];
             }
         }];
     }
@@ -194,6 +214,13 @@ static NSString *const collectionID = @"cell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+#ifdef DEBUG
+    NSLog(@"dealloc = %s", __FUNCTION__);
+#endif
 }
 
 /*

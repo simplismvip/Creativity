@@ -57,8 +57,9 @@
     _className.text = [NSString stringWithFormat:@"%ld", model.index];
     _className.hidden = model.isHide;
     
+    JMSelf(ws);
     [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:200 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-        _classImage.image = photo;
+        ws.classImage.image = photo;
     }];
 }
 

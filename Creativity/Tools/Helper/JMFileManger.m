@@ -7,6 +7,8 @@
 //
 
 #import "JMFileManger.h"
+#import "JMHomeModel.h"
+#import "NSObject+JMProperty.h"
 
 @implementation JMFileManger
 
@@ -81,6 +83,34 @@
             
             [[NSFileManager defaultManager] removeItemAtPath:[folderPath stringByAppendingPathComponent:dir] error:nil];
         }
+    }
+}
+
++ (NSMutableArray *)homeModels
+{
+    NSError *error;
+    NSArray *dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:JMDocumentsPath error:&error];
+    if (!error) {
+    
+        NSMutableArray *dataSource = [NSMutableArray array];
+        for (NSString *path in dirs) {
+            
+            if (![path isEqualToString:@".DS_Store"]) {
+                
+                NSArray *pngs = [self getFileFromDir:[JMDocumentsPath stringByAppendingPathComponent:path] bySuffix:@"gif"];
+                if (pngs.count>0) {
+                    
+                    NSDictionary *dic = @{@"folderPath":pngs.firstObject};
+                    JMHomeModel *model = [JMHomeModel objectWithDictionary:dic];
+                    [dataSource addObject:model];
+                }
+            }
+        }
+        
+        return dataSource;
+    }else{
+    
+        return nil;
     }
 }
 

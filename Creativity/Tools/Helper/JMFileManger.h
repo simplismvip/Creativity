@@ -13,4 +13,5 @@
 + (BOOL)removeFileByPath:(NSString *)fileName;
 + (BOOL)creatDir:(NSString *)dirName;
 + (NSMutableArray *)getFileFromDir:(NSString *)dir bySuffix:(NSString *)suffix;
++ (NSMutableArray *)homeModels;
 @end
