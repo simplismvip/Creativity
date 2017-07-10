@@ -134,21 +134,10 @@ static NSString *const headerID = @"header";
         JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
         GIF.filePath = model.folderPath;
         GIF.delayTime = 2-image.duration/image.images.count;
-        
-        NSMutableArray *newImages = [NSMutableArray array];
-        for (UIImage *ima in image.images) {
-            
-            JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-            gif.backgroundColor = [UIColor whiteColor];
-            gif.image = ima;
-            UIImage *newIma = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
-            [newImages addObject:newIma];
-        }
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [hud hideAnimated:YES];
-            GIF.imagesFromHomeVC = newImages;
+            GIF.imagesFromHomeVC = [image.images mutableCopy];
             [self.navigationController pushViewController:GIF animated:YES];
         });
     });
@@ -279,8 +268,6 @@ static NSString *const headerID = @"header";
 
 - (void)rightImageAction:(UIBarButtonItem *)sender
 {
-//    [self getImageFromLibrary];
-    
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 80+44*6)];
     alert.delegate = self;
     UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
@@ -293,18 +280,9 @@ static NSString *const headerID = @"header";
         backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
         alert.frame = CGRectMake(0, self.view.bounds.size.height-(40+44*6), self.view.bounds.size.width, 40+44*6);
     }];
-    
-    if ([[TZImageManager manager] authorizationStatusAuthorized]) {
-        
-        [[TZImageManager manager] getAllAlbums:YES allowPickingImage:YES completion:^(NSArray<TZAlbumModel *> *models) {
-            
-            
-            
-        }];
-    }
-    
 }
 
+#pragma mark --
 - (void)photoFromSource:(NSInteger)sourceType
 {
     JMPhotosController *photos = [[JMPhotosController alloc] init];
@@ -323,249 +301,106 @@ static NSString *const headerID = @"header";
         
     }else if (sourceType == 201){
     
+        photos.type = ImageTypePhoto;
         [[TZImageManager manager] getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
             
             [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
                 
                 photos.models = models;
             }];
-            
         }];
         
     }else if (sourceType == 202){
-        
+    
+        photos.type = ImageTypePhotoLivePhoto;
         
     }else if (sourceType == 203){
         
+        photos.type = ImageTypePhotoBursts;
         
     }else if (sourceType == 204){
         
-        
+        photos.type = ImageTypePhotoGIF;
+        [[TZImageManager manager] getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+            
+            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+                
+                NSMutableArray *gifs = [NSMutableArray array];
+                for (TZAssetModel *model in models) {
+                    
+                    NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
+                    [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        PHAssetResource *resource = obj;
+                        if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+                            
+                            [gifs addObject:model];
+                        }
+                    }];
+                }
+                
+                photos.models = [gifs copy];
+            }];
+        }];
     }
     
     JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-// 获取连拍快照
-- (void)getBursts:(NSArray<TZAlbumModel *> *)models
-{
-    for (TZAlbumModel *model in models) {
-        
-        if ([model.name isEqualToString:@"Bursts"]) {
-            
-            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
-                
-                for (TZAssetModel *model in models) {
-                    
-                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-                        
-                        NSLog(@"%@--------%@", photo, info);
-                        
-                    }];
-                }
-            }];
-        }
-    }
-    
-}
-
-// 获取livePhotos
-- (void)getLivePhotos:(NSArray<TZAlbumModel *> *)models
-{
-    for (TZAlbumModel *model in models) {
-        
-        if ([model.name isEqualToString:@"Bursts"]) {
-            
-            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
-                
-                for (TZAssetModel *model in models) {
-                    
-                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-                        
-                        NSLog(@"%@--------%@", photo, info);
-                        
-                    }];
-                }
-            }];
-        }
-    }
-}
-
-// 获取GIF
-- (void)getGIF:(NSArray<TZAlbumModel *> *)models
-{
-    for (TZAlbumModel *model in models) {
-        
-        if ([model.name isEqualToString:@"微博动图"]) {
-            
-            [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
-                
-                for (TZAssetModel *model in models) {
-                    
-                    NSLog(@"%@-/-%@", (PHAsset *)model.asset, model.timeLength);
-                    [[TZImageManager manager] getOriginalPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info) {
-                        
-                        NSLog(@"%@--------%@", photo, info);
-                        
-                    }];
-                }
-            }];
-        }
-    }
-}
-
-// 获取所有照片
-- (void)getAllPhotos:(NSArray<TZAlbumModel *> *)models
-{
-    for (TZAlbumModel *model in models) {
-        
-        [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
-            
-            for (TZAssetModel *model in models) {
-                
-                [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-                    
-                    NSLog(@"%@--------%@", photo, info);
-                    
-                }];
-            }
-        }];
-    }
-}
-
+#pragma mark -- JMPhotosControllerDelegate
 - (void)pickerPhotosSuccess:(NSArray *)photos
 {
-    if (photos.count> 2) {
+    TZAssetModel *model = photos.firstObject;
+    if (model.type == TZAssetModelMediaTypePhoto) {
         
-        JMGetGIFController *draw = [[JMGetGIFController alloc] init];
-        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-        [JMFileManger creatDir:gifPath];
-        draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-        
-        NSMutableArray *newImages = [NSMutableArray array];
-        for (UIImage *image in photos) {
+        NSMutableArray *images = [NSMutableArray array];
+        for (TZAssetModel *model in photos) {
             
             JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-            gif.image = image;
+            gif.image = model.image;
             UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
-            [newImages addObject:image];
+            [images addObject:image];
         }
         
-        draw.delayTime = 0.5;
-        draw.imagesFromDrawVC = newImages;
-        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            JMGetGIFController *draw = [[JMGetGIFController alloc] init];
+            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+            [JMFileManger creatDir:gifPath];
+            draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+            
+            draw.delayTime = 0.5;
+            draw.imagesFromDrawVC = images;
+            JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
             
             [self presentViewController:Nav animated:YES completion:nil];
         });
         
-    }else{
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"生成Gif/Video所需照片必须大于1" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
-        [self presentViewController:alertController animated:YES completion:nil];
-        
-        if (IS_IPAD) {
-            
-            UIPopoverPresentationController *popover = alertController.popoverPresentationController;
-            if (popover){
-                popover.sourceView = self.navigationController.navigationBar;
-                popover.sourceRect = self.navigationController.navigationBar.bounds;
-                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
-            }
-        }
-    }
-}
-
-
-// //////////////////////////////////
-- (void)getImageFromLibrary
-{
+    }else if (model.type == TZAssetModelMediaTypeLivePhoto){
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"选择画板来源" preferredStyle:(UIAlertControllerStyleActionSheet)];
-    
-    // 创作
-    [alertController addAction:[UIAlertAction actionWithTitle:@"创作" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
         
+    }else if (model.type == TZAssetModelMediaTypeBursts){
+        
+        
+    }else if (model.type == TZAssetModelMediaTypeGIF){
+        
+        TZAssetModel *model = photos.firstObject;
+        JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
         NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
         [JMFileManger creatDir:gifPath];
-        
-        JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-        draw.folderPath = gifPath;
-        [draw initPaintBoard:nil images:nil];
-        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-        [self presentViewController:Nav animated:YES completion:nil];
-    }]];
-    
-    // 相册
-    [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
-        
-        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:50 delegate:self];
-        imagePickerVc.allowPickingOriginalPhoto = YES;
-        imagePickerVc.allowPickingVideo = NO;
-        [self presentViewController:imagePickerVc animated:YES completion:nil];
-        
-    }]];
-    
-    // 取消
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:nil]];
-    [self presentViewController:alertController animated:YES completion:nil];
-    
-    if (IS_IPAD) {
-        
-        UIPopoverPresentationController *popover = alertController.popoverPresentationController;
-        
-        if (popover){
-            popover.sourceView = self.navigationController.navigationBar;
-            popover.sourceRect = self.navigationController.navigationBar.bounds;
-            popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
-        }
-    }
-}
-
-#pragma mark -- TZImagePickerControllerDelegate
-- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
-{
-    if (photos.count> 2) {
-      
-        JMGetGIFController *draw = [[JMGetGIFController alloc] init];
-        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-        [JMFileManger creatDir:gifPath];
-        draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+        GIF.filePath = gifPath;
+        GIF.delayTime = 2-model.image.duration/model.image.images.count;
         
         NSMutableArray *newImages = [NSMutableArray array];
-        for (UIImage *image in photos) {
+        for (UIImage *ima in model.image.images) {
             
             JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-            gif.image = image;
-            UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
-            [newImages addObject:image];
+            gif.image = ima;
+            UIImage *newIma = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
+            [newImages addObject:newIma];
         }
-        
-        draw.delayTime = 0.5;
-        draw.imagesFromDrawVC = newImages;
-        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            [self presentViewController:Nav animated:YES completion:nil];
-        });
-    
-    }else{
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"生成Gif/Video所需照片必须大于1" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
-        [self presentViewController:alertController animated:YES completion:nil];
-        
-        if (IS_IPAD) {
-            
-            UIPopoverPresentationController *popover = alertController.popoverPresentationController;
-            if (popover){
-                popover.sourceView = self.navigationController.navigationBar;
-                popover.sourceRect = self.navigationController.navigationBar.bounds;
-                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
-            }
-        }
+        GIF.imagesFromHomeVC = newImages;
+        [self.navigationController pushViewController:GIF animated:YES];
     }
 }
 
@@ -578,6 +413,72 @@ static NSString *const headerID = @"header";
 }
 
 /*
+ 
+ // 获取连拍快照
+ - (void)getBursts:(NSArray<TZAlbumModel *> *)models
+ {
+ for (TZAlbumModel *model in models) {
+ 
+ if ([model.name isEqualToString:@"Bursts"]) {
+ 
+ [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+ 
+ for (TZAssetModel *model in models) {
+ 
+ //                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+ //
+ //                        NSLog(@"%@----Bursts----%@", photo, info);
+ //                    }];
+ 
+ NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
+ [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+ PHAssetResource *resource = obj;
+ NSLog(@"---Bursts---%@", resource.uniformTypeIdentifier);
+ 
+ //                        if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+ //
+ //                            NSLog(@"---微博动图---%@", resource.uniformTypeIdentifier);
+ //                        }
+ }];
+ }
+ }];
+ }
+ }
+ }
+ 
+ // 获取livePhotos
+ - (void)getLivePhotos:(NSArray<TZAlbumModel *> *)models
+ {
+ for (TZAlbumModel *model in models) {
+ 
+ if ([model.name isEqualToString:@"Live Photos"]) {
+ 
+ [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+ 
+ for (TZAssetModel *model in models) {
+ 
+ NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
+ [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+ PHAssetResource *resource = obj;
+ NSLog(@"---Live Photos---%@", resource.uniformTypeIdentifier);
+ 
+ //                        if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+ //
+ //                            NSLog(@"------%@", resource.uniformTypeIdentifier);
+ //                        }
+ }];
+ 
+ //                    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:64 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+ //
+ //                        NSLog(@"%@----Live Photos----%@", photo, info);
+ //
+ //                    }];
+ }
+ }];
+ }
+ }
+ }
+ 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

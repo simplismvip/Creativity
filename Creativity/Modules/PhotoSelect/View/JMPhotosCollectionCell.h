@@ -10,7 +10,7 @@
 
 @class TZAssetModel;
 @interface JMPhotosCollectionCell : UICollectionViewCell
-- (void)selec:(BOOL)isSelect Index:(NSInteger)index;
+@property (nonatomic, strong) UIImageView *classImage;
 @property (nonatomic, assign) BOOL isSelect;
 @property (nonatomic, strong) TZAssetModel *model;
 @end

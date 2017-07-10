@@ -25,6 +25,7 @@
         self.index = 0;
         
         UIImageView *imageview = [[UIImageView alloc] init];
+//        imageview.contentMode = 
         [self addSubview:imageview];
         self.imageView = imageview;
     }

@@ -9,12 +9,11 @@
 #import "JMPhotosController.h"
 #import "JMPhotosLayout.h"
 #import "JMPhotosCollectionCell.h"
-// #import "JMPhotosModel.h"
 #import "TZAssetModel.h"
-
+#import "TZImageManager.h"
 @interface JMPhotosController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
 @property (nonatomic, strong) UICollectionView *collection;
-//@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *selectSource;
 @end
 
@@ -22,24 +21,15 @@
 
 static NSString *const collectionID = @"cell";
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.collection reloadData];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.selectSource = [NSMutableArray array];
-    
-    [self.view addSubview:self.collection];
-    
     self.leftImage = @"navbar_close_icon_black";
     self.rightTitle = @"完成";
+    [self.view addSubview:self.collection];
 }
-
 
 - (void)leftImageAction:(UIBarButtonItem *)sender
 {
@@ -53,9 +43,8 @@ static NSString *const collectionID = @"cell";
         if ([self.delegate respondsToSelector:@selector(pickerPhotosSuccess:)]) {
             
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-            // [self.delegate pickerPhotosSuccess:_selectSource];
+            [self.delegate pickerPhotosSuccess:_selectSource];
         }
-        
     }else{
     
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"并未选择任何照片，是否退出！" preferredStyle:(UIAlertControllerStyleAlert)];
@@ -64,7 +53,6 @@ static NSString *const collectionID = @"cell";
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
             
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-            
         }]];
         
         // 取消
@@ -82,7 +70,6 @@ static NSString *const collectionID = @"cell";
             }
         }        
     }
-    
 }
 
 #pragma mark -- collectionView 方法
@@ -124,43 +111,65 @@ static NSString *const collectionID = @"cell";
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMPhotosCollectionCell *cell = (JMPhotosCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    TZAssetModel *model = self.models[indexPath.row];
-    model.isSelect = !cell.isSelect;
-    model.isHide = !model.isHide;
-    
-    if (!cell.isSelect) {
+    if (self.type == ImageTypePhoto) {
         
-        [self.selectSource addObject:model];
+        JMPhotosCollectionCell *cell = (JMPhotosCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        TZAssetModel *model = self.models[indexPath.row];
+        model.type = TZAssetModelMediaTypePhoto;
+        model.isSelect = !cell.isSelect;
+        model.isHide = !model.isHide;
         
-    }else{
-        
-        // 如果取消选择的照片indx小于选中数组元素index，说明取消的是中间个数，对大于数量之行减1
-        for (TZAssetModel *model_old in _selectSource) {
+        if (!cell.isSelect) {
             
-            if (model_old.index > model.index) {
+            model.image = cell.classImage.image;
+            [self.selectSource addObject:model];
+        }else{
+            // 如果取消选择的照片indx小于选中数组元素index，说明取消的是中间个数，对大于数量之行减1
+            for (TZAssetModel *model_old in _selectSource) {
                 
-                model_old.index = model_old.index-1;
+                if (model_old.index > model.index) {model_old.index = model_old.index-1;}
             }
-        }
-        
-        // 如果取消选择的照片inde小于选中数组元素个数，说明取消的是中间个数，需要重新刷新界面
-        if (model.index < _selectSource.count ) {
             
-            [collectionView reloadData];
+            // 如果取消选择的照片inde小于选中数组元素个数，说明取消的是中间个数，需要重新刷新界面
+            if (model.index < _selectSource.count ) {[collectionView reloadData];}
+            model.image = nil;
+            [self.selectSource removeObject:model];
         }
         
-        [self.selectSource removeObject:model];
-    }
+        model.index = _selectSource.count;
+        cell.model = model;
+        
+    }else if (self.type == 1){
     
-    model.index = _selectSource.count;
-    cell.model = model;
+        TZAssetModel *model = self.models[indexPath.row];
+        model.type = TZAssetModelMediaTypeLivePhoto;
+        
+    }else if (self.type == 2){
+        
+        TZAssetModel *model = self.models[indexPath.row];
+        model.type = TZAssetModelMediaTypeBursts;
+        
+    }else if (self.type == 3){
+        
+        TZAssetModel *model = self.models[indexPath.row];
+        model.type = TZAssetModelMediaTypeGIF;
+        [self.selectSource addObject:model];
+        [[TZImageManager manager] getAllGifCompletion:model gifData:^(NSData *gifData) {
+            
+            if ([self.delegate respondsToSelector:@selector(pickerPhotosSuccess:)]) {
+            
+                model.image = [UIImage jm_animatedGIFWithData:gifData];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                [self.delegate pickerPhotosSuccess:_selectSource];
+            }
+        }];
+    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger rows = (self.view.bounds.size.width-20)/3;
+    NSInteger rows = (self.view.width-20)/3;
     return CGSizeMake(rows, rows);
 }
 

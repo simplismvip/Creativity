@@ -47,6 +47,48 @@
 }
 
 #pragma mark - Get Album
+/// Get Album 连拍快照
+- (void)getBurstsAlbumCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
+
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.synchronous = YES;
+    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        
+        if (gifData) {
+            gifData(imageData);
+        }
+    }];
+
+}
+
+/// Get Album GIF
+- (void)getAllGifCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
+    
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.synchronous = YES;
+    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        
+        if (gifData) {
+            gifData(imageData);
+        }
+    }];
+}
+
+/// Get Album livePhoto
+- (void)getAllLivePhotosCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
+    
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.synchronous = YES;
+    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        
+        if (gifData) {
+            gifData(imageData);
+        }
+    }];
+}
 
 /// Get Album 获得相册/相册数组
 - (void)getCameraRollAlbum:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(TZAlbumModel *))completion{
@@ -146,7 +188,7 @@
         [fetchResult enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             PHAsset *asset = (PHAsset *)obj;
             TZAssetModelMediaType type = TZAssetModelMediaTypePhoto;
-            if (asset.mediaType == PHAssetMediaTypeVideo)      type = TZAssetModelMediaTypeVideo;
+            if (asset.mediaType == PHAssetMediaTypeVideo) type = TZAssetModelMediaTypeVideo;
             else if (asset.mediaType == PHAssetMediaTypeAudio) type = TZAssetModelMediaTypeAudio;
             else if (asset.mediaType == PHAssetMediaTypeImage) {
                 if (iOS9_1Later) {
@@ -318,13 +360,18 @@
         CGFloat pixelHeight = pixelWidth / aspectRatio;
         
         [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            
             BOOL downloadFinined = (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey]);
+            //  && [[info valueForKey:@"PHImageResultIsDegradedKey"] integerValue] 判断照片取几次
             if (downloadFinined && result) {
+                
                 result = [self fixOrientation:result];
                 if (completion) completion(result,info,[[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
             }
+            
             // Download image from iCloud / 从iCloud下载图片
             if ([info objectForKey:PHImageResultIsInCloudKey] && !result) {
+                
                 PHImageRequestOptions *option = [[PHImageRequestOptions alloc]init];
                 option.networkAccessAllowed = YES;
                 [[PHImageManager defaultManager] requestImageDataForAsset:asset options:option resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {

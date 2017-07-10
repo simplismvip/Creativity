@@ -46,4 +46,7 @@
 /// Get photo bytes 获得一组照片的大小
 - (void)getPhotosBytesWithArray:(NSArray *)photos completion:(void (^)(NSString *totalBytes))completion;
 
+- (void)getAllGifCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *gifData))gifData;
+// - (void)getAllLivePhotosCompletion:(void (^)(TZAlbumModel *))completion;
+
 @end

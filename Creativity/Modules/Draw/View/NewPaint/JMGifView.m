@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -31,8 +31,8 @@
 - (void)drawRect:(CGRect)rect {
     
     CGFloat rate = _image.size.width/_image.size.height;
-    CGFloat w = self.width;
-    CGFloat h = self.height;
+    CGFloat w = kW;
+    CGFloat h = kW;
     
     CGSize imageSize;
     if (rate>1) {

@@ -16,6 +16,9 @@
     model.asset = asset;
     model.isSelected = NO;
     model.type = type;
+    model.isHide = YES;
+    model.isSelect = NO;
+    model.index = 0;
     return model;
 }
 

@@ -33,10 +33,9 @@ typedef enum : NSUInteger {
 
 // 
 @property (nonatomic, assign) NSInteger index;
-@property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL isSelect;
 @property (nonatomic, assign) BOOL isHide;
-
+@property (nonatomic, strong) UIImage *image;
 @end
 
 

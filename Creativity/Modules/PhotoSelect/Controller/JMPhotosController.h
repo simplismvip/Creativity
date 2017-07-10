@@ -8,6 +8,13 @@
 
 #import "JMBaseController.h"
 
+typedef enum : NSUInteger {
+    ImageTypePhoto = 0,
+    ImageTypePhotoLivePhoto,
+    ImageTypePhotoBursts, // 连拍快照
+    ImageTypePhotoGIF
+} ImageType;
+
 @protocol JMPhotosControllerDelegate <NSObject>
 
 @optional
@@ -19,4 +26,5 @@
 @interface JMPhotosController : JMBaseController
 @property (nonatomic, weak) id <JMPhotosControllerDelegate>delegate;
 @property (nonatomic, strong) NSArray *models;
+@property (nonatomic, assign) ImageType type;
 @end

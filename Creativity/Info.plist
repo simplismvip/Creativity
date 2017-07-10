@@ -13,7 +13,7 @@
 			<string>GIF</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.gif</string>
+				<string>com.compuserve.gif</string>
 			</array>
 		</dict>
 	</array>
@@ -137,7 +137,7 @@
 			<key>UTTypeDescription</key>
 			<string>GIF</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.Creativity.gif</string>
+			<string>com.compuserve.gif</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -154,7 +154,7 @@
 			<key>UTTypeDescription</key>
 			<string>gif</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.creativity.GIF</string>
+			<string>com.compuserve.gif</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

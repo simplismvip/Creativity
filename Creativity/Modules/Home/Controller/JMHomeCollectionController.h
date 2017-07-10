@@ -10,6 +10,6 @@
 
 @interface JMHomeCollectionController : JMBaseController
 - (void)refreshData;
-- (void)leftSwitchEditerStatus;
+//- (void)leftSwitchEditerStatus;
 @property (nonatomic, copy) NSString *key;
 @end
