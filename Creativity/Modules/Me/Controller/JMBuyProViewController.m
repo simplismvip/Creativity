@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
     self.dataArray = [NSMutableArray array];
-    self.rightTitle = @"完成";
+    self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
     self.leftTitle = @"恢复购买";
     
     [self reloadModels];

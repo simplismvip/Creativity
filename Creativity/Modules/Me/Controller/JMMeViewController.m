@@ -34,12 +34,12 @@
     
     self.dataSource = [JMHelper getSetModel];
     [self setUI];
-    self.rightTitle = @"完成";
+    self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
 }
 
 - (void)setUI
 {
-    self.title = @"设置";
+    self.title = NSLocalizedString(@"gif.set.navigation.title", "");
     UITableView *setTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStyleGrouped)];
     [setTableView registerClass:[SetTableViewCell class] forCellReuseIdentifier:@"baseCell"];
     setTableView.delegate = self;
@@ -83,21 +83,20 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     JMAccountHeaderFooter *headView = [JMAccountHeaderFooter headViewWithTableView:tableView];
-    
     if (section == 0) {
     
-        headView.name.text = @"升级VIP";
+        headView.name.text = NSLocalizedString(@"gif.base.alert.cancle", "");
         
     }else if (section == 1){
     
-        headView.name.text = @"关于我们";
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionOne", "");
         
     }else if (section == 2){
     
-        headView.name.text = @"支持中心";
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionTwo", "");
     }else{
     
-        headView.name.text = @"作者开发的其他应用";
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionThree", "");
     }
     
     return headView;
@@ -139,7 +138,7 @@
                 hud.mode = MBProgressHUDModeCustomView;
                 hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
                 hud.square = YES;
-                hud.label.text = @"成功";
+                hud.label.text = NSLocalizedString(@"gif.base.alert.success", "");
                 [hud hideAnimated:YES afterDelay:1.5f];
             });
         });

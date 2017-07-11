@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = JMColor(240, 240, 240);
-    self.memberArray = @[@"用户反馈", @"给应用评分", @"分享给朋友"];
+    self.memberArray = @[NSLocalizedString(@"gif.set.aboutUs.rowZero", ""), NSLocalizedString(@"gif.set.aboutUs.rowOne", ""), NSLocalizedString(@"gif.set.aboutUs.rowTwo", "")];
     [self setUI];
     
     //设置用户自定义的平台

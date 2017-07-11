@@ -16,7 +16,11 @@
     if (self) {
         
         self.backgroundColor = [UIColor clearColor];
-        NSArray *array = @[@"画板", @"相册", @"GIF", @"取消"];
+        NSArray *array = @[
+                           NSLocalizedString(@"gif.home.bottom.alert.board", ""),
+                           NSLocalizedString(@"gif.home.bottom.alert.album", ""),
+                           NSLocalizedString(@"gif.home.bottom.alert.gif", ""),
+                           NSLocalizedString(@"gif.base.alert.cancle", "")];
         
         int i = 0;
         for (NSString *name in array) {

@@ -1,0 +1,86 @@
+/* 
+  Localizable.strings
+  Creativity
+
+  Created by JM Zhao on 2017/7/11.
+  Copyright © 2017年 JMZhao. All rights reserved.
+*/
+// base
+"gif.base.alert.cancle"="取消";
+"gif.base.alert.success"="成功";
+"gif.base.alert.done"="完成";
+"gif.base.alert.sure"="确定";
+"gif.base.alert.editer"="编辑";
+"gif.base.alert.delete"="删除";
+
+
+// home
+"gif.home.navigation.title"="我的动画";
+"gif.home.bottom.alert.board"="画板";
+"gif.home.bottom.alert.album"="相册";
+"gif.home.bottom.alert.gif"="GIF";
+
+// set
+"gif.set.navigation.title"="设置";
+"gif.set.navigation.rightTitle"="完成";
+
+"gif.set.sectionZero.rowZero"="获取VIP";
+"gif.set.sectionOne.rowZero"="帮助中心";
+"gif.set.sectionOne.rowOne"="清空缓存";
+"gif.set.sectionTwo.rowZero"="软件许可";
+"gif.set.sectionTwo.rowOne"="关于我们";
+
+"gif.set.header.SectionZero"="升级VIP";
+"gif.set.header.SectionOne"="关于我们";
+"gif.set.header.SectionTwo"="帮助中心";
+"gif.set.header.SectionThree"="作者开发的其他应用";
+
+"gif.set.aboutUs.rowZero"="用户反馈";
+"gif.set.aboutUs.rowOne"="给应用评分";
+"gif.set.aboutUs.rowTwo"="分享给朋友";
+
+// draw
+"gif.draw.navigation.title"="我的画板";
+"gif.draw.bottomDraw.curve"="曲线";
+"gif.draw.bottomDraw.straightline"="直线";
+"gif.draw.bottomDraw.arrow"="箭头";
+"gif.draw.bottomDraw.rect"="矩形";
+"gif.draw.bottomDraw.oval"="椭圆";
+"gif.draw.bottomDraw.emoji"="表情";
+"gif.draw.bottomDraw.font"="字体";
+"gif.draw.bottomClean.previe"="取消";
+"gif.draw.bottomClean.clearnAll"="清空";
+"gif.draw.bottomClean.last"="恢复";
+"gif.draw.bottomSet.dash"="虚线";
+"gif.draw.bottomSet.fill"="填充";
+"gif.draw.bottomSet.photo"="照片";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

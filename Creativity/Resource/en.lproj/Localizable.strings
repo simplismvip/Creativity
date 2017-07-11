@@ -1,0 +1,57 @@
+/* 
+  Localizable.strings
+  Creativity
+
+  Created by JM Zhao on 2017/7/11.
+  Copyright © 2017年 JMZhao. All rights reserved.
+*/
+
+// base
+"gif.base.alert.cancle"="Cancle";
+"gif.base.alert.success"="Success";
+"gif.base.alert.done"="Done";
+"gif.base.alert.sure"="Done";
+"gif.base.alert.editer"="Edit";
+"gif.base.alert.delete"="Delete";
+
+// home
+"gif.home.navigation.title"="Animation";
+"gif.home.bottom.alert.board"="Drawing board";
+"gif.home.bottom.alert.album"="Album";
+"gif.home.bottom.alert.gif"="GIF";
+
+// set
+"gif.set.navigation.title"="Settings";
+"gif.set.navigation.rightTitle"="Done";
+"gif.set.sectionZero.rowZero"="VIP Features";
+"gif.set.sectionOne.rowZero"="Help";
+"gif.set.sectionOne.rowOne"="Clear Cache";
+"gif.set.sectionTwo.rowZero"="Licenses";
+"gif.set.sectionTwo.rowOne"="About";
+"gif.set.header.SectionZero"="Upgrade";
+"gif.set.header.SectionOne"="About";
+"gif.set.header.SectionTwo"="Help&Info";
+"gif.set.header.SectionThree"="Apps made by author";
+
+"gif.set.aboutUs.rowZero"="Feedback";
+"gif.set.aboutUs.rowOne"="Like";
+"gif.set.aboutUs.rowTwo"="ShareToFriends";
+
+// draw
+"gif.draw.navigation.title"="Drawing board";
+"gif.draw.bottomDraw.curve"="curve";
+"gif.draw.bottomDraw.straightline"="straight";
+"gif.draw.bottomDraw.arrow"="arrow";
+"gif.draw.bottomDraw.rect"="rect";
+"gif.draw.bottomDraw.oval"="oval";
+"gif.draw.bottomDraw.emoji"="emoji";
+"gif.draw.bottomDraw.font"="font";
+"gif.draw.bottomClean.previe"="pre";
+"gif.draw.bottomClean.clearnAll"="Emptied";
+"gif.draw.bottomClean.last"="last";
+"gif.draw.bottomSet.dash"="dash";
+"gif.draw.bottomSet.fill"="fill";
+"gif.draw.bottomSet.photo"="photo";
+
+
+

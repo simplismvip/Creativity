@@ -60,7 +60,7 @@ static NSString *const collectionID = @"cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"我的动画";
+    self.title = NSLocalizedString(@"gif.home.navigation.title", "");
     self.leftImage = @"toolbar_setting_icon_black";
     self.rightImage = @"navbar_plus_icon_black";
     
