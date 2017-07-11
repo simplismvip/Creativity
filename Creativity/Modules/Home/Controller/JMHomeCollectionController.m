@@ -21,15 +21,14 @@
 #import "JMGetGIFController.h"
 #import "Masonry.h"
 #import "UIImage+JMImage.h"
-#import "TZImagePickerController.h"
-#import <Photos/Photos.h>
 #import "JMGifView.h"
 #import "JMPhotosAlertView.h"
 #import "JMPhotosController.h"
 #import "TZImageManager.h"
 #import "TZAssetModel.h"
+#import <UShareUI/UShareUI.h>
 
-@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, TZImagePickerControllerDelegate, JMPhotosAlertViewDelegate, JMPhotosControllerDelegate>
+@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate, JMPhotosControllerDelegate,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @end
@@ -75,6 +74,13 @@ static NSString *const collectionID = @"cell";
     collection.showsVerticalScrollIndicator = NO;
     [collection mas_makeConstraints:^(MASConstraintMaker *make) {make.edges.mas_equalTo(self.view);}];
     self.collection = collection;
+    
+    
+    //设置用户自定义的平台
+    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_QQ),
+                                               @(UMSocialPlatformType_Sina),]];
+    
+    [UMSocialUIManager setShareMenuViewDelegate:self];
 }
 
 #pragma mark UICollectionViewDataSource,
@@ -146,12 +152,62 @@ static NSString *const collectionID = @"cell";
     return 5;
 }
 
+//分享图片和文字
+- (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
+{
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"001" descr:@"gif" thumImage:[UIImage imageNamed:@"text"]];
+    gif.emotionData = shareImage;
+    messageObject.shareObject = gif;
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            UMSocialLogInfo(@"************Share fail with error %@*********",error);
+        }else{
+            if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                UMSocialShareResponse *resp = data;
+                
+                //分享结果消息
+                UMSocialLogInfo(@"response message is %@",resp.message);
+                
+                //第三方原始返回的数据
+                UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                
+            }else{
+                UMSocialLogInfo(@"response data is %@",data);
+            }
+        }
+    }];
+}
+
 #pragma mark -- JMHomeCollectionViewCellDelegate
 - (void)share:(NSIndexPath *)indexPath
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
+//
+//    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+//    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+//    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+//    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+//        
+//        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
+//    }];
     
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[NSData dataWithContentsOfFile:model.folderPath]] applicationActivities:nil];
+    NSMutableArray *items = [NSMutableArray array];
+    [items addObject:@"来自GIF Master的分享"];
+    NSData *data = [NSData dataWithContentsOfFile:model.folderPath];
+    [items addObject:data];
+    [items addObject:@"https://www.baidu.com"];
+    
+    NSMutableArray *excludedActivityTypes =  [NSMutableArray arrayWithArray:@[UIActivityTypeAirDrop, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeMail, UIActivityTypePostToTencentWeibo, UIActivityTypeSaveToCameraRoll, UIActivityTypeMessage, UIActivityTypePostToTwitter]];
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+    activityViewController.excludedActivityTypes = excludedActivityTypes;
+    
+    activityViewController.completionWithItemsHandler = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError){
+        NSLog(@"%@  ----   %@", activityType, returnedItems);
+    };
     
     if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
         
@@ -301,6 +357,7 @@ static NSString *const collectionID = @"cell";
         [self.navigationController pushViewController:GIF animated:YES];
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

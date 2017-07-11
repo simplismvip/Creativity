@@ -428,6 +428,10 @@
 //分享图片和文字
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
+    
+    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"001" descr:@"gif" thumImage:[UIImage imageNamed:@"logo"]];
+//    gif.emotionData = 
+    
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     

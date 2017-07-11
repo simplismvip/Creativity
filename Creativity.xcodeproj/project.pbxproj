@@ -156,6 +156,7 @@
 		04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFA1EEF81A400464852 /* Assets.xcassets */; };
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
 		04A0DE091EEF81A400464852 /* CreativityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DE081EEF81A400464852 /* CreativityTests.m */; };
+		04A4CDF51F14A54A00A445EB /* ShareTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A4CDF41F14A54A00A445EB /* ShareTool.m */; };
 		04B033AE1EFA153700A10D4C /* ImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A31EFA153700A10D4C /* ImageUtil.m */; };
 		04B033AF1EFA153700A10D4C /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A51EFA153700A10D4C /* UIImage+Alpha.m */; };
 		04B033B01EFA153700A10D4C /* UIImage+Cut.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A71EFA153700A10D4C /* UIImage+Cut.m */; };
@@ -464,6 +465,8 @@
 		04A0DE041EEF81A400464852 /* CreativityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreativityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DE081EEF81A400464852 /* CreativityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreativityTests.m; sourceTree = "<group>"; };
 		04A0DE0A1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04A4CDF31F14A54A00A445EB /* ShareTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareTool.h; sourceTree = "<group>"; };
+		04A4CDF41F14A54A00A445EB /* ShareTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareTool.m; sourceTree = "<group>"; };
 		04B033A11EFA153700A10D4C /* ColorMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMatrix.h; sourceTree = "<group>"; };
 		04B033A21EFA153700A10D4C /* ImageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtil.h; sourceTree = "<group>"; };
 		04B033A31EFA153700A10D4C /* ImageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtil.m; sourceTree = "<group>"; };
@@ -975,6 +978,8 @@
 				0490F24C1EEFB7CF00E05A84 /* StaticClass.m */,
 				04654A651F050264008D0B27 /* DeviceHelper.h */,
 				04654A661F050264008D0B27 /* DeviceHelper.m */,
+				04A4CDF31F14A54A00A445EB /* ShareTool.h */,
+				04A4CDF41F14A54A00A445EB /* ShareTool.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1760,6 +1765,7 @@
 				047FCF191EF3DCBD00AD0C08 /* JMAttributeTextInputView.m in Sources */,
 				A28DCF591F104DA1005E316D /* TZAssetModel.m in Sources */,
 				A20F38C81EF97CEF009E5E48 /* TZVideoPlayerController.m in Sources */,
+				04A4CDF51F14A54A00A445EB /* ShareTool.m in Sources */,
 				04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */,
 				0490F23E1EEFA32900E05A84 /* JMSubImageModel.m in Sources */,
 				047FCF1B1EF3DCBD00AD0C08 /* JMBaseColorView.m in Sources */,
