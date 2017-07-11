@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @interface ShareTool : NSObject
-- (void)shareWithTitle:(NSString *)title description:(NSString *)description url:(NSString *)url image:(UIImage *)image completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler;
+- (void)shareWithTitle:(NSString *)title url:(NSString *)url data:(NSData *)data completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler;
 @end

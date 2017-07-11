@@ -10,16 +10,16 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
-NSString * const ActivityServiceWeixin = @"weixin";
-NSString * const ActivityServiceWeixinFriends = @"weixin_friends";
+NSString *const ActivityServiceWeixin = @"weixin";
+NSString *const ActivityServiceWeixinFriends = @"weixin_friends";
 
 @interface HBShareBaseActivity : UIActivity
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *type;
 @property (nonatomic) NSString *urlString;
-@property (nonatomic) NSString *shareDescription;
 @property (nonatomic) NSString *shareTitle;
 @property (nonatomic) UIImage *image;
+
 - (instancetype)initWithTitle:(NSString *)title type:(NSString *)type;
 @end
 
@@ -28,6 +28,7 @@ NSString * const ActivityServiceWeixinFriends = @"weixin_friends";
 - (instancetype)initWithTitle:(NSString *)title type:(NSString *)type
 {
     if (self = [super init]) {
+        
         self.title = title;
         self.type = type;
     }
@@ -71,11 +72,10 @@ NSString * const ActivityServiceWeixinFriends = @"weixin_friends";
 @end
 @implementation ShareTool
 
-- (void)shareWithTitle:(NSString *)title description:(NSString *)description url:(NSString *)url image:(UIImage *)image completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler
+- (void)shareWithTitle:(NSString *)title url:(NSString *)url data:(NSData *)data completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler;
 {
     NSMutableArray *items = [NSMutableArray array];
     [items addObject:title?:@""];
-    if (image) { [items addObject:image];}
     
     if (url) { [items addObject:url];}
     
@@ -85,13 +85,9 @@ NSString * const ActivityServiceWeixinFriends = @"weixin_friends";
     
     [@[weixinActivity, weixinFriendsActivity] enumerateObjectsUsingBlock:^(HBShareBaseActivity *activity, NSUInteger idx, BOOL *stop) {
         activity.urlString = url;
-        activity.shareDescription = description;
         activity.shareTitle = title;
-        activity.image = image;
     }];
-    
-    
-    
+
     [activities addObjectsFromArray:@[weixinActivity, weixinFriendsActivity]];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities];
     NSMutableArray *excludedActivityTypes =  [NSMutableArray arrayWithArray:@[UIActivityTypeAirDrop, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeMail, UIActivityTypePostToTencentWeibo, UIActivityTypeSaveToCameraRoll, UIActivityTypeMessage, UIActivityTypePostToTwitter]];
