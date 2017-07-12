@@ -117,6 +117,7 @@ static NSString *const collectionID = @"cell";
         JMHomeModel *model = self.dataSource[indexPath.row];
         UIImage *image = [UIImage jm_animatedGIFWithData:[NSData dataWithContentsOfFile:model.folderPath]];
         JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
+        GIF.title = NSLocalizedString(@"gif.home.VC.title.gifBoart", "");
         GIF.filePath = model.folderPath;
         GIF.delayTime = 2-image.duration/image.images.count;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -243,7 +244,13 @@ static NSString *const collectionID = @"cell";
 
 - (void)rightImageAction:(UIBarButtonItem *)sender
 {
+    NSArray *array = @[
+                       NSLocalizedString(@"gif.home.bottom.alert.board", ""),
+                       NSLocalizedString(@"gif.home.bottom.alert.album", ""),
+                       NSLocalizedString(@"gif.home.bottom.alert.gif", ""),
+                       NSLocalizedString(@"gif.base.alert.cancle", "")];
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
+    alert.titles = array;
     alert.delegate = self;
     UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
     UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
@@ -253,7 +260,7 @@ static NSString *const collectionID = @"cell";
     [UIView animateWithDuration:0.3 animations:^{
         
         backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-        alert.frame = CGRectMake(0, kH-(12+alertHeight*4), kW, 12+alertHeight*4);
+        alert.frame = CGRectMake(0, kH-(12+alertHeight*array.count), kW, 12+alertHeight*array.count);
     }];
 }
 
@@ -269,6 +276,7 @@ static NSString *const collectionID = @"cell";
         [JMFileManger creatDir:gifPath];
         
         JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+        draw.title = NSLocalizedString(@"gif.home.VC.title.gifBoart", "");
         draw.folderPath = gifPath;
         [draw initPaintBoard:nil images:nil];
         JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
@@ -291,7 +299,7 @@ static NSString *const collectionID = @"cell";
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [hud hideAnimated:YES];
-                photos.title = @"相机胶卷";
+                photos.title = NSLocalizedString(@"gif.home.VC.title.CameraRoll", "");
                 JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
                 [self presentViewController:nav animated:YES completion:nil];
             });
@@ -314,7 +322,7 @@ static NSString *const collectionID = @"cell";
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [hud hideAnimated:YES];
-                photos.title = @"GIF相册";
+                photos.title = NSLocalizedString(@"gif.home.VC.title.gifAlbum", "");
                 JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
                 [self presentViewController:nav animated:YES completion:nil];
             });

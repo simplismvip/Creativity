@@ -28,17 +28,20 @@
     for (JMPaintView *paint in dataArray) {
         
         JMMemberModel *model = [JMMemberModel new];
-        model.showAndHide = @"vesion_show_32";
+        model.showAndHide = @"icons8-visible";
         model.thumbnailImage = paint.image;
         [array addObject:model];
     }
     
-    JMMembersView *base = [[self alloc] initWithFrame:CGRectMake(0, kH, kW, kW*0.618)];
+    CGFloat h = 45*dataArray.count;
+    if (h> kH/2) {h = kW;}
+    
+    JMMembersView *base = [[self alloc] initWithFrame:CGRectMake(0, kH, kW, h)];
     base.memberArray = array;
     base.editer = isEditer;
     base.delegate = delegate;
     [[JMGestureButton creatGestureButton] addSubview:base];
-    [UIView animateWithDuration:0.4 animations:^{base.frame = CGRectMake(0, kH-kW*0.618, kW, kW*0.618);}];
+    [UIView animateWithDuration:0.3 animations:^{base.frame = CGRectMake(0, kH-h, kW, h);}];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -50,13 +53,12 @@
         [tabView registerClass:[JMMembersCell class] forCellReuseIdentifier:@"memberCell"];
         tabView.delegate = self;
         tabView.dataSource = self;
-        tabView.alpha = 0.95;
-        tabView.separatorColor = JMColorRGBA(217, 51, 58, 0.5);
+        tabView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+        tabView.separatorColor = tabView.backgroundColor;
+        
         tabView.showsVerticalScrollIndicator = NO;
         tabView.allowsSelection = NO;
-        if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){
-            tabView.cellLayoutMarginsFollowReadableWidth = NO;
-        }
+        if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){tabView.cellLayoutMarginsFollowReadableWidth = NO;}
         [self addSubview:tabView];
         self.tabView = tabView;
     }
@@ -72,6 +74,7 @@
 #pragma mark -- UITableViewDelegate, UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
     return self.memberArray.count;
 }
 
@@ -120,11 +123,13 @@
         [self.memberArray insertObject:model atIndex:toIndexPath.row];
     }
 }
+
 // 设置哪些行可以移动
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
+
 // 限制跨区移动的方法
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath
 {

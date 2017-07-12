@@ -90,7 +90,7 @@
     
     // 底部菜单显示
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
-    bsae.subViews = @[@"filter", @"navbar_video_icon_disabled_black", @"gif", @"navbar_pause_icon_black", @"turn_Left", @"turn_Right"];
+    bsae.subViews = @[@"filters", @"navbar_video_icon_disabled_black", @"gif", @"navbar_pause_icon_black", @"turnaroundback", @"turnaroundgo"];
     bsae.delegate = self;
     bsae.sliderA.value = _delayTime;
     [self.view addSubview:bsae];
@@ -124,7 +124,7 @@
     _imagesFromDrawVC = imagesFromDrawVC;
     self.images = imagesFromDrawVC;
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"gif.base.alert.done", "") style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
     self.navigationItem.rightBarButtonItems = @[right];
 }
 
@@ -134,8 +134,8 @@
     _imagesFromHomeVC = imagesFromHomeVC;
     self.images = imagesFromHomeVC;
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
-    UIBarButtonItem *editer = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(Editer:)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_delete_icon_black"] style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteBtn:)];
+    UIBarButtonItem *editer = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"gif.base.alert.editer", "") style:(UIBarButtonItemStyleDone) target:self action:@selector(Editer:)];
     self.navigationItem.rightBarButtonItems = @[right, editer];
 }
 
@@ -249,7 +249,7 @@
                             hud.mode = MBProgressHUDModeCustomView;
                             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"]];
                             hud.square = YES;
-                            hud.label.text = @"失败";
+                            hud.label.text = NSLocalizedString(@"gif.base.alert.Failed", "");
                             [hud hideAnimated:YES afterDelay:1.5f];
                         });
 
@@ -262,7 +262,7 @@
                             hud.mode = MBProgressHUDModeCustomView;
                             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
                             hud.square = YES;
-                            hud.label.text = @"完成";
+                            hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
                             [hud hideAnimated:YES afterDelay:1.5f];
                             [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
                         });
@@ -291,7 +291,7 @@
                 hud.mode = MBProgressHUDModeCustomView;
                 hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
                 hud.square = YES;
-                hud.label.text = @"完成";
+                hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
                 [hud hideAnimated:YES afterDelay:1.5f];
             });
         });
@@ -325,7 +325,6 @@
 - (void)dealloc
 {
     NSLog(@"JMGetGIFController 销毁");
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"JMFrameViewStopTimer" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

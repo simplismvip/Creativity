@@ -105,7 +105,7 @@
     button.frame = CGRectMake(CGRectGetMaxX(self.textInput.frame)+10, (self.height - kInputHeight)/2, 32, 32);
     [button addTarget:self action:@selector(fontAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [button setTintColor:[UIColor redColor]];
-    [button setImage:[UIImage imageNamed:@"textNote"] forState:(UIControlStateNormal)];
+    [button setImage:[UIImage imageNamed:@"icons8-Lowercase-104"] forState:(UIControlStateNormal)];
     [self addSubview:button];
 }
 
@@ -116,7 +116,7 @@
         _textInput.inputView = self.baseAttribute;
         [_textInput becomeFirstResponder];
         [_textInput reloadInputViews];
-        [sender setTitle:@"完成" forState:(UIControlStateNormal)];
+        [sender setTitle:NSLocalizedString(@"gif.base.alert.done", "") forState:(UIControlStateNormal)];
         [sender setImage:nil forState:(UIControlStateNormal)];
         
     }else{
@@ -125,7 +125,7 @@
         [_textInput becomeFirstResponder];
         [_textInput reloadInputViews];
         [sender setTitle:@"" forState:(UIControlStateNormal)];
-        [sender setImage:[UIImage imageNamed:@"textNote"] forState:(UIControlStateNormal)];
+        [sender setImage:[UIImage imageNamed:@"icons8-Lowercase-104"] forState:(UIControlStateNormal)];
     }
     
     _isSelect = !_isSelect;

@@ -8,16 +8,28 @@
 // base
 "gif.base.alert.cancle"="取消";
 "gif.base.alert.success"="成功";
+"gif.base.alert.Failed"="失敗";
 "gif.base.alert.done"="完成";
 "gif.base.alert.sure"="確定";
 "gif.base.alert.editer"="編輯";
 "gif.base.alert.delete"="刪除";
+"gif.base.alert.cleanAllContent"="添加圖片將清除當前畫板";
+"gif.base.alert.inputContent"="請輸入...";
+"gif.base.alert.picLessTen"="非VIP最多添加10张照片";
+"gif.base.alert.NoChiosePicAndQuit"="並未選擇任何照片，是否退出？";
+"gif.base.alert.moreThanTwo"="照片數量必須大於1 !";
+
 
 // home
 "gif.home.navigation.title"="我的動畫";
 "gif.home.bottom.alert.board"="畫板";
 "gif.home.bottom.alert.album"="相冊";
 "gif.home.bottom.alert.gif"="GIF";
+"gif.home.VC.title.CameraRoll"="膠捲相機";
+"gif.home.VC.title.gifAlbum"="GIF 相冊";
+"gif.home.VC.title.gifBoart"="我的畫板";
+"gif.base.alert.getVIP"="獲取VIP";
+"gif.base.alert.Addpic"="繼續添加";
 
 // set
 "gif.set.navigation.title"="設置";
@@ -53,4 +65,7 @@
 "gif.draw.bottomSet.dash"="虛線";
 "gif.draw.bottomSet.fill"="填充";
 "gif.draw.bottomSet.photo"="照片";
+
+"gif.draw.photoAlert.album"="相冊";
+"gif.draw.photoAlert.camera"="相機";
 

@@ -8,17 +8,27 @@
 // base
 "gif.base.alert.cancle"="取消";
 "gif.base.alert.success"="成功";
+"gif.base.alert.Failed"="失败";
 "gif.base.alert.done"="完成";
 "gif.base.alert.sure"="确定";
 "gif.base.alert.editer"="编辑";
 "gif.base.alert.delete"="删除";
-
+"gif.base.alert.getVIP"="获取VIP";
+"gif.base.alert.Addpic"="继续添加";
+"gif.base.alert.cleanAllContent"="添加图片将清除当前画板";
+"gif.base.alert.inputContent"="请输入...";
+"gif.base.alert.picLessTen"="非VIP用戶最多添加10張照片";
+"gif.base.alert.NoChiosePicAndQuit"="并未选择任何照片，是否退出?";
+"gif.base.alert.moreThanTwo"="照片数量必须大于1 !";
 
 // home
 "gif.home.navigation.title"="我的动画";
 "gif.home.bottom.alert.board"="画板";
 "gif.home.bottom.alert.album"="相册";
 "gif.home.bottom.alert.gif"="GIF";
+"gif.home.VC.title.CameraRoll"="胶卷相机";
+"gif.home.VC.title.gifAlbum"="GIF 相册";
+"gif.home.VC.title.gifBoart"="我的画板";
 
 // set
 "gif.set.navigation.title"="设置";
@@ -55,8 +65,8 @@
 "gif.draw.bottomSet.fill"="填充";
 "gif.draw.bottomSet.photo"="照片";
 
-
-
+"gif.draw.photoAlert.album"="相册";
+"gif.draw.photoAlert.camera"="相机";
 
 
 

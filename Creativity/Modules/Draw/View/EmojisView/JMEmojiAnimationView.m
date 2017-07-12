@@ -25,10 +25,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
+        self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.8];
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
-        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
         coverView.layer.cornerRadius = 10;
         coverView.layer.masksToBounds = YES;
         [self addSubview:coverView];

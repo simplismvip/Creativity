@@ -13,14 +13,13 @@
 @property (nonatomic, assign) BOOL drawViewHide;
 @end
 
-
 @implementation JMMembersCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.textLabel.textColor = JMColor(55, 55, 55);
+        self.backgroundColor = JMColor(100, 100, 100);
         
         // 左侧label
         self.header = [[UIImageView alloc] init];
@@ -30,12 +29,13 @@
         // 右侧label
         self.name = [[UILabel alloc] init];
         self.name.font = [UIFont systemFontOfSize:14.0];
+        self.name.textColor = [UIColor whiteColor];
         self.name.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.name];
         
         // 右侧label
         self.showAndHide = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [_showAndHide setTintColor:JMColorRGBA(217, 51, 58, 0.5)];
+        [_showAndHide setTintColor:JMColorRGBA(217, 51, 58, 1.0)];
         [_showAndHide addTarget:self action:@selector(showAndHide:event:) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:_showAndHide];
         
@@ -70,11 +70,11 @@
             
             if (self.drawViewHide) {
                
-                [self.showAndHide setImage:[UIImage imageWithTemplateName:@"vesion_hide_32"] forState:(UIControlStateNormal)];
+                [self.showAndHide setImage:[UIImage imageWithTemplateName:@"icons8-hide"] forState:(UIControlStateNormal)];
                 
             }else{
                 
-                [self.showAndHide setImage:[UIImage imageWithTemplateName:@"vesion_show_32"] forState:(UIControlStateNormal)];
+                [self.showAndHide setImage:[UIImage imageWithTemplateName:@"icons8-visible"] forState:(UIControlStateNormal)];
             }
         }
     }
@@ -93,7 +93,7 @@
 {
     [super layoutSubviews];
     self.header.frame = CGRectMake(10, 4, self.height-8, self.height-8);
-    self.name.frame = CGRectMake(CGRectGetMaxX(_header.frame)+10, CGRectGetMinY(_header.frame), self.width*0.6, self.height-10);
+    self.name.frame = CGRectMake(CGRectGetMaxX(_header.frame)+20, CGRectGetMinY(_header.frame), self.height, self.height-10);
     self.showAndHide.frame = CGRectMake(self.width-45, 6, 30, 30);
 
     for (UIControl *control in self.subviews) {

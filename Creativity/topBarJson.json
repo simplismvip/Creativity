@@ -9,50 +9,49 @@
                         "type":"3"
 					}
 			},
-                
             {
-                "navbar_delete_icon_black":{
-                    "imageName":["coverage_32"],
+                "navbar_note_icon_disabled_white":{
+                    "imageName":["curve", "icons8-horizontal_line", "icons8-Down Right-100", "icons8-Full Image-100", "icons8-Ellipse Stroked-100", "navbar_emoticon_icon_black", "icons8-Lowercase-104"],
+                    "showName":["曲线", "直线", "箭头", "矩形", "椭圆", "表情", "文字"],
+                    "color":"0",
+                    "type":"4"
+                }
+            },
+
+            {
+                "navbar_palette_icon_black":{
+                    "imageName":["color_32-1"],
+                    "showName":["颜色"],
+                    "color":"0",
+                    "type":"3"
+                }
+            },
+                
+		  	{
+		  		"navbar_eraser_icon_black":{
+		  				"imageName":["icons8-back", "icons8-recurring_appointment", "icons8-go"],
+						"showName":["取消", "清空", "恢复"], 
+						"color":"0",
+                        "type":"5"
+                }
+			},
+
+            {
+                "icons8-layers":{
+                    "imageName":["icons8-layers"],
                     "showName":["图层"],
                     "color":"0",
                     "type":"3"
                 }
             },
-
+                
 		  	{
-		  		"navbar_note_icon_disabled_white":{
-		  				"imageName":["cave_32", "icons8-Line-100", "icons8-Down Right-100", "icons8-Full Image-100", "icons8-Ellipse Stroked-100", "navbar_emoticon_icon_black", "icons8-Lowercase-104"],
-						"showName":["曲线", "直线", "箭头", "矩形", "椭圆", "表情", "文字"],
-						"color":"0",
-                        "type":"4"
-					}
-			},
-
-		  	{
-		  		"navbar_eraser_icon_black":{
-		  				"imageName":["arrow_back", "claerAll", "arrow_go"],
-						"showName":["取消", "清空", "恢复"], 
-						"color":"0",
-                        "type":"5"
-					}
-			},
-
-		  	{
-		  		"navbar_delete_icon_black":{
-		  				"imageName":["dashLine", "fill_32", "image"],
+		  		"icons8-more":{
+		  				"imageName":["dashline", "icons8-Fill Color-80", "icons8-add_image"],
 						"showName":["虚线", "填充", "照片"],
 						"color":"0",
                         "type":"7"
-					}
-			},
-                
-            {
-                "navbar_palette_icon_black":{
-                        "imageName":["color_32-1"],
-                        "showName":["颜色"],
-                        "color":"0",
-                        "type":"3"
                 }
-            }
+			}
 		]
 }

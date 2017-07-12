@@ -26,10 +26,11 @@
 #import "Masonry.h"
 #import <UShareUI/UShareUI.h>
 #import "JMSlider.h"
+#import "JMPhotosAlertView.h"
 
 #define kMargin 10.0
 
-@interface JMDrawViewController ()<JMTopTableViewDelegate,UMSocialShareMenuViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface JMDrawViewController ()<JMPhotosAlertViewDelegate,JMTopTableViewDelegate,UMSocialShareMenuViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, weak) JMPaintView *paintView;
 @property (nonatomic, weak) JMSlider *slider;
@@ -58,8 +59,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"我的画板";
     
     // 首先创建画图View, 创建接收消息方法
     self.subViews = [NSMutableArray array];
@@ -105,7 +104,7 @@
     if (parentController) {
         
         self.GIFController = parentController;
-        self.rightTitle = @"完成";
+        self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
         
         for (UIImage *image in images) {
             
@@ -181,8 +180,8 @@
         [self.navigationController pushViewController:gif animated:YES];
     }else{
     
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"生成Gif/Video所需照片必须大于1" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.moreThanTwo", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.sure", "") style:(UIAlertActionStyleDefault) handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
         [self configiPad:alertController];
     }
@@ -227,14 +226,14 @@
             }];
         }else{
         
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"非VIP最多添加10张照片" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.picLessTen", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
             
-            UIAlertAction *buyVip = [UIAlertAction actionWithTitle:@"获取VIP" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *buyVip = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.getVIP", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                 
                 [JMBuyHelper getVip];
             }];
             
-            [alertController addAction:[UIAlertAction actionWithTitle:@"取消添加" style:(UIAlertActionStyleDefault) handler:nil]];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
             [alertController addAction:buyVip];
             [self presentViewController:alertController animated:YES completion:nil];
         }
@@ -269,7 +268,7 @@
             JMSelf(ws);
             JMAttributeTextInputView *attribute = [[JMAttributeTextInputView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 44)];
             attribute.textViewMaxLine = 5;
-            attribute.placeholderLabel.text = @"请输入...";
+            attribute.placeholderLabel.text = NSLocalizedString(@"gif.base.alert.inputContent", "");
             attribute.inputAttribute = ^(NSString *sendContent) {ws.paintView.paintText = sendContent;[StaticClass setPaintText:sendContent];};
             [self.view addSubview:attribute];
             [attribute.textInput becomeFirstResponder];
@@ -305,13 +304,13 @@
         
         if ([_paintView canUndo]) {
         
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"此时添加图片将清除当前画板内容" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-            [alertController addAction:[UIAlertAction actionWithTitle:@"依然添加" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.cleanAllContent", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.Addpic", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
                 
                 [self getImageFromLibrary];
             }]];
             
-            [alertController addAction:[UIAlertAction actionWithTitle:@"取消添加" style:(UIAlertActionStyleDefault) handler:nil]];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
             [self configiPad:alertController];
         }else{
@@ -350,28 +349,38 @@
     pView.hidden = isHide;
 }
 
-#pragma mark -- ****************初始化图片选择器
 - (void)getImageFromLibrary
 {
-    JMSelf(ws);
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    NSArray *array = @[
+                       NSLocalizedString(@"gif.draw.photoAlert.camera", ""),
+                       NSLocalizedString(@"gif.draw.photoAlert.album", ""),
+                       NSLocalizedString(@"gif.base.alert.cancle", "")];
+    JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
+    alert.titles = array;
+    alert.delegate = self;
+    UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
+    UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
+    [window addSubview:backView];
+    [backView addSubview:alert];
     
-    // 相机
-    [alertController addAction:[UIAlertAction actionWithTitle:@"相机" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+    [UIView animateWithDuration:0.3 animations:^{
         
-        if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeCamera)]) {[ws initImagePicker:1];}
-    }]];
-    
-    // 相册
-    [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+        alert.frame = CGRectMake(0, kH-(12+alertHeight*array.count), kW, 12+alertHeight*array.count);
+    }];
+}
+
+#pragma mark --
+- (void)photoFromSource:(NSInteger)sourceType
+{
+    if (sourceType == 200) {
         
-        if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypePhotoLibrary)]) {[ws initImagePicker:0];}
-    }]];
-    
-    // 取消
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:nil]];
-    [self presentViewController:alertController animated:YES completion:nil];
-    [self configiPad:alertController];
+        if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeCamera)]) {[self initImagePicker:1];}
+        
+    }else if (sourceType == 201){
+       
+        if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypePhotoLibrary)]) {[self initImagePicker:0];}
+    }
 }
 
 #pragma mark -- 初始化图片选择器
@@ -388,7 +397,7 @@
 #pragma mark -- UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0) {
     
-    JMPaintView *pView = self.subViews.firstObject;
+    JMPaintView *pView = self.subViews.lastObject;
     pView.image = image;
     [pView setNeedsDisplay];
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -402,7 +411,7 @@
 
 - (void)shareCurrentImage:(UIButton *)sender
 {
-    JMPaintView *pView = self.subViews.firstObject;
+    JMPaintView *pView = self.subViews.lastObject;
     
     if (pView.image) {
         
@@ -428,10 +437,6 @@
 //分享图片和文字
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
-    
-    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"001" descr:@"gif" thumImage:[UIImage imageNamed:@"logo"]];
-//    gif.emotionData = 
-    
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     

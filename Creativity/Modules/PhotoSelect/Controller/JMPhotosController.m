@@ -29,7 +29,7 @@ static NSString *const collectionID = @"cell";
     self.view.backgroundColor = [UIColor whiteColor];
     self.selectSource = [NSMutableArray array];
     self.leftImage = @"navbar_close_icon_black";
-    self.rightTitle = @"完成";
+    self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
     [self.view addSubview:self.collection];
 }
 
@@ -49,16 +49,16 @@ static NSString *const collectionID = @"cell";
         }
     }else{
     
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"并未选择任何照片，是否退出！" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"gif.base.alert.NoChiosePicAndQuit", "") preferredStyle:(UIAlertControllerStyleAlert)];
         
         // 创作
-        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.sure", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
             
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
         }]];
         
         // 取消
-        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
         
         if (IS_IPAD) {
@@ -132,14 +132,14 @@ static NSString *const collectionID = @"cell";
                 cell.model = model;
             }else{
             
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"非VIP最多添加20张照片" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.picLessTen", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
                 
-                UIAlertAction *buyVip = [UIAlertAction actionWithTitle:@"获取VIP" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertAction *buyVip = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.getVIP", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                     
                     [JMBuyHelper getVip];
                 }];
                 
-                [alertController addAction:[UIAlertAction actionWithTitle:@"取消添加" style:(UIAlertActionStyleDefault) handler:nil]];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
                 [alertController addAction:buyVip];
                 [self presentViewController:alertController animated:YES completion:nil];
             }

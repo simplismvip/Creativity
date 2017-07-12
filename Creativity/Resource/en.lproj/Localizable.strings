@@ -9,16 +9,28 @@
 // base
 "gif.base.alert.cancle"="Cancle";
 "gif.base.alert.success"="Success";
+"gif.base.alert.Failed"="Failed";
 "gif.base.alert.done"="Done";
 "gif.base.alert.sure"="Done";
 "gif.base.alert.editer"="Edit";
 "gif.base.alert.delete"="Delete";
+"gif.base.alert.getVIP"="VIP";
+"gif.base.alert.Addpic"="Continue";
+"gif.base.alert.cleanAllContent"="Will clear the current palette";
+"gif.base.alert.inputContent"="Enter...";
+"gif.base.alert.picLessTen"="Non VIP users add up to 10 photos";
+"gif.base.alert.NoChiosePicAndQuit"="No choose photos, whether to quit?";
+"gif.base.alert.moreThanTwo"="The number of photos must be greater than 1";
 
 // home
-"gif.home.navigation.title"="Animation";
+"gif.home.navigation.title"="GIF Animation";
 "gif.home.bottom.alert.board"="Drawing board";
 "gif.home.bottom.alert.album"="Album";
 "gif.home.bottom.alert.gif"="GIF";
+"gif.home.VC.title.gifBoart"="Drawing board";
+
+"gif.home.VC.title.CameraRoll"="Camera Roll";
+"gif.home.VC.title.gifAlbum"="GIF Album";
 
 // set
 "gif.set.navigation.title"="Settings";
@@ -52,6 +64,9 @@
 "gif.draw.bottomSet.dash"="dash";
 "gif.draw.bottomSet.fill"="fill";
 "gif.draw.bottomSet.photo"="photo";
+
+"gif.draw.photoAlert.album"="Album";
+"gif.draw.photoAlert.camera"="Camera";
 
 
 

@@ -13,4 +13,5 @@
 @end
 @interface JMPhotosAlertView : UIView
 @property (nonatomic, weak) id <JMPhotosAlertViewDelegate>delegate;
+@property (nonatomic, strong) NSArray *titles;
 @end
