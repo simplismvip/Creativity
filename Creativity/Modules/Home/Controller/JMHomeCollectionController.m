@@ -157,7 +157,7 @@ static NSString *const collectionID = @"cell";
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"001" descr:@"gif" thumImage:[UIImage imageNamed:@"text"]];
+    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GIF大师的分享" descr:@"哈哈哈🙃🙃🙃" thumImage:[UIImage imageNamed:@"text"]];
     gif.emotionData = shareImage;
     messageObject.shareObject = gif;
     
