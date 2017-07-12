@@ -21,7 +21,7 @@
 
 		  	{
 		  		"navbar_note_icon_disabled_white":{
-		  				"imageName":["cave_32", "line_32", "arrow_32", "rect_32", "ellopse_32", "navbar_emoticon_icon_black", "textNote"],
+		  				"imageName":["cave_32", "icons8-Line-100", "icons8-Down Right-100", "icons8-Full Image-100", "icons8-Ellipse Stroked-100", "navbar_emoticon_icon_black", "icons8-Lowercase-104"],
 						"showName":["曲线", "直线", "箭头", "矩形", "椭圆", "表情", "文字"],
 						"color":"0",
                         "type":"4"

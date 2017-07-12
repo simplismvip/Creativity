@@ -26,7 +26,7 @@
         JMBottomCell *btn = [[JMBottomCell alloc] init];
         btn.backgroundColor = JMColor(31, 31, 31);
         btn.tag = i+200;
-        [btn setTitle:bottomModel.title forState:(UIControlStateNormal)];
+//        [btn setTitle:bottomModel.title forState:(UIControlStateNormal)];
         [btn setImage:[UIImage imageWithTemplateName:bottomModel.image] forState:(UIControlStateNormal)];
         [btn setTintColor:JMBaseColor];
         [btn addTarget:self action:@selector(select:) forControlEvents:(UIControlEventTouchUpInside)];
