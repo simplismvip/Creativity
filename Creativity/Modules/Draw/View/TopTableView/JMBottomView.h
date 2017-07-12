@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JMBottomCell.h"
 
+@class JMBottomCell;
 @class JMBottomView;
 @protocol JMBottomViewDataSourceDelegate <NSObject>
 
