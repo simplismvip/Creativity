@@ -10,10 +10,7 @@
 
 @interface JMMemberModel : NSObject
 
-@property (nonatomic, assign) BOOL isHide;
 @property (nonatomic, assign) NSInteger index;
 @property (nonatomic, copy) NSString *Thumbnail;
-@property (nonatomic, copy) NSString *content;
-@property (nonatomic, copy) NSString *showAndHide;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 @end

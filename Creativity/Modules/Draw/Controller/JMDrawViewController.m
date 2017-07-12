@@ -27,6 +27,7 @@
 #import <UShareUI/UShareUI.h>
 #import "JMSlider.h"
 #import "JMPhotosAlertView.h"
+#import "JMEditerSuperView.h"
 
 #define kMargin 10.0
 
@@ -104,62 +105,34 @@
 
 - (void)initPaintBoard:(JMGetGIFController *)parentController images:(NSArray *)images
 {
+    JMPaintView *pView = [[JMPaintView alloc] init];
+    pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
+    pView.lineDash = [StaticClass getDashType];
+    pView.paintText = [StaticClass getPaintText];
+    pView.paintImage = [StaticClass getPaintImage];
+    self.paintView = pView;
+    [self.view addSubview:pView];
+    [self.subViews addObject:pView];
+    
+    [pView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.view);
+        make.width.height.mas_equalTo(self.view.width);
+    }];
+
+    
     if (parentController) {
         
         self.GIFController = parentController;
         self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
-        
-        // 优化, 这里没必要每次都初始化全部, 用到哪张初始化哪张就可以
-        JMPaintView *pView = [[JMPaintView alloc] init];
-        pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
-        pView.lineDash = [StaticClass getDashType];
-        pView.paintText = [StaticClass getPaintText];
-        pView.paintImage = [StaticClass getPaintImage];
-        pView.image = images.lastObject;
-        self.paintView = pView;
-        [self.view addSubview:pView];
-        [self.subViews addObject:pView];
-        
-        [pView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(self.view);
-            make.width.height.mas_equalTo(self.view.width);
-        }];
-        
+ 
 #pragma mark -- 这里也可以优化, 没必要每次都创建, 创建新的View时原来的保存下来就是
+        _cacheArray = [images mutableCopy];
+        _paintView.image = _cacheArray.lastObject;
+        [_paintView setNeedsDisplay];
         
-        for (UIImage *image in images) {
-            
-            JMPaintView *pView = [[JMPaintView alloc] init];
-            pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
-            pView.lineDash = [StaticClass getDashType];
-            pView.paintText = [StaticClass getPaintText];
-            pView.paintImage = [StaticClass getPaintImage];
-            pView.image = image;
-            self.paintView = pView;
-            [self.view addSubview:pView];
-            [self.subViews addObject:pView];
-            
-            [pView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.mas_equalTo(self.view);
-                make.width.height.mas_equalTo(self.view.width);
-            }];
-        }
     }else{
         self.leftImage = @"navbar_close_icon_black";
         self.rightImage = @"navbar_next_icon_black";
-        JMPaintView *pView = [[JMPaintView alloc] init];
-        pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
-        pView.lineDash = [StaticClass getDashType];
-        pView.paintText = [StaticClass getPaintText];
-        pView.paintImage = [StaticClass getPaintImage];
-        self.paintView = pView;
-        [self.view addSubview:pView];
-        [self.subViews addObject:pView];
-        
-        [pView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(self.view);
-            make.width.height.mas_equalTo(self.view.width);
-        }];
     }
 }
 
@@ -171,33 +144,19 @@
 // 完成按钮
 - (void)rightTitleAction:(UIBarButtonItem *)sender
 {
-    NSMutableArray *images = [NSMutableArray array];
-    for (JMPaintView *memberView in self.subViews) {
-        
-        UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
-        [images addObject:imageNew];
-    }
-    
-    self.GIFController.imagesFromDrawVC = images;
+    self.GIFController.imagesFromDrawVC = _cacheArray;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -- 进入getGIF界面
 - (void)rightImageAction:(UIBarButtonItem *)sender
 {
-    if (self.subViews.count>2) {
+    if (_cacheArray.count>2) {
     
         JMGetGIFController *gif = [[JMGetGIFController alloc] init];
         gif.filePath = [self.folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-        
-        NSMutableArray *images = [NSMutableArray array];
-        for (JMPaintView *memberView in self.subViews) {
-            
-            UIImage *imageNew = [UIImage imageWithCaptureView:memberView rect:CGRectMake(0, 0, kW, kW)];
-            [images addObject:imageNew];
-        }
         gif.delayTime = 0.5;
-        gif.imagesFromDrawVC = images;
+        gif.imagesFromDrawVC = _cacheArray;
         [self.navigationController pushViewController:gif animated:YES];
     }else{
     
@@ -227,26 +186,15 @@
     if (bottomType == JMTopBarTypeAdd){
         
 #pragma mark -- 这里也可以优化, 没必要每次都创建, 创建新的View时原来的保存下来就是
-        if (self.subViews.count<11) {
+        if (_cacheArray.count<11) {
             
             _slider.slider.value = 1.0;
             [JMPopView popView:self.view title:title];
             
-            JMPaintView *pView = [[JMPaintView alloc] init];
-            pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
-            pView.lineDash = [StaticClass getDashType];
-            pView.paintText = [StaticClass getPaintText];
-            pView.paintImage = [StaticClass getPaintImage];
+            UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+            [_cacheArray addObject:imageNew];
+            [_paintView clearAll];
             
-            self.paintView = pView;
-            [self.view addSubview:pView];
-            [self.subViews addObject:pView];
-            
-            [pView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.mas_equalTo(self.view);
-                make.width.height.mas_equalTo(self.view.width);
-                // make.height.mas_equalTo(self.view.width*1.2);
-            }];
         }else{
         
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.picLessTen", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
@@ -264,7 +212,7 @@
     }else if (bottomType == JMTopBarTypeLayerManger){
         
         [JMPopView popView:self.view title:title];
-        [JMMembersView initMemberDataArray:self.subViews isEditer:NO addDelegate:self];
+        [JMMembersView initMemberDataArray:_cacheArray isEditer:NO addDelegate:self];
         
     }else if (bottomType == JMTopBarTypePaint){
         
@@ -323,14 +271,19 @@
         [JMPopView popView:self.view title:title];
         _paintView.isFill = !_paintView.isFill;
         [StaticClass setFillType:_paintView.isFill];
+        
     }else if (bottomType == JMTopBarTypeNote && row==2){
         
         if ([_paintView canUndo]) {
         
+            JMSelf(ws);
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.cleanAllContent", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.Addpic", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
                 
-                [self getImageFromLibrary];
+                UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+                [ws.cacheArray addObject:imageNew];
+                [ws.paintView clearAll];
+                [ws getImageFromLibrary];
             }]];
             
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
@@ -351,25 +304,45 @@
 
 - (void)moveCoverageAtIndexPath:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
-    JMPaintView *from = self.subViews[fromIndex];
-    JMPaintView *to = self.subViews[toIndex];
-    [self.view insertSubview:from aboveSubview:to];
-    
-    [self.subViews removeObjectAtIndex:fromIndex];
-    [self.subViews insertObject:from atIndex:toIndex];
+//    if (fromIndex == _cacheArray.count-1) {
+//        
+//        
+//    }
+//    
+//    JMPaintView *from = self.subViews[fromIndex];
+//    JMPaintView *to = self.subViews[toIndex];
+//    [self.view insertSubview:from aboveSubview:to];
+//    
+//    [self.subViews removeObjectAtIndex:fromIndex];
+//    [self.subViews insertObject:from atIndex:toIndex];
 }
 
 - (void)removeCoverageAtIndex:(NSInteger)index
 {
-    JMPaintView *pView = self.subViews[index];
-    [pView removeFromSuperview];
-    [self.subViews removeObjectAtIndex:index];
+    if (index==_cacheArray.count-1) {
+        
+        [_paintView clearAll];
+        _paintView.image = _cacheArray[index-1];
+        [_paintView setNeedsDisplay];
+    }
+    
+    [_cacheArray removeObjectAtIndex:index];
 }
 
-- (void)hideCoverageAtIndex:(NSInteger)index isHide:(BOOL)isHide
+- (void)editerAtIndex:(NSInteger)index frame:(CGRect)frame
 {
-    JMPaintView *pView = self.subViews[index];
-    pView.hidden = isHide;
+    JMSelf(ws);
+    JMEditerSuperView *image = [[JMEditerSuperView alloc] initWithFrame:self.view.bounds];
+    image.imageRect = frame;
+    image.image = _cacheArray[index];
+    image.editerDone = ^(UIImage *image) {
+        
+        [ws.cacheArray insertObject:image atIndex:index];
+    };
+    
+    UIWindow *windows = [UIApplication sharedApplication].windows.firstObject;
+    [windows addSubview:image];
+    [_cacheArray removeObjectAtIndex:index];
 }
 
 - (void)getImageFromLibrary
@@ -420,9 +393,9 @@
 #pragma mark -- UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0) {
     
-    JMPaintView *pView = self.subViews.lastObject;
-    pView.image = image;
-    [pView setNeedsDisplay];
+#pragma mark -- 这一步应该先保存原来的, 在开始新的
+    _paintView.image = image;
+    [_paintView setNeedsDisplay];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -434,13 +407,13 @@
 
 - (void)shareCurrentImage:(UIButton *)sender
 {
-    JMPaintView *pView = self.subViews.lastObject;
+    // JMPaintView *pView = self.subViews.lastObject;
     
-    if (pView.image) {
+    if (_paintView.image) {
         
-        [self showBottomCircleView:[pView.image imageWithWaterMask]];
+        [self showBottomCircleView:[_paintView.image imageWithWaterMask]];
     }else{
-        UIImage *image = [UIImage imageWithCaptureView:pView rect:CGRectMake(0, 0, kW, kW)];
+        UIImage *image = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
         [self showBottomCircleView:[image imageWithWaterMask]];
     }
 }
@@ -515,6 +488,17 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
+    for (UIImage *image in _cacheArray) {
+        
+        NSData *data = UIImagePNGRepresentation(image);
+        NSString *cache = [NSString stringWithFormat:@"%@/%@.png", JMCachePath, [JMHelper timerString]];
+        [data writeToFile:cache atomically:YES];
+    }
+    
+    [_cacheArray removeAllObjects];
+    
+    
 #ifdef DEBUG
     NSLog(@"%s", __FUNCTION__);
 #endif

@@ -14,10 +14,8 @@
 #import "JMPaintView.h"
 
 @interface JMMembersView() <UITableViewDelegate, UITableViewDataSource, JMMembersCellDelegate>
-
 @property (nonatomic, weak) UITableView *tabView;
 @property (nonatomic, strong) NSMutableArray *memberArray;
-@property (nonatomic, assign) BOOL editer;
 @end
 
 @implementation JMMembersView
@@ -25,11 +23,10 @@
 + (void)initMemberDataArray:(NSMutableArray *)dataArray isEditer:(BOOL)isEditer addDelegate:(id)delegate
 {
     NSMutableArray *array = [NSMutableArray array];
-    for (JMPaintView *paint in dataArray) {
+    for (UIImage *paint in dataArray) {
         
         JMMemberModel *model = [JMMemberModel new];
-        model.showAndHide = @"icons8-visible";
-        model.thumbnailImage = paint.image;
+        model.thumbnailImage = paint;
         [array addObject:model];
     }
     
@@ -38,7 +35,6 @@
     
     JMMembersView *base = [[self alloc] initWithFrame:CGRectMake(0, kH, kW, h)];
     base.memberArray = array;
-    base.editer = isEditer;
     base.delegate = delegate;
     [[JMGestureButton creatGestureButton] addSubview:base];
     [UIView animateWithDuration:0.3 animations:^{base.frame = CGRectMake(0, kH-h, kW, h);}];
@@ -55,9 +51,9 @@
         tabView.dataSource = self;
         tabView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
         tabView.separatorColor = tabView.backgroundColor;
-        
         tabView.showsVerticalScrollIndicator = NO;
         tabView.allowsSelection = NO;
+        [tabView setEditing:YES animated:YES];
         if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){tabView.cellLayoutMarginsFollowReadableWidth = NO;}
         [self addSubview:tabView];
         self.tabView = tabView;
@@ -88,17 +84,12 @@
     JMMembersCell *cell = [JMMembersCell initWithMemberCell:tableView cellForRowAtIndexPath:indexPath];
     cell.delegate = self;
     JMMemberModel *model = self.memberArray[indexPath.row];
-    cell.header.image = model.thumbnailImage;
-    cell.name.text = [NSString stringWithFormat:@"%ld", indexPath.row];;
-    [cell.showAndHide setImage:[UIImage imageWithTemplateName:model.showAndHide] forState:(UIControlStateNormal)];
+    model.index = indexPath.row;
+    cell.model = model;
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-}
-
+// 删除
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle ==UITableViewCellEditingStyleDelete)
@@ -124,6 +115,15 @@
     }
 }
 
+// 编辑
+- (void)editerView:(NSIndexPath *)indexPath frame:(CGRect)frame
+{
+    if ([self.delegate respondsToSelector:@selector(editerAtIndex:frame:)]) {
+        
+        [self.delegate editerAtIndex:indexPath.row frame:frame];
+    }
+}
+
 // 设置哪些行可以移动
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -144,21 +144,6 @@
 {
     return UITableViewCellEditingStyleDelete;
     // return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
-}
-
-#pragma mark -- JMMembersCellDelegate
-- (void)editerCell
-{
-    self.tabView.editing = !self.tabView.editing;
-    [self.tabView setEditing:self.tabView.editing animated:YES];
-}
-
-- (void)hideView:(NSInteger)index isHide:(BOOL)isHide;
-{
-    if ([self.delegate respondsToSelector:@selector(hideCoverageAtIndex:isHide:)]) {
-        
-        [self.delegate hideCoverageAtIndex:index isHide:isHide];
-    }
 }
 
 @end

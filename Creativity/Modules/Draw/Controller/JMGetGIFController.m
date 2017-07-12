@@ -47,6 +47,7 @@
     [super viewWillDisappear:animated];
     [_animationView stopAnimation];
     [MobClick endLogPageView:@"JMGetGIFController"];
+    _frameView.images = nil;
 }
 
 - (JMGIFAnimationView *)animationView
@@ -76,15 +77,7 @@
     
     // 顶部动画显示
     JMFrameView *frameView = [[JMFrameView alloc] initWithFrame:CGRectMake(10, 84, kW-20, 40)];
-    
-    NSMutableArray *thubImage = [NSMutableArray array];
-    for (UIImage *imageView in _images) {
-        
-        UIImage *image = [imageView compressOriginalImage:imageView toSize:CGSizeMake(64, 64)];
-        [thubImage addObject:image];
-    }
-    
-    frameView.images = thubImage;
+    frameView.images = _images;
     frameView.layer.borderColor = JMBaseColor.CGColor;
     frameView.layer.borderWidth = 3;
     [self.view addSubview:frameView];
@@ -118,6 +111,7 @@
     _images = images;
     self.animationView.imageSource = [images copy];
     _animationView.delayer = _delayTime;
+    _frameView.images = self.animationView.imageSource;
 }
 
 #pragma mark -- drawVC界面进入
@@ -160,9 +154,6 @@
     [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
     [self presentViewController:Nav animated:YES completion:nil];
-    
-    // 停止动画
-    // [_animationView stopAnimation];
 }
 
 // 编辑界面，删除GIF文件

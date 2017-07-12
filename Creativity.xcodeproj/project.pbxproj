@@ -170,6 +170,11 @@
 		04DA2E081F16138200D59DDD /* gif_4.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E071F16138200D59DDD /* gif_4.gif */; };
 		04DA2E0A1F1613AD00D59DDD /* gif_5.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E091F1613AD00D59DDD /* gif_5.gif */; };
 		04DA2E0C1F1613BB00D59DDD /* gif_6.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E0B1F1613BB00D59DDD /* gif_6.gif */; };
+		04DA2E111F162AC300D59DDD /* gif_0.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E0D1F162AC300D59DDD /* gif_0.gif */; };
+		04DA2E121F162AC400D59DDD /* gif_7.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E0E1F162AC300D59DDD /* gif_7.gif */; };
+		04DA2E131F162AC400D59DDD /* gif_8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E0F1F162AC300D59DDD /* gif_8.gif */; };
+		04DA2E141F162AC400D59DDD /* gif_9.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E101F162AC300D59DDD /* gif_9.gif */; };
+		04DA2E171F1636D900D59DDD /* JMEditerSuperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E161F1636D900D59DDD /* JMEditerSuperView.m */; };
 		04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */; };
 		04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */; };
 		04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFD1EF904E500C8B24F /* JMFilterItem.m */; };
@@ -491,6 +496,12 @@
 		04DA2E071F16138200D59DDD /* gif_4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_4.gif; sourceTree = "<group>"; };
 		04DA2E091F1613AD00D59DDD /* gif_5.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_5.gif; sourceTree = "<group>"; };
 		04DA2E0B1F1613BB00D59DDD /* gif_6.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_6.gif; sourceTree = "<group>"; };
+		04DA2E0D1F162AC300D59DDD /* gif_0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_0.gif; sourceTree = "<group>"; };
+		04DA2E0E1F162AC300D59DDD /* gif_7.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_7.gif; sourceTree = "<group>"; };
+		04DA2E0F1F162AC300D59DDD /* gif_8.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_8.gif; sourceTree = "<group>"; };
+		04DA2E101F162AC300D59DDD /* gif_9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_9.gif; sourceTree = "<group>"; };
+		04DA2E151F1636D900D59DDD /* JMEditerSuperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerSuperView.h; sourceTree = "<group>"; };
+		04DA2E161F1636D900D59DDD /* JMEditerSuperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerSuperView.m; sourceTree = "<group>"; };
 		04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseBottomView.h; sourceTree = "<group>"; };
 		04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseBottomView.m; sourceTree = "<group>"; };
 		04E62CFA1EF904E500C8B24F /* JMBaseFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseFiltersView.h; sourceTree = "<group>"; };
@@ -1271,6 +1282,10 @@
 		04DA2DFA1F160C1F00D59DDD /* gifSources */ = {
 			isa = PBXGroup;
 			children = (
+				04DA2E0D1F162AC300D59DDD /* gif_0.gif */,
+				04DA2E0E1F162AC300D59DDD /* gif_7.gif */,
+				04DA2E0F1F162AC300D59DDD /* gif_8.gif */,
+				04DA2E101F162AC300D59DDD /* gif_9.gif */,
 				04DA2E0B1F1613BB00D59DDD /* gif_6.gif */,
 				04DA2E091F1613AD00D59DDD /* gif_5.gif */,
 				04DA2E071F16138200D59DDD /* gif_4.gif */,
@@ -1315,6 +1330,8 @@
 				A20DAF0F1EF2E31A008DBFA9 /* JMMembersCell.m */,
 				A20DAF101EF2E31A008DBFA9 /* JMMembersView.h */,
 				A20DAF111EF2E31A008DBFA9 /* JMMembersView.m */,
+				04DA2E151F1636D900D59DDD /* JMEditerSuperView.h */,
+				04DA2E161F1636D900D59DDD /* JMEditerSuperView.m */,
 			);
 			path = MembersView;
 			sourceTree = "<group>";
@@ -1510,6 +1527,7 @@
 				0490EE621EEF977000E05A84 /* emoji_icon_61.png in Resources */,
 				0490EE611EEF977000E05A84 /* emoji_icon_60.png in Resources */,
 				0490EE551EEF977000E05A84 /* emoji_icon_48.png in Resources */,
+				04DA2E121F162AC400D59DDD /* gif_7.gif in Resources */,
 				0490EE511EEF977000E05A84 /* emoji_icon_44.png in Resources */,
 				A20F389C1EF83091009E5E48 /* handwrite_03.png in Resources */,
 				A20DAF2A1EF2E85E008DBFA9 /* topBarJson.json in Resources */,
@@ -1517,6 +1535,7 @@
 				A20F38A31EF83091009E5E48 /* handwrite_10.png in Resources */,
 				0490EE4A1EEF977000E05A84 /* emoji_icon_37.png in Resources */,
 				0490EE531EEF977000E05A84 /* emoji_icon_46.png in Resources */,
+				04DA2E111F162AC300D59DDD /* gif_0.gif in Resources */,
 				0490EE331EEF977000E05A84 /* emoji_icon_14.png in Resources */,
 				0490EE431EEF977000E05A84 /* emoji_icon_30.png in Resources */,
 				0490EE2A1EEF977000E05A84 /* emoji_icon_ 5.png in Resources */,
@@ -1548,7 +1567,9 @@
 				0490EE5E1EEF977000E05A84 /* emoji_icon_57.png in Resources */,
 				0490EE411EEF977000E05A84 /* emoji_icon_28.png in Resources */,
 				A20F389A1EF83091009E5E48 /* handwrite_01.png in Resources */,
+				04DA2E141F162AC400D59DDD /* gif_9.gif in Resources */,
 				0490EE451EEF977000E05A84 /* emoji_icon_32.png in Resources */,
+				04DA2E131F162AC400D59DDD /* gif_8.gif in Resources */,
 				0490EE631EEF977000E05A84 /* emoji_icon_62.png in Resources */,
 				0490EE401EEF977000E05A84 /* emoji_icon_27.png in Resources */,
 				0490EE261EEF977000E05A84 /* emoji_icon_ 1.png in Resources */,
@@ -1751,6 +1772,7 @@
 				047FCF161EF3DCBC00AD0C08 /* JMAttributeStringModel.m in Sources */,
 				047FCF1A1EF3DCBD00AD0C08 /* JMAnimationView.m in Sources */,
 				0490EDE31EEF976F00E05A84 /* UIViewController+BackButtonHandler.m in Sources */,
+				04DA2E171F1636D900D59DDD /* JMEditerSuperView.m in Sources */,
 				A20DAF311EF42338008DBFA9 /* JMSelectEmojiView.m in Sources */,
 				A20DAF151EF2E31A008DBFA9 /* JMMembersView.m in Sources */,
 				04654A581F04ADDA008D0B27 /* JMAttributeScrollBaseView.m in Sources */,

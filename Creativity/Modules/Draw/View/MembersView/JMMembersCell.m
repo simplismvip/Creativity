@@ -7,10 +7,10 @@
 //
 
 #import "JMMembersCell.h"
+#import "JMMemberModel.h"
 
 @interface JMMembersCell()
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, assign) BOOL drawViewHide;
 @end
 
 @implementation JMMembersCell
@@ -21,11 +21,6 @@
         
         self.backgroundColor = JMColor(100, 100, 100);
         
-        // 左侧label
-        self.header = [[UIImageView alloc] init];
-        self.header.backgroundColor = JMColor(245, 245, 245);
-        [self addSubview:self.header];
-        
         // 右侧label
         self.name = [[UILabel alloc] init];
         self.name.font = [UIFont systemFontOfSize:14.0];
@@ -34,50 +29,33 @@
         [self addSubview:self.name];
         
         // 右侧label
-        self.showAndHide = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [_showAndHide setTintColor:JMColorRGBA(217, 51, 58, 1.0)];
-        [_showAndHide addTarget:self action:@selector(showAndHide:event:) forControlEvents:(UIControlEventTouchUpInside)];
-        [self addSubview:_showAndHide];
-        
-        UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(getEditer:)];
-        ges.minimumPressDuration = 1;
-        [self addGestureRecognizer:ges];
+        self.headerBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//        [_headerBtn setTintColor:JMColorRGBA(217, 51, 58, 1.0)];
+        [_headerBtn addTarget:self action:@selector(headerBtn:event:) forControlEvents:(UIControlEventTouchUpInside)];
+        [self addSubview:_headerBtn];
     }
     
     return self;
 }
 
-- (void)getEditer:(UILongPressGestureRecognizer *)ges
+- (void)headerBtn:(UIButton *)btn event:(id)event
 {
-    if (ges.state == UIGestureRecognizerStateBegan) {
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    CGRect rect = [btn convertRect:btn.bounds toView:window];
+    UITouch *touch =[[event allTouches] anyObject];
+    NSIndexPath *indexpath = [_tableView indexPathForRowAtPoint:[touch locationInView:_tableView]];
     
-        if ([self.delegate respondsToSelector:@selector(editerCell)]) {
-            [self.delegate editerCell];
-        }
+    if ([self.delegate respondsToSelector:@selector(editerView:frame:)]) {
+        
+        [self.delegate editerView:indexpath frame:rect];
     }
 }
 
-- (void)showAndHide:(UIButton *)btn event:(id)event
+- (void)setModel:(JMMemberModel *)model
 {
-    UITouch *touch =[[event allTouches] anyObject];
-    NSIndexPath *indexpath = [_tableView indexPathForRowAtPoint:[touch locationInView:_tableView]];
-    if (indexpath) {
-        
-        self.drawViewHide = !self.drawViewHide;
-        if ([self.delegate respondsToSelector:@selector(hideView:isHide:)]) {
-            
-            [self.delegate hideView:indexpath.row isHide:self.drawViewHide];
-            
-            if (self.drawViewHide) {
-               
-                [self.showAndHide setImage:[UIImage imageWithTemplateName:@"icons8-hide"] forState:(UIControlStateNormal)];
-                
-            }else{
-                
-                [self.showAndHide setImage:[UIImage imageWithTemplateName:@"icons8-visible"] forState:(UIControlStateNormal)];
-            }
-        }
-    }
+    _model = model;
+    [_headerBtn setImage:model.thumbnailImage forState:(UIControlStateNormal)];
+    _name.text = [NSString stringWithFormat:@"%ld", model.index];
 }
 
 + (instancetype)initWithMemberCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,12 +70,11 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.header.frame = CGRectMake(10, 4, self.height-8, self.height-8);
-    self.name.frame = CGRectMake(CGRectGetMaxX(_header.frame)+20, CGRectGetMinY(_header.frame), self.height, self.height-10);
-    self.showAndHide.frame = CGRectMake(self.width-45, 6, 30, 30);
-
+    self.headerBtn.frame = CGRectMake(10, 4, self.height-8, self.height-8);
+    self.name.frame = CGRectMake(CGRectGetMaxX(_headerBtn.frame)+20, CGRectGetMinY(_headerBtn.frame), self.height, self.height-10);
+    
     for (UIControl *control in self.subviews) {
-        self.showAndHide.hidden = _tableView.isEditing;
+        
         if ([control isKindOfClass:NSClassFromString(@"UITableViewCellEditControl")]) {[control removeFromSuperview];}
     }
 }

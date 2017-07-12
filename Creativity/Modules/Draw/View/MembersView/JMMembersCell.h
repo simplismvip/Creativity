@@ -10,17 +10,15 @@
 
 @protocol JMMembersCellDelegate <NSObject>
 
-- (void)editerCell;
-- (void)hideView:(NSInteger)index isHide:(BOOL)isHide;
+- (void)editerView:(NSIndexPath *)indexPath frame:(CGRect)frame;
 
 @end
 
+@class JMMemberModel;
 @interface JMMembersCell : UITableViewCell
-@property (nonatomic, strong) UIImageView *header;
-@property (nonatomic, strong) UIButton *showAndHide;
-@property (nonatomic, strong) UILabel *name;
-
 @property (nonatomic, weak) id<JMMembersCellDelegate> delegate;
-
+@property (nonatomic, strong) UILabel *name;
+@property (nonatomic, strong) UIButton *headerBtn;
+@property (nonatomic, strong) JMMemberModel *model;
 + (JMMembersCell *)initWithMemberCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end
