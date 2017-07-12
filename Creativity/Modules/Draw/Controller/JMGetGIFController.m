@@ -45,6 +45,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [_animationView stopAnimation];
     [MobClick endLogPageView:@"JMGetGIFController"];
 }
 
@@ -52,12 +53,13 @@
 {
     if (!_animationView) {
         
+        JMSelf(ws);
         JMGIFAnimationView *aniView = [[JMGIFAnimationView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
         aniView.backgroundColor = [UIColor whiteColor];
         aniView.center = self.view.center;
         aniView.frameChange = ^(NSInteger index) {
             
-            [_frameView refrashLocation:index];
+            [ws.frameView refrashLocation:index];
         };
         
         [self.view insertSubview:aniView belowSubview:_showFps];
@@ -160,7 +162,7 @@
     [self presentViewController:Nav animated:YES completion:nil];
     
     // 停止动画
-//    [_animationView stopAnimation];
+    // [_animationView stopAnimation];
 }
 
 // 编辑界面，删除GIF文件

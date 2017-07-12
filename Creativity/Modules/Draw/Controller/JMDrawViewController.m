@@ -39,7 +39,7 @@
 @property (nonatomic, strong) NSMutableArray *subViews;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *memberViewData;
-@property (nonatomic, strong) NSMutableArray *memberViewBuff;
+@property (nonatomic, strong) NSMutableArray *cacheArray;
 @end
 
 @implementation JMDrawViewController
@@ -62,7 +62,10 @@
     
     // 首先创建画图View, 创建接收消息方法
     self.subViews = [NSMutableArray array];
-    self.memberViewBuff = [NSMutableArray array];
+    
+    // 缓存
+    self.cacheArray = [NSMutableArray array];
+    
     self.memberViewData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
     
@@ -105,6 +108,24 @@
         
         self.GIFController = parentController;
         self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
+        
+        // 优化, 这里没必要每次都初始化全部, 用到哪张初始化哪张就可以
+        JMPaintView *pView = [[JMPaintView alloc] init];
+        pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
+        pView.lineDash = [StaticClass getDashType];
+        pView.paintText = [StaticClass getPaintText];
+        pView.paintImage = [StaticClass getPaintImage];
+        pView.image = images.lastObject;
+        self.paintView = pView;
+        [self.view addSubview:pView];
+        [self.subViews addObject:pView];
+        
+        [pView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self.view);
+            make.width.height.mas_equalTo(self.view.width);
+        }];
+        
+#pragma mark -- 这里也可以优化, 没必要每次都创建, 创建新的View时原来的保存下来就是
         
         for (UIImage *image in images) {
             
@@ -193,7 +214,7 @@
     NSInteger row = indexPath.row;
     NSString *title = nil;
     
-    JMTopBarModel *tModel = self.dataSource[indexPath.section];
+    JMTopBarModel *tModel = _dataSource[indexPath.section];
     if (tModel.models.count == 1) {
         
         title = tModel.title;
@@ -205,10 +226,12 @@
     
     if (bottomType == JMTopBarTypeAdd){
         
+#pragma mark -- 这里也可以优化, 没必要每次都创建, 创建新的View时原来的保存下来就是
         if (self.subViews.count<11) {
             
             _slider.slider.value = 1.0;
             [JMPopView popView:self.view title:title];
+            
             JMPaintView *pView = [[JMPaintView alloc] init];
             pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
             pView.lineDash = [StaticClass getDashType];

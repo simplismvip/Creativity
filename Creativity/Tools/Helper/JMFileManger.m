@@ -107,6 +107,14 @@
             }
         }
         
+        NSArray *gif = [[NSBundle mainBundle] pathsForResourcesOfType:@"gif" inDirectory:nil];
+        for (NSString *path in gif) {
+            
+            NSDictionary *dic = @{@"folderPath":path};
+            JMHomeModel *model = [JMHomeModel objectWithDictionary:dic];
+            [dataSource addObject:model];
+        }
+        
         return dataSource;
     }else{
     
