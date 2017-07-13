@@ -225,6 +225,11 @@
 		A28DCF5B1F104DA1005E316D /* JMPhotosAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF511F104DA1005E316D /* JMPhotosAlertView.m */; };
 		A28DCF5C1F104DA1005E316D /* JMPhotosCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF531F104DA1005E316D /* JMPhotosCollectionCell.m */; };
 		A28DCF5D1F104DA1005E316D /* JMPhotosLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF551F104DA1005E316D /* JMPhotosLayout.m */; };
+		A2B2D7EC1F16E8100068CB15 /* JMEditerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7EB1F16E8100068CB15 /* JMEditerController.m */; };
+		A2B2D7F01F16E89A0068CB15 /* JMEditerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7EF1F16E89A0068CB15 /* JMEditerCollectionViewCell.m */; };
+		A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F21F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m */; };
+		A2B2D7F61F16E97D0068CB15 /* JMEditerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */; };
+		A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */; };
 		E38178D8D78B0997D888FA8D /* libPods-Creativity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */; };
 /* End PBXBuildFile section */
 
@@ -590,6 +595,16 @@
 		A28DCF531F104DA1005E316D /* JMPhotosCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotosCollectionCell.m; sourceTree = "<group>"; };
 		A28DCF541F104DA1005E316D /* JMPhotosLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhotosLayout.h; sourceTree = "<group>"; };
 		A28DCF551F104DA1005E316D /* JMPhotosLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotosLayout.m; sourceTree = "<group>"; };
+		A2B2D7EA1F16E8100068CB15 /* JMEditerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerController.h; sourceTree = "<group>"; };
+		A2B2D7EB1F16E8100068CB15 /* JMEditerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerController.m; sourceTree = "<group>"; };
+		A2B2D7EE1F16E89A0068CB15 /* JMEditerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerCollectionViewCell.h; sourceTree = "<group>"; };
+		A2B2D7EF1F16E89A0068CB15 /* JMEditerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerCollectionViewCell.m; sourceTree = "<group>"; };
+		A2B2D7F11F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		A2B2D7F21F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		A2B2D7F41F16E97D0068CB15 /* JMEditerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerModel.h; sourceTree = "<group>"; };
+		A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerModel.m; sourceTree = "<group>"; };
+		A2B2D7F71F16F2990068CB15 /* JMEditerDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerDetailController.h; sourceTree = "<group>"; };
+		A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerDetailController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1142,6 +1157,10 @@
 				0490F2011EEFA32900E05A84 /* JMDrawViewController.m */,
 				0490F2541EEFBE1B00E05A84 /* JMGetGIFController.h */,
 				0490F2551EEFBE1B00E05A84 /* JMGetGIFController.m */,
+				A2B2D7EA1F16E8100068CB15 /* JMEditerController.h */,
+				A2B2D7EB1F16E8100068CB15 /* JMEditerController.m */,
+				A2B2D7F71F16F2990068CB15 /* JMEditerDetailController.h */,
+				A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1153,6 +1172,8 @@
 				0490F20F1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m */,
 				0490F2101EEFA32900E05A84 /* JMSubImageModel.h */,
 				0490F2111EEFA32900E05A84 /* JMSubImageModel.m */,
+				A2B2D7F41F16E97D0068CB15 /* JMEditerModel.h */,
+				A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1160,6 +1181,7 @@
 		0490F2121EEFA32900E05A84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A2B2D7ED1F16E8770068CB15 /* EditerView */,
 				04E62CF91EF904E500C8B24F /* FiltersView */,
 				A20F38861EF64902009E5E48 /* Others */,
 				A20DAF2B1EF42338008DBFA9 /* EmojisView */,
@@ -1420,6 +1442,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A2B2D7ED1F16E8770068CB15 /* EditerView */ = {
+			isa = PBXGroup;
+			children = (
+				A2B2D7EE1F16E89A0068CB15 /* JMEditerCollectionViewCell.h */,
+				A2B2D7EF1F16E89A0068CB15 /* JMEditerCollectionViewCell.m */,
+				A2B2D7F11F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.h */,
+				A2B2D7F21F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m */,
+			);
+			path = EditerView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1675,6 +1708,7 @@
 				0490F2441EEFA32900E05A84 /* JMPaintView.m in Sources */,
 				04E62D041EF904E500C8B24F /* JMFilterModel.m in Sources */,
 				A20DAF271EF2E61E008DBFA9 /* JMTopBarModel.m in Sources */,
+				A2B2D7F61F16E97D0068CB15 /* JMEditerModel.m in Sources */,
 				0490EDDC1EEF976F00E05A84 /* NSString+Extension.m in Sources */,
 				0490F1AE1EEF9C3900E05A84 /* JMHomeModel.m in Sources */,
 				0490EEDB1EEF977000E05A84 /* UserDefaultTools.m in Sources */,
@@ -1682,6 +1716,7 @@
 				047FCF1C1EF3DCBD00AD0C08 /* JMColorView.m in Sources */,
 				A20F388B1EF64902009E5E48 /* JMButtom.m in Sources */,
 				A20BE8901EFE07980083DBF1 /* JMLicenceController.m in Sources */,
+				A2B2D7F01F16E89A0068CB15 /* JMEditerCollectionViewCell.m in Sources */,
 				A20DAF371EF4363F008DBFA9 /* MSCellAccessory.m in Sources */,
 				A20DAF141EF2E31A008DBFA9 /* JMMembersCell.m in Sources */,
 				0490EEA21EEF977000E05A84 /* JMFmdbModel.m in Sources */,
@@ -1708,6 +1743,7 @@
 				04E62D051EF904E500C8B24F /* JMFiltersView.m in Sources */,
 				04E62D171EF921F400C8B24F /* ProModel.m in Sources */,
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
+				A2B2D7EC1F16E8100068CB15 /* JMEditerController.m in Sources */,
 				047FCF141EF3DCBC00AD0C08 /* JMAttributeStringCell.m in Sources */,
 				04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
@@ -1729,6 +1765,7 @@
 				A28DCF5C1F104DA1005E316D /* JMPhotosCollectionCell.m in Sources */,
 				04B033AF1EFA153700A10D4C /* UIImage+Alpha.m in Sources */,
 				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,
+				A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */,
 				A28DCF5D1F104DA1005E316D /* JMPhotosLayout.m in Sources */,
 				A20DAF251EF2E61E008DBFA9 /* JMBottomModel.m in Sources */,
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
@@ -1736,6 +1773,7 @@
 				0490EED01EEF977000E05A84 /* UIColor+Separate.m in Sources */,
 				0490EDDB1EEF976F00E05A84 /* NSString+Emoji.m in Sources */,
 				04E62D141EF9202500C8B24F /* JMProTableViewCell.m in Sources */,
+				A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */,
 				04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */,
 				04B033B21EFA153700A10D4C /* UIImage+RoundedCorner.m in Sources */,
 				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,

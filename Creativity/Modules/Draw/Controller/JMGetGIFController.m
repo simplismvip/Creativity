@@ -21,6 +21,8 @@
 #import "JMFrameView.h"
 #import "NSTimer+JMAddition.h"
 #import "JMGIFAnimationView.h"
+#import "JMEditerController.h"
+
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 {
@@ -144,16 +146,22 @@
 // 1> 开始编辑
 - (void)Editer:(UIBarButtonItem *)done
 {
-    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-    [draw initPaintBoard:self images:_images];
-    
-    // 删除GIF文件
-    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
-    draw.folderPath = [_filePath stringByReplacingOccurrencesOfString:string withString:@""];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
-    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+    JMEditerController *editer = [[JMEditerController alloc] init];
+    editer.title = NSLocalizedString(@"gif.base.alert.editer", "");
+    editer.editerImages = _images;
+    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:editer];
     [self presentViewController:Nav animated:YES completion:nil];
+    
+//    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+//    [draw initPaintBoard:self images:_images];
+//    
+//    // 删除GIF文件
+//    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
+//    draw.folderPath = [_filePath stringByReplacingOccurrencesOfString:string withString:@""];
+//    
+//    [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
+//    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+//    [self presentViewController:Nav animated:YES completion:nil];
 }
 
 // 编辑界面，删除GIF文件
