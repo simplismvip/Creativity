@@ -24,7 +24,7 @@
 #import "JMSlider.h"
 #import "JMPhotosAlertView.h"
 #import "JMEditerSuperView.h"
-
+#import "UIViewController+BackButtonHandler.h"
 
 @interface JMEditerDetailController ()<JMPhotosAlertViewDelegate,JMTopTableViewDelegate,UMSocialShareMenuViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak) JMPaintView *paintView;
@@ -39,12 +39,21 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMDrawViewController"];
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMDrawViewController"];
+    
+    // 开启返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
 }
 
 - (void)viewDidLoad {
@@ -109,7 +118,7 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark -- ****************JMTopTableViewDelegate
+#pragma mark -- JMTopTableViewDelegate
 - (void)topTableView:(JMBottomType)bottomType didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
@@ -350,6 +359,12 @@
             popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
         }
     }
+}
+
+- (BOOL)navigationShouldPopOnBackButton
+{
+    if (self.editerDetailDone) {self.editerDetailDone(_paintView.image);}
+    return YES;
 }
 
 - (void)dealloc

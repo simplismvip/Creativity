@@ -70,9 +70,9 @@
     self.memberViewData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
     
+    JMSelf(ws);
     JMSlider *slider = [[JMSlider alloc] initWithFrame:CGRectMake(10, (self.view.height/2-self.view.width/2+64)*0.5-15, self.view.width-20, 30)];
     slider.slider.value = 1.0;
-    JMSelf(ws);
     slider.value = ^(JMSlider *value) {ws.paintView.alpha = value.sValue;};
     [self.view addSubview:slider];
     self.slider = slider;
@@ -119,33 +119,13 @@
         make.width.height.mas_equalTo(self.view.width);
     }];
 
-    
-    if (parentController) {
-        
-        self.GIFController = parentController;
-        self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
- 
-#pragma mark -- 这里也可以优化, 没必要每次都创建, 创建新的View时原来的保存下来就是
-        _cacheArray = [images mutableCopy];
-        _paintView.image = _cacheArray.lastObject;
-        [_paintView setNeedsDisplay];
-        
-    }else{
-        self.leftImage = @"navbar_close_icon_black";
-        self.rightImage = @"navbar_next_icon_black";
-    }
+    self.leftImage = @"navbar_close_icon_black";
+    self.rightImage = @"navbar_next_icon_black";
 }
 
 - (void)leftImageAction:(UIBarButtonItem *)sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-// 完成按钮
-- (void)rightTitleAction:(UIBarButtonItem *)sender
-{
-    self.GIFController.imagesFromDrawVC = _cacheArray;
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -- 进入getGIF界面
@@ -154,10 +134,11 @@
     if (_cacheArray.count>2) {
     
         JMGetGIFController *gif = [[JMGetGIFController alloc] init];
-        gif.filePath = [self.folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+        gif.filePath = [_folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
         gif.delayTime = 0.5;
         gif.imagesFromDrawVC = _cacheArray;
         [self.navigationController pushViewController:gif animated:YES];
+        
     }else{
     
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.moreThanTwo", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];

@@ -12,6 +12,9 @@
 #import "TZAssetModel.h"
 #import "TZImageManager.h"
 #import "JMBuyHelper.h"
+#import "JMGetGIFController.h"
+#import "JMGifView.h"
+#import "JMFileManger.h"
 
 @interface JMPhotosController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -29,8 +32,15 @@ static NSString *const collectionID = @"cell";
     self.view.backgroundColor = [UIColor whiteColor];
     self.selectSource = [NSMutableArray array];
     self.leftImage = @"navbar_close_icon_black";
-    self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
-    [self.view addSubview:self.collection];
+    
+    JMPhotosLayout *collectionLayout = [[JMPhotosLayout alloc] init];
+    self.collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:collectionLayout];
+    [_collection registerClass:[JMPhotosCollectionCell class] forCellWithReuseIdentifier:collectionID];
+    _collection.dataSource = self;
+    _collection.delegate = self;
+    _collection.backgroundColor = [UIColor whiteColor];
+    _collection.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_collection];
 }
 
 - (void)leftImageAction:(UIBarButtonItem *)sender
@@ -38,14 +48,33 @@ static NSString *const collectionID = @"cell";
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)rightTitleAction:(UIBarButtonItem *)sender
+- (void)rightImageAction:(UIBarButtonItem *)sender
 {
     if (_selectSource.count>0) {
         
-        if ([self.delegate respondsToSelector:@selector(pickerPhotosSuccess:)]) {
+        TZAssetModel *model = _selectSource.firstObject;
+        if (model.type == TZAssetModelMediaTypePhoto) {
             
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-            [self.delegate pickerPhotosSuccess:_selectSource];
+            NSMutableArray *images = [NSMutableArray array];
+            for (TZAssetModel *model in _selectSource) {
+                
+                JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+                gif.image = model.image;
+                UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
+                [images addObject:image];
+            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                JMGetGIFController *draw = [[JMGetGIFController alloc] init];
+                NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+                [JMFileManger creatDir:gifPath];
+                draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+                
+                draw.delayTime = 0.5;
+                draw.imagesFromDrawVC = images;
+                [self.navigationController pushViewController:draw animated:YES];
+            });
         }
     }else{
     
@@ -74,23 +103,6 @@ static NSString *const collectionID = @"cell";
     }
 }
 
-#pragma mark -- collectionView 方法
-- (UICollectionView *)collection
-{
-    if (!_collection)
-    {
-        JMPhotosLayout *collectionLayout = [[JMPhotosLayout alloc] init];
-        self.collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:collectionLayout];
-        [_collection registerClass:[JMPhotosCollectionCell class] forCellWithReuseIdentifier:collectionID];
-        _collection.dataSource = self;
-        _collection.delegate = self;
-        _collection.backgroundColor = [UIColor whiteColor];
-        _collection.showsVerticalScrollIndicator = NO;
-        [self.view addSubview:_collection];
-    }
-    return _collection;
-}
-
 #pragma mark UICollectionViewDataSource,
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -113,7 +125,6 @@ static NSString *const collectionID = @"cell";
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMSelf(ws);
     if (self.type == ImageTypePhoto) {
         
         JMPhotosCollectionCell *cell = (JMPhotosCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -176,12 +187,14 @@ static NSString *const collectionID = @"cell";
         [self.selectSource addObject:model];
         [[TZImageManager manager] getAllGifCompletion:model gifData:^(NSData *gifData) {
             
-            if ([ws.delegate respondsToSelector:@selector(pickerPhotosSuccess:)]) {
-            
-                model.image = [UIImage jm_animatedGIFWithData:gifData];
-                [ws.navigationController dismissViewControllerAnimated:YES completion:nil];
-                [ws.delegate pickerPhotosSuccess:_selectSource];
-            }
+            model.image = [UIImage jm_animatedGIFWithData:gifData];
+            JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
+            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+            [JMFileManger creatDir:gifPath];
+            GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+            GIF.delayTime = 2-model.image.duration/model.image.images.count;
+            GIF.imagesFromDrawVC = [model.image.images mutableCopy];
+            [self.navigationController pushViewController:GIF animated:YES];
         }];
     }
 }

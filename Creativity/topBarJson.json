@@ -11,7 +11,7 @@
 			},
             {
                 "navbar_note_icon_disabled_white":{
-                    "imageName":["curve", "icons8-horizontal_line", "icons8-Down Right-100", "icons8-Full Image-100", "icons8-Ellipse Stroked-100", "navbar_emoticon_icon_black", "icons8-Lowercase-104"],
+                    "imageName":["curve", "icons8-horizontal_line", "icons8-arrows_long_right", "icons8-Full Image-100", "icons8-Ellipse Stroked-100", "emojis_icon", "icons8-lowercase"],
                     "showName":["曲线", "直线", "箭头", "矩形", "椭圆", "表情", "文字"],
                     "color":"0",
                     "type":"4"

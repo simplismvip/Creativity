@@ -175,6 +175,13 @@
 		04DA2E131F162AC400D59DDD /* gif_8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E0F1F162AC300D59DDD /* gif_8.gif */; };
 		04DA2E141F162AC400D59DDD /* gif_9.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E101F162AC300D59DDD /* gif_9.gif */; };
 		04DA2E171F1636D900D59DDD /* JMEditerSuperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E161F1636D900D59DDD /* JMEditerSuperView.m */; };
+		04DA2E2B1F17629E00D59DDD /* FICImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E1D1F17629E00D59DDD /* FICImageCache.m */; };
+		04DA2E2C1F17629E00D59DDD /* FICImageFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E1F1F17629E00D59DDD /* FICImageFormat.m */; };
+		04DA2E2D1F17629E00D59DDD /* FICImageTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E211F17629E00D59DDD /* FICImageTable.m */; };
+		04DA2E2E1F17629E00D59DDD /* FICImageTableChunk.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E231F17629E00D59DDD /* FICImageTableChunk.m */; };
+		04DA2E2F1F17629E00D59DDD /* FICImageTableEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E251F17629E00D59DDD /* FICImageTableEntry.m */; };
+		04DA2E301F17629E00D59DDD /* FICUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E281F17629E00D59DDD /* FICUtilities.m */; };
+		04DA2E311F17629E00D59DDD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E2A1F17629E00D59DDD /* Info.plist */; };
 		04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */; };
 		04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */; };
 		04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFD1EF904E500C8B24F /* JMFilterItem.m */; };
@@ -507,6 +514,23 @@
 		04DA2E101F162AC300D59DDD /* gif_9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif_9.gif; sourceTree = "<group>"; };
 		04DA2E151F1636D900D59DDD /* JMEditerSuperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerSuperView.h; sourceTree = "<group>"; };
 		04DA2E161F1636D900D59DDD /* JMEditerSuperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerSuperView.m; sourceTree = "<group>"; };
+		04DA2E1A1F17629E00D59DDD /* FICEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICEntity.h; sourceTree = "<group>"; };
+		04DA2E1B1F17629E00D59DDD /* FICImageCache+FICErrorLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FICImageCache+FICErrorLogging.h"; sourceTree = "<group>"; };
+		04DA2E1C1F17629E00D59DDD /* FICImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageCache.h; sourceTree = "<group>"; };
+		04DA2E1D1F17629E00D59DDD /* FICImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageCache.m; sourceTree = "<group>"; };
+		04DA2E1E1F17629E00D59DDD /* FICImageFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageFormat.h; sourceTree = "<group>"; };
+		04DA2E1F1F17629E00D59DDD /* FICImageFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageFormat.m; sourceTree = "<group>"; };
+		04DA2E201F17629E00D59DDD /* FICImageTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageTable.h; sourceTree = "<group>"; };
+		04DA2E211F17629E00D59DDD /* FICImageTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageTable.m; sourceTree = "<group>"; };
+		04DA2E221F17629E00D59DDD /* FICImageTableChunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageTableChunk.h; sourceTree = "<group>"; };
+		04DA2E231F17629E00D59DDD /* FICImageTableChunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageTableChunk.m; sourceTree = "<group>"; };
+		04DA2E241F17629E00D59DDD /* FICImageTableEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageTableEntry.h; sourceTree = "<group>"; };
+		04DA2E251F17629E00D59DDD /* FICImageTableEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageTableEntry.m; sourceTree = "<group>"; };
+		04DA2E261F17629E00D59DDD /* FICImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImports.h; sourceTree = "<group>"; };
+		04DA2E271F17629E00D59DDD /* FICUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICUtilities.h; sourceTree = "<group>"; };
+		04DA2E281F17629E00D59DDD /* FICUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICUtilities.m; sourceTree = "<group>"; };
+		04DA2E291F17629E00D59DDD /* FastImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastImageCache.h; sourceTree = "<group>"; };
+		04DA2E2A1F17629E00D59DDD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseBottomView.h; sourceTree = "<group>"; };
 		04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseBottomView.m; sourceTree = "<group>"; };
 		04E62CFA1EF904E500C8B24F /* JMBaseFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseFiltersView.h; sourceTree = "<group>"; };
@@ -760,6 +784,7 @@
 		0490EC781EEF976F00E05A84 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				04DA2E181F17629E00D59DDD /* FastImageCache */,
 				04B033A01EFA153700A10D4C /* filter */,
 				0490EC941EEF976F00E05A84 /* images */,
 				0490ED461EEF976F00E05A84 /* LibPackage */,
@@ -1317,6 +1342,38 @@
 			path = gifSources;
 			sourceTree = "<group>";
 		};
+		04DA2E181F17629E00D59DDD /* FastImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				04DA2E191F17629E00D59DDD /* FastImageCache */,
+				04DA2E291F17629E00D59DDD /* FastImageCache.h */,
+				04DA2E2A1F17629E00D59DDD /* Info.plist */,
+			);
+			path = FastImageCache;
+			sourceTree = "<group>";
+		};
+		04DA2E191F17629E00D59DDD /* FastImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				04DA2E1A1F17629E00D59DDD /* FICEntity.h */,
+				04DA2E1B1F17629E00D59DDD /* FICImageCache+FICErrorLogging.h */,
+				04DA2E1C1F17629E00D59DDD /* FICImageCache.h */,
+				04DA2E1D1F17629E00D59DDD /* FICImageCache.m */,
+				04DA2E1E1F17629E00D59DDD /* FICImageFormat.h */,
+				04DA2E1F1F17629E00D59DDD /* FICImageFormat.m */,
+				04DA2E201F17629E00D59DDD /* FICImageTable.h */,
+				04DA2E211F17629E00D59DDD /* FICImageTable.m */,
+				04DA2E221F17629E00D59DDD /* FICImageTableChunk.h */,
+				04DA2E231F17629E00D59DDD /* FICImageTableChunk.m */,
+				04DA2E241F17629E00D59DDD /* FICImageTableEntry.h */,
+				04DA2E251F17629E00D59DDD /* FICImageTableEntry.m */,
+				04DA2E261F17629E00D59DDD /* FICImports.h */,
+				04DA2E271F17629E00D59DDD /* FICUtilities.h */,
+				04DA2E281F17629E00D59DDD /* FICUtilities.m */,
+			);
+			path = FastImageCache;
+			sourceTree = "<group>";
+		};
 		04E62CF91EF904E500C8B24F /* FiltersView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1633,6 +1690,7 @@
 				0490EE281EEF977000E05A84 /* emoji_icon_ 3.png in Resources */,
 				0490EE571EEF977000E05A84 /* emoji_icon_50.png in Resources */,
 				0490EE391EEF977000E05A84 /* emoji_icon_20.png in Resources */,
+				04DA2E311F17629E00D59DDD /* Info.plist in Resources */,
 				0490EE3D1EEF977000E05A84 /* emoji_icon_24.png in Resources */,
 				A20F389D1EF83091009E5E48 /* handwrite_04.png in Resources */,
 				0490EE4E1EEF977000E05A84 /* emoji_icon_41.png in Resources */,
@@ -1744,6 +1802,7 @@
 				04E62D171EF921F400C8B24F /* ProModel.m in Sources */,
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
 				A2B2D7EC1F16E8100068CB15 /* JMEditerController.m in Sources */,
+				04DA2E2D1F17629E00D59DDD /* FICImageTable.m in Sources */,
 				047FCF141EF3DCBC00AD0C08 /* JMAttributeStringCell.m in Sources */,
 				04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
@@ -1755,6 +1814,7 @@
 				A20F388C1EF64902009E5E48 /* JMPopView.m in Sources */,
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */,
+				04DA2E301F17629E00D59DDD /* FICUtilities.m in Sources */,
 				04B033AE1EFA153700A10D4C /* ImageUtil.m in Sources */,
 				0490EDE41EEF976F00E05A84 /* UIAlertController+SYQAlterViewController.m in Sources */,
 				04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */,
@@ -1766,6 +1826,7 @@
 				04B033AF1EFA153700A10D4C /* UIImage+Alpha.m in Sources */,
 				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,
 				A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */,
+				04DA2E2E1F17629E00D59DDD /* FICImageTableChunk.m in Sources */,
 				A28DCF5D1F104DA1005E316D /* JMPhotosLayout.m in Sources */,
 				A20DAF251EF2E61E008DBFA9 /* JMBottomModel.m in Sources */,
 				0490EEA41EEF977000E05A84 /* Tool_FMDBGetDatabase.m in Sources */,
@@ -1776,6 +1837,7 @@
 				A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */,
 				04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */,
 				04B033B21EFA153700A10D4C /* UIImage+RoundedCorner.m in Sources */,
+				04DA2E2B1F17629E00D59DDD /* FICImageCache.m in Sources */,
 				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,
 				047F57531F0CF5140045D3ED /* JMFrameView.m in Sources */,
 				0490F1E81EEF9E1900E05A84 /* SetTableViewCell.m in Sources */,
@@ -1796,6 +1858,7 @@
 				0490EED41EEF977000E05A84 /* JMTabBar.m in Sources */,
 				0490F2531EEFBC5C00E05A84 /* JMBaseController.m in Sources */,
 				0490F1E51EEF9DCB00E05A84 /* SetModel.m in Sources */,
+				04DA2E2F1F17629E00D59DDD /* FICImageTableEntry.m in Sources */,
 				0490F23D1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m in Sources */,
 				0490EDDE1EEF976F00E05A84 /* NSObject+JMProperty.m in Sources */,
 				A20BE89C1EFE18B20083DBF1 /* JMLicenceViewModel.m in Sources */,
@@ -1820,6 +1883,7 @@
 				04A4CDF51F14A54A00A445EB /* ShareTool.m in Sources */,
 				04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */,
 				0490F23E1EEFA32900E05A84 /* JMSubImageModel.m in Sources */,
+				04DA2E2C1F17629E00D59DDD /* FICImageFormat.m in Sources */,
 				047FCF1B1EF3DCBD00AD0C08 /* JMBaseColorView.m in Sources */,
 				047F57581F0CF51D0045D3ED /* JMGifSetView.m in Sources */,
 				047F57591F0CF51D0045D3ED /* JMGifView.m in Sources */,

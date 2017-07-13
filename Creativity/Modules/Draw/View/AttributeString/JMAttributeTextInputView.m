@@ -105,7 +105,7 @@
     button.frame = CGRectMake(CGRectGetMaxX(self.textInput.frame)+10, (self.height - kInputHeight)/2, 32, 32);
     [button addTarget:self action:@selector(fontAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [button setTintColor:[UIColor redColor]];
-    [button setImage:[UIImage imageNamed:@"icons8-Lowercase-104"] forState:(UIControlStateNormal)];
+    [button setImage:[UIImage imageNamed:@"icons8-lowercase"] forState:(UIControlStateNormal)];
     [self addSubview:button];
 }
 
@@ -125,7 +125,7 @@
         [_textInput becomeFirstResponder];
         [_textInput reloadInputViews];
         [sender setTitle:@"" forState:(UIControlStateNormal)];
-        [sender setImage:[UIImage imageNamed:@"icons8-Lowercase-104"] forState:(UIControlStateNormal)];
+        [sender setImage:[UIImage imageNamed:@"icons8-lowercase"] forState:(UIControlStateNormal)];
     }
     
     _isSelect = !_isSelect;

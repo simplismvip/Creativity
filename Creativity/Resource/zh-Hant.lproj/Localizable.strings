@@ -18,7 +18,7 @@
 "gif.base.alert.picLessTen"="非VIP最多添加10张照片";
 "gif.base.alert.NoChiosePicAndQuit"="並未選擇任何照片，是否退出？";
 "gif.base.alert.moreThanTwo"="照片數量必須大於1 !";
-
+"gif.base.alert.fileNotSave" = "檔案未保存，是否退出";
 
 // home
 "gif.home.navigation.title"="我的動畫";

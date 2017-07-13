@@ -21,9 +21,10 @@
 "gif.base.alert.picLessTen"="Non VIP users add up to 10 photos";
 "gif.base.alert.NoChiosePicAndQuit"="No choose photos, whether to quit?";
 "gif.base.alert.moreThanTwo"="The number of photos must be greater than 1";
+"gif.base.alert.fileNotSave"="The file is not saved. Do you want to quit?";
 
 // home
-"gif.home.navigation.title"="GIF Animation";
+"gif.home.navigation.title"="Animation";
 "gif.home.bottom.alert.board"="Drawing board";
 "gif.home.bottom.alert.album"="Album";
 "gif.home.bottom.alert.gif"="GIF";

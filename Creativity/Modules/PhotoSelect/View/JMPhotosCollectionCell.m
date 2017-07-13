@@ -58,7 +58,7 @@
     _className.hidden = model.isHide;
     
     JMSelf(ws);
-    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:200 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:60 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
         ws.classImage.image = photo;
     }];
 }

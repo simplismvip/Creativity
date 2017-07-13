@@ -29,7 +29,7 @@
 #import <UShareUI/UShareUI.h>
 #import "ShareTool.h"
 
-@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate, JMPhotosControllerDelegate,UMSocialShareMenuViewDelegate>
+@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @end
@@ -267,9 +267,6 @@ static NSString *const collectionID = @"cell";
 #pragma mark --
 - (void)photoFromSource:(NSInteger)sourceType
 {
-    JMPhotosController *photos = [[JMPhotosController alloc] init];
-    photos.delegate = self;
-
     if (sourceType == 200) {
         
         NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
@@ -287,6 +284,8 @@ static NSString *const collectionID = @"cell";
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
         hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+        JMPhotosController *photos = [[JMPhotosController alloc] init];
+        photos.rightImage = @"navbar_next_icon_black";
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
@@ -310,6 +309,7 @@ static NSString *const collectionID = @"cell";
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
         hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+        JMPhotosController *photos = [[JMPhotosController alloc] init];
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
@@ -329,48 +329,6 @@ static NSString *const collectionID = @"cell";
         });
     }
 }
-
-#pragma mark -- JMPhotosControllerDelegate
-- (void)pickerPhotosSuccess:(NSArray *)photos
-{
-    TZAssetModel *model = photos.firstObject;
-    if (model.type == TZAssetModelMediaTypePhoto) {
-        
-        NSMutableArray *images = [NSMutableArray array];
-        for (TZAssetModel *model in photos) {
-            
-            JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-            gif.image = model.image;
-            UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
-            [images addObject:image];
-        }
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            JMGetGIFController *draw = [[JMGetGIFController alloc] init];
-            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-            [JMFileManger creatDir:gifPath];
-            draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-            
-            draw.delayTime = 0.5;
-            draw.imagesFromDrawVC = images;
-            JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-            [self presentViewController:Nav animated:YES completion:nil];
-        });
-        
-    }else if (model.type == TZAssetModelMediaTypeGIF){
-        
-        TZAssetModel *model = photos.firstObject;
-        JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
-        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-        [JMFileManger creatDir:gifPath];
-        GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-        GIF.delayTime = 2-model.image.duration/model.image.images.count;
-        GIF.imagesFromHomeVC = [model.image.images mutableCopy];
-        [self.navigationController pushViewController:GIF animated:YES];
-    }
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

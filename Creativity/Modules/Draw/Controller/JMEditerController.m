@@ -11,10 +11,11 @@
 #import "JMEditerCollectionViewFlowLayout.h"
 #import "JMEditerModel.h"
 #import "JMEditerDetailController.h"
-@interface JMEditerController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMEditerCollectionViewFlowLayoutDelegate, JMEditerCollectionViewFlowLayoutDelegate>
+@interface JMEditerController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMEditerCollectionViewFlowLayoutDelegate, JMEditerCollectionViewCellDelegate>
+
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, strong) JMEditerCollectionViewFlowLayout *collectionLayout;
-@property (nonatomic, strong) NSMutableArray *dataSource;
+
 // 是否处于编辑状态
 @property (nonatomic, assign) BOOL inEditState;
 
@@ -27,23 +28,12 @@ static NSString *const collectionID = @"cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.dataSource = [NSMutableArray array];
-    
-    for (UIImage *image in _editerImages) {
-        
-        JMEditerModel *model = [[JMEditerModel alloc] init];
-        model.showImage = image;
-        model.deleteName = @"navbar_close_icon_black";
-        [_dataSource addObject:model];
-    }
-    
-    [_collection reloadData];
-    
     self.leftImage = @"navbar_close_icon_black";
-    self.rightImage = @"navbar_next_icon_black";
+    self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
     
     self.collectionLayout = [[JMEditerCollectionViewFlowLayout alloc] init];
-    self.collectionLayout.delegate = self;
+    _collectionLayout.delegate = self;
+    
     self.collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:_collectionLayout];
     _collection.backgroundColor = JMTabViewBaseColor;
     _collection.dataSource = self;
@@ -55,10 +45,20 @@ static NSString *const collectionID = @"cell";
     [_collection registerClass:[JMEditerCollectionViewCell class] forCellWithReuseIdentifier:collectionID];
 }
 
+- (void)leftImageAction:(UIBarButtonItem *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)rightTitleAction:(UIBarButtonItem *)sender
+{
+    if (self.editerDone) {self.editerDone(_editerImages);}
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.dataSource removeAllObjects];
 }
 
 #pragma mark UICollectionViewDataSource,
@@ -69,14 +69,14 @@ static NSString *const collectionID = @"cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.dataSource.count;
+    return self.editerImages.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JMEditerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionID forIndexPath:indexPath];
     cell.collection = collectionView;
-    cell.model = self.dataSource[indexPath.row];
+    cell.image = _editerImages[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -86,47 +86,18 @@ static NSString *const collectionID = @"cell";
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMEditerModel *model = self.dataSource[indexPath.row];
     JMEditerDetailController *detail = [[JMEditerDetailController alloc] init];
     detail.title = self.title;
-    detail.editerImage = model.showImage;
+    detail.editerImage = _editerImages[indexPath.row];
+    [_editerImages removeObjectAtIndex:indexPath.row];
+    JMSelf(ws);
+    detail.editerDetailDone = ^(UIImage *image) {
+        
+        [ws.editerImages insertObject:image atIndex:indexPath.row];
+        [ws.collection reloadData];
+    };
+    
     [self.navigationController pushViewController:detail animated:YES];
-}
-
-// 长按某item，弹出copy和paste的菜单
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-
-// 使copy和paste有效
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
-{
-    if ([NSStringFromSelector(action) isEqualToString:@"copy:"] || [NSStringFromSelector(action) isEqualToString:@"paste:"])
-    {
-        return YES;
-    }
-    return NO;
-}
-
-//
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
-{
-    if([NSStringFromSelector(action) isEqualToString:@"copy:"]){
-        
-        [_collection performBatchUpdates:^{
-            
-//            JMEditerModel *homeModel = self.dataSource[indexPath.row];
-//            [[NSFileManager defaultManager] removeItemAtPath:[JMAccountPath stringByAppendingPathComponent:homeModel.folderName] error:nil];
-//            
-//            [self.collection deleteItemsAtIndexPaths:@[indexPath]];
-//            [self.dataSource[indexPath.section] removeObjectAtIndex:indexPath.row];
-            
-        } completion:nil];
-        
-    }else if([NSStringFromSelector(action) isEqualToString:@"paste:"]){
-        
-    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -154,35 +125,6 @@ static NSString *const collectionID = @"cell";
     return 5;
 }
 
-// 动态设置某个分区头视图大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    return CGSizeMake(self.view.width, 25);
-}
-
-// 动态设置某个分区尾视图大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    return CGSizeMake(0, 0);
-}
-
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath
-{
-    
-}
-
-#pragma mark -- 私有方法
-- (void)refreshData
-{
-    [self.collection reloadData];
-}
-
 - (void)leftSwitchEditerStatus
 {
     // 点击了管理
@@ -201,24 +143,19 @@ static NSString *const collectionID = @"cell";
     [self.collectionLayout setInEditState:self.inEditState];
 }
 
-
 #pragma mark -- JMHomeCollectionViewCellDelegate
 - (void)deleteByIndexPath:(NSIndexPath *)indexPath
 {
-    [self.collection performBatchUpdates:^{
+    [_collection performBatchUpdates:^{
         
-//        JMEditerModel *homeModel = self.dataSource[indexPath.row];
-//        [[NSFileManager defaultManager] removeItemAtPath:[JMAccountPath stringByAppendingPathComponent:homeModel.folderName] error:nil];
-//        
-//        [self.collection deleteItemsAtIndexPaths:@[indexPath]];
-//        [self.dataSource[indexPath.section] removeObjectAtIndex:indexPath.row];
-        
+        [_collection deleteItemsAtIndexPaths:@[indexPath]];
+        [_editerImages removeObjectAtIndex:indexPath.row];
         
     } completion:^(BOOL finished) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self.collection reloadData];
+            [_collection reloadData];
         });
     }];
 }
@@ -228,13 +165,9 @@ static NSString *const collectionID = @"cell";
 // 改变数据源中model的位置
 - (void)moveItemAtIndexPath:(NSIndexPath *)formPath toIndexPath:(NSIndexPath *)toPath
 {
-    JMEditerModel *model = self.dataSource[formPath.row];
-    
-    // 先把移动的这个model移除
-    [_dataSource removeObject:model];
-    
-    // 再把这个移动的model插入到相应的位置
-    [_dataSource insertObject:model atIndex:toPath.row];
+    UIImage *image = _editerImages[formPath.row];
+    [_editerImages removeObject:image];
+    [_editerImages insertObject:image atIndex:toPath.row];
 }
 
 

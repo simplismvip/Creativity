@@ -15,16 +15,7 @@ typedef enum : NSUInteger {
     ImageTypePhotoGIF
 } ImageType;
 
-@protocol JMPhotosControllerDelegate <NSObject>
-
-@optional
-- (void)pickerPhotosSuccess:(NSArray *)photos;
-- (void)canclePicker;
-
-@end
-
 @interface JMPhotosController : JMBaseController
-@property (nonatomic, weak) id <JMPhotosControllerDelegate>delegate;
 @property (nonatomic, strong) NSArray *models;
 @property (nonatomic, assign) ImageType type;
 @end

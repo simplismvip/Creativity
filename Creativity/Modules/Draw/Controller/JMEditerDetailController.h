@@ -8,6 +8,8 @@
 
 #import "JMBaseController.h"
 
+typedef void(^EditerDetailDone)(UIImage *image);
 @interface JMEditerDetailController : JMBaseController
 @property (nonatomic, strong) UIImage *editerImage;
+@property (nonatomic, copy) EditerDetailDone editerDetailDone;
 @end

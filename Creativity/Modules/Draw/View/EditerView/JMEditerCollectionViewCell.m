@@ -30,7 +30,8 @@
         
         _deleteBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
         _deleteBtn.frame = CGRectZero;
-        [_deleteBtn setTintColor:JMColor(115, 115, 155)];
+        [_deleteBtn setTintColor:JMBaseColor];
+        [_deleteBtn setImage:[UIImage imageNamed:@"navbar_close_icon_black"] forState:(UIControlStateNormal)];
         [_deleteBtn addTarget:self action:@selector(deleteByIndexPath:event:) forControlEvents:(UIControlEventTouchUpInside)];
         [self.contentView addSubview:_deleteBtn];
     }
@@ -42,15 +43,10 @@
 {
     if ([self.delegate respondsToSelector:@selector(deleteByIndexPath:)]) {
         
-        NSSet *touches =[event allTouches];
-        UITouch *touch =[touches anyObject];
+        UITouch *touch =[[event allTouches] anyObject];
         CGPoint currentTouchPosition = [touch locationInView:_collection];
         NSIndexPath *indexpath = [_collection indexPathForItemAtPoint:currentTouchPosition];
-        
-        if (indexpath) {
-            
-            [self.delegate deleteByIndexPath:indexpath];
-        }
+        if (indexpath) {[self.delegate deleteByIndexPath:indexpath];}
     }
 }
 
@@ -62,11 +58,20 @@
     _deleteBtn.frame = CGRectMake(0, 0, 30, 30);
 }
 
-- (void)setModel:(JMEditerModel *)model
+- (void)setImage:(UIImage *)image
 {
-    _model = model;
-    _classImage.image = model.showImage;
-    [_deleteBtn setImage:[UIImage imageWithTemplateName:model.deleteName] forState:(UIControlStateNormal)];
+    _image = image;
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        
+        UIImage *newNimage = [image compressOriginalImage:image toSize:CGSizeMake(64, 64)];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            _classImage.image = newNimage;
+        });
+    });
+    
 }
 
 @end

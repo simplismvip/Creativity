@@ -23,11 +23,11 @@
 #import "JMGIFAnimationView.h"
 #import "JMEditerController.h"
 
-
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 {
     NSTimer *_aniTimer;
     BOOL _pause;
+    BOOL _isSave;
 }
 @property (nonatomic, weak) UIButton *showFps;
 @property (nonatomic, weak) JMFrameView *frameView;
@@ -42,6 +42,10 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMGetGIFController"];
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -50,6 +54,11 @@
     [_animationView stopAnimation];
     [MobClick endLogPageView:@"JMGetGIFController"];
     _frameView.images = nil;
+    
+    // 开启返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
 }
 
 - (JMGIFAnimationView *)animationView
@@ -140,28 +149,41 @@
 // 创作选项弹出，保存第一次生成GIF文件
 - (void)Done:(UIBarButtonItem *)done
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    if (_isSave) {
+       
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }else{
+    
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.fileNotSave", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        UIAlertAction *buyVip = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.sure", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        UIAlertAction *cancle = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil];
+        [alertController addAction:cancle];
+        [alertController addAction:buyVip];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 // 1> 开始编辑
 - (void)Editer:(UIBarButtonItem *)done
 {
+    JMSelf(ws);
     JMEditerController *editer = [[JMEditerController alloc] init];
     editer.title = NSLocalizedString(@"gif.base.alert.editer", "");
     editer.editerImages = _images;
+    editer.editerDone = ^(NSMutableArray *images) {
+        ws.images = images;
+    };
+    
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:editer];
     [self presentViewController:Nav animated:YES completion:nil];
     
-//    JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-//    [draw initPaintBoard:self images:_images];
-//    
-//    // 删除GIF文件
-//    NSString *string = [NSString stringWithFormat:@"/%@", [_filePath lastPathComponent]];
-//    draw.folderPath = [_filePath stringByReplacingOccurrencesOfString:string withString:@""];
-//    
-//    [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
-//    JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-//    [self presentViewController:Nav animated:YES completion:nil];
+    // 删除GIF文件
+    // [[NSFileManager defaultManager] removeItemAtPath:_filePath error:nil];
 }
 
 // 编辑界面，删除GIF文件
@@ -266,6 +288,7 @@
                             hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
                             [hud hideAnimated:YES afterDelay:1.5f];
                             [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+                            _isSave = YES;
                         });
                     }
                 }];
@@ -294,6 +317,7 @@
                 hud.square = YES;
                 hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
                 [hud hideAnimated:YES afterDelay:1.5f];
+                _isSave = YES;
             });
         });
         

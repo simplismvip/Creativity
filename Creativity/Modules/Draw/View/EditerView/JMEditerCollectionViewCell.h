@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @protocol JMEditerCollectionViewCellDelegate <NSObject>
 - (void)deleteByIndexPath:(NSIndexPath *)indexPath;
 @end
 
-@class JMEditerModel;
 @interface JMEditerCollectionViewCell : UICollectionViewCell
-@property (nonatomic, strong) JMEditerModel *model;
+@property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, weak) id<JMEditerCollectionViewCellDelegate> delegate;
 @end
