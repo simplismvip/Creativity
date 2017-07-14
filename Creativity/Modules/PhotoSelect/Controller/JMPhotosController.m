@@ -24,6 +24,12 @@
 
 @implementation JMPhotosController
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+//    _models = nil;
+}
+
 static NSString *const collectionID = @"cell";
 
 - (void)viewDidLoad {

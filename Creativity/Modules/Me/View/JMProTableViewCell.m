@@ -22,7 +22,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = JMColor(41, 41, 41);
+        self.backgroundColor = JMColor(37, 37, 37);
         
         UIImageView *leftImage = [[UIImageView alloc] init];
         [self.contentView addSubview:leftImage];

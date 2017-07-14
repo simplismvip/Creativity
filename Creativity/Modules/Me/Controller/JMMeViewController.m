@@ -46,12 +46,10 @@
     setTableView.dataSource = self;
     setTableView.sectionHeaderHeight = 0;
     setTableView.sectionFooterHeight = 0;
+    setTableView.backgroundColor = JMColor(41, 41, 41);
     setTableView.separatorColor = setTableView.backgroundColor;
     setTableView.showsVerticalScrollIndicator = NO;
-    setTableView.backgroundColor = JMTabViewBaseColor;
-    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){
-        setTableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){setTableView.cellLayoutMarginsFollowReadableWidth = NO;}
     [self.view addSubview:setTableView];
     self.setTableView = setTableView;
     
@@ -85,7 +83,7 @@
     JMAccountHeaderFooter *headView = [JMAccountHeaderFooter headViewWithTableView:tableView];
     if (section == 0) {
     
-        headView.name.text = NSLocalizedString(@"gif.base.alert.cancle", "");
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionZero", "");
         
     }else if (section == 1){
     

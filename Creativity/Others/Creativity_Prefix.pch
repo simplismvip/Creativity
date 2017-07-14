@@ -38,7 +38,7 @@
 
 // @[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]
 
-#define kSetArray @[@[@{@"title":NSLocalizedString(@"gif.set.sectionZero.rowZero", ""), @"icon":@"icons8-xbox_b",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionOne.rowZero", ""), @"icon":@"icons8-help 2",@"accessoryType":@"1"}, @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowOne", ""), @"icon":@"cacheclean",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowZero", ""), @"icon":@"icons8-creative_commons",@"accessoryType":@"0"}, @{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowOne", ""), @"icon":@"icons8-info",@"accessoryType":@"1"}], @[@{@"title":@"PhotoLocker", @"icon":@"locker",@"accessoryType":@"0"}, @{@"title":@"滤镜相册", @"icon":@"icon-29",@"accessoryType":@"1"}]];
+#define kSetArray @[@[@{@"title":NSLocalizedString(@"gif.set.sectionZero.rowZero", ""), @"icon":@"icons8-xbox_b",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionOne.rowZero", ""), @"icon":@"icons8-help 2",@"accessoryType":@"1"}, @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowOne", ""), @"icon":@"cacheclean",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowZero", ""), @"icon":@"icons8-creative_commons",@"accessoryType":@"0"}, @{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowOne", ""), @"icon":@"icons8-info",@"accessoryType":@"1"}], @[@{@"title":@"PhotoLocker", @"icon":@"icons8-google_drive",@"accessoryType":@"0"}, @{@"title":@"滤镜相册", @"icon":@"icons8-google_photos",@"accessoryType":@"1"}]];
 
 // 颜色
 #define JMCellBackground JMColor(239, 239, 239)

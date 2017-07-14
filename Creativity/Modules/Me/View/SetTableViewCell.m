@@ -21,6 +21,8 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
+        self.backgroundColor = JMColor(37, 37, 37);
+        
         UIImageView *leftImage = [[UIImageView alloc] init];
         [self.contentView addSubview:leftImage];
         leftImage.tintColor = JMBaseColor;
@@ -29,7 +31,7 @@
         UILabel *textTitle = [[UILabel alloc] init];
         textTitle.textAlignment = NSTextAlignmentLeft;
         textTitle.font = [UIFont systemFontOfSize:14.0];
-        textTitle.textColor = JMColor(55, 55, 55);
+        textTitle.textColor = JMTabViewBaseColor;
         [self.contentView addSubview:textTitle];
         self.textTitle = textTitle;
     }

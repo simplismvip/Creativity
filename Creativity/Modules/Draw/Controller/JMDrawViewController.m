@@ -37,7 +37,6 @@
 @property (nonatomic, weak) JMSlider *slider;
 @property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, strong) JMGetGIFController *GIFController;
-@property (nonatomic, strong) NSMutableArray *subViews;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *memberViewData;
 @property (nonatomic, strong) NSMutableArray *cacheArray;
@@ -62,9 +61,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 首先创建画图View, 创建接收消息方法
-    self.subViews = [NSMutableArray array];
-    
     // 缓存
     self.cacheArray = [NSMutableArray array];
     
@@ -77,21 +73,6 @@
     slider.value = ^(JMSlider *value) {ws.paintView.alpha = value.sValue;};
     [self.view addSubview:slider];
     self.slider = slider;
-    
-    slider.dragUpEnd = ^(BOOL hide) {
-        
-        ws.imageView.hidden = hide;
-        
-    };
-    
-    slider.dragUp = ^(BOOL hide) {
-        
-        NSInteger index = ws.cacheArray.count;
-        
-        ws.imageView.hidden = hide;
-        ws.imageView.image = ws.cacheArray[index-2];
-        
-    };
 
     UIImageView *imageView = [[UIImageView alloc] init];
     self.imageView = imageView;
@@ -137,7 +118,6 @@
     pView.paintImage = [StaticClass getPaintImage];
     self.paintView = pView;
     [self.view addSubview:pView];
-    [self.subViews addObject:pView];
     
     [pView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.view);
@@ -200,6 +180,7 @@
             UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
             [_cacheArray addObject:imageNew];
             [_paintView clearAll];
+            _imageView.image = imageNew;
             
         }else{
         
