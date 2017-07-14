@@ -31,6 +31,7 @@
         [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
         [sliderA addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         [sliderA addTarget:self action:@selector(sliderDragUp:) forControlEvents:UIControlEventTouchUpInside];
+        [sliderA addTarget:self action:@selector(sliderTouchDown:) forControlEvents:UIControlEventTouchDown];
         
         [self addSubview:sliderA];
         self.slider = sliderA;
@@ -50,11 +51,17 @@
 - (void)sliderDragUp:(UISlider *)slider
 {
     _title.hidden = YES;
+    if (self.dragUpEnd) {self.dragUpEnd(YES);}
+}
+
+- (void)sliderTouchDown:(UISlider *)slider
+{
+    _title.hidden = NO;
+    if (self.dragUp) {self.dragUp(NO);}
 }
 
 - (void)sliderValueChanged:(UISlider *)slider
 {
-    _title.hidden = NO;
     _title.center = CGPointMake(self.width*slider.value, 0);
     _title.text = [NSString stringWithFormat:@"%.2f", slider.value];
     _sValue = slider.value;

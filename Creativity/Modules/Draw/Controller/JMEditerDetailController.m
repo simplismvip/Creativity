@@ -30,6 +30,8 @@
 @property (nonatomic, weak) JMPaintView *paintView;
 @property (nonatomic, weak) JMSlider *slider;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, weak) JMTopTableView *topbar;
+@property (nonatomic, weak) UIImageView *imageView;
 @end
 
 @implementation JMEditerDetailController
@@ -64,6 +66,20 @@
     slider.slider.value = 1.0;
     JMSelf(ws);
     slider.value = ^(JMSlider *value) {ws.paintView.alpha = value.sValue;};
+    slider.dragUpEnd = ^(BOOL hide) {
+      
+        ws.imageView.hidden = hide;
+        
+    };
+    
+    slider.dragUp = ^(BOOL hide) {
+        
+        ws.imageView.hidden = hide;
+        ws.imageView.image = ws.paintView.image;
+        
+    };
+    
+    
     [self.view addSubview:slider];
     self.slider = slider;
     
@@ -81,12 +97,23 @@
         make.width.height.mas_equalTo(self.view.width);
     }];
     
+    
+    UIImageView *imageView = [[UIImageView alloc] init];
+    self.imageView = imageView;
+    [self.view addSubview:imageView];
+    
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.view);
+        make.width.height.mas_equalTo(self.view.width);
+    }];
+    
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
     JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, kH-44, kW, 44)];
     topbar.delegate = self;
     topbar.dataSource = _dataSource;
     [self.view addSubview:topbar];
+    self.topbar = topbar;
     
     UIButton *shareBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
     shareBtn.tintColor = JMBaseColor;
@@ -136,12 +163,23 @@
     
     if (bottomType == JMTopBarTypeAdd){
         
-        [JMPopView popView:self.view title:@"空实现"];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"是否保存当前修改" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.Addpic", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+            
+            if (self.editerDetailDone) {
+                self.editerDetailDone(_paintView.image);
+                [_paintView clearAll];
+            }
+            
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        [self configiPad:alertController];
         
     }else if (bottomType == JMTopBarTypeLayerManger){
         
         [JMPopView popView:self.view title:@"空实现"];
-        
         
     }else if (bottomType == JMTopBarTypePaint){
         
@@ -216,6 +254,7 @@
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
             [self configiPad:alertController];
+            
         }else{
             
             [self getImageFromLibrary];
@@ -279,7 +318,6 @@
     
 #pragma mark -- 这一步应该先保存原来的, 在开始新的
     _paintView.image = image;
-    [_paintView setNeedsDisplay];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -14,4 +14,5 @@
 + (BOOL)creatDir:(NSString *)dirName;
 + (NSMutableArray *)getFileFromDir:(NSString *)dir bySuffix:(NSString *)suffix;
 + (NSMutableArray *)homeModels;
++ (void)copyFile2Documents;
 @end

@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *memberViewData;
 @property (nonatomic, strong) NSMutableArray *cacheArray;
+@property (nonatomic, weak) UIImageView *imageView;
 @end
 
 @implementation JMDrawViewController
@@ -76,6 +77,30 @@
     slider.value = ^(JMSlider *value) {ws.paintView.alpha = value.sValue;};
     [self.view addSubview:slider];
     self.slider = slider;
+    
+    slider.dragUpEnd = ^(BOOL hide) {
+        
+        ws.imageView.hidden = hide;
+        
+    };
+    
+    slider.dragUp = ^(BOOL hide) {
+        
+        NSInteger index = ws.cacheArray.count;
+        
+        ws.imageView.hidden = hide;
+        ws.imageView.image = ws.cacheArray[index-2];
+        
+    };
+
+    UIImageView *imageView = [[UIImageView alloc] init];
+    self.imageView = imageView;
+    [self.view addSubview:imageView];
+    
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.view);
+        make.width.height.mas_equalTo(self.view.width);
+    }];
     
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];

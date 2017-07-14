@@ -107,18 +107,39 @@
             }
         }
         
-        NSArray *gif = [[NSBundle mainBundle] pathsForResourcesOfType:@"gif" inDirectory:nil];
-        for (NSString *path in gif) {
-            
-            NSDictionary *dic = @{@"folderPath":path};
-            JMHomeModel *model = [JMHomeModel objectWithDictionary:dic];
-            [dataSource addObject:model];
-        }
+//        NSArray *gif = [[NSBundle mainBundle] pathsForResourcesOfType:@"gif" inDirectory:nil];
+//        for (NSString *path in gif) {
+//            
+//            NSDictionary *dic = @{@"folderPath":path};
+//            JMHomeModel *model = [JMHomeModel objectWithDictionary:dic];
+//            [dataSource addObject:model];
+//        }
         
         return dataSource;
     }else{
     
         return nil;
+    }
+}
+
++ (void)copyFile2Documents
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSArray *gif = [[NSBundle mainBundle] pathsForResourcesOfType:@"gif" inDirectory:nil];
+    if (gif.count>0) {
+        
+        for (NSString *path in gif) {
+            
+            NSString *destPath = [documentsDirectory stringByAppendingPathComponent:[JMHelper timerString]];
+            [self creatDir:destPath];
+            NSString *pathnew = [destPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+            [fileManager moveItemAtPath:path toPath:pathnew error:&error];
+            
+            [fileManager removeItemAtPath:path error:&error];
+        }
     }
 }
 

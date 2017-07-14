@@ -10,9 +10,13 @@
 
 @class JMSlider;
 typedef void(^SliderValue)(JMSlider *value);
+typedef void(^SliderDragUp)(BOOL hide);
+typedef void(^SliderDragUpEnd)(BOOL hide);
 
 @interface JMSlider : UIView
 @property (nonatomic, copy) SliderValue value;
+@property (nonatomic, copy) SliderDragUp dragUp;
+@property (nonatomic, copy) SliderDragUpEnd dragUpEnd;
 /**
  *UISlider 的值
  */
