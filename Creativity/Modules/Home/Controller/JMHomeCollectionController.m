@@ -28,6 +28,7 @@
 #import "TZAssetModel.h"
 #import <UShareUI/UShareUI.h>
 #import "ShareTool.h"
+#import <Social/Social.h>
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
@@ -188,51 +189,87 @@ static NSString *const collectionID = @"cell";
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
 
-    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
-    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
-    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
-    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
-        
-        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
-    }];
+//    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+//    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+//    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+//    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+//        
+//        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
+//    }];
     
 //    [[ShareTool alloc] shareWithTitle:@"来自GIF Master的分享" description:@"" url:@"" completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
-//        
-//        
+        
+        
 //    }];
     
 //    NSMutableArray *items = [NSMutableArray array];
 //    [items addObject:@"来自GIF Master的分享"];
 //    [items addObject:[NSData dataWithContentsOfFile:model.folderPath]];
 //    [items addObject:@"https://www.baidu.com"];
-//    
-//    NSMutableArray *excludedActivityTypes =  [NSMutableArray arrayWithArray:@[UIActivityTypeAirDrop, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeMail, UIActivityTypePostToTencentWeibo, UIActivityTypeSaveToCameraRoll, UIActivityTypeMessage, UIActivityTypePostToTwitter]];
-//    
-//    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
-//    activityViewController.excludedActivityTypes = excludedActivityTypes;
-//    
-//    activityViewController.completionWithItemsHandler = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError){
-//        NSLog(@"%@  ----   %@", activityType, returnedItems);
-//    };
-//    
-//    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
-//        
-//        if (IS_IPAD) {
-//            
-//            UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
-//            
-//            if (popover){
-//                popover.sourceView = self.navigationController.navigationBar;
-//                popover.sourceRect = self.navigationController.navigationBar.bounds;
-//                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
-//            }
-//        }else{
-//        
-//            activityViewController.popoverPresentationController.sourceView = self.view;
-//        }
+    
+    NSURL *url = [NSURL fileURLWithPath:model.folderPath];
+    
+    // 38773
+    // 180957
+    // 57348
+    // 2590754
+    NSData *data = [NSData dataWithContentsOfFile:model.folderPath];
+    
+//    // 1.判断平台是否可用
+//    if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo]) {
+//        NSLog(@"查看您是否设置了新浪微博帐号,设置界面-->新浪微博-->配置帐号");
 //    }
 //    
-//    [self presentViewController:activityViewController animated:YES completion:NULL];
+//    // 2.创建SLComposeViewController
+//    SLComposeViewController *composeVc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
+//    
+//    // 2.1.添加分享文字
+//    [composeVc setInitialText:@"做人如果没有梦想,跟咸鱼有什么区别"];
+//    
+//    // 2.2.添加分享图片
+//    [composeVc addURL:url];
+//    
+//    // 3.弹出分享界面
+//    [self presentViewController:composeVc animated:YES completion:nil];
+//    
+//    
+//    // 4.设置block属性
+//    composeVc.completionHandler = ^(SLComposeViewControllerResult result) {
+//        if (result == SLComposeViewControllerResultCancelled) {
+//            NSLog(@"用户点击了取消");
+//        } else {
+//            NSLog(@"用户点击了发送");
+//        }
+//    };
+    
+    // UIActivityTypeAirDrop, 
+    NSMutableArray *excludedActivityTypes =  [NSMutableArray arrayWithArray:@[UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeMail, UIActivityTypePostToTencentWeibo, UIActivityTypeSaveToCameraRoll, UIActivityTypeMessage, UIActivityTypePostToTwitter]];
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:nil];
+    activityViewController.excludedActivityTypes = excludedActivityTypes;
+    
+    activityViewController.completionWithItemsHandler = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError){
+        NSLog(@"%@  ----   %@", activityType, returnedItems);
+    };
+    
+    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
+        
+        if (IS_IPAD) {
+            
+            UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
+            
+            if (popover){
+                popover.sourceView = self.navigationController.navigationBar;
+                popover.sourceRect = self.navigationController.navigationBar.bounds;
+                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            }
+        }else{
+        
+            activityViewController.popoverPresentationController.sourceView = self.view;
+        }
+    }
+    
+    [self presentViewController:activityViewController animated:YES completion:NULL];
 }
 
 #pragma mark -- left right UIBarButtonItem
