@@ -155,4 +155,6 @@
 
 // 给照片添加水印
 - (UIImage *)imageWithWaterMask;
+
+- (UIImage *)drawRectNewImage;
 @end

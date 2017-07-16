@@ -177,7 +177,7 @@
             _slider.slider.value = 1.0;
             [JMPopView popView:self.view title:title];
             
-            UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+            UIImage *imageNew = _paintView.image; //[UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
             [_cacheArray addObject:imageNew];
             [_paintView clearAll];
             _imageView.image = imageNew;
@@ -267,8 +267,8 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.cleanAllContent", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.Addpic", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
                 
-                UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
-                [ws.cacheArray addObject:imageNew];
+//                UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+                [ws.cacheArray addObject:_paintView.image];
                 [ws.paintView clearAll];
                 [ws getImageFromLibrary];
             }]];
@@ -400,7 +400,7 @@
         
         [self showBottomCircleView:[_paintView.image imageWithWaterMask]];
     }else{
-        UIImage *image = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+        UIImage *image = _paintView.image; //[UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
         [self showBottomCircleView:[image imageWithWaterMask]];
     }
 }

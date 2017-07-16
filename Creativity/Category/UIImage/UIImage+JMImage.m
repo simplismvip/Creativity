@@ -614,29 +614,37 @@
     }
 }
 
-//+ (NSData *)zipGIFWithData:(NSData *)data {
-//    if (!data) {
-//        return nil;
-//    }
-//    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
-//    size_t count = CGImageSourceGetCount(source);
-//    UIImage *animatedImage = nil;
-//    NSMutableArray *images = [NSMutableArray array];
-//    NSTimeInterval duration = 0.0f;
-//    for (size_t i = 0; i < count; i++) {
-//        CGImageRef image = CGImageSourceCreateImageAtIndex(source, i, NULL);
-//        duration += [self frameDurationAtIndex:i source:source];
-//        UIImage *ima = [UIImage imageWithCGImage:image scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
-//        ima = [ima zip];
-//        [images addObject:ima];
-//        CGImageRelease(image);
-//        if (!duration) {
-//            duration = (1.0f / 10.0f) * count;
-//        }
-//        animatedImage = [UIImage animatedImageWithImages:images duration:duration];
-//    }
-//    CFRelease(source);
-//    return UIImagePNGRepresentation(animatedImage);
-//}
+- (UIImage *)drawRectNewImage
+{
+    CGFloat rate = self.size.width/self.size.height;
+    CGFloat w = kW;
+    CGFloat h = kW;
+    
+    CGSize imageSize;
+    if (rate>1) {
+        
+        // w > h
+        imageSize = CGSizeMake(w, w/rate);
+        
+    }else if (rate<1){
+        
+        // w < h
+        imageSize = CGSizeMake(w*rate, w);
+        
+    }else{
+        // w == h
+        imageSize = CGSizeMake(w, w);
+    }
+    
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(kW, kW), NO, 0.0);
+    
+    // 原图
+    CGRect imageRect = CGRectMake(w/2-imageSize.width/2, h/2-imageSize.height/2, imageSize.width, imageSize.height);
+    [self drawInRect:imageRect];
+    UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newPic;
+}
 
 @end
