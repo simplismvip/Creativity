@@ -24,6 +24,12 @@
 
 @implementation JMPhotosController
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+//    _models = nil;
+}
+
 static NSString *const collectionID = @"cell";
 
 - (void)viewDidLoad {
@@ -46,7 +52,7 @@ static NSString *const collectionID = @"cell";
 - (void)leftImageAction:(UIBarButtonItem *)sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
+}   
 
 - (void)rightImageAction:(UIBarButtonItem *)sender
 {
@@ -55,24 +61,14 @@ static NSString *const collectionID = @"cell";
         TZAssetModel *model = _selectSource.firstObject;
         if (model.type == TZAssetModelMediaTypePhoto) {
             
-            NSMutableArray *images = [NSMutableArray array];
-            for (TZAssetModel *model in _selectSource) {
-                
-                JMGifView *gif = [[JMGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-                gif.image = model.image;
-                UIImage *image = [UIImage imageWithCaptureView:gif rect:CGRectMake(0, 0, self.view.width, self.view.width)];
-                [images addObject:image];
-            }
-            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
                 JMGetGIFController *draw = [[JMGetGIFController alloc] init];
                 NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
                 [JMFileManger creatDir:gifPath];
                 draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-                
                 draw.delayTime = 0.5;
-                draw.imagesFromDrawVC = images;
+                draw.imagesFromDrawVC = _selectSource;
                 [self.navigationController pushViewController:draw animated:YES];
             });
         }

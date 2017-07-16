@@ -129,7 +129,10 @@
 - (void)setImagesFromDrawVC:(NSMutableArray *)imagesFromDrawVC
 {
     _imagesFromDrawVC = imagesFromDrawVC;
-    self.images = imagesFromDrawVC;
+    
+    NSMutableArray *images = [NSMutableArray array];
+    for (id model in imagesFromDrawVC) {[images addObject:[model image]];}
+    self.images = images;
     
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"gif.base.alert.done", "") style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
     self.navigationItem.rightBarButtonItems = @[right];
@@ -256,9 +259,21 @@
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
             NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
+            NSMutableArray *newImages = [NSMutableArray array];
+            for (UIImage *image in _images) {
+                
+                if (image.size.width == image.size.width == kW) {
+                    
+                    [newImages addObject:image]; 
+                }else{
+                
+                    UIImage *newImage = [image drawRectNewImage];
+                    [newImages addObject:newImage];
+                }
+            }
             
             // 总时间
-            [JMMediaHelper saveImagesToVideoWithImages:_images fps:1/_delayTime+1 andVideoPath:videoPath completed:^(NSString *filePath) {
+            [JMMediaHelper saveImagesToVideoWithImages:newImages fps:1/_delayTime+1 andVideoPath:videoPath completed:^(NSString *filePath) {
                 
                 ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
                 [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:filePath] completionBlock:^(NSURL *assetURL, NSError *error) {

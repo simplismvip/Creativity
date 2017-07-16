@@ -8,6 +8,7 @@
 
 #import "JMEditerCollectionViewCell.h"
 #import "JMEditerModel.h"
+#import "SDImageCache.h"
 
 @interface JMEditerCollectionViewCell ()
 @property (nonatomic, strong) UIImageView *classImage;
@@ -47,6 +48,8 @@
         CGPoint currentTouchPosition = [touch locationInView:_collection];
         NSIndexPath *indexpath = [_collection indexPathForItemAtPoint:currentTouchPosition];
         if (indexpath) {[self.delegate deleteByIndexPath:indexpath];}
+        
+        [SDImageCache sharedImageCache] ;
     }
 }
 
@@ -61,17 +64,35 @@
 - (void)setImage:(UIImage *)image
 {
     _image = image;
+//    NSString *localIdentifier = @"";
+//    [[SDImageCache sharedImageCache] diskImageExistsWithKey:localIdentifier completion:^(BOOL isInCache) {
+//        
+//        if (isInCache) {
+//            
+//            _classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:localIdentifier];
+//            
+//            NSLog(@"存在改文件---------------");
+//        }else{
+//            
+//            JMSelf(ws);
+//            [[SDImageCache sharedImageCache] storeImage:image forKey:localIdentifier completion:^{
+//                
+//                ws.classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:localIdentifier];;
+//            }];
+//            
+//            NSLog(@"---------------");
+//
+//        }
+//    }];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         
         UIImage *newNimage = [image compressOriginalImage:image toSize:CGSizeMake(64, 64)];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             _classImage.image = newNimage;
         });
     });
-    
 }
 
 @end

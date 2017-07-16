@@ -11,6 +11,5 @@
 typedef void(^EditerDone)(NSMutableArray *images);
 @interface JMEditerController : JMBaseController
 @property (nonatomic, strong) NSMutableArray *editerImages;
-
 @property (nonatomic, copy) EditerDone editerDone;
 @end

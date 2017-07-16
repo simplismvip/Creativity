@@ -28,6 +28,7 @@
 #import "TZAssetModel.h"
 #import <UShareUI/UShareUI.h>
 #import "ShareTool.h"
+#import <Social/Social.h>
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
@@ -76,11 +77,8 @@ static NSString *const collectionID = @"cell";
     [collection mas_makeConstraints:^(MASConstraintMaker *make) {make.edges.mas_equalTo(self.view);}];
     self.collection = collection;
     
-    
     //设置用户自定义的平台
-    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_QQ),
-                                               @(UMSocialPlatformType_Sina),]];
-    
+    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
     [UMSocialUIManager setShareMenuViewDelegate:self];
 }
 
@@ -187,7 +185,6 @@ static NSString *const collectionID = @"cell";
 - (void)share:(NSIndexPath *)indexPath
 {
     JMHomeModel *model = self.dataSource[indexPath.row];
-
     [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
     [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
     [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
@@ -195,44 +192,7 @@ static NSString *const collectionID = @"cell";
         
         [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
     }];
-    
-//    [[ShareTool alloc] shareWithTitle:@"来自GIF Master的分享" description:@"" url:@"" completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
-//        
-//        
-//    }];
-    
-//    NSMutableArray *items = [NSMutableArray array];
-//    [items addObject:@"来自GIF Master的分享"];
-//    [items addObject:[NSData dataWithContentsOfFile:model.folderPath]];
-//    [items addObject:@"https://www.baidu.com"];
-//    
-//    NSMutableArray *excludedActivityTypes =  [NSMutableArray arrayWithArray:@[UIActivityTypeAirDrop, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeMail, UIActivityTypePostToTencentWeibo, UIActivityTypeSaveToCameraRoll, UIActivityTypeMessage, UIActivityTypePostToTwitter]];
-//    
-//    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
-//    activityViewController.excludedActivityTypes = excludedActivityTypes;
-//    
-//    activityViewController.completionWithItemsHandler = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError){
-//        NSLog(@"%@  ----   %@", activityType, returnedItems);
-//    };
-//    
-//    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
-//        
-//        if (IS_IPAD) {
-//            
-//            UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
-//            
-//            if (popover){
-//                popover.sourceView = self.navigationController.navigationBar;
-//                popover.sourceRect = self.navigationController.navigationBar.bounds;
-//                popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
-//            }
-//        }else{
-//        
-//            activityViewController.popoverPresentationController.sourceView = self.view;
-//        }
-//    }
-//    
-//    [self presentViewController:activityViewController animated:YES completion:NULL];
+
 }
 
 #pragma mark -- left right UIBarButtonItem

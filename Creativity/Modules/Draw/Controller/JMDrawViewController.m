@@ -37,7 +37,6 @@
 @property (nonatomic, weak) JMSlider *slider;
 @property (nonatomic, assign) NSInteger timeNum;
 @property (nonatomic, strong) JMGetGIFController *GIFController;
-@property (nonatomic, strong) NSMutableArray *subViews;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *memberViewData;
 @property (nonatomic, strong) NSMutableArray *cacheArray;
@@ -61,9 +60,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // 首先创建画图View, 创建接收消息方法
-    self.subViews = [NSMutableArray array];
     
     // 缓存
     self.cacheArray = [NSMutableArray array];
@@ -138,7 +134,6 @@
     pView.paintImage = [StaticClass getPaintImage];
     self.paintView = pView;
     [self.view addSubview:pView];
-    [self.subViews addObject:pView];
     
     [pView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.view);
@@ -198,9 +193,10 @@
             _slider.slider.value = 1.0;
             [JMPopView popView:self.view title:title];
             
-            UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+            UIImage *imageNew = _paintView.image; //[UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
             [_cacheArray addObject:imageNew];
             [_paintView clearAll];
+            _imageView.image = imageNew;
             
         }else{
         
@@ -287,8 +283,8 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.cleanAllContent", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.Addpic", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
                 
-                UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
-                [ws.cacheArray addObject:imageNew];
+//                UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+                [ws.cacheArray addObject:_paintView.image];
                 [ws.paintView clearAll];
                 [ws getImageFromLibrary];
             }]];
@@ -420,7 +416,7 @@
         
         [self showBottomCircleView:[_paintView.image imageWithWaterMask]];
     }else{
-        UIImage *image = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
+        UIImage *image = _paintView.image; //[UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
         [self showBottomCircleView:[image imageWithWaterMask]];
     }
 }

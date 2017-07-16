@@ -9,6 +9,7 @@
 #import "JMPhotosCollectionCell.h"
 #import "TZAssetModel.h"
 #import "TZImageManager.h"
+#import "SDImageCache.h"
 
 @interface JMPhotosCollectionCell()
 @property (nonatomic, strong) UILabel *className;
@@ -56,10 +57,29 @@
     _isSelect = model.isSelect;
     _className.text = [NSString stringWithFormat:@"%ld", model.index];
     _className.hidden = model.isHide;
+    PHAsset *asset = (PHAsset *)model.asset;
     
-    JMSelf(ws);
-    [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:60 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-        ws.classImage.image = photo;
+    [[SDImageCache sharedImageCache] diskImageExistsWithKey:asset.localIdentifier completion:^(BOOL isInCache) {
+    
+        if (isInCache) {
+    
+            _classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:asset.localIdentifier];
+            
+            NSLog(@"存在改文件---------------");
+        }else{
+        
+            JMSelf(ws);
+            [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:100 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+                
+                PHAsset *asset = (PHAsset *)model.asset;
+                [[SDImageCache sharedImageCache] storeImage:photo forKey:asset.localIdentifier completion:^{
+                
+                    ws.classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:asset.localIdentifier];;
+                }];
+                
+                NSLog(@"---------------");
+            }];
+        }
     }];
 }
 

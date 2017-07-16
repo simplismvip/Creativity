@@ -34,8 +34,14 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     
     for (UIImage *imagePath in images) {
         
-        NSLog(@"imagePath = %@", NSStringFromCGSize(imagePath.size));
-        CGImageDestinationAddImage(destination, imagePath.CGImage, (__bridge CFDictionaryRef)frameProperties);
+        if (imagePath.size.width == imagePath.size.width == kW) {
+        
+            CGImageDestinationAddImage(destination, imagePath.CGImage, (__bridge CFDictionaryRef)frameProperties);
+        }else{
+        
+            UIImage *image = [imagePath drawRectNewImage];
+            CGImageDestinationAddImage(destination, image.CGImage, (__bridge CFDictionaryRef)frameProperties);
+        }
     }
     
     if (!CGImageDestinationFinalize(destination)) {
@@ -261,7 +267,7 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     NSParameterAssert(videoWriter);
     if(error) NSLog(@"error =%@", [error localizedDescription]);
     
-    NSDictionary *videoSettings =[NSDictionary dictionaryWithObjectsAndKeys:AVVideoCodecH264,AVVideoCodecKey, [NSNumber numberWithInt:frameSize.width],AVVideoWidthKey,[NSNumber numberWithInt:frameSize.height],AVVideoHeightKey,nil];
+    NSDictionary *videoSettings =[NSDictionary dictionaryWithObjectsAndKeys:AVVideoCodecH264,AVVideoCodecKey, [NSNumber numberWithInt:frameSize.width],AVVideoWidthKey, [NSNumber numberWithInt:frameSize.height],AVVideoHeightKey,nil];
     AVAssetWriterInput *writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
     
     NSDictionary*sourcePixelBufferAttributesDictionary =[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:kCVPixelFormatType_32ARGB],kCVPixelBufferPixelFormatTypeKey,nil];

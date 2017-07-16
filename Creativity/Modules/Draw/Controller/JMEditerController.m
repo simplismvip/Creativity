@@ -11,6 +11,8 @@
 #import "JMEditerCollectionViewFlowLayout.h"
 #import "JMEditerModel.h"
 #import "JMEditerDetailController.h"
+#import "SDImageCache.h"
+
 @interface JMEditerController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMEditerCollectionViewFlowLayoutDelegate, JMEditerCollectionViewCellDelegate>
 
 @property (nonatomic, strong) UICollectionView *collection;

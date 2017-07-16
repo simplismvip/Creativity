@@ -117,36 +117,36 @@
     
     if ([JMBuyHelper isVip]) {
         
-        model.image = @"pro_Image";
-        model.title = @"VIP用户";
+        model.image = @"waterCap";
+//        model.title = @"VIP用户";
         model.subTitle = @"您制作的作品将不再显示水印图标";
         
-        model1.image = @"pro_color";
-        model1.title = @"VIP用户";
+        model1.image = @"filter";
+//        model1.title = @"VIP用户";
         model1.subTitle = @"您可以使用全部目前和以后更新的滤镜";
         
-        model2.image = @"pro_AD";
-        model2.title = @"VIP用户";
+        model2.image = @"ad";
+//        model2.title = @"VIP用户";
         model2.subTitle = @"您可以使用无广告的使用APP的乐趣";
         
-        model3.image = @"pro_AD";
-        model3.title = @"VIP用户";
+        model3.image = @"limitline";
+//        model3.title = @"VIP用户";
         model3.subTitle = @"您可以添加不限张数照片(硬件承受范围内)";
     }else{
         
-        model.image = @"pro_Image";
+        model.image = @"waterCap";
         model.title = @"删除水印";
         model.subTitle = @"不再显示Creativity的水印图标";
         
-        model1.image = @"pro_color";
+        model1.image = @"filter";
         model1.title = @"多种多样滤镜";
         model1.subTitle = @"无限制使用全部滤镜";
         
-        model2.image = @"pro_AD";
+        model2.image = @"ad";
         model2.title = @"删除广告";
         model2.subTitle = @"享受无广告的乐趣";
         
-        model3.image = @"pro_AD";
+        model3.image = @"limitline";
         model3.title = @"无限制";
         model3.subTitle = @"无限制照片张数";
     }
