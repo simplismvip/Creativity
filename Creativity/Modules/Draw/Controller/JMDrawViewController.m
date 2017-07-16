@@ -78,19 +78,20 @@
     [self.view addSubview:slider];
     self.slider = slider;
     
-    slider.dragUpEnd = ^(BOOL hide) {
-        
-        ws.imageView.hidden = hide;
-        
-    };
+//    slider.dragUpEnd = ^(BOOL hide) {
+//        
+//        ws.imageView.hidden = hide;
+//        
+//    };
     
     slider.dragUp = ^(BOOL hide) {
         
         NSInteger index = ws.cacheArray.count;
-        
-        ws.imageView.hidden = hide;
-        ws.imageView.image = ws.cacheArray[index-2];
-        
+        if (index>0) {
+         
+//            ws.imageView.hidden = hide;
+            ws.imageView.image = ws.cacheArray[index-1];
+        }
     };
 
     UIImageView *imageView = [[UIImageView alloc] init];
