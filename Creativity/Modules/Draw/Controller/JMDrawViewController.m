@@ -136,11 +136,11 @@
 #pragma mark -- 进入getGIF界面
 - (void)rightImageAction:(UIBarButtonItem *)sender
 {
-    if (_cacheArray.count>2) {
+    if (_cacheArray.count>1) {
     
         JMGetGIFController *gif = [[JMGetGIFController alloc] init];
         gif.filePath = [_folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-        gif.delayTime = 0.5;
+        gif.delayTime = 0.7;
         gif.imagesFromDrawVC = _cacheArray;
         [self.navigationController pushViewController:gif animated:YES];
         

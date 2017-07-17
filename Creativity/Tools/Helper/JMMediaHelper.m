@@ -34,20 +34,14 @@ static OSType pixelFormatType = kCVPixelFormatType_32ARGB;
     
     for (UIImage *imagePath in images) {
         
-        if (imagePath.size.width == imagePath.size.width == kW) {
-        
-            CGImageDestinationAddImage(destination, imagePath.CGImage, (__bridge CFDictionaryRef)frameProperties);
-        }else{
-        
-            UIImage *image = [imagePath drawRectNewImage];
-            CGImageDestinationAddImage(destination, image.CGImage, (__bridge CFDictionaryRef)frameProperties);
-        }
+        CGImageDestinationAddImage(destination, imagePath.CGImage, (__bridge CFDictionaryRef)frameProperties);
     }
     
     if (!CGImageDestinationFinalize(destination)) {
         
         NSLog(@"destination");
     }
+
     
     CFRelease(destination);
     return fileURL;

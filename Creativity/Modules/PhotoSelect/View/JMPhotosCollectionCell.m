@@ -64,8 +64,6 @@
         if (isInCache) {
     
             _classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:asset.localIdentifier];
-            
-            NSLog(@"存在改文件---------------");
         }else{
         
             JMSelf(ws);
@@ -76,8 +74,6 @@
                 
                     ws.classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:asset.localIdentifier];;
                 }];
-                
-                NSLog(@"---------------");
             }];
         }
     }];

@@ -117,7 +117,7 @@ static NSString *const collectionID = @"cell";
         JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
         GIF.title = NSLocalizedString(@"gif.home.VC.title.gifBoart", "");
         GIF.filePath = model.folderPath;
-        GIF.delayTime = 2-image.duration/image.images.count;
+        GIF.delayTime = image.duration/image.images.count;
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [hud hideAnimated:YES];

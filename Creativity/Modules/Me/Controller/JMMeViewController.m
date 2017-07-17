@@ -17,6 +17,7 @@
 #import "JMMainNavController.h"
 #import "JMLicenceController.h"
 #import "JMBaseWebViewController.h"
+#import "SDImageCache.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -128,17 +129,20 @@
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
             [JMFileManger clearCache:JMDocumentsPath];
-            sleep(1.);
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
                 
-                [hud hideAnimated:YES];
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                hud.mode = MBProgressHUDModeCustomView;
-                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
-                hud.square = YES;
-                hud.label.text = NSLocalizedString(@"gif.base.alert.success", "");
-                [hud hideAnimated:YES afterDelay:1.5f];
-            });
+                sleep(.5);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [hud hideAnimated:YES];
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
+                    hud.square = YES;
+                    hud.label.text = NSLocalizedString(@"gif.base.alert.success", "");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                });
+            }];
         });
         
     }else if (indexPath.section==2 && indexPath.row==0) {
@@ -159,7 +163,6 @@
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

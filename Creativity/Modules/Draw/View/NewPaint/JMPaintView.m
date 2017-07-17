@@ -100,7 +100,7 @@
 - (void)updateCacheImage:(BOOL)redraw
 {
     // 开启上下文
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1.0);
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
     
     if (redraw) {
         

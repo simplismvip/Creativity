@@ -461,7 +461,6 @@
 }
 
 #pragma mark - Export video
-
 - (void)getVideoOutputPathWithAsset:(id)asset completion:(void (^)(NSString *outputPath))completion {
     if ([asset isKindOfClass:[PHAsset class]]) {
         PHVideoRequestOptions* options = [[PHVideoRequestOptions alloc] init];
@@ -671,6 +670,100 @@
             if (completion) {completion(models);}
         }];
     }];
+}
+
+- (void)saveGifOrVideoToMyAlbum:(NSString *)path isPhoto:(BOOL)isPhoto completion:(void (^)(BOOL isSuccess))isSuccess
+{
+    // 1> 先获取或者创建相册
+    PHAssetCollection *collec = [self createMyAlbum];
+    if (collec) {
+        
+        // 2> 保存到相册
+        PHFetchResult<PHAsset *> *assets = [self syncSaveVideoOrPhotoWithVideo:[NSURL fileURLWithPath:path] isPhoto:isPhoto];
+        
+        if (assets == nil){return;}
+        NSError *error = nil;
+        [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
+            
+            // 3> 保存到自定义相册
+            PHAssetCollectionChangeRequest *collectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collec];
+            [collectionChangeRequest insertAssets:assets atIndexes:[NSIndexSet indexSetWithIndex:0]];
+            
+            if (isSuccess) {isSuccess(YES);}
+            
+        } error:&error];
+        
+        if (error) {if (isSuccess) {isSuccess(NO);}}
+    }else{
+    
+        if (isSuccess) {isSuccess(NO);}
+    }
+}
+
+/**同步方式保存图片到系统的相机胶卷中---返回的是当前保存成功后相册图片对象集合*/
+- (PHFetchResult<PHAsset *> *)syncSaveVideoOrPhotoWithVideo:(NSURL *)url isPhoto:(BOOL)isPhoto
+{
+    //--1 创建 ID 这个参数可以获取到图片保存后的 asset对象
+    __block NSString *createdAssetID = nil;
+    
+    NSError *error = nil;
+    [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
+        
+        if (!isPhoto) {
+        
+            createdAssetID = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url].placeholderForCreatedAsset.localIdentifier;
+        }else{
+        
+            createdAssetID = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:url].placeholderForCreatedAsset.localIdentifier;
+        }
+        
+    } error:&error];
+    
+    //--3 如果失败，则返回空
+    if (error) {return nil;}
+    
+    //--4 成功后，返回对象
+    //获取保存到系统相册成功后的 asset 对象集合，并返回
+    PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[createdAssetID] options:nil];
+    return assets;
+}
+
+// 创建自己要创建的自定义相册
+- (PHAssetCollection *)createMyAlbum
+{
+    // 创建一个新的相册
+    // 查看所有的自定义相册
+    // 先查看是否有自己要创建的自定义相册
+    // 如果没有自己要创建的自定义相册那么我们就进行创建
+    NSString * title = [NSBundle mainBundle].infoDictionary[(NSString *)kCFBundleNameKey];
+    
+    PHFetchResult<PHAssetCollection *> *collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
+    
+    PHAssetCollection * createCollection = nil; // 最终要获取的自己创建的相册
+    for (PHAssetCollection * collection in collections) {
+        if ([collection.localizedTitle isEqualToString:title]) {    // 如果有自己要创建的相册
+            createCollection = collection;
+            break;
+        }
+    }
+    if (createCollection == nil) {  // 如果没有自己要创建的相册
+        
+        // 创建自己要创建的相册
+        NSError * error1 = nil;
+        __block NSString * createCollectionID = nil;
+        [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
+            NSString * title = [NSBundle mainBundle].infoDictionary[(NSString *)kCFBundleNameKey];
+            createCollectionID = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:title].placeholderForCreatedAssetCollection.localIdentifier;
+        } error:&error1];
+        
+        if (error1) {
+            NSLog(@"创建相册失败...");
+        }
+        // 创建相册之后我们还要获取此相册 因为我们要往进存储相片
+        createCollection = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[createCollectionID] options:nil].firstObject;
+    }
+    
+    return createCollection;
 }
 
 @end
