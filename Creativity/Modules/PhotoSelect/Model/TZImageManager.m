@@ -766,4 +766,48 @@
     return createCollection;
 }
 
+// 获取连拍快照
+- (void)getAllBrustCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion
+{
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        PHAsset *asset = (PHAsset *)obj;
+        
+        // 获取连拍快照
+        if (asset.representsBurst) {
+
+            PHFetchOptions *options = [[PHFetchOptions alloc] init];
+            options.includeAllBurstAssets = YES;
+            
+            PHFetchResult *resu = [PHAsset fetchAssetsWithBurstIdentifier:asset.burstIdentifier options:options];
+            [resu enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                [self burstImage:obj];
+            }];
+        }
+    }];
+}
+
+- (void)burstImage:(PHAsset *)phAsset
+{
+    PHImageRequestOptions *imageOPtions = [[PHImageRequestOptions alloc] init];
+    imageOPtions.synchronous = YES;
+    imageOPtions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    imageOPtions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    
+    CGFloat aspectRatio = phAsset.pixelWidth / (CGFloat)phAsset.pixelHeight;
+    CGFloat multiple = [UIScreen mainScreen].scale;
+    CGFloat pixelWidth = 600 * multiple;
+    CGFloat pixelHeight = pixelWidth / aspectRatio;
+    
+    [[PHImageManager defaultManager] requestImageForAsset:phAsset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:imageOPtions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        
+        NSLog(@"%@--%@", result, info);
+    }];
+}
+
 @end

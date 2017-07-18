@@ -84,7 +84,6 @@
     self.slider = slider;
     
     CGFloat rate = _editerImage.size.height / _editerImage.size.width;
-    
     JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 0, kW, kW*rate)];
     pView.center = self.view.center;
     pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
@@ -163,7 +162,6 @@
                 self.editerDetailDone(_paintView.image);
                 [_paintView clearAll];
             }
-            
         }]];
         
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];

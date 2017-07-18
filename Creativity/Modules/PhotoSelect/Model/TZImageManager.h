@@ -52,6 +52,7 @@
 // 获取相册GIF图片
 - (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion;
 - (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
+- (void)getAllBrustCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
 
 // 获取应用名字, 创建相册
 - (void)saveGifOrVideoToMyAlbum:(NSString *)path isPhoto:(BOOL)isPhoto completion:(void (^)(BOOL isSuccess))isSuccess;
