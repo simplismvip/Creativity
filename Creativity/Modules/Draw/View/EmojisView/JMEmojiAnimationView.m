@@ -15,7 +15,6 @@
 @interface JMEmojiAnimationView ()
 @property (nonatomic, weak) JMFiltersView *filter;
 @property (nonatomic, weak) JMSelectEmojiView *emojiView;
-@property (nonatomic, weak) UIView *coverView;
 @end
 
 @implementation JMEmojiAnimationView
@@ -27,43 +26,26 @@
         
         self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.8];
         
-        UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(kW/2, 80, 0, kH-160)];
-        coverView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0];
-        coverView.layer.cornerRadius = 10;
-        coverView.layer.masksToBounds = YES;
-        [self addSubview:coverView];
-        self.coverView = coverView;
-        
         //
-        UIButton *close = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        UIButton *close = [[UIButton alloc] initWithFrame:CGRectMake(20, 64, 40, 40)];
         close.tintColor = JMBaseColor;
         [close setImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"] forState:(UIControlStateNormal)];
         [close addTarget:self action:@selector(closeView:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:close];
+    
+        JMSelectEmojiView *emojiView = [[JMSelectEmojiView alloc] initWithFrame:CGRectMake(20, 120, kW-40, kH*0.6)];
+        emojiView.modelBlock = ^(id model) {if (self.animationBlock) {self.animationBlock(model);}};
+        [self addSubview:emojiView];
         
-        [UIView animateWithDuration:0.2 animations:^{
-            
-            coverView.frame = CGRectMake(kW*0.1, 120, kW*0.8, kH*0.6);
-            
-        } completion:^(BOOL finished) {
-            
-            [coverView addSubview:close];
-            [self addsubEmojiViews];
-        }];
+        self.emojiView = emojiView;
+        NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"json"];
+        NSArray *emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
+        NSMutableArray *data = [NSMutableArray array];
+        for (NSDictionary *dic in emojis) {[data addObject:[JMSubImageModel objectWithDictionary:dic]];}
+        [emojiView reloadData:data];
+
     }
     return self;
-}
-
-- (void)addsubEmojiViews
-{
-    JMSelectEmojiView *emojiView = [[JMSelectEmojiView alloc] initWithFrame:CGRectMake(10, 0, _coverView.width-20, _coverView.height)];
-    emojiView.modelBlock = ^(id model) {if (self.animationBlock) {self.animationBlock(model);}};
-    [self.coverView insertSubview:emojiView atIndex:0];
-    self.emojiView = emojiView;
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"json"];
-    NSArray *emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
-    NSMutableArray *data = [NSMutableArray array];
-    for (NSDictionary *dic in emojis) {[data addObject:[JMSubImageModel objectWithDictionary:dic]];}
-    [emojiView reloadData:data];
 }
 
 - (void)closeView:(UIButton *)sender
@@ -76,14 +58,7 @@
         
     } completion:^(BOOL finished) {
         
-        [UIView animateWithDuration:0.3 animations:^{
-            
-            _coverView.alpha = 0.0;
-            
-        } completion:^(BOOL finished) {
-            
-            [self removeFromSuperview];
-        }];
+        [self removeFromSuperview];
     }];
 }
 

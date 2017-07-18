@@ -43,6 +43,7 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMGetGIFController"];
+    [_animationView restartAnimation];
     
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
@@ -52,7 +53,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_animationView stopAnimation];
+    [_animationView pauseAnimation];
     [MobClick endLogPageView:@"JMGetGIFController"];
     _frameView.images = nil;
     
@@ -164,7 +165,13 @@
     JMEditerController *editer = [[JMEditerController alloc] init];
     editer.title = NSLocalizedString(@"gif.base.alert.editer", "");
     editer.editerImages = _images;
-    editer.editerDone = ^(NSMutableArray *images) {ws.images = images;};
+    editer.editerDone = ^(NSMutableArray *images) {
+    
+        ws.images = images;
+        ws.animationView.imageSource = [images copy];
+        ws.frameView.images = images;
+    };
+    
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:editer];
     [self presentViewController:Nav animated:YES completion:nil];
     

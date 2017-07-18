@@ -143,15 +143,17 @@ static NSString *const collectionID = @"cell";
         
         if (!cell.isSelect) {
             
-            if (_selectSource.count<10) {
+            if (_selectSource.count<31) {
             
+                [self.selectSource addObject:model];
+                model.index = _selectSource.count;
+                cell.model = model;
+
                 [[TZImageManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
             
                     if (!isDegraded) {
+                        
                         model.image = [photo drawRectNewImage];
-                        [self.selectSource addObject:model];
-                        model.index = _selectSource.count;
-                        cell.model = model;
                     }
                 }];
             }else{

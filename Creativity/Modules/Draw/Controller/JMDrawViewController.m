@@ -203,7 +203,6 @@
         
     }else if (bottomType == JMTopBarTypePaint){
         
-        [JMPopView popView:self.view title:title];
         _paintView.drawType = (JMPaintToolType)row;
         [StaticClass setPaintType:row];
         
@@ -310,7 +309,6 @@
         
         [_paintView clearAll];
         _paintView.image = _cacheArray[index-1];
-        [_paintView setNeedsDisplay];
     }
     
     [_cacheArray removeObjectAtIndex:index];

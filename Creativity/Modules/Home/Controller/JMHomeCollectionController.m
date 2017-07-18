@@ -152,7 +152,20 @@ static NSString *const collectionID = @"cell";
     return 5;
 }
 
-//分享图片和文字
+#pragma mark -- JMHomeCollectionViewCellDelegate
+- (void)share:(NSIndexPath *)indexPath
+{
+    JMHomeModel *model = self.dataSource[indexPath.row];
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        
+        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
+    }];    
+}
+
+// 分享图片和文字
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
@@ -179,20 +192,6 @@ static NSString *const collectionID = @"cell";
             }
         }
     }];
-}
-
-#pragma mark -- JMHomeCollectionViewCellDelegate
-- (void)share:(NSIndexPath *)indexPath
-{
-    JMHomeModel *model = self.dataSource[indexPath.row];
-    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
-    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
-    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
-    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
-        
-        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
-    }];
-
 }
 
 #pragma mark -- left right UIBarButtonItem
