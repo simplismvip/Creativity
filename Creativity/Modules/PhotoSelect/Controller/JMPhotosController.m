@@ -207,7 +207,7 @@ static NSString *const collectionID = @"cell";
             NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
             [JMFileManger creatDir:gifPath];
             GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-            GIF.delayTime = 2-model.image.duration/model.image.images.count;
+            GIF.delayTime = model.image.duration/model.image.images.count;
             GIF.imagesFromDrawVC = [model.image.images mutableCopy];
             [self.navigationController pushViewController:GIF animated:YES];
         }];
@@ -245,9 +245,9 @@ static NSString *const collectionID = @"cell";
 }
 
 - (void)dealloc
-{
+{    
 #ifdef DEBUG
-    NSLog(@"dealloc = %s", __FUNCTION__);
+    NSLog(@"JMPhotosController = %s", __FUNCTION__);
 #endif
 }
 

@@ -83,7 +83,10 @@
     [self.view addSubview:slider];
     self.slider = slider;
     
-    JMPaintView *pView = [[JMPaintView alloc] init];
+    CGFloat rate = _editerImage.size.height / _editerImage.size.width;
+    
+    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 0, kW, kW*rate)];
+    pView.center = self.view.center;
     pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
     pView.lineDash = [StaticClass getDashType];
     pView.paintText = [StaticClass getPaintText];
@@ -92,21 +95,11 @@
     self.paintView = pView;
     [self.view addSubview:pView];
     
-    [pView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(self.view);
-        make.width.height.mas_equalTo(self.view.width);
-    }];
-    
-    
-    UIImageView *imageView = [[UIImageView alloc] init];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kW, kW*rate)];
+    imageView.center = self.view.center;
     self.imageView = imageView;
     [self.view addSubview:imageView];
-    
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(self.view);
-        make.width.height.mas_equalTo(self.view.width);
-    }];
-    
+        
     // 这里创建bottomView
     self.dataSource = [JMHelper getTopBarModel];
     JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, kH-44, kW, 44)];
@@ -408,7 +401,7 @@
 - (void)dealloc
 {
 #ifdef DEBUG
-    NSLog(@"JMDrawViewController销毁 %s", __FUNCTION__);
+    NSLog(@"JMEditerDetailController销毁 %s", __FUNCTION__);
 #endif
 }
 

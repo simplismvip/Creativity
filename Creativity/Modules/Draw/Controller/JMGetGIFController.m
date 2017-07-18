@@ -43,7 +43,13 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMGetGIFController"];
-    [_animationView restartAnimation];
+    if (_delayTime>0) {
+        
+        [_animationView setDelayer:_delayTime];
+    }else{
+        [_animationView setDelayer:0.7];
+        _delayTime = 0.7;
+    }
     
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
@@ -53,9 +59,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_animationView pauseAnimation];
+    [_animationView stopAnimation];
     [MobClick endLogPageView:@"JMGetGIFController"];
-    _frameView.images = nil;
     
     // 开启返回手势
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -76,9 +81,6 @@
         
         [ws.frameView refrashLocation:index];
     };
-    
-    if (_delayTime>0) {aniView.delayer = _delayTime;
-    }else{aniView.delayer = 0.7;_delayTime = 0.7;}
     
     aniView.imageSource = [_images copy];
     [self.view addSubview:aniView];
@@ -171,7 +173,6 @@
         ws.animationView.imageSource = [images copy];
         ws.frameView.images = images;
     };
-    
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:editer];
     [self presentViewController:Nav animated:YES completion:nil];
     
