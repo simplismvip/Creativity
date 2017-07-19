@@ -40,7 +40,7 @@
 
 - (void)btnTargenAction:(UIButton *)sender
 {
-    if (sender.tag < 205) {
+    if (sender.tag < 199+_titles.count) {
         
         if ([self.delegate respondsToSelector:@selector(photoFromSource:)]) {
             

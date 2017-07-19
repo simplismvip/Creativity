@@ -87,7 +87,7 @@
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         
-        UIImage *newNimage = [image compressOriginalImage:image toSize:CGSizeMake(64, 64)];
+        UIImage *newNimage = [image compressOriginalImageToSize:CGSizeMake(64, 64)];
         dispatch_async(dispatch_get_main_queue(), ^{
             
             _classImage.image = newNimage;

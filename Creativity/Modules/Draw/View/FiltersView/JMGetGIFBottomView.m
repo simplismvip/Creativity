@@ -24,8 +24,8 @@
         self.backgroundColor = JMColor(33, 33, 33);
         
         UISlider *sliderA = [[UISlider alloc] init];
-        sliderA.minimumValue = 0.5;
-        sliderA.maximumValue = 2.0;
+        sliderA.minimumValue = 0.1;
+        sliderA.maximumValue = .9;
         [sliderA setMinimumTrackImage:[[UIImage imageNamed:@"prgbar_unread"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
         [sliderA setMaximumTrackImage:[[UIImage imageNamed:@"prgbar_read"] imageWithColor:JMBaseColor] forState:UIControlStateNormal];
         [sliderA setThumbImage:[[UIImage imageNamed:@"prgbar_icon"] imageWithColor:JMBaseColor] forState:UIControlStateHighlighted];
@@ -144,6 +144,13 @@
         }
     }
 }
+
+- (void)dealloc
+{
+    NSLog(@"JMGetGIFBottomView 销毁");
+}
+
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

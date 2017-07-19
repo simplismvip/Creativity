@@ -105,7 +105,7 @@ static NSString *const collectionID = @"cell";
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger rows = (self.view.width-20)/3;
+    NSInteger rows = (self.view.width-30)/5;
     return CGSizeMake(rows, rows);
 }
 
@@ -170,6 +170,13 @@ static NSString *const collectionID = @"cell";
     UIImage *image = _editerImages[formPath.row];
     [_editerImages removeObject:image];
     [_editerImages insertObject:image atIndex:toPath.row];
+}
+
+- (void)dealloc
+{    
+#ifdef DEBUG
+    NSLog(@"JMEditerController = %s", __FUNCTION__);
+#endif
 }
 
 

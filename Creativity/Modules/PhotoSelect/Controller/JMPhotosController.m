@@ -67,9 +67,21 @@ static NSString *const collectionID = @"cell";
                 NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
                 [JMFileManger creatDir:gifPath];
                 draw.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-                draw.delayTime = 0.5;
-                draw.imagesFromDrawVC = _selectSource;
-                [self.navigationController pushViewController:draw animated:YES];
+                
+                NSMutableArray *images = [NSMutableArray array];
+                dispatch_queue_t queue=dispatch_queue_create("com.privateQueue", NULL);
+                
+                //异步任务1加入队列中
+                dispatch_async(queue, ^{
+                
+                    for (TZAssetModel *model in _selectSource) {[images addObject:model.image];}
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                       
+                        draw.imagesFromDrawVC = images;
+                        [self.navigationController pushViewController:draw animated:YES];
+                    });
+                });
             });
         }
     }else{
@@ -131,12 +143,19 @@ static NSString *const collectionID = @"cell";
         
         if (!cell.isSelect) {
             
-            if (_selectSource.count<21) {
+            if (_selectSource.count<31) {
             
-                model.image = cell.classImage.image;
                 [self.selectSource addObject:model];
                 model.index = _selectSource.count;
                 cell.model = model;
+
+                [[TZImageManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+            
+                    if (!isDegraded) {
+                        
+                        model.image = [photo drawRectNewImage];
+                    }
+                }];
             }else{
             
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.picLessTen", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
@@ -176,20 +195,29 @@ static NSString *const collectionID = @"cell";
         TZAssetModel *model = self.models[indexPath.row];
         model.type = TZAssetModelMediaTypeBursts;
         
-    }else if (self.type == 3){
-        
-        TZAssetModel *model = self.models[indexPath.row];
-        model.type = TZAssetModelMediaTypeGIF;
-        [self.selectSource addObject:model];
-        [[TZImageManager manager] getAllGifCompletion:model gifData:^(NSData *gifData) {
+        [[TZImageManager manager] getBurstsAlbumCompletion:model gifData:^(NSMutableArray *images) {
             
-            model.image = [UIImage jm_animatedGIFWithData:gifData];
             JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
             NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
             [JMFileManger creatDir:gifPath];
             GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-            GIF.delayTime = 2-model.image.duration/model.image.images.count;
-            GIF.imagesFromDrawVC = [model.image.images mutableCopy];
+            GIF.imagesFromDrawVC = images;
+            [self.navigationController pushViewController:GIF animated:YES];
+        }];
+        
+    }else if (self.type == 3){
+        
+        TZAssetModel *model = self.models[indexPath.row];
+        model.type = TZAssetModelMediaTypeGIF;
+        [[TZImageManager manager] getAllGifCompletion:model gifData:^(NSData *gifData) {
+            
+            UIImage *images = [UIImage jm_animatedGIFWithData:gifData];
+            JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
+            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+            [JMFileManger creatDir:gifPath];
+            GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+            GIF.delayTime = images.duration/images.images.count;
+            GIF.imagesFromDrawVC = [images.images mutableCopy];
             [self.navigationController pushViewController:GIF animated:YES];
         }];
     }
@@ -226,9 +254,9 @@ static NSString *const collectionID = @"cell";
 }
 
 - (void)dealloc
-{
+{    
 #ifdef DEBUG
-    NSLog(@"dealloc = %s", __FUNCTION__);
+    NSLog(@"JMPhotosController = %s", __FUNCTION__);
 #endif
 }
 

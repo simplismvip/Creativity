@@ -451,7 +451,7 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
     
         CGFloat scare = _linesWidth / 10.0;
         UIImage *image = [[UIImage imageNamed:self.drawImage] imageByApplyingAlpha:_linesAlpha];
-        UIImage *newImage = [image compressOriginalImage:image toSize:CGSizeMake(image.size.width*scare, image.size.height*scare)];
+        UIImage *newImage = [image compressOriginalImageToSize:CGSizeMake(image.size.width*scare, image.size.height*scare)];
         CGPoint point = CGPointMake(_lastPoint.x-newImage.size.width/2, _lastPoint.y-newImage.size.height/2);
         [newImage drawAtPoint:point];
         image = nil;

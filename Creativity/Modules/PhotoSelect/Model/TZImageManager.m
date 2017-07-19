@@ -47,19 +47,46 @@
 }
 
 #pragma mark - Get Album
+
 /// Get Album 连拍快照
-- (void)getBurstsAlbumCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
-
-    PHImageRequestOptions *options = [PHImageRequestOptions new];
-    options.resizeMode = PHImageRequestOptionsResizeModeFast;
-    options.synchronous = YES;
-    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+- (void)getBurstsAlbumCompletion:(TZAssetModel *)model gifData:(void (^)(NSMutableArray *))brustData
+{
+    PHAsset *phAsset = (PHAsset *)model.asset;
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.includeAllBurstAssets = YES;
+    
+    PHFetchResult *resu = [PHAsset fetchAssetsWithBurstIdentifier:phAsset.burstIdentifier options:options];
+    NSMutableArray *images = [NSMutableArray array];
+    
+    [resu enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if (gifData) {
-            gifData(imageData);
-        }
+        PHAsset *asset = (PHAsset *)obj;
+        PHImageRequestOptions *imageOPtions = [[PHImageRequestOptions alloc] init];
+        imageOPtions.synchronous = YES;
+        imageOPtions.deliveryMode = PHImageRequestOptionsResizeModeFast;
+        imageOPtions.resizeMode = PHImageRequestOptionsResizeModeExact;
+        CGFloat aspectRatio = asset.pixelWidth / (CGFloat)asset.pixelHeight;
+        CGFloat pixelWidth = kW*kScale;
+        CGFloat pixelHeight = pixelWidth / aspectRatio;
+        
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:imageOPtions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            
+            NSData *data = UIImageJPEGRepresentation(result, 0.0);
+            NSLog(@"%ld --%@", data.length, NSStringFromCGSize(result.size));
+            
+            UIImage *new = [result compressOriginalImageToSize:CGSizeMake(kW, kW/aspectRatio)];
+            [images addObject:new];
+            
+            NSData *dataNew = UIImageJPEGRepresentation(new, 0.0);
+            NSLog(@"%ld-New-%@", dataNew.length, NSStringFromCGSize(new.size));
+            
+        }];
     }];
-
+    
+    if (brustData) {
+        
+        brustData(images);
+    }
 }
 
 /// Get Album GIF
@@ -461,7 +488,6 @@
 }
 
 #pragma mark - Export video
-
 - (void)getVideoOutputPathWithAsset:(id)asset completion:(void (^)(NSString *outputPath))completion {
     if ([asset isKindOfClass:[PHAsset class]]) {
         PHVideoRequestOptions* options = [[PHVideoRequestOptions alloc] init];
@@ -640,26 +666,33 @@
 #pragma mark -- 新添加的方法
 - (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion
 {
-    [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    NSMutableArray *models = [NSMutableArray array];
+    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        [self getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
-            
-            NSMutableArray *gifs = [NSMutableArray array];
-            for (TZAssetModel *model in models) {
+        PHAsset *asset = (PHAsset *)obj;
+        if (asset.representsBurst == NO && asset.mediaSubtypes == 0 && asset.sourceType == 1 && asset.mediaType == 1) {
+        
+            NSArray *resourceList = [PHAssetResource assetResourcesForAsset:asset];
+            [resourceList enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
-                NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
-                [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    PHAssetResource *resource = obj;
-                    if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
-                        
-                        [gifs addObject:model];
-                    }
-                }];
-            }
-            
-            if (completion) {completion(gifs);}
-        }];
+                PHAssetResource *resource = obj;
+                if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+                    
+                    TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeGIF];
+                    [models addObject:model];
+                }
+            }];
+        }
     }];
+    
+    if (completion) {
+        
+        completion(models);
+    }
 }
 
 - (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion
@@ -673,4 +706,176 @@
     }];
 }
 
+- (void)saveGifOrVideoToMyAlbum:(NSString *)path isPhoto:(BOOL)isPhoto completion:(void (^)(BOOL isSuccess))isSuccess
+{
+    // 1> 先获取或者创建相册
+    PHAssetCollection *collec = [self createMyAlbum];
+    if (collec) {
+        
+        // 2> 保存到相册
+        PHFetchResult<PHAsset *> *assets = [self syncSaveVideoOrPhotoWithVideo:[NSURL fileURLWithPath:path] isPhoto:isPhoto];
+        
+        if (assets == nil){return;}
+        NSError *error = nil;
+        [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
+            
+            // 3> 保存到自定义相册
+            PHAssetCollectionChangeRequest *collectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collec];
+            [collectionChangeRequest insertAssets:assets atIndexes:[NSIndexSet indexSetWithIndex:0]];
+            
+            if (isSuccess) {isSuccess(YES);}
+            
+        } error:&error];
+        
+        if (error) {if (isSuccess) {isSuccess(NO);}}
+    }else{
+    
+        if (isSuccess) {isSuccess(NO);}
+    }
+}
+
+/**同步方式保存图片到系统的相机胶卷中---返回的是当前保存成功后相册图片对象集合*/
+- (PHFetchResult<PHAsset *> *)syncSaveVideoOrPhotoWithVideo:(NSURL *)url isPhoto:(BOOL)isPhoto
+{
+    //--1 创建 ID 这个参数可以获取到图片保存后的 asset对象
+    __block NSString *createdAssetID = nil;
+    
+    NSError *error = nil;
+    [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
+        
+        if (!isPhoto) {
+        
+            createdAssetID = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url].placeholderForCreatedAsset.localIdentifier;
+        }else{
+        
+            createdAssetID = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:url].placeholderForCreatedAsset.localIdentifier;
+        }
+        
+    } error:&error];
+    
+    //--3 如果失败，则返回空
+    if (error) {return nil;}
+    
+    //--4 成功后，返回对象
+    //获取保存到系统相册成功后的 asset 对象集合，并返回
+    PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[createdAssetID] options:nil];
+    return assets;
+}
+
+// 创建自己要创建的自定义相册
+- (PHAssetCollection *)createMyAlbum
+{
+    // 创建一个新的相册
+    // 查看所有的自定义相册
+    // 先查看是否有自己要创建的自定义相册
+    // 如果没有自己要创建的自定义相册那么我们就进行创建
+    NSString * title = [NSBundle mainBundle].infoDictionary[(NSString *)kCFBundleNameKey];
+    
+    PHFetchResult<PHAssetCollection *> *collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
+    
+    PHAssetCollection * createCollection = nil; // 最终要获取的自己创建的相册
+    for (PHAssetCollection * collection in collections) {
+        if ([collection.localizedTitle isEqualToString:title]) {    // 如果有自己要创建的相册
+            createCollection = collection;
+            break;
+        }
+    }
+    if (createCollection == nil) {  // 如果没有自己要创建的相册
+        
+        // 创建自己要创建的相册
+        NSError * error1 = nil;
+        __block NSString * createCollectionID = nil;
+        [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
+            NSString * title = [NSBundle mainBundle].infoDictionary[(NSString *)kCFBundleNameKey];
+            createCollectionID = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:title].placeholderForCreatedAssetCollection.localIdentifier;
+        } error:&error1];
+        
+        if (error1) {
+            NSLog(@"创建相册失败...");
+        }
+        // 创建相册之后我们还要获取此相册 因为我们要往进存储相片
+        createCollection = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[createCollectionID] options:nil].firstObject;
+    }
+    
+    return createCollection;
+}
+
+// 获取连拍快照
+- (void)getAllBrustCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion
+{
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    NSMutableArray *models = [NSMutableArray array];
+    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        PHAsset *asset = (PHAsset *)obj;
+        
+        // 获取连拍快照
+        if (asset.representsBurst) {
+
+            TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeBursts];
+            [models addObject:model];
+        }
+    }];
+    
+    if (completion) {
+        
+        completion([models copy]);
+    }
+}
+
+- (void)burstImage:(PHAsset *)phAsset
+{
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.includeAllBurstAssets = YES;
+    
+    PHFetchResult *resu = [PHAsset fetchAssetsWithBurstIdentifier:phAsset.burstIdentifier options:options];
+    [resu enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        PHAsset *asset = (PHAsset *)obj;
+        
+        PHImageRequestOptions *imageOPtions = [[PHImageRequestOptions alloc] init];
+        imageOPtions.synchronous = YES;
+        imageOPtions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        imageOPtions.resizeMode = PHImageRequestOptionsResizeModeExact;
+        
+        CGFloat aspectRatio = asset.pixelWidth / (CGFloat)asset.pixelHeight;
+        CGFloat multiple = [UIScreen mainScreen].scale;
+        CGFloat pixelWidth = 600 * multiple;
+        CGFloat pixelHeight = pixelWidth / aspectRatio;
+        
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:imageOPtions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            
+            NSLog(@"%@--%@", result, info);
+        }];
+    }];
+}
+
 @end
+
+/*
+ // 获取系统相册GIF方法
+ //    [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+ //
+ //        [self getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+ //
+ //            NSMutableArray *gifs = [NSMutableArray array];
+ //            for (TZAssetModel *model in models) {
+ //
+ //                NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
+ //                [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+ //                    PHAssetResource *resource = obj;
+ //                    if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+ //
+ //                        [gifs addObject:model];
+ //                    }
+ //                }];
+ //            }
+ //
+ //            if (completion) {completion(gifs);}
+ //        }];
+ //    }];
+ */
+

@@ -215,42 +215,34 @@
  *  压缩图片到指定文件大小
  *
  *  @param image 目标图片
- *  @param size  目标大小（最大值）
+ *  @param maxFileSize  目标大小（最大值）
  *
- *  @return 返回的图片文件
+ *  @return 返回的imageData
  */
-- (NSData *)compressOriginalImage:(UIImage *)image toMaxDataSizeKBytes:(CGFloat)size
-{
-    NSData *data = UIImageJPEGRepresentation(image, 1.0);
-    CGFloat dataKBytes = data.length/1000.0;
-    CGFloat maxQuality = 0.9f;
-    CGFloat lastData = dataKBytes;
-    while (dataKBytes > size && maxQuality > 0.01f) {
-        maxQuality = maxQuality - 0.01f;
-        data = UIImageJPEGRepresentation(image, maxQuality);
-        dataKBytes = data.length / 1000.0;
-        if (lastData == dataKBytes) {
-            break;
-        }else{
-            lastData = dataKBytes;
-        }
+- (UIImage *)compressImage:(UIImage *)image toMaxFileSize:(NSInteger)maxFileSize {
+    CGFloat compression = 0.9f;
+    CGFloat maxCompression = 0.1f;
+    NSData *imageData = UIImageJPEGRepresentation(image, compression);
+    while ([imageData length] > maxFileSize && compression > maxCompression) {
+        compression -= 0.1;
+        imageData = UIImageJPEGRepresentation(image, compression);
     }
     
-    return data;
+    UIImage *compressedImage = [UIImage imageWithData:imageData];
+    return compressedImage;
 }
 
 /**
  *  压缩图片到指定尺寸大小
  *
- *  @param image 原始图片
  *  @param size  目标大小
  *
  *  @return 生成图片
  */
-- (UIImage *)compressOriginalImage:(UIImage *)image toSize:(CGSize)size
+- (UIImage *)compressOriginalImageToSize:(CGSize)size
 {
     UIGraphicsBeginImageContext(size);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
@@ -636,15 +628,14 @@
         imageSize = CGSizeMake(w, w);
     }
     
-    
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(kW, kW), NO, 0.0);
-    
-    // 原图
     CGRect imageRect = CGRectMake(w/2-imageSize.width/2, h/2-imageSize.height/2, imageSize.width, imageSize.height);
     [self drawInRect:imageRect];
     UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return newPic;
+    
+    UIImage *image = [self compressImage:newPic toMaxFileSize:100];
+    return image;
 }
 
 @end

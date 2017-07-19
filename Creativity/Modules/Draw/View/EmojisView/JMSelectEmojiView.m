@@ -78,11 +78,12 @@
     return cell;
 }
 
-// 点击高亮
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if (self.modelBlock) {self.modelBlock(self.dataSource[indexPath.row]);}
     
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     [UIView animateWithDuration:0.5 animations:^{
         
         cell.transform = CGAffineTransformMakeScale(2, 2);
@@ -96,16 +97,6 @@
             cell.alpha = 1.0;
         }];
     }];
-}
-
-#pragma mark UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    JMSubImageModel *model = self.dataSource[indexPath.row];
-    if (self.modelBlock) {
-        
-        self.modelBlock(model);
-    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

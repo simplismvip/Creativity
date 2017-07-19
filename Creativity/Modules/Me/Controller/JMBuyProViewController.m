@@ -10,6 +10,7 @@
 #import "JMProTableViewCell.h"
 #import "ProModel.h"
 #import "JMProHeaderView.h"
+#import "JMUserDefault.h"
 
 @interface JMBuyProViewController ()<UITableViewDelegate, UITableViewDataSource, JMProHeaderViewDelegate>
 @property (nonatomic, weak) UITableView *proView;
@@ -24,7 +25,7 @@
     
     self.dataArray = [NSMutableArray array];
     self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
-    self.leftTitle = @"恢复购买";
+    self.leftTitle = NSLocalizedString(@"gif.BuyPro.LeftTitle.RestorePurchase", "");
     
     [self reloadModels];
     [self setUI];
@@ -35,22 +36,58 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)leftTitleItem:(UIBarButtonItem *)sender
+- (void)leftTitleAction:(UIBarButtonItem *)sender
 {
     NSLog(@"恢复购买目录");
-    [JMBuyHelper setVIP];
-    [self reloadModels];
-    [_proView reloadData];
-    [_header refruseView];
+    [JMUserDefault setBool:NO forKey:@"superUser"];
+//    if ([JMBuyHelper getVip]) {
+//        
+//        [_header refruseView];
+//        [self reloadModels];
+//    };
 }
 
 - (void)buyPro
 {
     NSLog(@"购买Pro");
-    [JMBuyHelper setVIP];
-    [self reloadModels];
-    [_proView reloadData];
-    [_header refruseView];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+       
+        if ([JMBuyHelper getVip]) {
+    
+            sleep(2);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [_header refruseView];
+                [self reloadModels];
+                
+                [hud hideAnimated:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.square = YES;
+                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
+                hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
+                [hud hideAnimated:YES afterDelay:1.f];
+            });
+        }else{
+        
+            sleep(2);
+            dispatch_async(dispatch_get_main_queue(), ^{
+            
+                [hud hideAnimated:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.square = YES;
+                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"]];
+                hud.label.text = NSLocalizedString(@"gif.base.alert.Failed", "");
+                [hud hideAnimated:YES afterDelay:1.f];
+            });
+        }
+    });
 }
 
 - (void)setUI
@@ -118,19 +155,19 @@
     if ([JMBuyHelper isVip]) {
         
         model.image = @"waterCap";
-//        model.title = @"VIP用户";
+        model.title = @"VIP用户";
         model.subTitle = @"您制作的作品将不再显示水印图标";
         
         model1.image = @"filter";
-//        model1.title = @"VIP用户";
+        model1.title = @"VIP用户";
         model1.subTitle = @"您可以使用全部目前和以后更新的滤镜";
         
         model2.image = @"ad";
-//        model2.title = @"VIP用户";
+        model2.title = @"VIP用户";
         model2.subTitle = @"您可以使用无广告的使用APP的乐趣";
         
         model3.image = @"limitline";
-//        model3.title = @"VIP用户";
+        model3.title = @"VIP用户";
         model3.subTitle = @"您可以添加不限张数照片(硬件承受范围内)";
     }else{
         
@@ -150,6 +187,8 @@
         model3.title = @"无限制";
         model3.subTitle = @"无限制照片张数";
     }
+    
+    [self.proView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -8,6 +8,7 @@
 
 #import "JMSubImageCollectionViewCell.h"
 #import "JMSubImageModel.h"
+#import "SDImageCache.h"
 
 @interface JMSubImageCollectionViewCell()
 @property (nonatomic, weak) UIImageView *imageView;
@@ -34,7 +35,20 @@
 - (void)setModel:(JMSubImageModel *)model
 {
     _model = model;
-    _imageView.image = [UIImage imageNamed:model.name];
+    
+    JMSelf(ws);
+    [[SDImageCache sharedImageCache] diskImageExistsWithKey:model.name completion:^(BOOL isInCache) {
+        
+        if (isInCache) {
+            
+            ws.imageView.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:model.name];
+        }else{
+            [[SDImageCache sharedImageCache] storeImage:[UIImage imageNamed:model.name] forKey:model.name completion:^{
+                
+                ws.imageView.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:model.name];
+            }];
+        }
+    }];
 }
 
 - (void)layoutSubviews

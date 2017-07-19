@@ -46,12 +46,17 @@
 /// Get photo bytes 获得一组照片的大小
 - (void)getPhotosBytesWithArray:(NSArray *)photos completion:(void (^)(NSString *totalBytes))completion;
 
+/// 
+- (void)getBurstsAlbumCompletion:(TZAssetModel *)model gifData:(void (^)(NSMutableArray *))brustData;
 - (void)getAllGifCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *gifData))gifData;
 // - (void)getAllLivePhotosCompletion:(void (^)(TZAlbumModel *))completion;
 
 // 获取相册GIF图片
 - (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion;
-
 - (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
+- (void)getAllBrustCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
+
+// 获取应用名字, 创建相册
+- (void)saveGifOrVideoToMyAlbum:(NSString *)path isPhoto:(BOOL)isPhoto completion:(void (^)(BOOL isSuccess))isSuccess;
 
 @end

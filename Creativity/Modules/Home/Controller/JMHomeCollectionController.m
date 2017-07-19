@@ -117,7 +117,7 @@ static NSString *const collectionID = @"cell";
         JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
         GIF.title = NSLocalizedString(@"gif.home.VC.title.gifBoart", "");
         GIF.filePath = model.folderPath;
-        GIF.delayTime = 2-image.duration/image.images.count;
+        GIF.delayTime = image.duration/image.images.count;
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [hud hideAnimated:YES];
@@ -152,7 +152,20 @@ static NSString *const collectionID = @"cell";
     return 5;
 }
 
-//分享图片和文字
+#pragma mark -- JMHomeCollectionViewCellDelegate
+- (void)share:(NSIndexPath *)indexPath
+{
+    JMHomeModel *model = self.dataSource[indexPath.row];
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        
+        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
+    }];    
+}
+
+// 分享图片和文字
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
@@ -181,20 +194,6 @@ static NSString *const collectionID = @"cell";
     }];
 }
 
-#pragma mark -- JMHomeCollectionViewCellDelegate
-- (void)share:(NSIndexPath *)indexPath
-{
-    JMHomeModel *model = self.dataSource[indexPath.row];
-    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
-    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
-    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
-    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
-        
-        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
-    }];
-
-}
-
 #pragma mark -- left right UIBarButtonItem
 - (void)leftImageAction:(UIBarButtonItem *)sender
 {
@@ -208,6 +207,7 @@ static NSString *const collectionID = @"cell";
                        NSLocalizedString(@"gif.home.bottom.alert.board", ""),
                        NSLocalizedString(@"gif.home.bottom.alert.album", ""),
                        NSLocalizedString(@"gif.home.bottom.alert.gif", ""),
+                       NSLocalizedString(@"gif.home.VC.title.brust", ""),
                        NSLocalizedString(@"gif.base.alert.cancle", "")];
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
     alert.titles = array;
@@ -220,7 +220,7 @@ static NSString *const collectionID = @"cell";
     [UIView animateWithDuration:0.3 animations:^{
         
         backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-        alert.frame = CGRectMake(0, kH-(12+alertHeight*array.count), kW, 12+alertHeight*array.count);
+        alert.frame = CGRectMake(0, kH-(10+alertHeight*array.count), kW, 10+alertHeight*array.count);
     }];
 }
 
@@ -265,7 +265,7 @@ static NSString *const collectionID = @"cell";
         });
         
     }else if (sourceType == 202){
-        
+    
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
         hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
@@ -275,7 +275,7 @@ static NSString *const collectionID = @"cell";
             
             photos.type = ImageTypePhotoGIF;
             [[TZImageManager manager] getAllGifCompletion:^(NSMutableArray<TZAssetModel *> *models) {
-            
+                
                 photos.models = [models copy];
             }];
             
@@ -287,6 +287,18 @@ static NSString *const collectionID = @"cell";
                 [self presentViewController:nav animated:YES completion:nil];
             });
         });
+        
+    }else if (sourceType == 203){
+        
+        JMPhotosController *photos = [[JMPhotosController alloc] init];
+        photos.title = NSLocalizedString(@"gif.home.VC.title.brust", "");
+        photos.type = ImageTypePhotoBursts;
+        [[TZImageManager manager] getAllBrustCompletion:^(NSArray<TZAssetModel *> *models) {
+            
+            photos.models = models;
+            JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+            [self presentViewController:nav animated:YES completion:nil];
+        }];
     }
 }
 

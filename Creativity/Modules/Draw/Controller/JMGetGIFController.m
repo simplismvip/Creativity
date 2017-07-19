@@ -22,6 +22,7 @@
 #import "NSTimer+JMAddition.h"
 #import "JMGIFAnimationView.h"
 #import "JMEditerController.h"
+#import "TZImageManager.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
 {
@@ -42,6 +43,15 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMGetGIFController"];
+    if (_delayTime>0) {
+        
+        [_animationView setDelayer:_delayTime];
+    }else{
+        [_animationView setDelayer:0.7];
+        _delayTime = 0.7;
+    }
+    
+    _bsae.sliderA.value = _animationView.delayer;
     
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
@@ -53,7 +63,6 @@
     [super viewWillDisappear:animated];
     [_animationView stopAnimation];
     [MobClick endLogPageView:@"JMGetGIFController"];
-    _frameView.images = nil;
     
     // 开启返回手势
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -61,30 +70,23 @@
     }
 }
 
-- (JMGIFAnimationView *)animationView
-{
-    if (!_animationView) {
-        
-        JMSelf(ws);
-        JMGIFAnimationView *aniView = [[JMGIFAnimationView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
-        aniView.backgroundColor = [UIColor whiteColor];
-        aniView.center = self.view.center;
-        aniView.frameChange = ^(NSInteger index) {
-            
-            [ws.frameView refrashLocation:index];
-        };
-        
-        [self.view insertSubview:aniView belowSubview:_showFps];
-        self.animationView = aniView;
-    }
-    
-    return _animationView;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _pause = NO;
+    
+    JMSelf(ws);
+    JMGIFAnimationView *aniView = [[JMGIFAnimationView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
+    aniView.backgroundColor = [UIColor whiteColor];
+    aniView.center = self.view.center;
+    aniView.frameChange = ^(NSInteger index) {
+        
+        [ws.frameView refrashLocation:index];
+    };
+    
+    aniView.imageSource = [_images copy];
+    [self.view addSubview:aniView];
+    self.animationView = aniView;
     
     // 顶部动画显示
     JMFrameView *frameView = [[JMFrameView alloc] initWithFrame:CGRectMake(10, 84, kW-20, 40)];
@@ -98,7 +100,6 @@
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
     bsae.subViews = @[@"filters", @"navbar_video_icon_disabled_black", @"gif", @"navbar_pause_icon_black", @"turnaroundback", @"turnaroundgo"];
     bsae.delegate = self;
-    bsae.sliderA.value = _delayTime;
     [self.view addSubview:bsae];
     self.bsae = bsae;
     [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];
@@ -117,22 +118,11 @@
     self.showFps = showFps;
 }
 
-- (void)setImages:(NSMutableArray *)images
-{
-    _images = images;
-    self.animationView.imageSource = [images copy];
-    _animationView.delayer = _delayTime;
-    _frameView.images = self.animationView.imageSource;
-}
-
 #pragma mark -- drawVC界面进入
 - (void)setImagesFromDrawVC:(NSMutableArray *)imagesFromDrawVC
 {
     _imagesFromDrawVC = imagesFromDrawVC;
-    
-    NSMutableArray *images = [NSMutableArray array];
-    for (id model in imagesFromDrawVC) {[images addObject:[model image]];}
-    self.images = images;
+    self.images = imagesFromDrawVC;
     
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"gif.base.alert.done", "") style:(UIBarButtonItemStyleDone) target:self action:@selector(Done:)];
     self.navigationItem.rightBarButtonItems = @[right];
@@ -179,9 +169,11 @@
     editer.title = NSLocalizedString(@"gif.base.alert.editer", "");
     editer.editerImages = _images;
     editer.editerDone = ^(NSMutableArray *images) {
-        ws.images = images;
-    };
     
+        ws.images = images;
+        ws.animationView.imageSource = [images copy];
+        ws.frameView.images = images;
+    };
     JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:editer];
     [self presentViewController:Nav animated:YES completion:nil];
     
@@ -202,8 +194,8 @@
 {
     NSLog(@"%f", value);
     
-    _delayTime = 2-value;
-    _animationView.delayer = 2-value;
+    _delayTime = value;
+    _animationView.delayer = value;
     
     [UIView animateWithDuration:.8 animations:^{
         
@@ -259,53 +251,35 @@
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
             NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
-            NSMutableArray *newImages = [NSMutableArray array];
-            for (UIImage *image in _images) {
-                
-                if (image.size.width == image.size.width == kW) {
-                    
-                    [newImages addObject:image]; 
-                }else{
-                
-                    UIImage *newImage = [image drawRectNewImage];
-                    [newImages addObject:newImage];
-                }
-            }
             
             // 总时间
-            [JMMediaHelper saveImagesToVideoWithImages:newImages fps:1/_delayTime+1 andVideoPath:videoPath completed:^(NSString *filePath) {
+            [JMMediaHelper saveImagesToVideoWithImages:_images fps:1/_delayTime+1 andVideoPath:videoPath completed:^(NSString *filePath) {
                 
-                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-                [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:filePath] completionBlock:^(NSURL *assetURL, NSError *error) {
-
-                    if (error) {
-
-                        dispatch_async(dispatch_get_main_queue(), ^{
-
-                            [hud hideAnimated:YES];
-                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                            hud.mode = MBProgressHUDModeCustomView;
-                            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"]];
-                            hud.square = YES;
-                            hud.label.text = NSLocalizedString(@"gif.base.alert.Failed", "");
-                            [hud hideAnimated:YES afterDelay:1.5f];
-                        });
-
-                    } else {
-
-                        dispatch_async(dispatch_get_main_queue(), ^{
-
-                            [hud hideAnimated:YES];
-                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                            hud.mode = MBProgressHUDModeCustomView;
+                [[TZImageManager manager] saveGifOrVideoToMyAlbum:filePath isPhoto:NO completion:^(BOOL isSuccess) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [hud hideAnimated:YES];
+                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                        hud.mode = MBProgressHUDModeCustomView;
+                        hud.square = YES;
+                        
+                        if (isSuccess) {
+                            
                             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
-                            hud.square = YES;
+                            
                             hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
                             [hud hideAnimated:YES afterDelay:1.5f];
                             [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
                             _isSave = YES;
-                        });
-                    }
+
+                        }else{
+                            
+                            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"navbar_close_icon_black"]];
+                            hud.label.text = NSLocalizedString(@"gif.base.alert.Failed", "");
+                            [hud hideAnimated:YES afterDelay:1.5f];
+                        }
+                    });
                 }];
                 
             } andFailed:^(NSError *error) {
@@ -323,17 +297,20 @@
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
             [JMMediaHelper makeAnimatedGIF:_filePath images:_images delayTime:_delayTime];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [hud hideAnimated:YES];
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                hud.mode = MBProgressHUDModeCustomView;
-                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
-                hud.square = YES;
-                hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
-                [hud hideAnimated:YES afterDelay:1.5f];
-                _isSave = YES;
-            });
+            [[TZImageManager manager] saveGifOrVideoToMyAlbum:_filePath isPhoto:YES completion:^(BOOL isSuccess) {
+             
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [hud hideAnimated:YES];
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageWithTemplateName:@"Checkmark"]];
+                    hud.square = YES;
+                    hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    _isSave = YES;
+                });
+            }];
         });
         
     }else if (index == 3){

@@ -110,12 +110,11 @@
 /**
  *  压缩图片到指定尺寸大小
  *
- *  @param image 原始图片
  *  @param size  目标大小
  *
  *  @return 生成图片
  */
-- (UIImage *)compressOriginalImage:(UIImage *)image toSize:(CGSize)size;
+- (UIImage *)compressOriginalImageToSize:(CGSize)size;
 /**
  *  压缩图片到指定文件大小
  *
