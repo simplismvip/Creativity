@@ -195,20 +195,29 @@ static NSString *const collectionID = @"cell";
         TZAssetModel *model = self.models[indexPath.row];
         model.type = TZAssetModelMediaTypeBursts;
         
-    }else if (self.type == 3){
-        
-        TZAssetModel *model = self.models[indexPath.row];
-        model.type = TZAssetModelMediaTypeGIF;
-        [self.selectSource addObject:model];
-        [[TZImageManager manager] getAllGifCompletion:model gifData:^(NSData *gifData) {
+        [[TZImageManager manager] getBurstsAlbumCompletion:model gifData:^(NSMutableArray *images) {
             
-            model.image = [UIImage jm_animatedGIFWithData:gifData];
             JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
             NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
             [JMFileManger creatDir:gifPath];
             GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
-            GIF.delayTime = model.image.duration/model.image.images.count;
-            GIF.imagesFromDrawVC = [model.image.images mutableCopy];
+            GIF.imagesFromDrawVC = images;
+            [self.navigationController pushViewController:GIF animated:YES];
+        }];
+        
+    }else if (self.type == 3){
+        
+        TZAssetModel *model = self.models[indexPath.row];
+        model.type = TZAssetModelMediaTypeGIF;
+        [[TZImageManager manager] getAllGifCompletion:model gifData:^(NSData *gifData) {
+            
+            UIImage *images = [UIImage jm_animatedGIFWithData:gifData];
+            JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
+            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+            [JMFileManger creatDir:gifPath];
+            GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+            GIF.delayTime = images.duration/images.images.count;
+            GIF.imagesFromDrawVC = [images.images mutableCopy];
             [self.navigationController pushViewController:GIF animated:YES];
         }];
     }

@@ -51,6 +51,8 @@
         _delayTime = 0.7;
     }
     
+    _bsae.sliderA.value = _animationView.delayer;
+    
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -98,7 +100,6 @@
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
     bsae.subViews = @[@"filters", @"navbar_video_icon_disabled_black", @"gif", @"navbar_pause_icon_black", @"turnaroundback", @"turnaroundgo"];
     bsae.delegate = self;
-    bsae.sliderA.value = aniView.delayer;
     [self.view addSubview:bsae];
     self.bsae = bsae;
     [UIView animateWithDuration:0.3 animations:^{bsae.frame = CGRectMake(0, kH-74, kW, 74);}];

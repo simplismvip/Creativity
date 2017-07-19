@@ -47,19 +47,38 @@
 }
 
 #pragma mark - Get Album
+
 /// Get Album 连拍快照
-- (void)getBurstsAlbumCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
-
-    PHImageRequestOptions *options = [PHImageRequestOptions new];
-    options.resizeMode = PHImageRequestOptionsResizeModeFast;
-    options.synchronous = YES;
-    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+- (void)getBurstsAlbumCompletion:(TZAssetModel *)model gifData:(void (^)(NSMutableArray *))brustData
+{
+    PHAsset *phAsset = (PHAsset *)model.asset;
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.includeAllBurstAssets = YES;
+    
+    PHFetchResult *resu = [PHAsset fetchAssetsWithBurstIdentifier:phAsset.burstIdentifier options:options];
+    NSMutableArray *images = [NSMutableArray array];
+    
+    [resu enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if (gifData) {
-            gifData(imageData);
-        }
+        PHAsset *asset = (PHAsset *)obj;
+        PHImageRequestOptions *imageOPtions = [[PHImageRequestOptions alloc] init];
+        imageOPtions.synchronous = YES;
+        imageOPtions.deliveryMode = PHImageRequestOptionsResizeModeFast;
+        imageOPtions.resizeMode = PHImageRequestOptionsResizeModeExact;
+        CGFloat aspectRatio = asset.pixelWidth / (CGFloat)asset.pixelHeight;
+        CGFloat pixelWidth = 200*kScale;
+        CGFloat pixelHeight = pixelWidth / aspectRatio;
+        
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:imageOPtions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            
+            [images addObject:result];
+        }];
     }];
-
+    
+    if (brustData) {
+        
+        brustData(images);
+    }
 }
 
 /// Get Album GIF
@@ -639,26 +658,33 @@
 #pragma mark -- 新添加的方法
 - (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion
 {
-    [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    NSMutableArray *models = [NSMutableArray array];
+    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        [self getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
-            
-            NSMutableArray *gifs = [NSMutableArray array];
-            for (TZAssetModel *model in models) {
+        PHAsset *asset = (PHAsset *)obj;
+        if (asset.representsBurst == NO && asset.mediaSubtypes == 0 && asset.sourceType == 1 && asset.mediaType == 1) {
+        
+            NSArray *resourceList = [PHAssetResource assetResourcesForAsset:asset];
+            [resourceList enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
-                NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
-                [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    PHAssetResource *resource = obj;
-                    if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
-                        
-                        [gifs addObject:model];
-                    }
-                }];
-            }
-            
-            if (completion) {completion(gifs);}
-        }];
+                PHAssetResource *resource = obj;
+                if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+                    
+                    TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeGIF];
+                    [models addObject:model];
+                }
+            }];
+        }
     }];
+    
+    if (completion) {
+        
+        completion(models);
+    }
 }
 
 - (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion
@@ -773,6 +799,7 @@
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    NSMutableArray *models = [NSMutableArray array];
     [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         PHAsset *asset = (PHAsset *)obj;
@@ -780,34 +807,67 @@
         // 获取连拍快照
         if (asset.representsBurst) {
 
-            PHFetchOptions *options = [[PHFetchOptions alloc] init];
-            options.includeAllBurstAssets = YES;
-            
-            PHFetchResult *resu = [PHAsset fetchAssetsWithBurstIdentifier:asset.burstIdentifier options:options];
-            [resu enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                
-                [self burstImage:obj];
-            }];
+            TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeBursts];
+            [models addObject:model];
         }
     }];
+    
+    if (completion) {
+        
+        completion([models copy]);
+    }
 }
 
 - (void)burstImage:(PHAsset *)phAsset
 {
-    PHImageRequestOptions *imageOPtions = [[PHImageRequestOptions alloc] init];
-    imageOPtions.synchronous = YES;
-    imageOPtions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    imageOPtions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.includeAllBurstAssets = YES;
     
-    CGFloat aspectRatio = phAsset.pixelWidth / (CGFloat)phAsset.pixelHeight;
-    CGFloat multiple = [UIScreen mainScreen].scale;
-    CGFloat pixelWidth = 600 * multiple;
-    CGFloat pixelHeight = pixelWidth / aspectRatio;
-    
-    [[PHImageManager defaultManager] requestImageForAsset:phAsset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:imageOPtions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    PHFetchResult *resu = [PHAsset fetchAssetsWithBurstIdentifier:phAsset.burstIdentifier options:options];
+    [resu enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        NSLog(@"%@--%@", result, info);
+        PHAsset *asset = (PHAsset *)obj;
+        
+        PHImageRequestOptions *imageOPtions = [[PHImageRequestOptions alloc] init];
+        imageOPtions.synchronous = YES;
+        imageOPtions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        imageOPtions.resizeMode = PHImageRequestOptionsResizeModeExact;
+        
+        CGFloat aspectRatio = asset.pixelWidth / (CGFloat)asset.pixelHeight;
+        CGFloat multiple = [UIScreen mainScreen].scale;
+        CGFloat pixelWidth = 600 * multiple;
+        CGFloat pixelHeight = pixelWidth / aspectRatio;
+        
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:imageOPtions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            
+            NSLog(@"%@--%@", result, info);
+        }];
     }];
 }
 
 @end
+
+/*
+ // 获取系统相册GIF方法
+ //    [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
+ //
+ //        [self getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
+ //
+ //            NSMutableArray *gifs = [NSMutableArray array];
+ //            for (TZAssetModel *model in models) {
+ //
+ //                NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
+ //                [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+ //                    PHAssetResource *resource = obj;
+ //                    if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+ //
+ //                        [gifs addObject:model];
+ //                    }
+ //                }];
+ //            }
+ //
+ //            if (completion) {completion(gifs);}
+ //        }];
+ //    }];
+ */
+
