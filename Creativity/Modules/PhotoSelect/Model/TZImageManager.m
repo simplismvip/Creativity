@@ -66,12 +66,20 @@
         imageOPtions.deliveryMode = PHImageRequestOptionsResizeModeFast;
         imageOPtions.resizeMode = PHImageRequestOptionsResizeModeExact;
         CGFloat aspectRatio = asset.pixelWidth / (CGFloat)asset.pixelHeight;
-        CGFloat pixelWidth = 200*kScale;
+        CGFloat pixelWidth = kW*kScale;
         CGFloat pixelHeight = pixelWidth / aspectRatio;
         
         [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFit options:imageOPtions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
-            [images addObject:result];
+            NSData *data = UIImageJPEGRepresentation(result, 0.0);
+            NSLog(@"%ld --%@", data.length, NSStringFromCGSize(result.size));
+            
+            UIImage *new = [result compressOriginalImageToSize:CGSizeMake(kW, kW/aspectRatio)];
+            [images addObject:new];
+            
+            NSData *dataNew = UIImageJPEGRepresentation(new, 0.0);
+            NSLog(@"%ld-New-%@", dataNew.length, NSStringFromCGSize(new.size));
+            
         }];
     }];
     

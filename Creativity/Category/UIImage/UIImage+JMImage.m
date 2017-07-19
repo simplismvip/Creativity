@@ -235,15 +235,14 @@
 /**
  *  压缩图片到指定尺寸大小
  *
- *  @param image 原始图片
  *  @param size  目标大小
  *
  *  @return 生成图片
  */
-- (UIImage *)compressOriginalImage:(UIImage *)image toSize:(CGSize)size
+- (UIImage *)compressOriginalImageToSize:(CGSize)size
 {
     UIGraphicsBeginImageContext(size);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;

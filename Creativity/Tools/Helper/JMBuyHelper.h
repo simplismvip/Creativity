@@ -11,5 +11,5 @@
 @interface JMBuyHelper : NSObject
 + (BOOL)isVip;
 + (BOOL)setVIP;
-+ (void)getVip;
++ (BOOL)getVip;
 @end

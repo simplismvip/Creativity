@@ -88,11 +88,11 @@
         
     }else if (section == 1){
     
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionOne", "");
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionTwo", "");
         
     }else if (section == 2){
     
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionTwo", "");
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionOne", "");
     }else{
     
         headView.name.text = NSLocalizedString(@"gif.set.header.SectionThree", "");

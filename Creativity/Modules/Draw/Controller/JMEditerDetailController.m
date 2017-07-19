@@ -83,8 +83,8 @@
     [self.view addSubview:slider];
     self.slider = slider;
     
-    CGFloat rate = _editerImage.size.height / _editerImage.size.width;
-    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 0, kW, kW*rate)];
+//    CGFloat rate = _editerImage.size.height / _editerImage.size.width;
+    JMPaintView *pView = [[JMPaintView alloc] initWithFrame:CGRectMake(0, 0, _editerImage.size.width, _editerImage.size.height)];
     pView.center = self.view.center;
     pView.drawType = (JMPaintToolType)[StaticClass getPaintType];
     pView.lineDash = [StaticClass getDashType];
@@ -94,7 +94,7 @@
     self.paintView = pView;
     [self.view addSubview:pView];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kW, kW*rate)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _editerImage.size.width, _editerImage.size.height)];
     imageView.center = self.view.center;
     self.imageView = imageView;
     [self.view addSubview:imageView];

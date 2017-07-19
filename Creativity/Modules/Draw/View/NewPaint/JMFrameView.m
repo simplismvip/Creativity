@@ -42,7 +42,7 @@
     CGFloat w = (self.width-kMargin*2)/images.count;
     for (UIImage *image in images) {
         
-        UIImage *newImage = [image compressOriginalImage:image toSize:CGSizeMake(64, 64)];
+        UIImage *newImage = [image compressOriginalImageToSize:CGSizeMake(64, 64)];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
         [self addSubview:imageView];
         imageView.frame = CGRectMake(kMargin+w*i, 1, w, self.height-2);

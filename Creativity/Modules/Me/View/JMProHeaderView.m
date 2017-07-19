@@ -63,7 +63,7 @@
 
 - (void)buyPro:(UIButton *)sender
 {
-    if ([self.delegate respondsToSelector:@selector(buyPro:)]) {
+    if ([self.delegate respondsToSelector:@selector(buyPro)]) {
         
         [self.delegate buyPro];
     }

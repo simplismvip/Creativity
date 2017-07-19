@@ -68,33 +68,8 @@
 #pragma mark - Drawing
 - (void)drawRect:(CGRect)rect
 {
-    [self.image drawInRect:[self newImage:_image]];
+    [self.image drawInRect:rect];
     [self.currentTool draw];
-}
-
-- (CGRect)newImage:(UIImage *)oldImage
-{
-    CGFloat rate = _image.size.width/_image.size.height;
-    CGFloat w = self.bounds.size.width;
-    CGFloat h = self.bounds.size.height;
-    
-    CGSize imageSize;
-    if (rate>1) {
-        
-        // w > h
-        imageSize = CGSizeMake(w, w/rate);
-        
-    }else if (rate<1){
-        
-        // w < h
-        imageSize = CGSizeMake(w*rate, w);
-        
-    }else{
-        // w == h
-        imageSize = CGSizeMake(w, w);
-    }
-    
-    return CGRectMake(w/2-imageSize.width/2, h/2-imageSize.height/2, imageSize.width, imageSize.height);
 }
 
 - (void)updateCacheImage:(BOOL)redraw
@@ -108,7 +83,7 @@
         for (id<JMPaintTool> tool in self.pathArray) {[tool draw];}
     }else {
         
-        [self.image drawInRect:[self newImage:_image]];
+        [self.image drawInRect:self.bounds];
         [self.currentTool draw];
     }
     
