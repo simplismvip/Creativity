@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		040F173C1F20886100E9067E /* JMAuthorizeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F173B1F20886100E9067E /* JMAuthorizeManager.m */; };
 		040F17591F20B34100E9067E /* UIImage+Filters.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F17581F20B34100E9067E /* UIImage+Filters.m */; };
+		040F17671F20C07500E9067E /* JMFilterContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F17641F20C07500E9067E /* JMFilterContent.m */; };
+		040F17681F20C07500E9067E /* JMFiltersHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F17661F20C07500E9067E /* JMFiltersHelper.m */; };
 		04654A581F04ADDA008D0B27 /* JMAttributeScrollBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */; };
 		04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A601F04F760008D0B27 /* JMWebProgressView.m */; };
 		04654A641F04F7B1008D0B27 /* JMBaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */; };
@@ -248,6 +250,10 @@
 		040F173B1F20886100E9067E /* JMAuthorizeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthorizeManager.m; sourceTree = "<group>"; };
 		040F17571F20B34100E9067E /* UIImage+Filters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Filters.h"; path = "../UIView/UIImage+Filters.h"; sourceTree = "<group>"; };
 		040F17581F20B34100E9067E /* UIImage+Filters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Filters.m"; path = "../UIView/UIImage+Filters.m"; sourceTree = "<group>"; };
+		040F17631F20C07500E9067E /* JMFilterContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFilterContent.h; sourceTree = "<group>"; };
+		040F17641F20C07500E9067E /* JMFilterContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFilterContent.m; sourceTree = "<group>"; };
+		040F17651F20C07500E9067E /* JMFiltersHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFiltersHelper.h; sourceTree = "<group>"; };
+		040F17661F20C07500E9067E /* JMFiltersHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFiltersHelper.m; sourceTree = "<group>"; };
 		04654A561F04ADDA008D0B27 /* JMAttributeScrollBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeScrollBaseView.h; sourceTree = "<group>"; };
 		04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAttributeScrollBaseView.m; sourceTree = "<group>"; };
 		04654A5F1F04F760008D0B27 /* JMWebProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMWebProgressView.h; sourceTree = "<group>"; };
@@ -758,6 +764,10 @@
 				0490EC741EEF976F00E05A84 /* UIImage+JMImage.m */,
 				040F17571F20B34100E9067E /* UIImage+Filters.h */,
 				040F17581F20B34100E9067E /* UIImage+Filters.m */,
+				040F17631F20C07500E9067E /* JMFilterContent.h */,
+				040F17641F20C07500E9067E /* JMFilterContent.m */,
+				040F17651F20C07500E9067E /* JMFiltersHelper.h */,
+				040F17661F20C07500E9067E /* JMFiltersHelper.m */,
 			);
 			path = UIImage;
 			sourceTree = "<group>";
@@ -1769,6 +1779,7 @@
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
 				A2B2D7EC1F16E8100068CB15 /* JMEditerController.m in Sources */,
 				04DA2E2D1F17629E00D59DDD /* FICImageTable.m in Sources */,
+				040F17671F20C07500E9067E /* JMFilterContent.m in Sources */,
 				047FCF141EF3DCBC00AD0C08 /* JMAttributeStringCell.m in Sources */,
 				04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
@@ -1802,6 +1813,7 @@
 				04E62D141EF9202500C8B24F /* JMProTableViewCell.m in Sources */,
 				A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */,
 				04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */,
+				040F17681F20C07500E9067E /* JMFiltersHelper.m in Sources */,
 				04B033B21EFA153700A10D4C /* UIImage+RoundedCorner.m in Sources */,
 				04DA2E2B1F17629E00D59DDD /* FICImageCache.m in Sources */,
 				0490F1D31EEF9C4900E05A84 /* JMAboutUsController.m in Sources */,
