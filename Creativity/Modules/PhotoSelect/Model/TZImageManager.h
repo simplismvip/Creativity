@@ -51,6 +51,9 @@
 - (void)getAllGifCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *gifData))gifData;
 // - (void)getAllLivePhotosCompletion:(void (^)(TZAlbumModel *))completion;
 
+// 生成livePhoto
+- (void)creatLIvePhotos:(NSArray *)urls playhold:(UIImage *)image livePhoto:(void (^)(PHLivePhoto *livephoto))livephoto;
+
 // 获取相册GIF图片
 - (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion;
 - (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;

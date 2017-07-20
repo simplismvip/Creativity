@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^filterBlock)(NSInteger type);
+typedef void(^filterBlock)(NSInteger type, BOOL isVip);
 @interface JMFiltersView : UIScrollView
 @property (nonatomic, copy) filterBlock filter;
 @property (nonatomic, strong) UIColor *tinColor;

@@ -573,18 +573,6 @@
     return image;
 }
 
-- (UIImage *)defaultFilter:(NSInteger)index
-{
-    NSArray *filters = @[@"CIPhotoEffectNoir", @"CIPhotoEffectTransfer", @"CIPhotoEffectTonal", @"CIPhotoEffectProcess", @"CIPhotoEffectMono", @"CIPhotoEffectInstant", @"CIPhotoEffectFade", @"CIPhotoEffectChrome", @"CIMaskToAlpha", @"CIColorPosterize", @"CIColorInvert", @"CIWhitePointAdjust", @"CISRGBToneCurveToLinear", @"CILinearToSRGBToneCurve"];
-    
-    CIImage *ci = [CIImage imageWithData:UIImagePNGRepresentation(self)];
-    CIFilter *filte = [CIFilter filterWithName:filters[index]];
-    [filte setValue:ci forKey:kCIInputImageKey];
-    UIImage *newImage = [UIImage imageWithCIImage:filte.outputImage];
-    
-    return newImage;
-}
-
 - (UIImage *)imageWithWaterMask
 {
     if ([JMBuyHelper isVip]) {

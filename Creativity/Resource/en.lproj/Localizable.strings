@@ -70,5 +70,16 @@
 "gif.draw.photoAlert.album"="Album";
 "gif.draw.photoAlert.camera"="Camera";
 
+// BuyPro
+"gif.BuyPro.LeftTitle.RestorePurchase"="RestorePurchase";
+
+"gif.BuyPro.headerGetVip.ProUpgrade"="ProUpgrade";
+"gif.BuyPro.headerGetVip.VIP"="VIP";
+
+"gif.BuyPro.headerGetVipSubTitle.description" = "请将应用升级到专业版，享受到更多功能优惠。";
+"gif.BuyPro.headerGetVipSubTitle.VIP" = "您可以使用全部功能创建有趣的视频和GIF动画";
+
+"gif.BuyPro.headerGetSuperUser.NOVIP"="¥12.00购买专业版";
+"gif.BuyPro.headerGetSuperUser.VIP"="VIP User";
 
 

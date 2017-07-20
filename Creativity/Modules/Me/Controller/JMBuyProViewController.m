@@ -26,7 +26,7 @@
     self.dataArray = [NSMutableArray array];
     self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
     self.leftTitle = NSLocalizedString(@"gif.BuyPro.LeftTitle.RestorePurchase", "");
-    
+    self.title = NSLocalizedString(@"gif.set.sectionZero.rowZero", "");
     [self reloadModels];
     [self setUI];
 }

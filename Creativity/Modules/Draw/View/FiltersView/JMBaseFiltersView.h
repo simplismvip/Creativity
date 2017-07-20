@@ -10,7 +10,7 @@
 
 @protocol JMBaseFiltersViewDelegate <NSObject>
 
-- (void)baseFiltersSelectIndex:(NSInteger)index;
+- (void)baseFiltersSelectIndex:(NSInteger)index isVip:(BOOL)isVip;
 - (void)removeSelf;
 @end
 @interface JMBaseFiltersView : UIView

@@ -23,8 +23,9 @@
 #import "JMGIFAnimationView.h"
 #import "JMEditerController.h"
 #import "TZImageManager.h"
+#import "JMPhotosAlertView.h"
 
-@interface JMGetGIFController ()<JMGetGIFBottomViewDelegate>
+@interface JMGetGIFController ()<JMGetGIFBottomViewDelegate, JMPhotosAlertViewDelegate>
 {
     NSTimer *_aniTimer;
     BOOL _pause;
@@ -98,7 +99,7 @@
     
     // 底部菜单显示
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
-    bsae.subViews = @[@"filters", @"navbar_video_icon_disabled_black", @"gif", @"navbar_pause_icon_black", @"turnaroundback", @"turnaroundgo"];
+    bsae.subViews = @[@"filters", @"navbar_video_icon_disabled_black", @"gif", @"PhotosLivePrefsHeader", @"navbar_pause_icon_black", @"turnaroundback", @"turnaroundgo"];
     bsae.delegate = self;
     [self.view addSubview:bsae];
     self.bsae = bsae;
@@ -216,27 +217,63 @@
     [self.showFps setTitle:[NSString stringWithFormat:@"%ld 秒", (NSInteger)(progress*_images.count)] forState:(UIControlStateNormal)];
 }
 
-- (void)filtersDidSelectRowAtIndexPath:(NSInteger)index
+- (void)filtersDidSelectRowAtIndexPath:(NSInteger)index isVip:(BOOL)isVip
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-    
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+    if ([JMBuyHelper isVip]) {
         
-        NSMutableArray *newImages = [NSMutableArray array];
-        for (UIImage *originImage in _images) {
-            
-            UIImage *filterImage = [UIImage returnImage:index image:originImage];
-            [newImages addObject:filterImage];
-        }
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
-            [hud hideAnimated:YES];
-            self.images = newImages;
+            NSMutableArray *newImages = [NSMutableArray array];
+            for (UIImage *originImage in _images) {
+                
+                UIImage *filterImage = [UIImage returnImage:index image:originImage];
+                [newImages addObject:filterImage];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [hud hideAnimated:YES];
+                _images = newImages;
+                _animationView.imageSource = [newImages copy];
+            });
         });
-    });
+        
+    }else{
+    
+        if (isVip) {
+            
+            JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
+            pro.title = NSLocalizedString(@"gif.set.sectionZero.rowZero", "");
+            JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
+            [self presentViewController:nav animated:YES completion:nil];
+        }else{
+        
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+            hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+            
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                
+                NSMutableArray *newImages = [NSMutableArray array];
+                for (UIImage *originImage in _images) {
+                    
+                    UIImage *filterImage = [UIImage returnImage:index image:originImage];
+                    [newImages addObject:filterImage];
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [hud hideAnimated:YES];
+                    _images = newImages;
+                    _animationView.imageSource = [newImages copy];
+                });
+            });
+        }
+    }
 }
 
 // 总时间 = 张数 * 每张时间, fps = 1/每张时间
@@ -315,27 +352,96 @@
         
     }else if (index == 3){
         
+        NSMutableArray *urls = [NSMutableArray array];
+        for (UIImage *image in _images) {
+            
+            NSData *data = UIImagePNGRepresentation(image);
+            NSString *cache = [NSString stringWithFormat:@"%@/%@.png", JMCachePath, [JMHelper timerString]];
+            [data writeToFile:cache atomically:YES];
+            [urls addObject:[NSURL fileURLWithPath:cache]];
+        }
+        
+        
+        [[TZImageManager manager] creatLIvePhotos:[urls copy] playhold:_images.firstObject livePhoto:^(PHLivePhoto *livephoto) {
+            
+            //            [[TZImageManager manager] saveGifOrVideoToMyAlbum:_filePath isPhoto:NO completion:^(BOOL isSuccess) {
+            //
+            //                NSLog(@"%d", isSuccess);
+            //            }];
+            
+        }];
+        
+    }else if (index == 4){
+        
         UIButton *btn = [self.bsae viewWithTag:index+200];
         
         if (_pause) {
-        
+            
             [btn setImage:[UIImage imageNamed:@"navbar_pause_icon_black"] forState:(UIControlStateNormal)];
             [_animationView restartAnimation];
         }else {
-        
+            
             [btn setImage:[UIImage imageNamed:@"navbar_play_icon"] forState:(UIControlStateNormal)];
             [_animationView pauseAnimation];
         }
         
         _pause = !_pause;
         
-    }else if (index == 4){
-        
-        // _imageView.transform = CGAffineTransformMakeScale(-1, 1);
-        
     }else if (index == 5){
     
         // _imageView.transform = CGAffineTransformMakeScale(1, -1);
+        
+    }else if (index == 6){
+        
+        NSArray *array;
+        if ([JMBuyHelper isVip]) {array = @[@"分享微信", @"保存到相册", @"取消"];
+        }else{array = @[@"去水印", @"分享微信", @"保存到相册", @"取消"];}
+        
+        JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
+        alert.titles = array;
+        alert.delegate = self;
+        UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
+        UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
+        [window addSubview:backView];
+        [backView addSubview:alert];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            
+            backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+            alert.frame = CGRectMake(0, kH-(10+alertHeight*array.count), kW, 10+alertHeight*array.count);
+        }];
+        
+        // _imageView.transform = CGAffineTransformMakeScale(1, -1);
+    }
+}
+
+- (void)photoFromSource:(NSInteger)sourceType
+{
+    if ([JMBuyHelper isVip]) {
+        
+        if (sourceType == 200) {
+        
+            NSLog(@"VIP -- 分享到微信");
+
+        }else{
+        
+            NSLog(@"VIP -- 保存到本地");
+        }
+        
+    }else{
+        if (sourceType == 200) {
+            
+            JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
+            JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
+            [self presentViewController:nav animated:YES completion:nil];
+        }else if(sourceType == 201){
+            
+            NSLog(@"non--VIP  分享到微信");
+            
+        }else if(sourceType == 202){
+            
+            NSLog(@"non--VIP  保存到本地");
+        }
     }
 }
 

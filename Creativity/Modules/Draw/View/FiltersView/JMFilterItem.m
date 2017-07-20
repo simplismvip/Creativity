@@ -11,6 +11,7 @@
 @interface JMFilterItem ()
 @property (nonatomic, weak) UIButton *filterBtn;
 @property (nonatomic, weak) UILabel *btnTitle;
+@property (nonatomic, weak) UIImageView *vipView;
 @end
 
 @implementation JMFilterItem
@@ -34,6 +35,15 @@
         btnTitle.font = [UIFont systemFontOfSize:7.0];
         [self addSubview:btnTitle];
         self.btnTitle = btnTitle;
+        
+        if (![JMBuyHelper isVip]) {
+            
+            UIImageView *vip = [[UIImageView alloc] init];
+            vip.hidden = YES;
+            [self addSubview:vip];
+            self.vipView = vip;
+        }
+
     }
     return self;
 }
@@ -56,6 +66,13 @@
     _btnTitle.text = title;
 }
 
+- (void)setVip:(NSString *)vip
+{
+    _vip = vip;
+    _vipView.image = [UIImage imageNamed:vip];
+    _vipView.hidden = NO;
+}
+
 - (void)setTinColor:(UIColor *)tinColor
 {
     _tinColor = tinColor;
@@ -68,9 +85,9 @@
 {
     [super layoutSubviews];
     
+    _vipView.frame = CGRectMake(self.width-13, 3, 10, 10);
     _filterBtn.frame = CGRectMake(0, 0, self.width, self.height-12);
     _btnTitle.frame = CGRectMake(0, CGRectGetMaxY(_filterBtn.frame), self.width, 10);
-    
 }
 
 /*

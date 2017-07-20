@@ -11,6 +11,7 @@
 @interface JMFilterItem : UIView
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *vip;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UIColor *tinColor;
 @end
