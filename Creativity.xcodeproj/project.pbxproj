@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		040F173C1F20886100E9067E /* JMAuthorizeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F173B1F20886100E9067E /* JMAuthorizeManager.m */; };
+		040F17591F20B34100E9067E /* UIImage+Filters.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F17581F20B34100E9067E /* UIImage+Filters.m */; };
 		04654A581F04ADDA008D0B27 /* JMAttributeScrollBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */; };
 		04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A601F04F760008D0B27 /* JMWebProgressView.m */; };
 		04654A641F04F7B1008D0B27 /* JMBaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */; };
@@ -245,6 +246,8 @@
 /* Begin PBXFileReference section */
 		040F173A1F20886100E9067E /* JMAuthorizeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthorizeManager.h; sourceTree = "<group>"; };
 		040F173B1F20886100E9067E /* JMAuthorizeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthorizeManager.m; sourceTree = "<group>"; };
+		040F17571F20B34100E9067E /* UIImage+Filters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Filters.h"; path = "../UIView/UIImage+Filters.h"; sourceTree = "<group>"; };
+		040F17581F20B34100E9067E /* UIImage+Filters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Filters.m"; path = "../UIView/UIImage+Filters.m"; sourceTree = "<group>"; };
 		04654A561F04ADDA008D0B27 /* JMAttributeScrollBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeScrollBaseView.h; sourceTree = "<group>"; };
 		04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAttributeScrollBaseView.m; sourceTree = "<group>"; };
 		04654A5F1F04F760008D0B27 /* JMWebProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMWebProgressView.h; sourceTree = "<group>"; };
@@ -753,6 +756,8 @@
 			children = (
 				0490EC731EEF976F00E05A84 /* UIImage+JMImage.h */,
 				0490EC741EEF976F00E05A84 /* UIImage+JMImage.m */,
+				040F17571F20B34100E9067E /* UIImage+Filters.h */,
+				040F17581F20B34100E9067E /* UIImage+Filters.m */,
 			);
 			path = UIImage;
 			sourceTree = "<group>";
@@ -1823,6 +1828,7 @@
 				04DA2E2F1F17629E00D59DDD /* FICImageTableEntry.m in Sources */,
 				0490F23D1EEFA32900E05A84 /* JMSubImageCollectionViewCell.m in Sources */,
 				0490EDDE1EEF976F00E05A84 /* NSObject+JMProperty.m in Sources */,
+				040F17591F20B34100E9067E /* UIImage+Filters.m in Sources */,
 				A20BE89C1EFE18B20083DBF1 /* JMLicenceViewModel.m in Sources */,
 				04B033B11EFA153700A10D4C /* UIImage+Resize.m in Sources */,
 				0490EDE21EEF976F00E05A84 /* UINavigationBar+JMNavigationBar.m in Sources */,

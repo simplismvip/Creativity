@@ -149,9 +149,6 @@
 
 + (UIImage *)returnImage:(NSInteger)index image:(UIImage *)oldImage;
 
-// 添加系统滤镜;
-- (UIImage *)defaultFilter:(NSInteger)index;
-
 // 给照片添加水印
 - (UIImage *)imageWithWaterMask;
 
