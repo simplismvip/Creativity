@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040F173C1F20886100E9067E /* JMAuthorizeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F173B1F20886100E9067E /* JMAuthorizeManager.m */; };
 		04654A581F04ADDA008D0B27 /* JMAttributeScrollBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */; };
 		04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A601F04F760008D0B27 /* JMWebProgressView.m */; };
 		04654A641F04F7B1008D0B27 /* JMBaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */; };
@@ -242,6 +243,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040F173A1F20886100E9067E /* JMAuthorizeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthorizeManager.h; sourceTree = "<group>"; };
+		040F173B1F20886100E9067E /* JMAuthorizeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthorizeManager.m; sourceTree = "<group>"; };
 		04654A561F04ADDA008D0B27 /* JMAttributeScrollBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeScrollBaseView.h; sourceTree = "<group>"; };
 		04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAttributeScrollBaseView.m; sourceTree = "<group>"; };
 		04654A5F1F04F760008D0B27 /* JMWebProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMWebProgressView.h; sourceTree = "<group>"; };
@@ -1006,6 +1009,8 @@
 				04654A661F050264008D0B27 /* DeviceHelper.m */,
 				04A4CDF31F14A54A00A445EB /* ShareTool.h */,
 				04A4CDF41F14A54A00A445EB /* ShareTool.m */,
+				040F173A1F20886100E9067E /* JMAuthorizeManager.h */,
+				040F173B1F20886100E9067E /* JMAuthorizeManager.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1801,6 +1806,7 @@
 				0490F2451EEFA32900E05A84 /* JMWriteView.m in Sources */,
 				047F575C1F0DE05F0045D3ED /* JMBuyHelper.m in Sources */,
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
+				040F173C1F20886100E9067E /* JMAuthorizeManager.m in Sources */,
 				04A0DDF01EEF81A400464852 /* main.m in Sources */,
 				0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */,
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,

@@ -77,4 +77,6 @@
 #import "JMBuyHelper.h"
 #import "Masonry.h"
 #import "MBProgressHUD.h"
+#import "JMBuyProViewController.h"
+#import "JMMainNavController.h"
 #endif

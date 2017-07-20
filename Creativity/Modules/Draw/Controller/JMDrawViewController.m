@@ -188,7 +188,10 @@
             
             UIAlertAction *buyVip = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.getVIP", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                 
-                [JMBuyHelper getVip];
+                JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
+                pro.title = NSLocalizedString(@"gif.set.sectionZero.rowZero", "");
+                JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
+                [self presentViewController:nav animated:YES completion:nil];
             }];
             
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];

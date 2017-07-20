@@ -74,11 +74,11 @@
 }
 
 #pragma mark -- JMBaseFiltersViewDelegate 回调
-- (void)baseFiltersSelectIndex:(NSInteger)index
+- (void)baseFiltersSelectIndex:(NSInteger)index isVip:(BOOL)isVip
 {
-    if ([self.delegate respondsToSelector:@selector(didSelectRowAtIndexPath:)]) {
+    if ([self.delegate respondsToSelector:@selector(filtersDidSelectRowAtIndexPath:isVip:)]) {
         
-        [self.delegate filtersDidSelectRowAtIndexPath:index];
+        [self.delegate filtersDidSelectRowAtIndexPath:index isVip:isVip];
     }
 }
 

@@ -37,6 +37,7 @@
         UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
         subView.image = newimage;
         subView.title = model.title;
+        subView.vip = model.vip;
         subView.tag = 200 + i;
         subView.tinColor = [UIColor whiteColor];
         [subView addTarget:self action:@selector(filterViewAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -46,7 +47,21 @@
 
 - (void)filterViewAction:(UIButton *)sender
 {
-    if (self.filter) {self.filter(sender.tag-200);}
+    if (self.filter) {
+    
+        JMFilterModel *model = _titles[sender.tag-200];
+        
+        BOOL isVip;
+        if ([model.vip isEqualToString:@"super-user"]) {
+            
+            isVip = YES;
+        }else{
+        
+            isVip = NO;
+        }
+        
+        self.filter(sender.tag-200, isVip);
+    }
 }
 
 - (void)layoutSubviews

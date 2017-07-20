@@ -103,6 +103,14 @@
     }];
 }
 
+- (void)creatLIvePhotos:(NSArray *)urls playhold:(UIImage *)image livePhoto:(void (^)(PHLivePhoto *livephoto))livephoto
+{
+    [PHLivePhoto requestLivePhotoWithResourceFileURLs:urls placeholderImage:image targetSize:image.size contentMode:(PHImageContentModeAspectFit) resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
+        
+        if (livephoto) {livephoto(livePhoto);}
+    }];
+}
+
 /// Get Album livePhoto
 - (void)getAllLivePhotosCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
     

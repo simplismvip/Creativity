@@ -11,4 +11,5 @@
 @interface JMFilterModel : NSObject
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *image;
+@property (nonatomic, copy) NSString *vip;
 @end

@@ -113,7 +113,6 @@
     if (indexPath.section==0 && indexPath.row==0) {
        
         JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
-        pro.title = model.title;
         JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
         [self presentViewController:nav animated:YES completion:nil];
         
