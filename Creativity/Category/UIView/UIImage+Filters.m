@@ -70,39 +70,35 @@
         
     }else if (index == 12){
         
-        return [self colorCubeinput:2.0];
-        
-    }else if (index == 13){
-        
         return [self sepiaTones:1];
         
-    }else if (index == 14){
+    }else if (index == 13){
         
         UIImage *imaNew = [UIImage imageNamed:@"001"];
         return [self colorMap:imaNew];
         
-    }else if (index == 15){
+    }else if (index == 14){
         
         return [self falseColor:[CIColor colorWithRed:100.0/255.0 green:100.0/255.0 blue:100.0/255.0] color2:[CIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0]];
         
-    }else if (index == 16){
+    }else if (index == 15){
         
         return [self bloom:50 inputIntensity:3];
         
-    }else if (index == 17){
+    }else if (index == 16){
         
         return [self edges:1.5];
-    }else if (index == 18){
+    }else if (index == 17){
         
         return [self highlightShadowAdjust:.5 shadowAmount:-.7];
         
-    }else if (index == 19){
+    }else if (index == 18){
         
         return [self lineOverlay:0.1 sharpness:0.9 intensity:1.0 threshold:0.2 ontrast:10.0];
         
     }else {
         
-        return [self defaultFilter:index];
+        return [self defaultFilter:index-20];
     }
 }
 
