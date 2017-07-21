@@ -23,7 +23,6 @@
 - (UIImage *)saturateImage:(UIImage *)image saturationAmount:(float)saturationAmount withContrast:(float)contrastAmount
 {
     UIImage *sourceImage = image;
-//    CIContext *context = [CIContext contextWithOptions:nil];
     CIFilter *filter= [CIFilter filterWithName:@"CIColorControls"];
     CIImage *inputImage = [[CIImage alloc] initWithImage:sourceImage];
     [filter setValue:inputImage forKey:@"inputImage"];
@@ -34,7 +33,6 @@
 
 - (UIImage *)vignetteWithImage:(UIImage *)image Radius:(float)inputRadius andIntensity:(float)inputIntensity
 {
-//    CIContext *context = [CIContext contextWithOptions:nil];
     CIFilter *filter = [CIFilter filterWithName:@"CIVignette"];
     CIImage *inputImage = [[CIImage alloc] initWithImage:image];
     [filter setValue:inputImage forKey:@"inputImage"];
@@ -49,7 +47,6 @@
     
     //try with different textures
     CIImage *bgCIImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:imageName]];
-//    CIContext *context = [CIContext contextWithOptions:nil];
     CIFilter *filter= [CIFilter filterWithName:blendMode];
     
     // inputBackgroundImage most be the same size as the inputImage
@@ -61,7 +58,6 @@
 - (UIImage *)curveFilterImage:(UIImage *)image
 {
     CIImage *inputImage =[[CIImage alloc] initWithImage:image];
-//    CIContext *context = [CIContext contextWithOptions:nil];
     CIFilter *filter = [CIFilter filterWithName:@"CIToneCurve"];
     [filter setDefaults];
     [filter setValue:inputImage forKey:kCIInputImageKey];
@@ -95,7 +91,7 @@
                          @"inputTargetNeutral",[CIVector vectorWithX:5000 Y:0 Z:0],
                          nil];
     CIImage *outputImageC = [filterC outputImage];
-//    CIContext *context = [CIContext contextWithOptions:nil];
+ 
     CGImageRef imageRef = [self.context createCGImage:outputImageC fromRect:outputImageC.extent];
     UIImage *newImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
     CGImageRelease(imageRef);
@@ -108,7 +104,6 @@
     
     if (index < filters.count) {
         
-//        CIContext *context = [CIContext contextWithOptions:nil];
         CIImage *ci = [[CIImage alloc] initWithImage:image];
         CIFilter *filte = [CIFilter filterWithName:filters[index]];
         [filte setValue:ci forKey:kCIInputImageKey];

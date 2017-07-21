@@ -9,6 +9,7 @@
 #import "JMFilterContent.h"
 
 @implementation JMFilterContent
+
 + (instancetype)sharedInstance {
     static dispatch_once_t onceToken;
     static JMFilterContent *ne_authorizeManager = nil;
