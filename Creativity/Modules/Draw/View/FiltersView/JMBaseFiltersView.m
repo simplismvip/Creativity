@@ -21,8 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        // @[@"CIPhotoEffectNoir", @"CIPhotoEffectTransfer", @"CIPhotoEffectTonal", @"CIPhotoEffectProcess", @"CIPhotoEffectMono", @"CIPhotoEffectInstant", @"CIPhotoEffectFade", @"CIPhotoEffectChrome", @"CIMaskToAlpha", @"CIColorPosterize", @"CIColorInvert", @"CIWhitePointAdjust", @"CISRGBToneCurveToLinear", @"CILinearToSRGBToneCurve"];
-        
+        // 33
         NSArray *array = @[
                       @{@"title":@"原图", @"image":@"FullSizeRender", @"vip":@"0"},
                       @{@"title":@"LOMO", @"image":@"FullSizeRender", @"vip":@"super-user"},
@@ -35,25 +34,28 @@
                       @{@"title":@"清宁", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"浪漫", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"光晕", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"梦幻", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"夜色", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"清宁", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"浪漫", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"光晕", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"蓝调", @"image":@"FullSizeRender", @"vip":@"0"},
                       @{@"title":@"梦幻", @"image":@"FullSizeRender", @"vip":@"0"},
-                      @{@"title":@"夜色", @"image":@"FullSizeRender", @"vip":@"super-user"}
-                      
-//                      @{@"title":@"Noir", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Transfer", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Tonal", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Process", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Mono", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Instant", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Fade", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Chrome", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Alpha", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Posterize", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Invert", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Adjust", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Linear", @"image":@"FullSizeRender"},
-//                      @{@"title":@"Curve", @"image":@"FullSizeRender"}
-                      
+                      @{@"title":@"夜色", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Noir", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Transfer", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Tonal", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Process", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Mono", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Instant", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Fade", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Chrome", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Alpha", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Posterize", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Invert", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Adjust", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Linear", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Curve", @"image":@"FullSizeRender", @"vip":@"super-user"}
                       ];
         
         NSMutableArray *arr = [NSMutableArray array];

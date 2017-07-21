@@ -9,7 +9,8 @@
 #import "JMFiltersView.h"
 #import "JMFilterItem.h"
 #import "JMFilterModel.h"
-
+#import "UIImage+Filters.h"
+#import "SDImageCache.h"
 
 @implementation JMFiltersView
 
@@ -33,9 +34,22 @@
         JMFilterModel *model = titles[i];
         JMFilterItem *subView = [[JMFilterItem alloc] init];
         
-        UIImage *origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
-        UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
-        subView.image = newimage;
+        [[SDImageCache sharedImageCache] diskImageExistsWithKey:model.title completion:^(BOOL isInCache) {
+            
+            if (isInCache) {
+                
+                subView.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:model.title];
+            }else{
+                
+                UIImage *origin = [[UIImage imageNamed:model.image] setFiltersByIndex:i];
+                UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
+                [[SDImageCache sharedImageCache] storeImage:newimage forKey:model.title completion:^{
+                    
+                    subView.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:model.title];
+                }];
+            }
+        }];
+        
         subView.title = model.title;
         subView.vip = model.vip;
         subView.tag = 200 + i;
