@@ -38,7 +38,7 @@
         return [self curveFilter];
     }else if (index == 6){
         
-        return [self gaussianBlur:10];
+        return [self gaussianBlur:5];
         
     }else if (index == 7){
         
@@ -83,7 +83,7 @@
         
     }else if (index == 15){
         
-        return [self bloom:50 inputIntensity:3];
+        return [self bloom:30 inputIntensity:0.5];
         
     }else if (index == 16){
         
@@ -169,11 +169,19 @@
     JMFilterContent *context = [JMFilterContent sharedInstance];
     CIFilter *filter = [CIFilter filterWithName:@"CIBloom"];
     CIImage *inputImage = [[CIImage alloc] initWithImage:self];
-    
     [filter setValue:inputImage forKey:@"inputImage"];
     [filter setValue:[NSNumber numberWithFloat:inputRadius] forKey:@"inputRadius"];
     [filter setValue:[NSNumber numberWithFloat:inputIntensity] forKey:@"inputIntensity"];
-    return [self imageFromContext:context withFilter:filter];
+    
+    CGRect rect = [inputImage extent];
+    rect.origin.x += (rect.size.width - self.size.width) / 2;
+    rect.origin.y = (rect.size.height - self.size.height) / 2;
+    rect.size = self.size;
+    
+    CGImageRef imageRef = [context createCGImage:[filter outputImage] fromRect:rect];
+    UIImage *image = [UIImage imageWithCGImage:imageRef scale:self.scale orientation:self.imageOrientation];
+    CGImageRelease(imageRef);
+    return image;
 }
 
 #warning 不能使用
@@ -403,7 +411,15 @@
     [filte setValue:inputImage forKey:@"inputImage"];
     [filte setValue:number forKey:@"inputRadius"];
     
-    return [self imageFromContext:context withFilter:filte];
+    CGRect rect = [inputImage extent];
+    rect.origin.x += (rect.size.width - self.size.width) / 2;
+    rect.origin.y = (rect.size.height - self.size.height) / 2;
+    rect.size = self.size;
+    
+    CGImageRef imageRef = [context createCGImage:[filte outputImage] fromRect:rect];
+    UIImage *image = [UIImage imageWithCGImage:imageRef scale:self.scale orientation:self.imageOrientation];
+    CGImageRelease(imageRef);    
+    return image;
 }
 
 - (UIImage *)saturateImage:(float)saturationAmount withContrast:(float)contrastAmount{
