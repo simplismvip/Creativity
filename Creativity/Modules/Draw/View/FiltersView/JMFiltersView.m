@@ -9,7 +9,7 @@
 #import "JMFiltersView.h"
 #import "JMFilterItem.h"
 #import "JMFilterModel.h"
-
+#import "UIImage+Filters.h"
 
 @implementation JMFiltersView
 
@@ -33,7 +33,7 @@
         JMFilterModel *model = titles[i];
         JMFilterItem *subView = [[JMFilterItem alloc] init];
         
-        UIImage *origin = [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
+        UIImage *origin = [[UIImage imageNamed:model.image] setFiltersByIndex:i]; // [UIImage returnImage:i image:[UIImage imageNamed:model.image]];
         UIImage *newimage = [origin imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
         subView.image = newimage;
         subView.title = model.title;

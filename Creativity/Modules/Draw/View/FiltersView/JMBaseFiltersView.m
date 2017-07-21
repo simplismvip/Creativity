@@ -23,6 +23,7 @@
         
         // @[@"CIPhotoEffectNoir", @"CIPhotoEffectTransfer", @"CIPhotoEffectTonal", @"CIPhotoEffectProcess", @"CIPhotoEffectMono", @"CIPhotoEffectInstant", @"CIPhotoEffectFade", @"CIPhotoEffectChrome", @"CIMaskToAlpha", @"CIColorPosterize", @"CIColorInvert", @"CIWhitePointAdjust", @"CISRGBToneCurveToLinear", @"CILinearToSRGBToneCurve"];
         
+        // 33
         NSArray *array = @[
                       @{@"title":@"原图", @"image":@"FullSizeRender", @"vip":@"0"},
                       @{@"title":@"LOMO", @"image":@"FullSizeRender", @"vip":@"super-user"},
@@ -32,6 +33,25 @@
                       @{@"title":@"锐化", @"image":@"FullSizeRender", @"vip":@"0"},
                       @{@"title":@"淡雅", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"酒红", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"清宁", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"浪漫", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"光晕", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"蓝调", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"梦幻", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"夜色", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"清宁", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"浪漫", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"光晕", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"蓝调", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"梦幻", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"夜色", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"酒红", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"清宁", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"浪漫", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"光晕", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"蓝调", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"梦幻", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"夜色", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"清宁", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"浪漫", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"光晕", @"image":@"FullSizeRender", @"vip":@"super-user"},

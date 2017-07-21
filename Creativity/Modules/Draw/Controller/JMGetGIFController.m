@@ -24,6 +24,7 @@
 #import "JMEditerController.h"
 #import "TZImageManager.h"
 #import "JMPhotosAlertView.h"
+#import "UIImage+Filters.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate, JMPhotosAlertViewDelegate>
 {
@@ -217,6 +218,7 @@
     [self.showFps setTitle:[NSString stringWithFormat:@"%ld 秒", (NSInteger)(progress*_images.count)] forState:(UIControlStateNormal)];
 }
 
+#pragma mark -- 添加滤镜效果
 - (void)filtersDidSelectRowAtIndexPath:(NSInteger)index isVip:(BOOL)isVip
 {
     if ([JMBuyHelper isVip]) {
@@ -230,7 +232,7 @@
             NSMutableArray *newImages = [NSMutableArray array];
             for (UIImage *originImage in _images) {
                 
-                UIImage *filterImage = [UIImage returnImage:index image:originImage];
+                UIImage *filterImage = [originImage setFiltersByIndex:index]; //[UIImage returnImage:index image:originImage];
                 [newImages addObject:filterImage];
             }
             
