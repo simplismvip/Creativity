@@ -57,7 +57,7 @@
 - (void)setImage:(UIImage *)image
 {
     _image = image;
-    [_filterBtn setImage:image forState:(UIControlStateNormal)];
+    [_filterBtn setImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:(UIControlStateNormal)];
 }
 
 - (void)setTitle:(NSString *)title
@@ -69,7 +69,7 @@
 - (void)setVip:(NSString *)vip
 {
     _vip = vip;
-    _vipView.image = [UIImage imageNamed:vip];
+    _vipView.image = [UIImage imageWithRenderingName:vip];
     _vipView.hidden = NO;
 }
 

@@ -13,5 +13,5 @@ typedef void(^emojiBlock)(JMSubImageModel *model);
 
 @interface JMSelectEmojiView : UIView
 @property (nonatomic, copy) emojiBlock modelBlock;
-- (void)reloadData:(NSMutableArray *)data;
+//- (void)reloadData:(NSMutableArray *)data;
 @end
