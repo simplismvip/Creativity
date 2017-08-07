@@ -21,7 +21,8 @@
 "gif.base.alert.picLessTen"="Non VIP users add up to 10 photos";
 "gif.base.alert.NoChiosePicAndQuit"="No choose photos, whether to quit?";
 "gif.base.alert.moreThanTwo"="The number of photos must be greater than 1";
-"gif.base.alert.fileNotSave"="The file is not saved. Do you want to quit?";
+"gif.base.alert.fileNotSave"="The file is not saved, Do you want to quit?";
+"gif.base.alert.fileNotSaveOrNot"="The file is not saved, Do you want to save?";
 
 // home
 "gif.home.navigation.title"="Animation";
@@ -33,6 +34,7 @@
 "gif.home.VC.title.CameraRoll"="Camera Roll";
 "gif.home.VC.title.gifAlbum"="GIF Album";
 "gif.home.VC.title.brust"="Brust";
+"gif.home.VC.title.livephotos"="Live Photo";
 
 // set
 "gif.set.navigation.title"="Settings";

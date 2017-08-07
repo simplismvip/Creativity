@@ -10,6 +10,7 @@
 
 typedef void(^frameChange)(NSInteger index);
 @interface JMGIFAnimationView : UIView
+@property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, strong) NSArray *imageSource;
 @property (nonatomic, assign) CGFloat delayer;
 @property (nonatomic, copy) frameChange frameChange;

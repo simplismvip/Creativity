@@ -39,7 +39,6 @@
         if (![JMBuyHelper isVip]) {
             
             UIImageView *vip = [[UIImageView alloc] init];
-            vip.hidden = YES;
             [self addSubview:vip];
             self.vipView = vip;
         }
@@ -57,7 +56,7 @@
 - (void)setImage:(UIImage *)image
 {
     _image = image;
-    [_filterBtn setImage:image forState:(UIControlStateNormal)];
+    [_filterBtn setImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:(UIControlStateNormal)];
 }
 
 - (void)setTitle:(NSString *)title
@@ -69,8 +68,7 @@
 - (void)setVip:(NSString *)vip
 {
     _vip = vip;
-    _vipView.image = [UIImage imageNamed:vip];
-    _vipView.hidden = NO;
+    _vipView.image = [UIImage imageWithRenderingName:vip];
 }
 
 - (void)setTinColor:(UIColor *)tinColor
@@ -85,9 +83,9 @@
 {
     [super layoutSubviews];
     
-    _vipView.frame = CGRectMake(self.width-13, 3, 10, 10);
-    _filterBtn.frame = CGRectMake(0, 0, self.width, self.height-12);
-    _btnTitle.frame = CGRectMake(0, CGRectGetMaxY(_filterBtn.frame), self.width, 10);
+    _vipView.frame = CGRectMake(self.width-13, 3, 15, 15);
+    _filterBtn.frame = CGRectMake(0, 0, self.width, self.height);
+//    _btnTitle.frame = CGRectMake(0, CGRectGetMaxY(_filterBtn.frame), self.width, 10);
 }
 
 /*

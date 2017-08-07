@@ -19,6 +19,7 @@
 "gif.base.alert.NoChiosePicAndQuit"="並未選擇任何照片，是否退出？";
 "gif.base.alert.moreThanTwo"="照片數量必須大於1 !";
 "gif.base.alert.fileNotSave" = "檔案未保存，是否退出";
+"gif.base.alert.fileNotSaveOrNot"="檔案未保存, 是否保存?";
 
 // home
 "gif.home.navigation.title"="我的動畫";
@@ -31,6 +32,7 @@
 "gif.base.alert.getVIP"="獲取VIP";
 "gif.base.alert.Addpic"="繼續添加";
 "gif.home.VC.title.brust"="连拍快照";
+"gif.home.VC.title.livephotos"="Live Photo";
 
 // set
 "gif.set.navigation.title"="設置";

@@ -64,17 +64,7 @@
     if (self.filter) {
     
         JMFilterModel *model = _titles[sender.tag-200];
-        
-        BOOL isVip;
-        if ([model.vip isEqualToString:@"super-user"]) {
-            
-            isVip = YES;
-        }else{
-        
-            isVip = NO;
-        }
-        
-        self.filter(sender.tag-200, isVip);
+        self.filter(sender.tag-200, [model.vip isEqualToString:@"super-user"]);
     }
 }
 
@@ -83,7 +73,7 @@
     [super layoutSubviews];
     NSInteger count = self.subviews.count;
     CGFloat m = 5;
-    CGFloat h = self.bounds.size.height;
+    CGFloat h = self.height;
     CGFloat w = (self.contentSize.width-(count+1)*m)/count;
     
     int index = 0;

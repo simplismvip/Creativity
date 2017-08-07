@@ -24,9 +24,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.dataSource = [NSMutableArray array];
         NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"json"];
         NSArray *emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
-        self.dataSource = [NSMutableArray array];
         for (NSDictionary *dic in emojis) {[self.dataSource addObject:[JMSubImageModel objectWithDictionary:dic]];}
         [self addSubview:self.collection];
     }
@@ -52,7 +52,6 @@
         collection.dataSource = self;
         collection.delegate = self;
         collection.showsVerticalScrollIndicator = NO;
-        [self addSubview:collection];
         self.collection = collection;
     }
     

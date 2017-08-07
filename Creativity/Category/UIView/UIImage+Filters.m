@@ -46,16 +46,13 @@
         
     }else if (index == 8){
         
-        return [self curveFilter];
-    }else if (index == 9){
-        
         return [self temperatureAndTint:3000 inputTargetNeutral:100];
         
-    }else if (index == 10){
+    }else if (index == 9){
         
         return [self whitePointAdjust:[CIColor colorWithRed:255.0/255.0 green:247.0/255.0 blue:196.0/255.0]];
         
-    }else if (index == 11){
+    }else if (index == 10){
         
         const CGFloat reds[] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         CIVector *red = [CIVector vectorWithValues:reds count:10];
@@ -68,37 +65,37 @@
         
         return [self colorCrossPolynomial:red greenCoefficients:green blueCoefficients:blue];
         
-    }else if (index == 12){
+    }else if (index == 11){
         
         return [self sepiaTones:1];
         
-    }else if (index == 13){
+    }else if (index == 12){
         
-        UIImage *imaNew = [UIImage imageNamed:@"001"];
+        UIImage *imaNew = [UIImage imageNamed:@"text"];
         return [self colorMap:imaNew];
         
-    }else if (index == 14){
+    }else if (index == 13){
         
         return [self falseColor:[CIColor colorWithRed:100.0/255.0 green:100.0/255.0 blue:100.0/255.0] color2:[CIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0]];
         
-    }else if (index == 15){
+    }else if (index == 14){
         
         return [self bloom:30 inputIntensity:0.5];
         
-    }else if (index == 16){
+    }else if (index == 15){
         
         return [self edges:1.5];
-    }else if (index == 17){
+    }else if (index == 16){
         
         return [self highlightShadowAdjust:.5 shadowAmount:-.7];
         
-    }else if (index == 18){
+    }else if (index == 17){
         
         return [self lineOverlay:0.1 sharpness:0.9 intensity:1.0 threshold:0.2 ontrast:10.0];
         
     }else {
         
-        return [self defaultFilter:index-20];
+        return [self defaultFilter:index-19];
     }
 }
 
@@ -528,7 +525,7 @@
 // 14
 - (UIImage *)defaultFilter:(NSInteger)index
 {
-    NSArray *filters = @[@"CIPhotoEffectNoir", @"CIPhotoEffectTransfer", @"CIPhotoEffectTonal", @"CIPhotoEffectProcess", @"CIPhotoEffectMono", @"CIPhotoEffectInstant", @"CIPhotoEffectFade", @"CIPhotoEffectChrome", @"CIMaskToAlpha", @"CIColorPosterize", @"CIColorInvert", @"CIWhitePointAdjust", @"CISRGBToneCurveToLinear", @"CILinearToSRGBToneCurve"];
+    NSArray *filters = @[@"CIPhotoEffectNoir", @"CIPhotoEffectTransfer", @"CIPhotoEffectProcess", @"CIPhotoEffectMono", @"CIPhotoEffectInstant", @"CIPhotoEffectFade", @"CIPhotoEffectChrome", @"CIMaskToAlpha", @"CIColorPosterize", @"CIColorInvert", @"CIWhitePointAdjust", @"CISRGBToneCurveToLinear", @"CILinearToSRGBToneCurve"];
     
     if (index < filters.count) {
         

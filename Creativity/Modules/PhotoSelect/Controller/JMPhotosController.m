@@ -15,6 +15,7 @@
 #import "JMGetGIFController.h"
 #import "JMGifView.h"
 #import "JMFileManger.h"
+#import "NSGIF.h"
 
 @interface JMPhotosController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -143,7 +144,7 @@ static NSString *const collectionID = @"cell";
         
         if (!cell.isSelect) {
             
-            if (_selectSource.count<31) {
+            if (_selectSource.count<21) {
             
                 [self.selectSource addObject:model];
                 model.index = _selectSource.count;
@@ -151,10 +152,7 @@ static NSString *const collectionID = @"cell";
 
                 [[TZImageManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
             
-                    if (!isDegraded) {
-                        
-                        model.image = [photo drawRectNewImage];
-                    }
+                    if (!isDegraded) {model.image = [photo drawRectNewImage];}
                 }];
             }else{
             
@@ -190,8 +188,31 @@ static NSString *const collectionID = @"cell";
         
     }else if (self.type == 1){
     
-        TZAssetModel *model = self.models[indexPath.row];
-        model.type = TZAssetModelMediaTypeLivePhoto;
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+        
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            
+            TZAssetModel *model = self.models[indexPath.row];
+            model.type = TZAssetModelMediaTypeLivePhoto;
+            [[TZImageManager manager] getAllLivePhotosCompletion:model gifData:^(NSData *data) {
+                
+                UIImage *images = [UIImage jm_animatedGIFWithData:data];
+                JMGetGIFController *GIF = [[JMGetGIFController alloc] init];
+                NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+                [JMFileManger creatDir:gifPath];
+                GIF.filePath = [gifPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.gif", [JMHelper timerString]]];
+                GIF.delayTime = images.duration/images.images.count;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [hud hideAnimated:YES];
+                    GIF.imagesFromDrawVC = [images.images mutableCopy];
+                    [self.navigationController pushViewController:GIF animated:YES];
+                });
+            }];
+        });
         
     }else if (self.type == 2){
         

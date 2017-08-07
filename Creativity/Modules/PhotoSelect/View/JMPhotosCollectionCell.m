@@ -13,6 +13,7 @@
 
 @interface JMPhotosCollectionCell()
 @property (nonatomic, strong) UILabel *className;
+@property (nonatomic, strong) UIImageView *classImageTpye;
 @end
 
 @implementation JMPhotosCollectionCell
@@ -28,6 +29,12 @@
         _classImage.contentMode = UIViewContentModeScaleAspectFill;
         _classImage.clipsToBounds = YES;
         [self.contentView addSubview:_classImage];
+        
+        _classImageTpye = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _classImageTpye.contentMode = UIViewContentModeScaleAspectFill;
+        _classImageTpye.clipsToBounds = YES;
+        _classImageTpye.tintColor = JMColor(217, 51, 58);
+        [self.contentView addSubview:_classImageTpye];
         
         _className = [[UILabel alloc] initWithFrame:CGRectZero];
         _className.alpha = 0.5;
@@ -48,6 +55,7 @@
 {
     [super layoutSubviews];
     _classImage.frame = self.bounds;
+    _classImageTpye.frame = CGRectMake(5, self.height-25, 20, 20);
     _className.frame = self.bounds;
 }
 
@@ -58,8 +66,11 @@
     _className.text = [NSString stringWithFormat:@"%ld", model.index];
     _className.hidden = model.isHide;
     PHAsset *asset = (PHAsset *)model.asset;
+<<<<<<< HEAD
     
     JMSelf(ws);
+=======
+>>>>>>> bc93d9bd49b0860b4fbc43fd3b51a4dd96cbc0b8
     [[SDImageCache sharedImageCache] diskImageExistsWithKey:asset.localIdentifier completion:^(BOOL isInCache) {
     
         if (isInCache) {
@@ -77,6 +88,27 @@
             }];
         }
     }];
+    
+    if (model.type == TZAssetModelMediaTypeLivePhoto) {
+        
+        _classImageTpye.image = [UIImage imageWithRenderingName:@"PhotosLivePrefsHeader"];
+        
+    }else if (model.type == TZAssetModelMediaTypeBursts){
+        
+        _classImageTpye.image = [UIImage imageWithRenderingName:@"icons8-layers"];
+        
+    }else if (model.type == TZAssetModelMediaTypeGIF){
+        
+        _classImageTpye.image = [UIImage imageWithRenderingName:@"gif"];
+        
+    }else if (model.type == TZAssetModelMediaTypeVideo){
+        
+        _classImageTpye.image = [UIImage imageWithRenderingName:@"navbar_video_icon_disabled_black"];
+        
+    }else if (model.type == TZAssetModelMediaTypePhoto){
+        
+        _classImageTpye.image = [UIImage imageWithRenderingName:@"icons8-add_image"];
+    }
 }
 
 @end

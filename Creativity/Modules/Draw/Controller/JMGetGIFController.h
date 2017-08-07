@@ -15,11 +15,4 @@
 @property (nonatomic, strong) NSMutableArray *images;
 @property (nonatomic, strong) NSMutableArray *imagesFromDrawVC;
 @property (nonatomic, strong) NSMutableArray *imagesFromHomeVC;
-
 @end
-/*
- navbar_note_icon_disabled_white
- navbar_palette_icon_black
-
- 
- */

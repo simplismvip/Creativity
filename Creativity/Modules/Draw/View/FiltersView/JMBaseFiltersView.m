@@ -23,15 +23,14 @@
         
         // 33
         NSArray *array = @[
-                      @{@"title":@"原图", @"image":@"FullSizeRender", @"vip":@"0"},
-                      @{@"title":@"LOMO", @"image":@"FullSizeRender", @"vip":@"super-user"},
-                      @{@"title":@"黑白", @"image":@"FullSizeRender", @"vip":@"0"},
-                      @{@"title":@"复古", @"image":@"FullSizeRender", @"vip":@"super-user"},
-                      @{@"title":@"哥特", @"image":@"FullSizeRender", @"vip":@"0"},
-                      @{@"title":@"锐化", @"image":@"FullSizeRender", @"vip":@"0"},
-                      @{@"title":@"淡雅", @"image":@"FullSizeRender", @"vip":@"super-user"},
-                      @{@"title":@"酒红", @"image":@"FullSizeRender", @"vip":@"super-user"},
-                      @{@"title":@"清宁", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Brightnes", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"Brightnes-h", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"Vignette", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"ScreenBlend", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"SoftLight", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"ToneCurve", @"image":@"FullSizeRender", @"vip":@"0"},
+                      @{@"title":@"GaussianBlu", @"image":@"FullSizeRender", @"vip":@"super-user"},
+                      @{@"title":@"HueAdjust", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"浪漫", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"光晕", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"梦幻", @"image":@"FullSizeRender", @"vip":@"0"},
@@ -44,7 +43,6 @@
                       @{@"title":@"夜色", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"Noir", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"Transfer", @"image":@"FullSizeRender", @"vip":@"super-user"},
-                      @{@"title":@"Tonal", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"Process", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"Mono", @"image":@"FullSizeRender", @"vip":@"super-user"},
                       @{@"title":@"Instant", @"image":@"FullSizeRender", @"vip":@"super-user"},
@@ -79,7 +77,7 @@
         
         filter.tinColor = [UIColor redColor];
         filter.titles = [arr copy];
-        filter.contentSize = CGSizeMake(70*array.count, 65);
+        filter.contentSize = CGSizeMake(60*array.count, 50);
         [self addSubview:filter];
         self.filter = filter;
         
@@ -99,7 +97,7 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
      
-        self.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, self.bounds.size.width, 90);
+        self.frame = CGRectMake(0, kH, kW, 50);
         
     } completion:^(BOOL finished) {
         
@@ -114,7 +112,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _filter.frame = CGRectMake(0, 0, self.bounds.size.width, 65);
+    _filter.frame = CGRectMake(0, 10, self.bounds.size.width, 55);
     _button.frame = CGRectMake(self.bounds.size.width/2-22, CGRectGetMaxY(_filter.frame)+10, 44, 20);
 }
 

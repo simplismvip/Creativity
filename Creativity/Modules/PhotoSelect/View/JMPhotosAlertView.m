@@ -66,9 +66,7 @@
     int i = 0;
     for (UIView *view in self.subviews) {
         
-        CGFloat y;
-        if (i<self.subviews.count-1) {y = (alertHeight+1)*i;
-        }else{y = self.height-alertHeight;}
+        CGFloat y = i<self.subviews.count-1 ? (alertHeight+1)*i : self.height-alertHeight;
         view.frame = CGRectMake(0, y, kW, alertHeight);
         i ++;
     }

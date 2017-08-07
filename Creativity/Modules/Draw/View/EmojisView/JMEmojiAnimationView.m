@@ -36,13 +36,7 @@
         JMSelectEmojiView *emojiView = [[JMSelectEmojiView alloc] initWithFrame:CGRectMake(20, 120, kW-40, kH*0.6)];
         emojiView.modelBlock = ^(id model) {if (self.animationBlock) {self.animationBlock(model);}};
         [self addSubview:emojiView];
-        
         self.emojiView = emojiView;
-        NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"json"];
-        NSArray *emojis = [JMHelper readJsonByPath:jsonPath][@"emoji"];
-        NSMutableArray *data = [NSMutableArray array];
-        for (NSDictionary *dic in emojis) {[data addObject:[JMSubImageModel objectWithDictionary:dic]];}
-        [emojiView reloadData:data];
 
     }
     return self;
@@ -50,7 +44,7 @@
 
 - (void)closeView:(UIButton *)sender
 {
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         
         _emojiView.alpha = 0.0;
         sender.transform = CGAffineTransformMakeRotation(M_PI);
