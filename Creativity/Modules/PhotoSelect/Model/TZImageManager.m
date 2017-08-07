@@ -9,6 +9,7 @@
 #import "TZImageManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "TZAssetModel.h"
+#import "NSGIF.h"
 
 #define iOS7Later ([UIDevice currentDevice].systemVersion.floatValue >= 7.0f)
 #define iOS8Later ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
@@ -103,6 +104,30 @@
     }];
 }
 
+- (void)getAllLivePhotosCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
+    
+    [[PHImageManager defaultManager] requestLivePhotoForAsset:model.asset targetSize:CGSizeMake(100, 100) contentMode:(PHImageContentModeAspectFit) options:nil resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
+        
+        if (info[PHImageResultIsDegradedKey]) {
+        
+            NSArray *resourceArray = [PHAssetResource assetResourcesForLivePhoto:livePhoto];
+            NSURL *videoURL = [[NSURL alloc] initFileURLWithPath:[JMCachePath stringByAppendingPathComponent:@"Image.mov"]];
+            
+            [[PHAssetResourceManager defaultManager] writeDataForAssetResource:resourceArray[1] toFile:videoURL options:nil completionHandler:^(NSError * _Nullable error)
+             {
+                 [NSGIF optimalGIFfromURL:videoURL loopCount:0 completion:^(NSURL *GifURL) {
+                     
+                     if (gifData) {
+                         
+                         NSData *imageData=[NSData dataWithContentsOfURL:GifURL];
+                         gifData(imageData);
+                     }
+                 }];
+             }];
+        }
+    }];
+}
+
 - (void)creatLIvePhotos:(NSArray *)urls playhold:(UIImage *)image livePhoto:(void (^)(PHLivePhoto *livephoto))livephoto
 {
     [PHLivePhoto requestLivePhotoWithResourceFileURLs:urls placeholderImage:image targetSize:image.size contentMode:(PHImageContentModeAspectFit) resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
@@ -112,17 +137,29 @@
 }
 
 /// Get Album livePhoto
-- (void)getAllLivePhotosCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
+- (void)getAllLivePhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion
+{
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
-    PHImageRequestOptions *options = [PHImageRequestOptions new];
-    options.resizeMode = PHImageRequestOptionsResizeModeFast;
-    options.synchronous = YES;
-    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+    PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    NSMutableArray *models = [NSMutableArray array];
+    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if (gifData) {
-            gifData(imageData);
+        PHAsset *asset = (PHAsset *)obj;
+        
+        // 获取livePhotos
+        if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
+        
+            TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeLivePhoto];
+            [models addObject:model];
         }
     }];
+    
+    if (completion) {
+        
+        completion([models copy]);
+    }
 }
 
 /// Get Album 获得相册/相册数组
@@ -862,28 +899,3 @@
 }
 
 @end
-
-/*
- // 获取系统相册GIF方法
- //    [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
- //
- //        [self getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
- //
- //            NSMutableArray *gifs = [NSMutableArray array];
- //            for (TZAssetModel *model in models) {
- //
- //                NSArray *resourceList = [PHAssetResource assetResourcesForAsset:model.asset];
- //                [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
- //                    PHAssetResource *resource = obj;
- //                    if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
- //
- //                        [gifs addObject:model];
- //                    }
- //                }];
- //            }
- //
- //            if (completion) {completion(gifs);}
- //        }];
- //    }];
- */
-

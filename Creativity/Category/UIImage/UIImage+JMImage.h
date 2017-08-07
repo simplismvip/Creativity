@@ -9,14 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (JMImage)
-
-/**
- *  旋转
- *
- *  @param degrees 需要旋转的视图
- *
- */
-- (UIImage *)imageRotatedByDegrees:(CGFloat)degrees;
 /**
  *  创建一个内容可拉伸，而边角不拉伸的图片
  *

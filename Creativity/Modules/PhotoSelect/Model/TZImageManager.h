@@ -49,7 +49,7 @@
 /// 
 - (void)getBurstsAlbumCompletion:(TZAssetModel *)model gifData:(void (^)(NSMutableArray *))brustData;
 - (void)getAllGifCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *gifData))gifData;
-// - (void)getAllLivePhotosCompletion:(void (^)(TZAlbumModel *))completion;
+- (void)getAllLivePhotosCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData;
 
 // 生成livePhoto
 - (void)creatLIvePhotos:(NSArray *)urls playhold:(UIImage *)image livePhoto:(void (^)(PHLivePhoto *livephoto))livephoto;
@@ -58,8 +58,11 @@
 - (void)getAllGifCompletion:(void (^)(NSMutableArray<TZAssetModel *> *models))completion;
 - (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
 - (void)getAllBrustCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
+- (void)getAllLivePhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion;
 
 // 获取应用名字, 创建相册
 - (void)saveGifOrVideoToMyAlbum:(NSString *)path isPhoto:(BOOL)isPhoto completion:(void (^)(BOOL isSuccess))isSuccess;
+
+-(void)convertVideoToGif:(NSURL*)fileURL;
 
 @end

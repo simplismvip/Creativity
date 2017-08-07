@@ -21,6 +21,7 @@
 "gif.base.alert.NoChiosePicAndQuit"="并未选择任何照片，是否退出?";
 "gif.base.alert.moreThanTwo"="照片数量必须大于1 !";
 "gif.base.alert.fileNotSave"="文件未保存, 是否退出?";
+"gif.base.alert.fileNotSaveOrNot"="文件未保存, 是否保存?";
 
 // home
 "gif.home.navigation.title"="我的动画";
@@ -31,6 +32,7 @@
 "gif.home.VC.title.gifAlbum"="GIF 相册";
 "gif.home.VC.title.gifBoart"="我的画板";
 "gif.home.VC.title.brust"="连拍快照";
+"gif.home.VC.title.livephotos"="Live Photo";
 
 // set
 "gif.set.navigation.title"="设置";

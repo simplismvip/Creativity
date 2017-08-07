@@ -208,6 +208,7 @@ static NSString *const collectionID = @"cell";
                        NSLocalizedString(@"gif.home.bottom.alert.album", ""),
                        NSLocalizedString(@"gif.home.bottom.alert.gif", ""),
                        NSLocalizedString(@"gif.home.VC.title.brust", ""),
+                       NSLocalizedString(@"gif.home.VC.title.livephotos", ""),
                        NSLocalizedString(@"gif.base.alert.cancle", "")];
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
     alert.titles = array;
@@ -277,15 +278,15 @@ static NSString *const collectionID = @"cell";
             [[TZImageManager manager] getAllGifCompletion:^(NSMutableArray<TZAssetModel *> *models) {
                 
                 photos.models = [models copy];
-            }];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
                 
-                [hud hideAnimated:YES];
-                photos.title = NSLocalizedString(@"gif.home.VC.title.gifAlbum", "");
-                JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
-                [self presentViewController:nav animated:YES completion:nil];
-            });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [hud hideAnimated:YES];
+                    photos.title = NSLocalizedString(@"gif.home.VC.title.gifAlbum", "");
+                    JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+                    [self presentViewController:nav animated:YES completion:nil];
+                });
+            }];
         });
         
     }else if (sourceType == 203){
@@ -294,6 +295,18 @@ static NSString *const collectionID = @"cell";
         photos.title = NSLocalizedString(@"gif.home.VC.title.brust", "");
         photos.type = ImageTypePhotoBursts;
         [[TZImageManager manager] getAllBrustCompletion:^(NSArray<TZAssetModel *> *models) {
+            
+            photos.models = models;
+            JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+            [self presentViewController:nav animated:YES completion:nil];
+        }];
+        
+    }else if (sourceType == 204){
+        
+        JMPhotosController *photos = [[JMPhotosController alloc] init];
+        photos.title = NSLocalizedString(@"gif.home.VC.title.livephotos", "");
+        photos.type = ImageTypePhotoLivePhoto;
+        [[TZImageManager manager] getAllLivePhotosCompletion:^(NSArray<TZAssetModel *> *models) {
             
             photos.models = models;
             JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];

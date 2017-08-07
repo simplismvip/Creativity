@@ -12,10 +12,10 @@
 #import "JMDrawViewController.h"
 #import "JMMainNavController.h"
 #import <UMMobClick/MobClick.h>
+#import <UShareUI/UShareUI.h>
 #import "JMFileManger.h"
 #import "UIImage+JMImage.h"
 #import "JMGetGIFBottomView.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "JMFilterItem.h"
 #import "JMButtom.h"
 #import "JMFrameView.h"
@@ -25,13 +25,17 @@
 #import "TZImageManager.h"
 #import "JMPhotosAlertView.h"
 #import "UIImage+Filters.h"
+#import "UIViewController+BackButtonHandler.h"
+#import "UIImage+Rotate.h"
 
-@interface JMGetGIFController ()<JMGetGIFBottomViewDelegate, JMPhotosAlertViewDelegate>
+@interface JMGetGIFController ()<JMGetGIFBottomViewDelegate, JMPhotosAlertViewDelegate, UMSocialShareMenuViewDelegate>
 {
     NSTimer *_aniTimer;
     BOOL _pause;
     BOOL _isSave;
+    CGFloat rotation;
 }
+
 @property (nonatomic, weak) UIButton *showFps;
 @property (nonatomic, weak) JMFrameView *frameView;
 @property (nonatomic, weak) JMGIFAnimationView *animationView;
@@ -55,8 +59,7 @@
     
     _bsae.sliderA.value = _animationView.delayer;
     
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
 }
 
@@ -81,11 +84,7 @@
     JMGIFAnimationView *aniView = [[JMGIFAnimationView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width)];
     aniView.backgroundColor = [UIColor whiteColor];
     aniView.center = self.view.center;
-    aniView.frameChange = ^(NSInteger index) {
-        
-        [ws.frameView refrashLocation:index];
-    };
-    
+    aniView.frameChange = ^(NSInteger index) {[ws.frameView refrashLocation:index];};
     aniView.imageSource = [_images copy];
     [self.view addSubview:aniView];
     self.animationView = aniView;
@@ -100,7 +99,7 @@
     
     // 底部菜单显示
     JMGetGIFBottomView *bsae = [[JMGetGIFBottomView alloc] initWithFrame:CGRectMake(0, kH, kW, 74)];
-    bsae.subViews = @[@"filters", @"navbar_video_icon_disabled_black", @"gif", @"PhotosLivePrefsHeader", @"navbar_pause_icon_black", @"turnaroundback", @"turnaroundgo"];
+    bsae.subViews = @[@"filters", @"navbar_video_icon_disabled_black", @"gif", @"navbar_pause_icon_black", @"turnaroundback", @"turnaroundgo"];
     bsae.delegate = self;
     [self.view addSubview:bsae];
     self.bsae = bsae;
@@ -118,6 +117,10 @@
     showFps.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.7];
     [self.view addSubview:showFps];
     self.showFps = showFps;
+    
+    //设置用户自定义的平台
+    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
+    [UMSocialUIManager setShareMenuViewDelegate:self];
 }
 
 #pragma mark -- drawVC界面进入
@@ -144,23 +147,28 @@
 // 创作选项弹出，保存第一次生成GIF文件
 - (void)Done:(UIBarButtonItem *)done
 {
-    if (_isSave) {
-       
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    }else{
+    _isSave ? [self.navigationController dismissViewControllerAnimated:YES completion:nil] : [self showAlert];
+}
+
+- (BOOL)navigationShouldPopOnBackButton
+{
+    if (!_isSave) {[self showAlert];}
+    return YES;
+}
+
+- (void)showAlert
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.fileNotSave", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
     
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.fileNotSave", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *buyVip = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.sure", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         
-        UIAlertAction *buyVip = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.sure", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        }];
-        
-        UIAlertAction *cancle = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil];
-        [alertController addAction:cancle];
-        [alertController addAction:buyVip];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
+        _imagesFromHomeVC ? [self.navigationController popViewControllerAnimated:YES] : [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil];
+    [alertController addAction:cancle];
+    [alertController addAction:buyVip];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 // 1> 开始编辑
@@ -194,8 +202,6 @@
 #pragma mark -- JMGetGIFBottomViewDelegate
 - (void)changeValue:(CGFloat)value
 {
-    NSLog(@"%f", value);
-    
     _delayTime = value;
     _animationView.delayer = value;
     
@@ -226,14 +232,12 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
         hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-        
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
             NSMutableArray *newImages = [NSMutableArray array];
             for (UIImage *originImage in _images) {
                 
-                UIImage *filterImage = [originImage setFiltersByIndex:index]; //[UIImage returnImage:index image:originImage];
-                [newImages addObject:filterImage];
+                [newImages addObject:[originImage setFiltersByIndex:index]];
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -243,9 +247,7 @@
                 _animationView.imageSource = [newImages copy];
             });
         });
-        
     }else{
-    
         if (isVip) {
             
             JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
@@ -257,14 +259,13 @@
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
             hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-            
+        
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                 
                 NSMutableArray *newImages = [NSMutableArray array];
                 for (UIImage *originImage in _images) {
                     
-                    UIImage *filterImage = [UIImage returnImage:index image:originImage];
-                    [newImages addObject:filterImage];
+                    [newImages addObject:[originImage setFiltersByIndex:index]];
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -282,7 +283,6 @@
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
     if (index == 1){
-    
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
         hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
@@ -292,7 +292,7 @@
             NSString *videoPath = [self.filePath stringByReplacingOccurrencesOfString:@"gif" withString:@"mp4"];
             
             // 总时间
-            [JMMediaHelper saveImagesToVideoWithImages:_images fps:1/_delayTime+1 andVideoPath:videoPath completed:^(NSString *filePath) {
+            [JMMediaHelper saveImagesToVideoWithImages:[self ramoteImage:_images] fps:1/_delayTime+1 andVideoPath:videoPath completed:^(NSString *filePath) {
                 
                 [[TZImageManager manager] saveGifOrVideoToMyAlbum:filePath isPhoto:NO completion:^(BOOL isSuccess) {
                     
@@ -311,6 +311,7 @@
                             [hud hideAnimated:YES afterDelay:1.5f];
                             [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
                             _isSave = YES;
+                            [self showShare];
 
                         }else{
                             
@@ -335,7 +336,7 @@
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
-            [JMMediaHelper makeAnimatedGIF:_filePath images:_images delayTime:_delayTime];
+            [JMMediaHelper makeAnimatedGIF:_filePath images:[self ramoteImage:_images] delayTime:_delayTime];
             [[TZImageManager manager] saveGifOrVideoToMyAlbum:_filePath isPhoto:YES completion:^(BOOL isSuccess) {
              
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -348,35 +349,14 @@
                     hud.label.text = NSLocalizedString(@"gif.base.alert.done", "");
                     [hud hideAnimated:YES afterDelay:1.5f];
                     _isSave = YES;
+                    [self showShare];
                 });
             }];
         });
         
     }else if (index == 3){
         
-        NSMutableArray *urls = [NSMutableArray array];
-        for (UIImage *image in _images) {
-            
-            NSData *data = UIImagePNGRepresentation(image);
-            NSString *cache = [NSString stringWithFormat:@"%@/%@.png", JMCachePath, [JMHelper timerString]];
-            [data writeToFile:cache atomically:YES];
-            [urls addObject:[NSURL fileURLWithPath:cache]];
-        }
-        
-        
-        [[TZImageManager manager] creatLIvePhotos:[urls copy] playhold:_images.firstObject livePhoto:^(PHLivePhoto *livephoto) {
-            
-            //            [[TZImageManager manager] saveGifOrVideoToMyAlbum:_filePath isPhoto:NO completion:^(BOOL isSuccess) {
-            //
-            //                NSLog(@"%d", isSuccess);
-            //            }];
-            
-        }];
-        
-    }else if (index == 4){
-        
         UIButton *btn = [self.bsae viewWithTag:index+200];
-        
         if (_pause) {
             
             [btn setImage:[UIImage imageNamed:@"navbar_pause_icon_black"] forState:(UIControlStateNormal)];
@@ -389,46 +369,41 @@
         
         _pause = !_pause;
         
+    }else if (index == 4){
+        
+        rotation += 90;
+        _animationView.transform = CGAffineTransformMakeRotation(rotation*M_PI / 180.0);
+        
     }else if (index == 5){
-    
-        // _imageView.transform = CGAffineTransformMakeScale(1, -1);
         
-    }else if (index == 6){
-        
-        NSArray *array;
-        if ([JMBuyHelper isVip]) {array = @[@"分享微信", @"保存到相册", @"取消"];
-        }else{array = @[@"去水印", @"分享微信", @"保存到相册", @"取消"];}
-        
-        JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
-        alert.titles = array;
-        alert.delegate = self;
-        UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
-        UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
-        [window addSubview:backView];
-        [backView addSubview:alert];
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            
-            backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-            alert.frame = CGRectMake(0, kH-(10+alertHeight*array.count), kW, 10+alertHeight*array.count);
-        }];
-        
-        // _imageView.transform = CGAffineTransformMakeScale(1, -1);
+        rotation -= 90;
+        _animationView.transform = CGAffineTransformMakeRotation(rotation*M_PI / 180.0);
     }
+}
+
+- (void)showShare
+{
+    NSArray *array = [JMBuyHelper isVip] ? @[@"分享", @"取消"]: @[@"去水印", @"分享", @"取消"];
+    JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
+    alert.titles = array;
+    alert.delegate = self;
+    UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
+    UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
+    [window addSubview:backView];
+    [backView addSubview:alert];
+
+    [UIView animateWithDuration:0.3 animations:^{
+
+        backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+        alert.frame = CGRectMake(0, kH-(10+alertHeight*array.count), kW, 10+alertHeight*array.count);
+    }];
 }
 
 - (void)photoFromSource:(NSInteger)sourceType
 {
     if ([JMBuyHelper isVip]) {
         
-        if (sourceType == 200) {
-        
-            NSLog(@"VIP -- 分享到微信");
-
-        }else{
-        
-            NSLog(@"VIP -- 保存到本地");
-        }
+        [self shareUM];
         
     }else{
         if (sourceType == 200) {
@@ -439,12 +414,72 @@
         }else if(sourceType == 201){
             
             NSLog(@"non--VIP  分享到微信");
-            
-        }else if(sourceType == 202){
-            
-            NSLog(@"non--VIP  保存到本地");
+            [self shareUM];
         }
     }
+}
+
+#pragma mark -- JMHomeCollectionViewCellDelegate
+- (void)shareUM
+{
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        
+        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:_filePath]];
+    }];
+}
+
+// 分享图片和文字
+- (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
+{
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"🙃🙃🙃" thumImage:[UIImage imageNamed:@"text"]];
+    gif.emotionData = shareImage;
+    messageObject.shareObject = gif;
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            UMSocialLogInfo(@"************Share fail with error %@*********",error);
+        }else{
+            if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                UMSocialShareResponse *resp = data;
+                
+                //分享结果消息
+                UMSocialLogInfo(@"response message is %@",resp.message);
+                
+                //第三方原始返回的数据
+                UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                
+            }else{
+                UMSocialLogInfo(@"response data is %@",data);
+            }
+        }
+    }];
+}
+
+- (NSMutableArray *)ramoteImage:(NSMutableArray *)images
+{
+    NSMutableArray *news = [NSMutableArray array];
+    for (UIImage *image in _images) {
+        
+        [news addObject:[image imageRotatedByDegrees:rotation]];
+    }
+    
+    return news;
+}
+
+- (NSMutableArray *)cutImage:(NSMutableArray *)images
+{
+    NSMutableArray *news = [NSMutableArray array];
+    for (UIImage *image in _images) {
+        
+        [news addObject:[image imageRotatedByDegrees:rotation]];
+    }
+    
+    return news;
 }
 
 - (void)dealloc

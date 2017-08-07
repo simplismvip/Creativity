@@ -102,6 +102,7 @@
 		04B033B11EFA153700A10D4C /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A91EFA153700A10D4C /* UIImage+Resize.m */; };
 		04B033B21EFA153700A10D4C /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033AB1EFA153700A10D4C /* UIImage+RoundedCorner.m */; };
 		04B033B31EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033AD1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m */; };
+		04CC45641F27025E00D33311 /* ADUtilHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CC45631F27025E00D33311 /* ADUtilHelper.m */; };
 		04DA2E171F1636D900D59DDD /* JMEditerSuperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E161F1636D900D59DDD /* JMEditerSuperView.m */; };
 		04DA2E2B1F17629E00D59DDD /* FICImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E1D1F17629E00D59DDD /* FICImageCache.m */; };
 		04DA2E2C1F17629E00D59DDD /* FICImageFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E1F1F17629E00D59DDD /* FICImageFormat.m */; };
@@ -110,6 +111,10 @@
 		04DA2E2F1F17629E00D59DDD /* FICImageTableEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E251F17629E00D59DDD /* FICImageTableEntry.m */; };
 		04DA2E301F17629E00D59DDD /* FICUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA2E281F17629E00D59DDD /* FICUtilities.m */; };
 		04DA2E311F17629E00D59DDD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04DA2E2A1F17629E00D59DDD /* Info.plist */; };
+		04DA30A61F38262E007ACF3F /* NSGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30A51F38262E007ACF3F /* NSGIF.m */; };
+		04DA30AF1F3867AC007ACF3F /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30A81F3867AC007ACF3F /* UIImage+Color.m */; };
+		04DA30B01F3867AC007ACF3F /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30AA1F3867AC007ACF3F /* UIImage+Rotate.m */; };
+		04DA30B11F3867AC007ACF3F /* UIImage+SubImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30AC1F3867AC007ACF3F /* UIImage+SubImage.m */; };
 		04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */; };
 		04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */; };
 		04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFD1EF904E500C8B24F /* JMFilterItem.m */; };
@@ -359,6 +364,8 @@
 		04B033AB1EFA153700A10D4C /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		04B033AC1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SplitImageIntoTwoParts.h"; sourceTree = "<group>"; };
 		04B033AD1EFA153700A10D4C /* UIImage+SplitImageIntoTwoParts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplitImageIntoTwoParts.m"; sourceTree = "<group>"; };
+		04CC45621F27025E00D33311 /* ADUtilHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADUtilHelper.h; sourceTree = "<group>"; };
+		04CC45631F27025E00D33311 /* ADUtilHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADUtilHelper.m; sourceTree = "<group>"; };
 		04DA2E151F1636D900D59DDD /* JMEditerSuperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerSuperView.h; sourceTree = "<group>"; };
 		04DA2E161F1636D900D59DDD /* JMEditerSuperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerSuperView.m; sourceTree = "<group>"; };
 		04DA2E1A1F17629E00D59DDD /* FICEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICEntity.h; sourceTree = "<group>"; };
@@ -378,6 +385,14 @@
 		04DA2E281F17629E00D59DDD /* FICUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICUtilities.m; sourceTree = "<group>"; };
 		04DA2E291F17629E00D59DDD /* FastImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastImageCache.h; sourceTree = "<group>"; };
 		04DA2E2A1F17629E00D59DDD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04DA30A41F38262E007ACF3F /* NSGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSGIF.h; sourceTree = "<group>"; };
+		04DA30A51F38262E007ACF3F /* NSGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSGIF.m; sourceTree = "<group>"; };
+		04DA30A71F3867AC007ACF3F /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
+		04DA30A81F3867AC007ACF3F /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
+		04DA30A91F3867AC007ACF3F /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
+		04DA30AA1F3867AC007ACF3F /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
+		04DA30AB1F3867AC007ACF3F /* UIImage+SubImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SubImage.h"; sourceTree = "<group>"; };
+		04DA30AC1F3867AC007ACF3F /* UIImage+SubImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SubImage.m"; sourceTree = "<group>"; };
 		04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseBottomView.h; sourceTree = "<group>"; };
 		04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseBottomView.m; sourceTree = "<group>"; };
 		04E62CFA1EF904E500C8B24F /* JMBaseFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseFiltersView.h; sourceTree = "<group>"; };
@@ -600,6 +615,12 @@
 		0490EC721EEF976F00E05A84 /* UIImage */ = {
 			isa = PBXGroup;
 			children = (
+				04DA30A71F3867AC007ACF3F /* UIImage+Color.h */,
+				04DA30A81F3867AC007ACF3F /* UIImage+Color.m */,
+				04DA30A91F3867AC007ACF3F /* UIImage+Rotate.h */,
+				04DA30AA1F3867AC007ACF3F /* UIImage+Rotate.m */,
+				04DA30AB1F3867AC007ACF3F /* UIImage+SubImage.h */,
+				04DA30AC1F3867AC007ACF3F /* UIImage+SubImage.m */,
 				0490EC731EEF976F00E05A84 /* UIImage+JMImage.h */,
 				0490EC741EEF976F00E05A84 /* UIImage+JMImage.m */,
 				040F17571F20B34100E9067E /* UIImage+Filters.h */,
@@ -764,6 +785,8 @@
 		0490EDD51EEF976F00E05A84 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				04DA30A41F38262E007ACF3F /* NSGIF.h */,
+				04DA30A51F38262E007ACF3F /* NSGIF.m */,
 				A20DAF161EF2E4B0008DBFA9 /* JMGestureButton.h */,
 				A20DAF171EF2E4B0008DBFA9 /* JMGestureButton.m */,
 				047FCEE51EF26E5700AD0C08 /* JMHelper.h */,
@@ -786,6 +809,8 @@
 				04A4CDF41F14A54A00A445EB /* ShareTool.m */,
 				040F173A1F20886100E9067E /* JMAuthorizeManager.h */,
 				040F173B1F20886100E9067E /* JMAuthorizeManager.m */,
+				04CC45621F27025E00D33311 /* ADUtilHelper.h */,
+				04CC45631F27025E00D33311 /* ADUtilHelper.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1451,10 +1476,12 @@
 				0490EDDD1EEF976F00E05A84 /* NSString+Reglx.m in Sources */,
 				0490EDD91EEF976F00E05A84 /* NSDate+Extension.m in Sources */,
 				04E62D0E1EF90B4D00C8B24F /* JMGetGIFBottomView.m in Sources */,
+				04CC45641F27025E00D33311 /* ADUtilHelper.m in Sources */,
 				A20DAF361EF4363F008DBFA9 /* UIView+AccessViewController.m in Sources */,
 				0490EDE51EEF976F00E05A84 /* UIBarButtonItem+Item.m in Sources */,
 				0490F2501EEFB88C00E05A84 /* JMAttributeString.m in Sources */,
 				04E62D051EF904E500C8B24F /* JMFiltersView.m in Sources */,
+				04DA30AF1F3867AC007ACF3F /* UIImage+Color.m in Sources */,
 				04E62D171EF921F400C8B24F /* ProModel.m in Sources */,
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
 				A2B2D7EC1F16E8100068CB15 /* JMEditerController.m in Sources */,
@@ -1462,6 +1489,7 @@
 				040F17671F20C07500E9067E /* JMFilterContent.m in Sources */,
 				047FCF141EF3DCBC00AD0C08 /* JMAttributeStringCell.m in Sources */,
 				04E62D111EF91F0D00C8B24F /* JMBuyProViewController.m in Sources */,
+				04DA30B01F3867AC007ACF3F /* UIImage+Rotate.m in Sources */,
 				0490EDE01EEF976F00E05A84 /* NSTimer+JMAddition.m in Sources */,
 				04B033B01EFA153700A10D4C /* UIImage+Cut.m in Sources */,
 				0490F1D71EEF9C4900E05A84 /* JMMeViewController.m in Sources */,
@@ -1544,9 +1572,11 @@
 				04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */,
 				0490F23E1EEFA32900E05A84 /* JMSubImageModel.m in Sources */,
 				04DA2E2C1F17629E00D59DDD /* FICImageFormat.m in Sources */,
+				04DA30A61F38262E007ACF3F /* NSGIF.m in Sources */,
 				047FCF1B1EF3DCBD00AD0C08 /* JMBaseColorView.m in Sources */,
 				047F57581F0CF51D0045D3ED /* JMGifSetView.m in Sources */,
 				047F57591F0CF51D0045D3ED /* JMGifView.m in Sources */,
+				04DA30B11F3867AC007ACF3F /* UIImage+SubImage.m in Sources */,
 				0490EDE11EEF976F00E05A84 /* UINavigationBar+Awesome.m in Sources */,
 				A20DAF261EF2E61E008DBFA9 /* JMBottomView.m in Sources */,
 				A20DAF241EF2E61E008DBFA9 /* JMBottomCell.m in Sources */,

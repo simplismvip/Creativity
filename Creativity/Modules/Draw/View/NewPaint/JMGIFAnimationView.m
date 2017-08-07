@@ -12,7 +12,6 @@
 @interface JMGIFAnimationView ()
 @property (nonatomic, assign) NSInteger index;
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, weak) UIImageView *imageView;
 @end
 
 @implementation JMGIFAnimationView
