@@ -59,14 +59,14 @@
     _className.hidden = model.isHide;
     PHAsset *asset = (PHAsset *)model.asset;
     
+    JMSelf(ws);
     [[SDImageCache sharedImageCache] diskImageExistsWithKey:asset.localIdentifier completion:^(BOOL isInCache) {
     
         if (isInCache) {
     
-            _classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:asset.localIdentifier];
+            ws.classImage.image = [[SDImageCache sharedImageCache] imageFromCacheForKey:asset.localIdentifier];
         }else{
         
-            JMSelf(ws);
             [[TZImageManager manager] getPhotoWithAsset:model.asset photoWidth:100 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
                 
                 PHAsset *asset = (PHAsset *)model.asset;
