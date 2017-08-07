@@ -93,7 +93,6 @@
 		04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFA1EEF81A400464852 /* Assets.xcassets */; };
 		04A0DDFE1EEF81A400464852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */; };
 		04A0DE091EEF81A400464852 /* CreativityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DE081EEF81A400464852 /* CreativityTests.m */; };
-		04A4CDF51F14A54A00A445EB /* ShareTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A4CDF41F14A54A00A445EB /* ShareTool.m */; };
 		04A4CDFD1F14C17500A445EB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04A4CDFF1F14C17500A445EB /* InfoPlist.strings */; };
 		04A4CE051F14C2C200A445EB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04A4CE071F14C2C200A445EB /* Localizable.strings */; };
 		04B033AE1EFA153700A10D4C /* ImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B033A31EFA153700A10D4C /* ImageUtil.m */; };
@@ -115,6 +114,9 @@
 		04DA30AF1F3867AC007ACF3F /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30A81F3867AC007ACF3F /* UIImage+Color.m */; };
 		04DA30B01F3867AC007ACF3F /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30AA1F3867AC007ACF3F /* UIImage+Rotate.m */; };
 		04DA30B11F3867AC007ACF3F /* UIImage+SubImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30AC1F3867AC007ACF3F /* UIImage+SubImage.m */; };
+		04DA30BA1F388204007ACF3F /* JMShareTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30B91F388204007ACF3F /* JMShareTool.m */; };
+		04DA30BD1F388263007ACF3F /* JMShareActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA30BC1F388263007ACF3F /* JMShareActivity.m */; };
+		04DA30BF1F3882BA007ACF3F /* share_weChat.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DA30BE1F3882BA007ACF3F /* share_weChat.png */; };
 		04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */; };
 		04E62D021EF904E500C8B24F /* JMBaseFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFB1EF904E500C8B24F /* JMBaseFiltersView.m */; };
 		04E62D031EF904E500C8B24F /* JMFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62CFD1EF904E500C8B24F /* JMFilterItem.m */; };
@@ -341,8 +343,6 @@
 		04A0DE041EEF81A400464852 /* CreativityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreativityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A0DE081EEF81A400464852 /* CreativityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreativityTests.m; sourceTree = "<group>"; };
 		04A0DE0A1EEF81A400464852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04A4CDF31F14A54A00A445EB /* ShareTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareTool.h; sourceTree = "<group>"; };
-		04A4CDF41F14A54A00A445EB /* ShareTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareTool.m; sourceTree = "<group>"; };
 		04A4CDFB1F14C06F00A445EB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		04A4CDFC1F14C14D00A445EB /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		04A4CE001F14C17D00A445EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -393,6 +393,11 @@
 		04DA30AA1F3867AC007ACF3F /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
 		04DA30AB1F3867AC007ACF3F /* UIImage+SubImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SubImage.h"; sourceTree = "<group>"; };
 		04DA30AC1F3867AC007ACF3F /* UIImage+SubImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SubImage.m"; sourceTree = "<group>"; };
+		04DA30B81F388204007ACF3F /* JMShareTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMShareTool.h; sourceTree = "<group>"; };
+		04DA30B91F388204007ACF3F /* JMShareTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMShareTool.m; sourceTree = "<group>"; };
+		04DA30BB1F388263007ACF3F /* JMShareActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMShareActivity.h; sourceTree = "<group>"; };
+		04DA30BC1F388263007ACF3F /* JMShareActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMShareActivity.m; sourceTree = "<group>"; };
+		04DA30BE1F3882BA007ACF3F /* share_weChat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_weChat.png; sourceTree = "<group>"; };
 		04E62CE61EF8C85600C8B24F /* JMBaseBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseBottomView.h; sourceTree = "<group>"; };
 		04E62CE71EF8C85600C8B24F /* JMBaseBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseBottomView.m; sourceTree = "<group>"; };
 		04E62CFA1EF904E500C8B24F /* JMBaseFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseFiltersView.h; sourceTree = "<group>"; };
@@ -805,8 +810,10 @@
 				0490F24C1EEFB7CF00E05A84 /* StaticClass.m */,
 				04654A651F050264008D0B27 /* DeviceHelper.h */,
 				04654A661F050264008D0B27 /* DeviceHelper.m */,
-				04A4CDF31F14A54A00A445EB /* ShareTool.h */,
-				04A4CDF41F14A54A00A445EB /* ShareTool.m */,
+				04DA30B81F388204007ACF3F /* JMShareTool.h */,
+				04DA30B91F388204007ACF3F /* JMShareTool.m */,
+				04DA30BB1F388263007ACF3F /* JMShareActivity.h */,
+				04DA30BC1F388263007ACF3F /* JMShareActivity.m */,
 				040F173A1F20886100E9067E /* JMAuthorizeManager.h */,
 				040F173B1F20886100E9067E /* JMAuthorizeManager.m */,
 				04CC45621F27025E00D33311 /* ADUtilHelper.h */,
@@ -1061,6 +1068,7 @@
 				04A0DDFC1EEF81A400464852 /* LaunchScreen.storyboard */,
 				04A0DDFF1EEF81A400464852 /* Info.plist */,
 				A20DAF291EF2E85E008DBFA9 /* topBarJson.json */,
+				04DA30BE1F3882BA007ACF3F /* share_weChat.png */,
 				04A0DDEE1EEF81A400464852 /* Supporting Files */,
 			);
 			path = Creativity;
@@ -1377,6 +1385,7 @@
 				04A4CE051F14C2C200A445EB /* Localizable.strings in Resources */,
 				04A0DDFB1EEF81A400464852 /* Assets.xcassets in Resources */,
 				047FCF201EF3DCDE00AD0C08 /* point.png in Resources */,
+				04DA30BF1F3882BA007ACF3F /* share_weChat.png in Resources */,
 				0490EE241EEF976F00E05A84 /* emoji.json in Resources */,
 				04DA2E311F17629E00D59DDD /* Info.plist in Resources */,
 			);
@@ -1483,6 +1492,7 @@
 				04E62D051EF904E500C8B24F /* JMFiltersView.m in Sources */,
 				04DA30AF1F3867AC007ACF3F /* UIImage+Color.m in Sources */,
 				04E62D171EF921F400C8B24F /* ProModel.m in Sources */,
+				04DA30BD1F388263007ACF3F /* JMShareActivity.m in Sources */,
 				0490EED11EEF977000E05A84 /* UIColor+Wonderful.m in Sources */,
 				A2B2D7EC1F16E8100068CB15 /* JMEditerController.m in Sources */,
 				04DA2E2D1F17629E00D59DDD /* FICImageTable.m in Sources */,
@@ -1536,6 +1546,7 @@
 				0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */,
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,
 				0490EEA51EEF977000E05A84 /* Tool_FMDBModel.m in Sources */,
+				04DA30BA1F388204007ACF3F /* JMShareTool.m in Sources */,
 				A28DCF5A1F104DA1005E316D /* TZImageManager.m in Sources */,
 				0490F1B01EEF9C3900E05A84 /* JMHomeCollectionViewCell.m in Sources */,
 				A20DAF301EF42338008DBFA9 /* JMEmojiAnimationView.m in Sources */,
@@ -1568,7 +1579,6 @@
 				0490EDE71EEF976F00E05A84 /* UIView+Extension.m in Sources */,
 				047FCF191EF3DCBD00AD0C08 /* JMAttributeTextInputView.m in Sources */,
 				A28DCF591F104DA1005E316D /* TZAssetModel.m in Sources */,
-				04A4CDF51F14A54A00A445EB /* ShareTool.m in Sources */,
 				04E62CE81EF8C85600C8B24F /* JMBaseBottomView.m in Sources */,
 				0490F23E1EEFA32900E05A84 /* JMSubImageModel.m in Sources */,
 				04DA2E2C1F17629E00D59DDD /* FICImageFormat.m in Sources */,

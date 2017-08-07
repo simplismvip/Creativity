@@ -27,7 +27,7 @@
 #import "TZImageManager.h"
 #import "TZAssetModel.h"
 #import <UShareUI/UShareUI.h>
-#import "ShareTool.h"
+#import "JMShareTool.h"
 #import <Social/Social.h>
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
@@ -155,21 +155,32 @@ static NSString *const collectionID = @"cell";
 #pragma mark -- JMHomeCollectionViewCellDelegate
 - (void)share:(NSIndexPath *)indexPath
 {
-    JMHomeModel *model = self.dataSource[indexPath.row];
-    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
-    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
-    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
-    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+    JMHomeModel *model = _dataSource[indexPath.row];
+    JMShareTool *shareTool = [[JMShareTool alloc] init];
+    NSData *data = [NSData dataWithContentsOfFile:model.folderPath];
+    [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:@"" image:data completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
         
-        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:model.folderPath]];
-    }];    
+        NSLog(@"%@  %d", activityType, completed);
+    }];
+
+    JMSelf(ws);
+    shareTool.share = ^{
+        
+        [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+        [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+        [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+            
+            [ws shareImageAndTextToPlatformType:platformType shareImage:data];
+        }];
+    };
 }
 
 // 分享图片和文字
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GIF大师的分享" descr:@"哈哈哈🙃🙃🙃" thumImage:[UIImage imageNamed:@"text"]];
+    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"" thumImage:[UIImage imageNamed:@"text"]];
     gif.emotionData = shareImage;
     messageObject.shareObject = gif;
     

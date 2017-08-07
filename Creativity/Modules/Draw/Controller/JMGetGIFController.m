@@ -27,6 +27,7 @@
 #import "UIImage+Filters.h"
 #import "UIViewController+BackButtonHandler.h"
 #import "UIImage+Rotate.h"
+#import "JMShareTool.h"
 
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate, JMPhotosAlertViewDelegate, UMSocialShareMenuViewDelegate>
 {
@@ -419,18 +420,29 @@
     }
 }
 
-#pragma mark -- JMHomeCollectionViewCellDelegate
 - (void)shareUM
 {
-    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
-    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
-    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
-    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+    NSData *data = [NSData dataWithContentsOfFile:_filePath];
+    JMShareTool *shareTool = [[JMShareTool alloc] init];
+    [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:@"" image:data completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
         
-        [self shareImageAndTextToPlatformType:platformType shareImage:[NSData dataWithContentsOfFile:_filePath]];
+        NSLog(@"%@  %d", activityType, completed);
     }];
+    
+    JMSelf(ws);
+    shareTool.share = ^{
+        
+        [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+        [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+        [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+            
+            [ws shareImageAndTextToPlatformType:platformType shareImage:data];
+        }];
+    };
 }
 
+#pragma mark -- JMHomeCollectionViewCellDelegate
 // 分享图片和文字
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
