@@ -135,8 +135,7 @@ typedef NS_ENUM(NSInteger, GIFSize) {
     NSURL *fileURL = [NSURL fileURLWithPath:temporaryFile];
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)fileURL, kUTTypeGIF , frameCount, NULL);
     
-    if (fileURL == nil)
-        return nil;
+    if (fileURL == nil) return nil;
 
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
     AVAssetImageGenerator *generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:asset];
@@ -147,7 +146,7 @@ typedef NS_ENUM(NSInteger, GIFSize) {
     generator.requestedTimeToleranceAfter = tol;
     
     NSError *error = nil;
-   CGImageRef previousImageRefCopy = nil;
+    CGImageRef previousImageRefCopy = nil;
     for (NSValue *time in timePoints) {
         CGImageRef imageRef;
         

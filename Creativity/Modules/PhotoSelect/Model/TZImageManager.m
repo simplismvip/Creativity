@@ -106,9 +106,9 @@
 
 - (void)getAllLivePhotosCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
     
-    [[PHImageManager defaultManager] requestLivePhotoForAsset:model.asset targetSize:CGSizeMake(300, 300) contentMode:(PHImageContentModeAspectFit) options:nil resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
+    [[PHImageManager defaultManager] requestLivePhotoForAsset:model.asset targetSize:CGSizeMake(kW, kW) contentMode:(PHImageContentModeAspectFit) options:nil resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
         
-        if (info[PHImageResultIsDegradedKey]) {
+        if (!info[PHImageResultIsDegradedKey]) {
         
             NSLog(@"-------------------");
             
@@ -125,6 +125,7 @@
                          NSLog(@"1`````````````");
                          NSData *imageData=[NSData dataWithContentsOfURL:GifURL];
                          gifData(imageData);
+                         [[NSFileManager defaultManager] removeItemAtPath:[JMCachePath stringByAppendingPathComponent:@"Image.mov"] error:nil];
                      }
                  }];
              }];

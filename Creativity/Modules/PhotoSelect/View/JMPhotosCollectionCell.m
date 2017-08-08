@@ -66,11 +66,8 @@
     _className.text = [NSString stringWithFormat:@"%ld", model.index];
     _className.hidden = model.isHide;
     PHAsset *asset = (PHAsset *)model.asset;
-<<<<<<< HEAD
-    
+
     JMSelf(ws);
-=======
->>>>>>> bc93d9bd49b0860b4fbc43fd3b51a4dd96cbc0b8
     [[SDImageCache sharedImageCache] diskImageExistsWithKey:asset.localIdentifier completion:^(BOOL isInCache) {
     
         if (isInCache) {

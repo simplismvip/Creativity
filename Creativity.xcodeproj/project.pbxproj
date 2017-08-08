@@ -11,6 +11,7 @@
 		040F17591F20B34100E9067E /* UIImage+Filters.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F17581F20B34100E9067E /* UIImage+Filters.m */; };
 		040F17671F20C07500E9067E /* JMFilterContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F17641F20C07500E9067E /* JMFilterContent.m */; };
 		040F17681F20C07500E9067E /* JMFiltersHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 040F17661F20C07500E9067E /* JMFiltersHelper.m */; };
+		042B25E61F39CCB2004BD269 /* LivDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B25E51F39CCB2004BD269 /* LivDownloadHelper.m */; };
 		04654A581F04ADDA008D0B27 /* JMAttributeScrollBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */; };
 		04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A601F04F760008D0B27 /* JMWebProgressView.m */; };
 		04654A641F04F7B1008D0B27 /* JMBaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04654A631F04F7B1008D0B27 /* JMBaseWebViewController.m */; };
@@ -159,7 +160,6 @@
 		A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F21F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m */; };
 		A2B2D7F61F16E97D0068CB15 /* JMEditerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */; };
 		A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */; };
-		A2F906581F2447790061638B /* JMGetMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F906571F2447790061638B /* JMGetMD5.m */; };
 		E38178D8D78B0997D888FA8D /* libPods-Creativity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */; };
 /* End PBXBuildFile section */
 
@@ -182,6 +182,8 @@
 		040F17641F20C07500E9067E /* JMFilterContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFilterContent.m; sourceTree = "<group>"; };
 		040F17651F20C07500E9067E /* JMFiltersHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFiltersHelper.h; sourceTree = "<group>"; };
 		040F17661F20C07500E9067E /* JMFiltersHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFiltersHelper.m; sourceTree = "<group>"; };
+		042B25E41F39CCB2004BD269 /* LivDownloadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivDownloadHelper.h; sourceTree = "<group>"; };
+		042B25E51F39CCB2004BD269 /* LivDownloadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivDownloadHelper.m; sourceTree = "<group>"; };
 		04654A561F04ADDA008D0B27 /* JMAttributeScrollBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAttributeScrollBaseView.h; sourceTree = "<group>"; };
 		04654A571F04ADDA008D0B27 /* JMAttributeScrollBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAttributeScrollBaseView.m; sourceTree = "<group>"; };
 		04654A5F1F04F760008D0B27 /* JMWebProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMWebProgressView.h; sourceTree = "<group>"; };
@@ -484,8 +486,6 @@
 		A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerModel.m; sourceTree = "<group>"; };
 		A2B2D7F71F16F2990068CB15 /* JMEditerDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerDetailController.h; sourceTree = "<group>"; };
 		A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerDetailController.m; sourceTree = "<group>"; };
-		A2F906561F2447790061638B /* JMGetMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGetMD5.h; sourceTree = "<group>"; };
-		A2F906571F2447790061638B /* JMGetMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGetMD5.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -793,14 +793,14 @@
 		0490EDD51EEF976F00E05A84 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				042B25E41F39CCB2004BD269 /* LivDownloadHelper.h */,
+				042B25E51F39CCB2004BD269 /* LivDownloadHelper.m */,
 				04DA30A41F38262E007ACF3F /* NSGIF.h */,
 				04DA30A51F38262E007ACF3F /* NSGIF.m */,
 				A20DAF161EF2E4B0008DBFA9 /* JMGestureButton.h */,
 				A20DAF171EF2E4B0008DBFA9 /* JMGestureButton.m */,
 				047FCEE51EF26E5700AD0C08 /* JMHelper.h */,
 				047FCEE61EF26E5700AD0C08 /* JMHelper.m */,
-				A2F906561F2447790061638B /* JMGetMD5.h */,
-				A2F906571F2447790061638B /* JMGetMD5.m */,
 				047F575A1F0DE05F0045D3ED /* JMBuyHelper.h */,
 				047F575B1F0DE05F0045D3ED /* JMBuyHelper.m */,
 				047FCEEE1EF3777000AD0C08 /* JMMediaHelper.h */,
@@ -1547,6 +1547,7 @@
 				047F575C1F0DE05F0045D3ED /* JMBuyHelper.m in Sources */,
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
 				040F173C1F20886100E9067E /* JMAuthorizeManager.m in Sources */,
+				042B25E61F39CCB2004BD269 /* LivDownloadHelper.m in Sources */,
 				04A0DDF01EEF81A400464852 /* main.m in Sources */,
 				0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */,
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,
@@ -1591,11 +1592,7 @@
 				047FCF1B1EF3DCBD00AD0C08 /* JMBaseColorView.m in Sources */,
 				047F57581F0CF51D0045D3ED /* JMGifSetView.m in Sources */,
 				047F57591F0CF51D0045D3ED /* JMGifView.m in Sources */,
-
-				A2F906581F2447790061638B /* JMGetMD5.m in Sources */,
-
 				04DA30B11F3867AC007ACF3F /* UIImage+SubImage.m in Sources */,
-
 				0490EDE11EEF976F00E05A84 /* UINavigationBar+Awesome.m in Sources */,
 				A20DAF261EF2E61E008DBFA9 /* JMBottomView.m in Sources */,
 				A20DAF241EF2E61E008DBFA9 /* JMBottomCell.m in Sources */,
