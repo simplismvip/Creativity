@@ -8,8 +8,11 @@
 
 #import "JMBuyHelper.h"
 #import "JMUserDefault.h"
-
 #define kVIP @"superUser"
+
+@interface JMBuyHelper()
+
+@end
 
 @implementation JMBuyHelper
 
@@ -27,5 +30,4 @@
 {
     return [JMUserDefault setBool:YES forKey:kVIP];
 }
-
 @end

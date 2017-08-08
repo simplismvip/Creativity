@@ -41,9 +41,7 @@
     licence.separatorColor = [UIColor clearColor];
     licence.showsVerticalScrollIndicator = NO;
     licence.backgroundColor = JMTabViewBaseColor;
-    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){
-        licence.cellLayoutMarginsFollowReadableWidth = NO;
-    }
+    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){licence.cellLayoutMarginsFollowReadableWidth = NO;}
     [self.view addSubview:licence];
     self.licence = licence;
     
@@ -69,7 +67,6 @@
     JMLicenceViewModel *model = self.dataSource[indexPath.section];
     JMLicenceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"licence"];
     if (!cell) {cell = [[JMLicenceCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"licence"];}
-    
     cell.viewModel = model;
     return cell;
 }
@@ -81,6 +78,7 @@
     headView.contentView.backgroundColor = [UIColor whiteColor];
     headView.name.backgroundColor = [UIColor whiteColor];
     headView.name.text = model.model.headeTitle;
+    headView.name.textColor = [UIColor blackColor];
     headView.name.font = [UIFont fontWithName:@"AlNile-Bold" size:22];
     return headView;
 }
@@ -107,19 +105,19 @@
     JMLicenceModel *networking = [[JMLicenceModel alloc] init];
     [_dataSource addObject:viewModel];
     networking.headeTitle = @"AFNetworking";
-    networking.copyright = @" Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
-    networking.lower =@" Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
+    networking.copyright = @"Copyright (c) 2011–2016 Alamofire Software Foundation (http://alamofire.org/)";
+    networking.lower =@"Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the Software), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:";
     
     networking.aboveCopyright = @"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
     
-    networking.upper = @"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.";
+    networking.upper = @"THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.";
     viewModel.model = networking;
     
     JMLicenceViewModel *hudViewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *hud = [[JMLicenceModel alloc] init];
     [_dataSource addObject:hudViewModel];
     hud.headeTitle = @"MBProgressHUD";
-    hud.copyright = @" Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
+    hud.copyright = @"Copyright © 2009-2016 Matej Bukovinski";
     hud.lower =@" Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
     
     hud.aboveCopyright = @"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
@@ -131,7 +129,7 @@
     JMLicenceModel *sdwebimage = [[JMLicenceModel alloc] init];
     [_dataSource addObject:sdwebimageViewModel];
     sdwebimage.headeTitle = @"SDWebImage";
-    sdwebimage.copyright = @" Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
+    sdwebimage.copyright = @"Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
     sdwebimage.lower =@" Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
     
     sdwebimage.aboveCopyright = @"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
@@ -143,7 +141,7 @@
     JMLicenceModel *FLAnimatedImage = [[JMLicenceModel alloc] init];
     [_dataSource addObject:flaViewModel];
     FLAnimatedImage.headeTitle = @"FLAnimatedImage";
-    FLAnimatedImage.copyright = @" Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
+    FLAnimatedImage.copyright = @"Copyright (c) 2014-2016 Flipboard";
     FLAnimatedImage.lower =@" Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
     
     FLAnimatedImage.aboveCopyright = @"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
@@ -155,8 +153,8 @@
     JMLicenceViewModel *masonyViewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *masony = [[JMLicenceModel alloc] init];
     [_dataSource addObject:masonyViewModel];
-    masony.headeTitle = @"masony";
-    masony.copyright = @" Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
+    masony.headeTitle = @"Masony";
+    masony.copyright = @"Copyright (c) 2011-2012 Masonry Team - https://github.com/Masonry";
     masony.lower =@" Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
     
     masony.aboveCopyright = @"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
@@ -168,7 +166,8 @@
     JMLicenceViewModel *mjxtentViewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *mjextension = [[JMLicenceModel alloc] init];
     [_dataSource addObject:mjxtentViewModel];
-    mjextension.copyright = @" Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
+    masony.headeTitle = @"MJExtension";
+    mjextension.copyright = @"Copyright (c) 2013-2015 MJExtension (https://github.com/CoderMJLee/MJExtension)";
     mjextension.lower =@" Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
     
     mjextension.aboveCopyright = @"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
@@ -180,8 +179,8 @@
     JMLicenceViewModel *fmdbViewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *fmdb = [[JMLicenceModel alloc] init];
     [_dataSource addObject:fmdbViewModel];
-    fmdb.headeTitle = @"fmdb";
-    fmdb.copyright = @" Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com";
+    fmdb.headeTitle = @"FMDB";
+    fmdb.copyright = @"Copyright (c) 2008-2014 Flying Meat Inc.";
     fmdb.lower =@" Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
     
     fmdb.aboveCopyright = @"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.";
@@ -192,9 +191,7 @@
     for (JMLicenceViewModel *view in _dataSource) {
         
         NSLog(@"%@-%@--%@--%@--%@", view.model.headeTitle, view.model.copyright, view.model.lower, view.model.upper, view.model.aboveCopyright);
-        
     }
-    
 }
 
 /*

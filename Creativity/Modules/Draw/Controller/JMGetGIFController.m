@@ -153,7 +153,11 @@
 
 - (BOOL)navigationShouldPopOnBackButton
 {
-    if (!_isSave) {[self showAlert];}
+    if (_imagesFromHomeVC) {
+    
+        if (!_isSave) {[self showAlert];}
+    }
+    
     return YES;
 }
 
@@ -447,7 +451,7 @@
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"🙃🙃🙃" thumImage:[UIImage imageNamed:@"text"]];
+    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"强大的GIF编辑生成工具" thumImage:[UIImage imageNamed:@"GifPlayer_Icon"]];
     gif.emotionData = shareImage;
     messageObject.shareObject = gif;
     

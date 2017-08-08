@@ -39,11 +39,11 @@
     UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.width/2-35, self.view.height*0.17, 70, 70)];
     logo.layer.cornerRadius = 16;
     logo.layer.masksToBounds = YES;
-    logo.image = [UIImage imageNamed:@"text"];
+    logo.image = [UIImage imageNamed:@"GifPlayer_Icon"];
     [self.view addSubview:logo];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(logo.frame)+5, self.view.width, 30)];
-    label.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+    label.text = @"GifPlayer";// [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
     label.textAlignment = 1;
     label.font = [UIFont systemFontOfSize:14.0];
     CAGradientLayer *layer = [CAGradientLayer layer];
@@ -138,7 +138,7 @@
     // 添加主题
     [mailUrl appendString:@"&subject=用户反馈"];
     
-    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+    NSString *appName = @"GifPlayer"; // [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
     NSString *sysVersion= [[UIDevice currentDevice] systemVersion];
     NSString *device = [[UIDevice currentDevice] model];
     NSString *buildID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
@@ -180,9 +180,10 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"分享标题" descr:@"分享内容描述" thumImage:[UIImage imageNamed:@"icon"]];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"强大的GIF编辑生成工具" thumImage:[UIImage imageNamed:@"GifPlayer_Icon"]];
+    
     //设置网页地址
-    shareObject.webpageUrl =@"http://mobile.umeng.com/social";
+    shareObject.webpageUrl =@"itms-apps://itunes.apple.com/app/id1257334539";
     
     //分享消息对象设置分享内容对象
     messageObject.shareObject = shareObject;

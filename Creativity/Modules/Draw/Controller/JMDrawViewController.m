@@ -193,11 +193,12 @@
             _slider.slider.value = 1.0;
             [JMPopView popView:self.view title:title];
             
-            UIImage *imageNew = _paintView.image; //[UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
-            [_cacheArray addObject:imageNew];
-            [_paintView clearAll];
-            _imageView.image = imageNew;
-            
+            if (_paintView.image) {
+                
+                [_cacheArray addObject:_paintView.image];
+                [_paintView clearAll];
+                _imageView.image = _paintView.image;
+            }
         }else{
         
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.picLessTen", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
@@ -285,7 +286,6 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.alert.cleanAllContent", "") message:nil preferredStyle:(UIAlertControllerStyleAlert)];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.Addpic", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
                 
-//                UIImage *imageNew = [UIImage imageWithCaptureView:_paintView rect:CGRectMake(0, 0, kW, kW)];
                 [ws.cacheArray addObject:_paintView.image];
                 [ws.paintView clearAll];
                 [ws getImageFromLibrary];
@@ -309,17 +309,7 @@
 
 - (void)moveCoverageAtIndexPath:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
-//    if (fromIndex == _cacheArray.count-1) {
-//        
-//        
-//    }
-//    
-//    JMPaintView *from = self.subViews[fromIndex];
-//    JMPaintView *to = self.subViews[toIndex];
-//    [self.view insertSubview:from aboveSubview:to];
-//    
-//    [self.subViews removeObjectAtIndex:fromIndex];
-//    [self.subViews insertObject:from atIndex:toIndex];
+
 }
 
 - (void)removeCoverageAtIndex:(NSInteger)index
@@ -411,8 +401,6 @@
 
 - (void)shareCurrentImage:(UIButton *)sender
 {
-    // JMPaintView *pView = self.subViews.lastObject;
-    
     if (_paintView.image) {
         
         [self showBottomCircleView:[_paintView.image imageWithWaterMask]];

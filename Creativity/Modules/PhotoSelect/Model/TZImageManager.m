@@ -106,19 +106,23 @@
 
 - (void)getAllLivePhotosCompletion:(TZAssetModel *)model gifData:(void (^)(NSData *))gifData{
     
-    [[PHImageManager defaultManager] requestLivePhotoForAsset:model.asset targetSize:CGSizeMake(100, 100) contentMode:(PHImageContentModeAspectFit) options:nil resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
+    [[PHImageManager defaultManager] requestLivePhotoForAsset:model.asset targetSize:CGSizeMake(300, 300) contentMode:(PHImageContentModeAspectFit) options:nil resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
         
         if (info[PHImageResultIsDegradedKey]) {
         
+            NSLog(@"-------------------");
+            
             NSArray *resourceArray = [PHAssetResource assetResourcesForLivePhoto:livePhoto];
             NSURL *videoURL = [[NSURL alloc] initFileURLWithPath:[JMCachePath stringByAppendingPathComponent:@"Image.mov"]];
             
             [[PHAssetResourceManager defaultManager] writeDataForAssetResource:resourceArray[1] toFile:videoURL options:nil completionHandler:^(NSError * _Nullable error)
              {
+                 NSLog(@"dd--000000==========");
                  [NSGIF optimalGIFfromURL:videoURL loopCount:0 completion:^(NSURL *GifURL) {
                      
                      if (gifData) {
                          
+                         NSLog(@"1`````````````");
                          NSData *imageData=[NSData dataWithContentsOfURL:GifURL];
                          gifData(imageData);
                      }
@@ -814,7 +818,7 @@
     // 查看所有的自定义相册
     // 先查看是否有自己要创建的自定义相册
     // 如果没有自己要创建的自定义相册那么我们就进行创建
-    NSString * title = [NSBundle mainBundle].infoDictionary[(NSString *)kCFBundleNameKey];
+    NSString * title = @"GifPlayer";// [NSBundle mainBundle].infoDictionary[(NSString *)kCFBundleNameKey];
     
     PHFetchResult<PHAssetCollection *> *collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
     

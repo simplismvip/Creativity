@@ -53,11 +53,6 @@
     if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){setTableView.cellLayoutMarginsFollowReadableWidth = NO;}
     [self.view addSubview:setTableView];
     self.setTableView = setTableView;
-    
-    [setTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.edges.mas_equalTo(self.view);
-    }];
 }
 
 #pragma mark --
@@ -155,6 +150,9 @@
         JMAboutUsController *about = [[JMAboutUsController alloc] init];
         about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
+    }else{
+        NSURL *url  = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1257334539"];
+        [[UIApplication sharedApplication] openURL:url];
     }
 }
 

@@ -46,16 +46,16 @@
         
         if ([JMBuyHelper isVip]) {
             
-            frist.text = @"尊敬的付费用户";
-            sec.text = @"您可以使用全部功能创建有趣的视频和GIF动画";
+            frist.text = NSLocalizedString(@"gif.BuyPro.headerGetVip.VIP", "");
+            sec.text = NSLocalizedString(@"gif.BuyPro.headerGetVipSubTitle.VIP", "");
             button.userInteractionEnabled = NO;
-            [button setTitle:@"VIP用户" forState:(UIControlStateNormal)];
+            [button setTitle:NSLocalizedString(@"gif.BuyPro.headerGetSuperUser.VIP", "") forState:(UIControlStateNormal)];
             
         }else{
         
-            frist.text = @"升级到专业版";
-            sec.text = @"请将应用升级到专业版，享受到更多功能优惠。";
-            [button setTitle:@"¥12.00购买专业版" forState:(UIControlStateNormal)];
+            frist.text = NSLocalizedString(@"gif.BuyPro.headerGetVip.ProUpgrade", "");
+            sec.text = NSLocalizedString(@"gif.BuyPro.headerGetVipSubTitle.description", "");
+            [button setTitle:NSLocalizedString(@"gif.BuyPro.headerGetSuperUser.NOVIP", "") forState:(UIControlStateNormal)];
         }
     }
     return self;
@@ -71,10 +71,10 @@
 
 - (void)refruseView
 {
-    _frist.text = @"尊敬的付费用户";
-    _sec.text = @"您可以使用全部功能创建有趣的视频和GIF动画";
+    _frist.text = NSLocalizedString(@"gif.BuyPro.headerGetVip.VIP", "");
+    _sec.text = NSLocalizedString(@"gif.BuyPro.headerGetVipSubTitle.VIP", "");
     _button.userInteractionEnabled = NO;
-    [_button setTitle:@"VIP用户" forState:(UIControlStateNormal)];
+    [_button setTitle:NSLocalizedString(@"gif.BuyPro.headerGetSuperUser.VIP", "") forState:(UIControlStateNormal)];
 }
 
 - (void)layoutSubviews

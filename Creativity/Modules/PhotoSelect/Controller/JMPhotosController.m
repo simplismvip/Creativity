@@ -144,7 +144,7 @@ static NSString *const collectionID = @"cell";
         
         if (!cell.isSelect) {
             
-            if (_selectSource.count<21) {
+            if (_selectSource.count<10) {
             
                 [self.selectSource addObject:model];
                 model.index = _selectSource.count;

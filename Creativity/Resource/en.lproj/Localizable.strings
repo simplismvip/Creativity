@@ -7,6 +7,11 @@
 */
 
 // base
+
+"gif.base.alert.nothing"="NULL";
+"gif.base.alert.permissions"="No access album permissions";
+"gif.base.alert.close"="Close";
+"gif.base.alert.alert"="Alert";
 "gif.base.alert.cancle"="Cancle";
 "gif.base.alert.success"="Success";
 "gif.base.alert.Failed"="Failed";
@@ -78,10 +83,30 @@
 "gif.BuyPro.headerGetVip.ProUpgrade"="ProUpgrade";
 "gif.BuyPro.headerGetVip.VIP"="VIP";
 
-"gif.BuyPro.headerGetVipSubTitle.description" = "请将应用升级到专业版，享受到更多功能优惠。";
-"gif.BuyPro.headerGetVipSubTitle.VIP" = "您可以使用全部功能创建有趣的视频和GIF动画";
+"gif.BuyPro.headerGetVipSubTitle.description" = "Upgrade the application and enjoy more features.";
+"gif.BuyPro.headerGetVipSubTitle.VIP" = "You can use all of your features.";
 
 "gif.BuyPro.headerGetSuperUser.NOVIP"="¥12.00购买专业版";
 "gif.BuyPro.headerGetSuperUser.VIP"="VIP User";
+
+"gif.BuyPro.headerGetVip.purchased"="The goods have been purchased";
+"gif.BuyPro.headerGetVip.purchasedFail"="Your phone has not been opened for pay per program";
+"gif.BuyPro.headerGetVip.payFail"="Purchase failure";
+
+"gif.BuyPro.headerGetVip.watercap"="No Watermarks";
+"gif.BuyPro.headerGetVip.filter"="Full Filters";
+"gif.BuyPro.headerGetVip.noAD"="NO AD";
+"gif.BuyPro.headerGetVip.nolimite"="NO Limite";
+
+"gif.BuyPro.headerGetVip.onlyVip"="Only VIP";
+
+"gif.BuyPro.noVip.watercap"="VIP User No Watermarks.";
+"gif.BuyPro.noVip.filter"="VIP User Full Filters.";
+"gif.BuyPro.noVip.noAD"="VIP User NO AD.";
+"gif.BuyPro.noVip.nolimite"="VIP User NO Limite Add Picture!";
+
+
+
+
 
 

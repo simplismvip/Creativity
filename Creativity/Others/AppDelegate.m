@@ -13,7 +13,7 @@
 #import "StaticClass.h"
 #import <UShareUI/UShareUI.h>
 #import <UMMobClick/MobClick.h>
-
+#import "JMAuthorizeManager.h"
 @interface AppDelegate ()
 
 @end
@@ -21,6 +21,8 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+//    [[JMAuthorizeManager sharedInstance] requestPhotoAccessCompletionHandler:^(BOOL request, NSError *error) {}];
     
     // 友盟
     [[UMSocialManager defaultManager] openLog:YES];

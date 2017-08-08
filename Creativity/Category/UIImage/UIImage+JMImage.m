@@ -562,8 +562,8 @@
         
         // 原图
         [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
-        NSDictionary *dic = @{NSFontAttributeName:[UIFont fontWithName:@"Noteworthy-Light" size:11], NSForegroundColorAttributeName:JMColorRGBA(100, 100, 100, 0.8)};
-        NSString *appName = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] lowercaseString]];
+        NSDictionary *dic = @{NSFontAttributeName:[UIFont fontWithName:@"Noteworthy-Light" size:16], NSForegroundColorAttributeName:JMColorRGBA(100, 100, 100, 0.8)};
+        NSString *appName = @"GifPlayer";// [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] lowercaseString]];
         [appName drawInRect:CGRectMake(10, self.size.height-20, self.size.width-20, 20) withAttributes:dic];
         
         UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();

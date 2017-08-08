@@ -5,7 +5,13 @@
   Created by JM Zhao on 2017/7/11.
   Copyright © 2017年 JMZhao. All rights reserved.
 */
+
 // base
+"gif.base.alert.permissions"="請設定許可權允許訪問相册";
+"gif.base.alert.nothing"="空实现";
+
+"gif.base.alert.close"="關閉";
+"gif.base.alert.alert"="提示";
 "gif.base.alert.cancle"="取消";
 "gif.base.alert.success"="成功";
 "gif.base.alert.Failed"="失敗";
@@ -76,22 +82,27 @@
 // BuyPro
 "gif.BuyPro.LeftTitle.RestorePurchase"="恢复购买";
 
-"gif.BuyPro.headerGetVip.ProUpgrade"="升级到专业版";
-"gif.BuyPro.headerGetVip.VIP"="尊敬的付费用户";
+"gif.BuyPro.headerGetVip.ProUpgrade"="陞級到專業版";
+"gif.BuyPro.headerGetVip.VIP"="尊敬的付費用戶";
 
-"gif.BuyPro.headerGetVipSubTitle.description" = "请将应用升级到专业版，享受到更多功能优惠。";
-"gif.BuyPro.headerGetVipSubTitle.VIP" = "您可以使用全部功能创建有趣的视频和GIF动画";
+"gif.BuyPro.headerGetVipSubTitle.description" = "請將應用陞級到專業版，享受到更多功能優惠。";
+"gif.BuyPro.headerGetVipSubTitle.VIP" = "您可以使用全部功能創建有趣的視頻和GIF動畫";
 
-"gif.BuyPro.headerGetSuperUser.NOVIP"="¥12.00购买专业版";
-"gif.BuyPro.headerGetSuperUser.VIP"="VIP用户";
+"gif.BuyPro.headerGetSuperUser.NOVIP"="購買專業版";
+"gif.BuyPro.headerGetSuperUser.VIP"="VIP用戶";
+"gif.BuyPro.headerGetVip.purchased"="已經購買過該商品";
+"gif.BuyPro.headerGetVip.purchasedFail"="您的手機沒有打開程式內付費購買";
+"gif.BuyPro.headerGetVip.payFail"="購買失敗";
 
-
-
-
-
-
-
-
+"gif.BuyPro.headerGetVip.watercap"="您製作的作品將不再顯示浮水印";
+"gif.BuyPro.headerGetVip.filter"="您可以使用全部濾鏡";
+"gif.BuyPro.headerGetVip.noAD"="您可以使用無廣告的使用APP的樂趣";
+"gif.BuyPro.headerGetVip.nolimite"="您可以添加不限張數照片";
+"gif.BuyPro.headerGetVip.onlyVip"="VIP用戶專享";
+"gif.BuyPro.noVip.watercap"="Vip用户將不再顯示GifPlayer水印";
+"gif.BuyPro.noVip.filter"="VIP用戶可以無限制使用全部濾鏡";
+"gif.BuyPro.noVip.noAD"="VIP用戶可以去除全部廣告";
+"gif.BuyPro.noVip.nolimite"="VIP用戶可以添加不限張數照片";
 
 
 

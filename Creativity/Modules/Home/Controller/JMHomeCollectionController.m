@@ -29,6 +29,7 @@
 #import <UShareUI/UShareUI.h>
 #import "JMShareTool.h"
 #import <Social/Social.h>
+#import "JMAuthorizeManager.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
@@ -180,7 +181,7 @@ static NSString *const collectionID = @"cell";
 - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType shareImage:(id)shareImage
 {
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"" thumImage:[UIImage imageNamed:@"text"]];
+    UMShareEmotionObject *gif = [UMShareEmotionObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"强大的GIF编辑生成工具" thumImage:[UIImage imageNamed:@"GifPlayer_Icon"]];
     gif.emotionData = shareImage;
     messageObject.shareObject = gif;
     
@@ -239,91 +240,101 @@ static NSString *const collectionID = @"cell";
 #pragma mark --
 - (void)photoFromSource:(NSInteger)sourceType
 {
-    if (sourceType == 200) {
+    [[JMAuthorizeManager sharedInstance] requestPhotoAccessCompletionHandler:^(BOOL request, NSError *error) {
+
+        if (request) {
         
-        NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
-        [JMFileManger creatDir:gifPath];
-        
-        JMDrawViewController *draw = [[JMDrawViewController alloc] init];
-        draw.title = NSLocalizedString(@"gif.home.VC.title.gifBoart", "");
-        draw.folderPath = gifPath;
-        [draw initPaintBoard:nil images:nil];
-        JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
-        [self presentViewController:Nav animated:YES completion:nil];
-        
-    }else if (sourceType == 201){
-    
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-        JMPhotosController *photos = [[JMPhotosController alloc] init];
-        photos.rightImage = @"navbar_next_icon_black";
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-            
-            photos.type = ImageTypePhoto;
-            [[TZImageManager manager] getAllAlbumPhotosCompletion:^(NSArray<TZAssetModel *> *models) {
+            if (sourceType == 200) {
                 
-                photos.models = models;
-            }];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
+                NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+                [JMFileManger creatDir:gifPath];
                 
-                [hud hideAnimated:YES];
-                photos.title = NSLocalizedString(@"gif.home.VC.title.CameraRoll", "");
-                JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
-                [self presentViewController:nav animated:YES completion:nil];
-            });
-        });
-        
-    }else if (sourceType == 202){
-    
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-        JMPhotosController *photos = [[JMPhotosController alloc] init];
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-            
-            photos.type = ImageTypePhotoGIF;
-            [[TZImageManager manager] getAllGifCompletion:^(NSMutableArray<TZAssetModel *> *models) {
+                JMDrawViewController *draw = [[JMDrawViewController alloc] init];
+                draw.title = NSLocalizedString(@"gif.home.VC.title.gifBoart", "");
+                draw.folderPath = gifPath;
+                [draw initPaintBoard:nil images:nil];
+                JMMainNavController *Nav = [[JMMainNavController alloc] initWithRootViewController:draw];
+                [self presentViewController:Nav animated:YES completion:nil];
                 
-                photos.models = [models copy];
+            }else if (sourceType == 201){
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+                hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+                JMPhotosController *photos = [[JMPhotosController alloc] init];
+                photos.rightImage = @"navbar_next_icon_black";
+                
+                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                     
-                    [hud hideAnimated:YES];
-                    photos.title = NSLocalizedString(@"gif.home.VC.title.gifAlbum", "");
+                    photos.type = ImageTypePhoto;
+                    [[TZImageManager manager] getAllAlbumPhotosCompletion:^(NSArray<TZAssetModel *> *models) {
+                        
+                        photos.models = models;
+                    }];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [hud hideAnimated:YES];
+                        photos.title = NSLocalizedString(@"gif.home.VC.title.CameraRoll", "");
+                        JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+                        [self presentViewController:nav animated:YES completion:nil];
+                    });
+                });
+                
+            }else if (sourceType == 202){
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+                hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+                JMPhotosController *photos = [[JMPhotosController alloc] init];
+                
+                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                    
+                    photos.type = ImageTypePhotoGIF;
+                    [[TZImageManager manager] getAllGifCompletion:^(NSMutableArray<TZAssetModel *> *models) {
+                        
+                        photos.models = [models copy];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            
+                            [hud hideAnimated:YES];
+                            photos.title = NSLocalizedString(@"gif.home.VC.title.gifAlbum", "");
+                            JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+                            [self presentViewController:nav animated:YES completion:nil];
+                        });
+                    }];
+                });
+                
+            }else if (sourceType == 203){
+                
+                JMPhotosController *photos = [[JMPhotosController alloc] init];
+                photos.title = NSLocalizedString(@"gif.home.VC.title.brust", "");
+                photos.type = ImageTypePhotoBursts;
+                [[TZImageManager manager] getAllBrustCompletion:^(NSArray<TZAssetModel *> *models) {
+                    
+                    photos.models = models;
                     JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
                     [self presentViewController:nav animated:YES completion:nil];
-                });
-            }];
-        });
+                }];
+                
+            }else if (sourceType == 204){
+                
+                JMPhotosController *photos = [[JMPhotosController alloc] init];
+                photos.title = NSLocalizedString(@"gif.home.VC.title.livephotos", "");
+                photos.type = ImageTypePhotoLivePhoto;
+                [[TZImageManager manager] getAllLivePhotosCompletion:^(NSArray<TZAssetModel *> *models) {
+                    
+                    photos.models = models;
+                    JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
+                    [self presentViewController:nav animated:YES completion:nil];
+                }];
+            }
+        }else{
         
-    }else if (sourceType == 203){
-        
-        JMPhotosController *photos = [[JMPhotosController alloc] init];
-        photos.title = NSLocalizedString(@"gif.home.VC.title.brust", "");
-        photos.type = ImageTypePhotoBursts;
-        [[TZImageManager manager] getAllBrustCompletion:^(NSArray<TZAssetModel *> *models) {
-            
-            photos.models = models;
-            JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
-            [self presentViewController:nav animated:YES completion:nil];
-        }];
-        
-    }else if (sourceType == 204){
-        
-        JMPhotosController *photos = [[JMPhotosController alloc] init];
-        photos.title = NSLocalizedString(@"gif.home.VC.title.livephotos", "");
-        photos.type = ImageTypePhotoLivePhoto;
-        [[TZImageManager manager] getAllLivePhotosCompletion:^(NSArray<TZAssetModel *> *models) {
-            
-            photos.models = models;
-            JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:photos];
-            [self presentViewController:nav animated:YES completion:nil];
-        }];
-    }
+            UIAlertView *alerView2 = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"gif.base.alert.alert", "") message:NSLocalizedString(@"gif.base.alert.permissions", "") delegate:nil cancelButtonTitle:NSLocalizedString(@"gif.base.alert.close","") otherButtonTitles:nil];
+            [alerView2 show];            
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

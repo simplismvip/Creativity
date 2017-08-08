@@ -66,17 +66,12 @@
     slider.slider.value = 1.0;
     JMSelf(ws);
     slider.value = ^(JMSlider *value) {ws.paintView.alpha = value.sValue;};
-    slider.dragUpEnd = ^(BOOL hide) {
-      
-        ws.imageView.hidden = hide;
-        
-    };
+    slider.dragUpEnd = ^(BOOL hide) {ws.imageView.hidden = hide;};
     
     slider.dragUp = ^(BOOL hide) {
         
         ws.imageView.hidden = hide;
         ws.imageView.image = ws.paintView.image;
-        
     };
     
     
@@ -155,22 +150,18 @@
     
     if (bottomType == JMTopBarTypeAdd){
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"是否保存当前修改" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.Addpic", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        if (self.editerDetailDone) {
             
-            if (self.editerDetailDone) {
-                self.editerDetailDone(_paintView.image);
-                [_paintView clearAll];
-            }
-        }]];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
-        [self presentViewController:alertController animated:YES completion:nil];
-        [self configiPad:alertController];
+            self.editerDetailDone(_paintView.image);
+            [_paintView clearAll];
+        }
         
     }else if (bottomType == JMTopBarTypeLayerManger){
         
-        [JMPopView popView:self.view title:@"空实现"];
+        [JMPopView popView:self.view title:NSLocalizedString(@"gif.base.alert.nothing", "")];
+        UIButton *btn = [self.topbar viewWithTag:indexPath.section+baseTag];
+        btn.userInteractionEnabled = NO;
+        btn.tintColor = [UIColor grayColor];
         
     }else if (bottomType == JMTopBarTypePaint){
         

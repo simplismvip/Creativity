@@ -1341,7 +1341,7 @@
 				TargetAttributes = {
 					04A0DDEA1EEF81A400464852 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = 5ATA948SQL;
+						DevelopmentTeam = 48K328WFVJ;
 						ProvisioningStyle = Automatic;
 					};
 					04A0DE031EEF81A400464852 = {
@@ -1746,12 +1746,12 @@
 			baseConfigurationReference = 7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5ATA948SQL;
+				DEVELOPMENT_TEAM = 48K328WFVJ;
 				GCC_PREFIX_HEADER = Creativity/Others/Creativity_Prefix.pch;
 				INFOPLIST_FILE = Creativity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.Creativity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.GifPlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1761,12 +1761,12 @@
 			baseConfigurationReference = 0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5ATA948SQL;
+				DEVELOPMENT_TEAM = 48K328WFVJ;
 				GCC_PREFIX_HEADER = Creativity/Others/Creativity_Prefix.pch;
 				INFOPLIST_FILE = Creativity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.Creativity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.GifPlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
