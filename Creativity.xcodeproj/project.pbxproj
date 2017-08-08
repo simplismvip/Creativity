@@ -159,6 +159,7 @@
 		A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F21F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m */; };
 		A2B2D7F61F16E97D0068CB15 /* JMEditerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */; };
 		A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */; };
+		A2F906581F2447790061638B /* JMGetMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F906571F2447790061638B /* JMGetMD5.m */; };
 		E38178D8D78B0997D888FA8D /* libPods-Creativity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */; };
 /* End PBXBuildFile section */
 
@@ -483,6 +484,8 @@
 		A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerModel.m; sourceTree = "<group>"; };
 		A2B2D7F71F16F2990068CB15 /* JMEditerDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerDetailController.h; sourceTree = "<group>"; };
 		A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerDetailController.m; sourceTree = "<group>"; };
+		A2F906561F2447790061638B /* JMGetMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGetMD5.h; sourceTree = "<group>"; };
+		A2F906571F2447790061638B /* JMGetMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGetMD5.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -796,6 +799,8 @@
 				A20DAF171EF2E4B0008DBFA9 /* JMGestureButton.m */,
 				047FCEE51EF26E5700AD0C08 /* JMHelper.h */,
 				047FCEE61EF26E5700AD0C08 /* JMHelper.m */,
+				A2F906561F2447790061638B /* JMGetMD5.h */,
+				A2F906571F2447790061638B /* JMGetMD5.m */,
 				047F575A1F0DE05F0045D3ED /* JMBuyHelper.h */,
 				047F575B1F0DE05F0045D3ED /* JMBuyHelper.m */,
 				047FCEEE1EF3777000AD0C08 /* JMMediaHelper.h */,
@@ -1586,7 +1591,11 @@
 				047FCF1B1EF3DCBD00AD0C08 /* JMBaseColorView.m in Sources */,
 				047F57581F0CF51D0045D3ED /* JMGifSetView.m in Sources */,
 				047F57591F0CF51D0045D3ED /* JMGifView.m in Sources */,
+
+				A2F906581F2447790061638B /* JMGetMD5.m in Sources */,
+
 				04DA30B11F3867AC007ACF3F /* UIImage+SubImage.m in Sources */,
+
 				0490EDE11EEF976F00E05A84 /* UINavigationBar+Awesome.m in Sources */,
 				A20DAF261EF2E61E008DBFA9 /* JMBottomView.m in Sources */,
 				A20DAF241EF2E61E008DBFA9 /* JMBottomCell.m in Sources */,

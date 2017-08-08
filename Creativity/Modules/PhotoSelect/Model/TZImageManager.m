@@ -746,6 +746,7 @@
 
 - (void)getAllAlbumPhotosCompletion:(void (^)(NSArray<TZAssetModel *> *models))completion
 {
+    
     [self getCameraRollAlbum:YES allowPickingImage:YES completion:^(TZAlbumModel *model) {
         
         [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
