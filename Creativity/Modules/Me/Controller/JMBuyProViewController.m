@@ -26,7 +26,7 @@
     
     self.dataArray = [NSMutableArray array];
     self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
-    self.leftTitle = NSLocalizedString(@"gif.BuyPro.LeftTitle.RestorePurchase", "");
+//    self.leftTitle = NSLocalizedString(@"gif.BuyPro.LeftTitle.RestorePurchase", "");
     self.title = NSLocalizedString(@"gif.set.sectionZero.rowZero", "");
     [self reloadModels];
     
@@ -59,7 +59,7 @@
 - (void)leftTitleAction:(UIBarButtonItem *)sender
 {
     // NSLog(@"恢复购买目录");
-    [JMUserDefault setBool:NO forKey:@"superUser"];
+//    [JMUserDefault setBool:NO forKey:@"superUser"];
     
 //    if ([JMBuyHelper getVip]) {
 //        

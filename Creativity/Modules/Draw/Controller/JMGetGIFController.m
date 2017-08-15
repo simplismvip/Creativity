@@ -29,6 +29,7 @@
 #import "UIImage+Rotate.h"
 #import "JMShareTool.h"
 
+@import GoogleMobileAds;
 @interface JMGetGIFController ()<JMGetGIFBottomViewDelegate, JMPhotosAlertViewDelegate, UMSocialShareMenuViewDelegate>
 {
     NSTimer *_aniTimer;
@@ -37,6 +38,8 @@
     CGFloat rotation;
 }
 
+/// The interstitial ad.
+@property(nonatomic, strong) GADInterstitial *interstitial;
 @property (nonatomic, weak) UIButton *showFps;
 @property (nonatomic, weak) JMFrameView *frameView;
 @property (nonatomic, weak) JMGIFAnimationView *animationView;
@@ -497,6 +500,19 @@
     
     return news;
 }
+
+#pragma mark -- googleADS
+- (void)createAndLoadInterstitial {
+    
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3940256099942544/4411468910"];
+    GADRequest *request = [GADRequest request];
+    // Request test ads on devices you specify. Your test device ID is printed to the console when
+    // an ad request is made.
+    request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
+    [self.interstitial loadRequest:request];
+    [self.interstitial presentFromRootViewController:self];
+}
+
 
 - (void)dealloc
 {

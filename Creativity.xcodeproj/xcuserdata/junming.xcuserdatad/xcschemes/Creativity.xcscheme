@@ -92,10 +92,11 @@
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "GifPlayer"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

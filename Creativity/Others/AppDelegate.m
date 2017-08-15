@@ -14,6 +14,10 @@
 #import <UShareUI/UShareUI.h>
 #import <UMMobClick/MobClick.h>
 #import "JMAuthorizeManager.h"
+
+
+@import GoogleMobileAds;
+
 @interface AppDelegate ()
 
 @end
@@ -21,6 +25,9 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // Initialize Google Mobile Ads SDK
+    [GADMobileAds configureWithApplicationID:GoogleAD];
     
 //    [[JMAuthorizeManager sharedInstance] requestPhotoAccessCompletionHandler:^(BOOL request, NSError *error) {}];
     

@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface JMHomeModel : NSObject
-
 @property (nonatomic, copy) NSString *creatDate;
 @property (nonatomic, copy) NSString *size;
 @property (nonatomic, copy) NSString *jsonPath;

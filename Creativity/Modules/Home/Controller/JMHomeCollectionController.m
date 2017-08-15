@@ -28,7 +28,6 @@
 #import "TZAssetModel.h"
 #import <UShareUI/UShareUI.h>
 #import "JMShareTool.h"
-#import <Social/Social.h>
 #import "JMAuthorizeManager.h"
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
@@ -161,7 +160,12 @@ static NSString *const collectionID = @"cell";
     NSData *data = [NSData dataWithContentsOfFile:model.folderPath];
     [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:@"" image:data completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
         
-        NSLog(@"%@  %d", activityType, completed);
+        NSString *shareMessage =  completed ? NSLocalizedString(@"gif.base.alert.success", "") : NSLocalizedString(@"gif.base.alert.Failed", "");
+        
+        UIAlertView *alerView =  [[UIAlertView alloc] initWithTitle:shareMessage message:nil
+                                                           delegate:nil cancelButtonTitle:NSLocalizedString(@"gif.base.alert.close","") otherButtonTitles:nil];
+        [alerView show];
+
     }];
 
     JMSelf(ws);
@@ -222,6 +226,7 @@ static NSString *const collectionID = @"cell";
                        NSLocalizedString(@"gif.home.VC.title.brust", ""),
                        NSLocalizedString(@"gif.home.VC.title.livephotos", ""),
                        NSLocalizedString(@"gif.base.alert.cancle", "")];
+    
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
     alert.titles = array;
     alert.delegate = self;

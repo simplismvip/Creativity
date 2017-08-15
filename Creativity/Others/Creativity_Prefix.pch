@@ -9,6 +9,8 @@
 #ifndef Creativity_Prefix_pch
 #define Creativity_Prefix_pch
 
+#define GoogleAD @"ca-app-pub-5649482177498836/9307597084"
+
 #define baseTag 1000
 #define layerBaseTag 900
 #define ellipseBaseTag 800
@@ -21,7 +23,6 @@
 #define JMSourceFount [UIFont systemFontOfSize:12]
 
 #define JMSelf(weakSelf) __weak __typeof(&*self)weakSelf = self;
-
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 
