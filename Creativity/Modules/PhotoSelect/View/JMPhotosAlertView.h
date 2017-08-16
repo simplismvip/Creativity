@@ -10,6 +10,9 @@
 
 @protocol JMPhotosAlertViewDelegate <NSObject>
 - (void)photoFromSource:(NSInteger)sourceType;
+
+@optional
+- (void)cancle;
 @end
 @interface JMPhotosAlertView : UIView
 @property (nonatomic, weak) id <JMPhotosAlertViewDelegate>delegate;

@@ -259,12 +259,12 @@
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
     alert.titles = array;
     alert.delegate = self;
-    UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIView *backView = [[UIView alloc] initWithFrame:window.bounds];
     [window addSubview:backView];
     [backView addSubview:alert];
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         
         backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
         alert.frame = CGRectMake(0, kH-(12+alertHeight*array.count), kW, 12+alertHeight*array.count);

@@ -46,6 +46,13 @@
             
             [self.delegate photoFromSource:sender.tag];
         }
+    
+    }else{
+    
+        if ([self.delegate respondsToSelector:@selector(cancle)]) {
+            
+            [self.delegate cancle];
+        }
     }
     
     [UIView animateWithDuration:0.2 animations:^{
