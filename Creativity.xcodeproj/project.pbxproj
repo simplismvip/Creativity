@@ -160,6 +160,7 @@
 		A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F21F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m */; };
 		A2B2D7F61F16E97D0068CB15 /* JMEditerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */; };
 		A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */; };
+		A2F254A61F494F3B00A8E2B0 /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F254A51F494F3B00A8E2B0 /* CustomAlertView.m */; };
 		E38178D8D78B0997D888FA8D /* libPods-Creativity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */; };
 /* End PBXBuildFile section */
 
@@ -486,6 +487,8 @@
 		A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerModel.m; sourceTree = "<group>"; };
 		A2B2D7F71F16F2990068CB15 /* JMEditerDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerDetailController.h; sourceTree = "<group>"; };
 		A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerDetailController.m; sourceTree = "<group>"; };
+		A2F254A41F494F3B00A8E2B0 /* CustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAlertView.h; sourceTree = "<group>"; };
+		A2F254A51F494F3B00A8E2B0 /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -945,6 +948,8 @@
 				A20F38A81EF96662009E5E48 /* JMProHeaderView.m */,
 				A20BE8911EFE07EE0083DBF1 /* JMLicenceCell.h */,
 				A20BE8921EFE07EE0083DBF1 /* JMLicenceCell.m */,
+				A2F254A41F494F3B00A8E2B0 /* CustomAlertView.h */,
+				A2F254A51F494F3B00A8E2B0 /* CustomAlertView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1574,6 +1579,7 @@
 				0490EDDE1EEF976F00E05A84 /* NSObject+JMProperty.m in Sources */,
 				040F17591F20B34100E9067E /* UIImage+Filters.m in Sources */,
 				A20BE89C1EFE18B20083DBF1 /* JMLicenceViewModel.m in Sources */,
+				A2F254A61F494F3B00A8E2B0 /* CustomAlertView.m in Sources */,
 				04B033B11EFA153700A10D4C /* UIImage+Resize.m in Sources */,
 				0490EDE21EEF976F00E05A84 /* UINavigationBar+JMNavigationBar.m in Sources */,
 				0490F1B11EEF9C3900E05A84 /* JMHomeCollectionViewFlowLayout.m in Sources */,

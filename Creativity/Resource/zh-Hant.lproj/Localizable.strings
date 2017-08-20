@@ -88,11 +88,14 @@
 "gif.BuyPro.headerGetVipSubTitle.description" = "請將應用陞級到專業版，享受到更多功能優惠。";
 "gif.BuyPro.headerGetVipSubTitle.VIP" = "您可以使用全部功能創建有趣的視頻和GIF動畫";
 
-"gif.BuyPro.headerGetSuperUser.NOVIP"="購買專業版";
+"gif.BuyPro.headerGetSuperUser.NOVIP"="購買專業版 ¥3.99/月";
 "gif.BuyPro.headerGetSuperUser.VIP"="VIP用戶";
 "gif.BuyPro.headerGetVip.purchased"="已經購買過該商品";
 "gif.BuyPro.headerGetVip.purchasedFail"="您的手機沒有打開程式內付費購買";
 "gif.BuyPro.headerGetVip.payFail"="購買失敗";
+"gif.BuyPro.headerGetVip.details"="(1) 訂閱時限為1個月，每個訂閱期間用戶將能夠使用所有功能並去廣告\n(2) 您確認購買時將向iTunes帳戶收取付款\n(3) 訂閱將自動更新，除非在本期結束前至少24小時關閉自動續訂\n(4) 帳戶將在本期結束前24小時內收取續費費用，並確認續訂費用\n(5) 訂閱可能由用戶管理，自動續訂可能會在購買後轉到用戶的帳戶設置關閉\n(6) 如果提供免費試用期的任何未使用部分，如果用戶購買該訂閱，將被沒收";
+
+"gif.BuyPro.headerGetVip.detailsTitle"="訂閱詳情";
 
 "gif.BuyPro.headerGetVip.watercap"="您製作的作品將不再顯示浮水印";
 "gif.BuyPro.headerGetVip.filter"="您可以使用全部濾鏡";

@@ -86,12 +86,15 @@
 "gif.BuyPro.headerGetVipSubTitle.description" = "Upgrade the application and enjoy more features.";
 "gif.BuyPro.headerGetVipSubTitle.VIP" = "You can use all of your features.";
 
-"gif.BuyPro.headerGetSuperUser.NOVIP"="Pruchase Pro";
+"gif.BuyPro.headerGetSuperUser.NOVIP"="Pruchase Pro $0.49/Month";
 "gif.BuyPro.headerGetSuperUser.VIP"="VIP User";
 
 "gif.BuyPro.headerGetVip.purchased"="The goods have been purchased";
 "gif.BuyPro.headerGetVip.purchasedFail"="Your phone has not been opened for pay per program";
 "gif.BuyPro.headerGetVip.payFail"="Purchase failure";
+"gif.BuyPro.headerGetVip.details"="(1) $0.49/Month，enjoy more features \n(2) Payment will be charged to iTunes Account at confirmation of purchase\n(3) Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period\n(4) Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal\n(5) Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase\n(6) Any unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication, where applicable";
+
+"gif.BuyPro.headerGetVip.detailsTitle"="Subscription";
 
 "gif.BuyPro.headerGetVip.watercap"="No Watermarks";
 "gif.BuyPro.headerGetVip.filter"="Full Filters";

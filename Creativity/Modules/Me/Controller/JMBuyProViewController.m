@@ -11,6 +11,7 @@
 #import "ProModel.h"
 #import "JMProHeaderView.h"
 #import "JMUserDefault.h"
+#import "CustomAlertView.h"
 
 @interface JMBuyProViewController ()<SKPaymentTransactionObserver, SKProductsRequestDelegate, UITableViewDelegate, UITableViewDataSource, JMProHeaderViewDelegate>
 @property (nonatomic, weak) UITableView *proView;
@@ -149,27 +150,30 @@
 # pragma mark -- JMProHeaderViewDelegate
 - (void)buyPro
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-    self.hud = hud;
-    
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+    [CustomAlertView showOneButtonWithTitle:NSLocalizedString(@"gif.BuyPro.headerGetVip.detailsTitle", "") Message:NSLocalizedString(@"gif.BuyPro.headerGetVip.details", "") ButtonType:CustomAlertViewButtonTypeDefault ButtonTitle:NSLocalizedString(@"gif.base.alert.sure", "") Click:^{
+
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+        self.hud = hud;
         
-        // 1> 添加一个交易队列观察者
-        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-        
-        if ([SKPaymentQueue canMakePayments]) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
             
-            [self requestProductData:@"com.JunMing.GifPlay"];
+            // 1> 添加一个交易队列观察者
+            [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
             
-        }else{
-            // NSLog(@"不允许程序内付费购买");
-            UIAlertView *alerView =  [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"gif.base.alert.alert", "") message:NSLocalizedString(@"gif.BuyPro.headerGetVip.purchasedFail", "") delegate:nil cancelButtonTitle:NSLocalizedString(@"gif.base.alert.close","") otherButtonTitles:nil];
-            
-            [alerView show];
-        }
-    });
+            if ([SKPaymentQueue canMakePayments]) {
+                
+                [self requestProductData:@"com.JunMing.GifPlay"];
+                
+            }else{
+                // NSLog(@"不允许程序内付费购买");
+                UIAlertView *alerView =  [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"gif.base.alert.alert", "") message:NSLocalizedString(@"gif.BuyPro.headerGetVip.purchasedFail", "") delegate:nil cancelButtonTitle:NSLocalizedString(@"gif.base.alert.close","") otherButtonTitles:nil];
+                
+                [alerView show];
+            }
+        });
+    }];
 }
 
 #pragma mark -- 内购项目
@@ -207,10 +211,7 @@
 // 弹出错误信息
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [_hud hideAnimated:YES];
-    });
+    dispatch_async(dispatch_get_main_queue(), ^{[_hud hideAnimated:YES];});
 
     UIAlertView *alerView =  [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",NULL) message:[error localizedDescription]
                                                        delegate:nil cancelButtonTitle:NSLocalizedString(@"gif.base.alert.close","") otherButtonTitles:nil];
