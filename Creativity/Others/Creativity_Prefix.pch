@@ -9,7 +9,8 @@
 #ifndef Creativity_Prefix_pch
 #define Creativity_Prefix_pch
 
-#define GoogleAD @"ca-app-pub-5649482177498836/9307597084"
+#define GoogleAppID @"ca-app-pub-5649482177498836~1771710237"
+#define GoogleUtiID @"ca-app-pub-5649482177498836/9307597084"
 
 #define baseTag 1000
 #define layerBaseTag 900

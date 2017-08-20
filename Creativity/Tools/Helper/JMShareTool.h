@@ -14,5 +14,5 @@ typedef void(^shareWeChat)();
 @interface JMShareTool : NSObject
 @property (nonatomic, copy) shareWeChat share;
 
-- (void)shareWithTitle:(NSString *)title description:(NSString *)description url:(NSString *)url image:(id)image completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler;
+- (void)shareWithTitle:(NSString *)title description:(NSString *)description url:(NSString *)url image:(id)image popView:(UIView *)popView completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler;
 @end

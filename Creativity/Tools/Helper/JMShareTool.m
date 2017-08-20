@@ -16,7 +16,7 @@
 
 @implementation JMShareTool
 
-- (void)shareWithTitle:(NSString *)title description:(NSString *)description url:(NSString *)url image:(id)image completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler
+- (void)shareWithTitle:(NSString *)title description:(NSString *)description url:(NSString *)url image:(id)image popView:(UIView *)popView completionHandler:(UIActivityViewControllerCompletionHandler)completionHandler
 {
     NSMutableArray *items = [NSMutableArray array];
     [items addObject:title?:@""];
@@ -41,6 +41,17 @@
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.window.rootViewController presentViewController:activityViewController animated:YES completion:nil];
     
+    if (IS_IPAD) {
+        
+        UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
+        
+        if (popover){
+            
+            popover.sourceView = popView;
+            popover.sourceRect = popView.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        }
+    }
     activityViewController.completionHandler = ^(NSString *activityType, BOOL complted){
         
         if (completionHandler) {

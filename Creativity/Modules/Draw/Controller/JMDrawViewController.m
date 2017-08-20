@@ -63,9 +63,10 @@
     
     // 缓存
     self.cacheArray = [NSMutableArray array];
-    
     self.memberViewData = [NSMutableArray array];
     self.dataSource = [NSMutableArray array];
+    // 这里创建bottomView
+    self.dataSource = [JMHelper getTopBarModel];
     
     JMSelf(ws);
     JMSlider *slider = [[JMSlider alloc] initWithFrame:CGRectMake(10, (self.view.height/2-self.view.width/2+64)*0.5-15, self.view.width-20, 30)];
@@ -99,8 +100,6 @@
         make.width.height.mas_equalTo(self.view.width);
     }];
     
-    // 这里创建bottomView
-    self.dataSource = [JMHelper getTopBarModel];
     JMTopTableView *topbar = [[JMTopTableView alloc] initWithFrame:CGRectMake(0, kH-44, kW, 44)];
     topbar.delegate = self;
     topbar.dataSource = _dataSource;
@@ -176,10 +175,7 @@
     NSString *title = nil;
     
     JMTopBarModel *tModel = _dataSource[indexPath.section];
-    if (tModel.models.count == 1) {
-        
-        title = tModel.title;
-    }else{
+    if (tModel.models.count > 1) {
     
         JMBottomModel *bModel = [_dataSource[indexPath.section] models][row];
         title = bModel.title;
@@ -214,6 +210,7 @@
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil]];
             [alertController addAction:buyVip];
             [self presentViewController:alertController animated:YES completion:nil];
+            [self configiPad:alertController];
         }
         
     }else if (bottomType == JMTopBarTypeLayerManger){

@@ -27,7 +27,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Initialize Google Mobile Ads SDK
-    [GADMobileAds configureWithApplicationID:GoogleAD];
+    [GADMobileAds configureWithApplicationID:GoogleAppID];
     
 //    [[JMAuthorizeManager sharedInstance] requestPhotoAccessCompletionHandler:^(BOOL request, NSError *error) {}];
     

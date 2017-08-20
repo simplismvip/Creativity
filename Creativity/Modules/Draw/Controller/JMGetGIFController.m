@@ -40,6 +40,7 @@
 
 /// The interstitial ad.
 @property(nonatomic, strong) GADInterstitial *interstitial;
+
 @property (nonatomic, weak) UIButton *showFps;
 @property (nonatomic, weak) JMFrameView *frameView;
 @property (nonatomic, weak) JMGIFAnimationView *animationView;
@@ -53,9 +54,11 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = JMColor(41, 41, 41);
     [MobClick beginLogPageView:@"JMGetGIFController"];
+    
     if (_delayTime>0) {
         
         [_animationView setDelayer:_delayTime];
+        
     }else{
         [_animationView setDelayer:0.7];
         _delayTime = 0.7;
@@ -112,7 +115,7 @@
     // 滑动slider时显示帧数
     JMButtom *showFps = [[JMButtom alloc] init];
     showFps.layer.cornerRadius = 10;
-    [showFps setImage:[[UIImage imageNamed:@"ellopse_32"] imageWithColor:JMBaseColor] forState:(UIControlStateNormal)];
+    [showFps setImage:[[UIImage imageNamed:@"time"] imageWithColor:JMBaseColor] forState:(UIControlStateNormal)];
     showFps.titleLabel.font = [UIFont systemFontOfSize:14.0];
     showFps.titleLabel.textColor = [UIColor whiteColor];
     showFps.frame = CGRectMake(0, 0, 100, 100);
@@ -291,6 +294,7 @@
 - (void)didSelectRowAtIndexPath:(NSInteger)index
 {
     if (index == 1){
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
         hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
@@ -391,7 +395,11 @@
 
 - (void)showShare
 {
-    NSArray *array = [JMBuyHelper isVip] ? @[@"分享", @"取消"]: @[@"去水印", @"分享", @"取消"];
+    if (![JMBuyHelper isVip]) {
+        
+        [self createAndLoadInterstitial];
+    }
+    NSArray *array = [JMBuyHelper isVip] ? @[@"分享", @"取消"]: @[@"去水印", @"去广告", @"分享", @"取消"];
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
     alert.titles = array;
     alert.delegate = self;
@@ -404,6 +412,7 @@
 
         backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
         alert.frame = CGRectMake(0, kH-(10+alertHeight*array.count), kW, 10+alertHeight*array.count);
+        
     }];
 }
 
@@ -414,12 +423,14 @@
         [self shareUM];
         
     }else{
-        if (sourceType == 200) {
+        
+        if (sourceType == 200 || sourceType == 201) {
             
             JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
             JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
             [self presentViewController:nav animated:YES completion:nil];
-        }else if(sourceType == 201){
+        
+        }else if(sourceType == 202){
             
             NSLog(@"non--VIP  分享到微信");
             [self shareUM];
@@ -427,16 +438,24 @@
     }
 }
 
+//
 - (void)cancle
 {
-    
+    if (![JMBuyHelper isVip]) {
+        
+        if (self.interstitial.isReady) {
+            [self.interstitial presentFromRootViewController:self];
+        } else {
+            NSLog(@"Ad wasn't ready");
+        }
+    }
 }
 
 - (void)shareUM
 {
     NSData *data = [NSData dataWithContentsOfFile:_filePath];
     JMShareTool *shareTool = [[JMShareTool alloc] init];
-    [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:@"" image:data completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
+    [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:@"" image:data popView:self.navigationController.navigationBar completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
         
         NSLog(@"%@  %d", activityType, completed);
     }];
@@ -506,18 +525,30 @@
     return news;
 }
 
+- (void)configiPad:(UIAlertController *)alertController
+{
+    if (IS_IPAD) {
+        
+        UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+        
+        if (popover){
+            popover.sourceView = self.navigationController.navigationBar;
+            popover.sourceRect = self.navigationController.navigationBar.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        }
+    }
+}
+
 #pragma mark -- googleADS
 - (void)createAndLoadInterstitial {
     
-    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3940256099942544/4411468910"];
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:GoogleUtiID];
     GADRequest *request = [GADRequest request];
     // Request test ads on devices you specify. Your test device ID is printed to the console when
     // an ad request is made.
-    request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
+//    request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
     [self.interstitial loadRequest:request];
-    [self.interstitial presentFromRootViewController:self];
 }
-
 
 - (void)dealloc
 {

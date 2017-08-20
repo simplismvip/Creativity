@@ -139,10 +139,7 @@
     NSString *title = nil;
     
     JMTopBarModel *tModel = _dataSource[indexPath.section];
-    if (tModel.models.count == 1) {
-        
-        title = tModel.title;
-    }else{
+    if (tModel.models.count > 1) {
         
         JMBottomModel *bModel = [_dataSource[indexPath.section] models][row];
         title = bModel.title;

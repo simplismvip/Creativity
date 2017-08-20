@@ -88,23 +88,23 @@
     
     if (model.type == TZAssetModelMediaTypeLivePhoto) {
         
-        _classImageTpye.image = [UIImage imageWithRenderingName:@"PhotosLivePrefsHeader"];
+        _classImageTpye.image = [[UIImage imageWithRenderingName:@"PhotosLivePrefsHeader"] imageWithColor:JMBaseColor];
         
     }else if (model.type == TZAssetModelMediaTypeBursts){
         
-        _classImageTpye.image = [UIImage imageWithRenderingName:@"icons8-layers"];
+        _classImageTpye.image = [[UIImage imageWithRenderingName:@"icons8-layers"] imageWithColor:JMBaseColor];
         
     }else if (model.type == TZAssetModelMediaTypeGIF){
         
-        _classImageTpye.image = [UIImage imageWithRenderingName:@"gif"];
+        _classImageTpye.image = [[UIImage imageWithRenderingName:@"gif"] imageWithColor:JMBaseColor];
         
     }else if (model.type == TZAssetModelMediaTypeVideo){
         
-        _classImageTpye.image = [UIImage imageWithRenderingName:@"navbar_video_icon_disabled_black"];
+        _classImageTpye.image = [[UIImage imageWithRenderingName:@"navbar_video_icon_disabled_black"] imageWithColor:JMBaseColor];
         
     }else if (model.type == TZAssetModelMediaTypePhoto){
         
-        _classImageTpye.image = [UIImage imageWithRenderingName:@"icons8-add_image"];
+        _classImageTpye.image = [[UIImage imageWithRenderingName:@"icons8-add_image"] imageWithColor:JMBaseColor];
     }
 }
 
