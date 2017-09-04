@@ -45,7 +45,7 @@
     SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {cell = [[SetTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
     
-    cell.leftImage.image = indexPath.section == 3 ? [UIImage imageNamed:model.icon]:[UIImage imageWithTemplateName:model.icon];
+    cell.leftImage.image = indexPath.section == 2 ? [UIImage imageNamed:model.icon]:[UIImage imageWithTemplateName:model.icon];
     cell.textTitle.text = model.title;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMBaseColor];
