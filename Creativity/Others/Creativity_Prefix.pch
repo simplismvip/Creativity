@@ -12,6 +12,12 @@
 #define GoogleAppID @"ca-app-pub-5649482177498836~1771710237"
 #define GoogleUtiID @"ca-app-pub-5649482177498836/9307597084"
 
+#define ebookReaderID @"https://itunes.apple.com/cn/app/ebookreader/id1269413156?mt=8"
+#define photolockID @"itms-apps://itunes.apple.com/app/id1257334539"
+
+
+
+
 #define baseTag 1000
 #define layerBaseTag 900
 #define ellipseBaseTag 800

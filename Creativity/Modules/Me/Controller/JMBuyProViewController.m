@@ -12,6 +12,7 @@
 #import "JMProHeaderView.h"
 #import "JMUserDefault.h"
 #import "CustomAlertView.h"
+#import "JMServerViewController.h"
 
 @interface JMBuyProViewController ()<SKPaymentTransactionObserver, SKProductsRequestDelegate, UITableViewDelegate, UITableViewDataSource, JMProHeaderViewDelegate>
 @property (nonatomic, weak) UITableView *proView;
@@ -27,7 +28,7 @@
     
     self.dataArray = [NSMutableArray array];
     self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
-//    self.leftTitle = NSLocalizedString(@"gif.BuyPro.LeftTitle.RestorePurchase", "");
+    self.leftTitle = @"服务条款";// NSLocalizedString(@"gif.BuyPro.LeftTitle.RestorePurchase", "");
     self.title = NSLocalizedString(@"gif.set.sectionZero.rowZero", "");
     [self reloadModels];
     
@@ -59,6 +60,9 @@
 
 - (void)leftTitleAction:(UIBarButtonItem *)sender
 {
+    JMServerViewController *server = [[JMServerViewController alloc] init];
+    server.title = @"服务条款";
+    [self.navigationController pushViewController:server animated:YES];
     // NSLog(@"恢复购买目录");
 //    [JMUserDefault setBool:NO forKey:@"superUser"];
     

@@ -151,7 +151,8 @@
         about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
     }else{
-        NSURL *url  = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1257334539"];
+        
+        NSURL *url  = [NSURL URLWithString:ebookReaderID];
         [[UIApplication sharedApplication] openURL:url];
     }
 }

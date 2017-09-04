@@ -94,6 +94,7 @@
 "gif.BuyPro.headerGetVip.payFail"="Purchase failure";
 "gif.BuyPro.headerGetVip.details"="(1) $0.49/Month，enjoy more features \n(2) Payment will be charged to iTunes Account at confirmation of purchase\n(3) Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period\n(4) Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal\n(5) Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase\n(6) Any unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication, where applicable";
 
+"gif.BuyPro.headerGetVip.server"="Get unlimited downloads with no ads and stay hidden from friends. Subscription is auto-renewable which means that once purchased it will be auto-renewed every month until you cancel it 24 hours prior to the end of the current period. Duration of the subscription is 1 Month with a charge of $0.49 every month. iTunes Account will be charged for renewal within 24-hours prior to the end of the current period with the cost of $0.49. Manage your Subscription and Auto-Renewal by going to your Account Settings.";
 "gif.BuyPro.headerGetVip.detailsTitle"="Subscription";
 
 "gif.BuyPro.headerGetVip.watercap"="No Watermarks";
