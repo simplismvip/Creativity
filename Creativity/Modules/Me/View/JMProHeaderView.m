@@ -22,7 +22,7 @@
     if (self) {
         
         UILabel *frist = [[UILabel alloc] init];
-        frist.textColor = JMBaseColor;
+//        frist.textColor = JMBaseColor;
         frist.textAlignment = NSTextAlignmentCenter;
         frist.font = [UIFont systemFontOfSize:26];
         [self addSubview:frist];
@@ -30,7 +30,7 @@
         
         UILabel *sec = [[UILabel alloc] init];
         sec.textAlignment = NSTextAlignmentCenter;
-        sec.textColor = [UIColor whiteColor];
+//        sec.textColor = [UIColor whiteColor];
         sec.font = [UIFont systemFontOfSize:16];
         [self addSubview:sec];
         self.sec = sec;

@@ -21,17 +21,17 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.backgroundColor = JMColor(37, 37, 37);
+//        self.backgroundColor = [UIColor clearColor];
         
         UIImageView *leftImage = [[UIImageView alloc] init];
         [self.contentView addSubview:leftImage];
-        leftImage.tintColor = JMBaseColor;
+        leftImage.tintColor = [UIColor grayColor];
         self.leftImage = leftImage;
         
         UILabel *textTitle = [[UILabel alloc] init];
         textTitle.textAlignment = NSTextAlignmentLeft;
         textTitle.font = [UIFont systemFontOfSize:14.0];
-        textTitle.textColor = JMTabViewBaseColor;
+//        textTitle.textColor = JMTabViewBaseColor;
         [self.contentView addSubview:textTitle];
         self.textTitle = textTitle;
     }
@@ -45,14 +45,7 @@
     SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {cell = [[SetTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
     
-    if (indexPath.section == 3) {
-    
-        cell.leftImage.image = [UIImage imageNamed:model.icon];
-    }else{
-    
-        cell.leftImage.image = [UIImage imageWithTemplateName:model.icon];
-    }
-    
+    cell.leftImage.image = indexPath.section == 3 ? [UIImage imageNamed:model.icon]:[UIImage imageWithTemplateName:model.icon];
     cell.textTitle.text = model.title;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMBaseColor];

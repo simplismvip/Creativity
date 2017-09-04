@@ -22,7 +22,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = JMColor(37, 37, 37);
+        self.backgroundColor = [UIColor clearColor];
         
         UIImageView *leftImage = [[UIImageView alloc] init];
         [self.contentView addSubview:leftImage];
@@ -31,14 +31,14 @@
         UILabel *textTitle = [[UILabel alloc] init];
         textTitle.textAlignment = NSTextAlignmentLeft;
         textTitle.font = [UIFont systemFontOfSize:18.0];
-        textTitle.textColor = [UIColor whiteColor];
+//        textTitle.textColor = [UIColor whiteColor];
         [self.contentView addSubview:textTitle];
         self.textTitle = textTitle;
         
         UILabel *subTitle = [[UILabel alloc] init];
         subTitle.textAlignment = NSTextAlignmentLeft;
         subTitle.font = [UIFont systemFontOfSize:14.0];
-        subTitle.textColor = [UIColor whiteColor];
+//        subTitle.textColor = [UIColor whiteColor];
         [self.contentView addSubview:subTitle];
         self.subTitle = subTitle;
     }

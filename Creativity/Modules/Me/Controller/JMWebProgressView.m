@@ -28,8 +28,8 @@ static NSTimeInterval const kFastTimeInterval = 0.003;
 
 - (void)initialize
 {
-    self.lineWidth = 2;
-    self.strokeColor = JMColor(52, 118, 237).CGColor;
+    self.lineWidth = 4;
+    self.strokeColor = JMBaseColor.CGColor;
     _timer = [NSTimer scheduledTimerWithTimeInterval:kFastTimeInterval target:self selector:@selector(pathChanged:) userInfo:nil repeats:YES];
     [_timer pause];
     

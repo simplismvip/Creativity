@@ -18,6 +18,7 @@
 #import "JMLicenceController.h"
 #import "JMBaseWebViewController.h"
 #import "SDImageCache.h"
+#import "JMServerViewController.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -47,7 +48,7 @@
     setTableView.dataSource = self;
     setTableView.sectionHeaderHeight = 0;
     setTableView.sectionFooterHeight = 0;
-    setTableView.backgroundColor = JMColor(41, 41, 41);
+//    setTableView.backgroundColor = JMColor(41, 41, 41);
     setTableView.separatorColor = setTableView.backgroundColor;
     setTableView.showsVerticalScrollIndicator = NO;
     if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){setTableView.cellLayoutMarginsFollowReadableWidth = NO;}
@@ -141,15 +142,15 @@
         
     }else if (indexPath.section==2 && indexPath.row==0) {
         
-        JMLicenceController *about = [[JMLicenceController alloc] init];
-        about.title = model.title;
-        [self.navigationController pushViewController:about animated:YES];
-        
-    }else if (indexPath.section==2 && indexPath.row==1) {
-        
         JMAboutUsController *about = [[JMAboutUsController alloc] init];
         about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
+    
+    }else if (indexPath.section==2 && indexPath.row==1) {
+        
+        JMServerViewController *server = [[JMServerViewController alloc] init];
+        server.title = @"服务条款";
+        [self.navigationController pushViewController:server animated:YES];
     }else{
         
         NSURL *url  = [NSURL URLWithString:ebookReaderID];

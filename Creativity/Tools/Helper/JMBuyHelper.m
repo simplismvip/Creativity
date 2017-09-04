@@ -28,6 +28,6 @@
 
 + (BOOL)getVip
 {
-    return [JMUserDefault setBool:YES forKey:kVIP];
+    return [JMUserDefault readBoolByKey:kVIP];
 }
 @end

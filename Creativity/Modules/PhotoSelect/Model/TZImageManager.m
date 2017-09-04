@@ -724,19 +724,11 @@
     [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         PHAsset *asset = (PHAsset *)obj;
-        if (asset.representsBurst == NO && asset.mediaSubtypes == 0 && asset.sourceType == 1 && asset.mediaType == 1) {
-        
-            NSArray *resourceList = [PHAssetResource assetResourcesForAsset:asset];
-            [resourceList enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                
-                PHAssetResource *resource = obj;
-                if ([resource.uniformTypeIdentifier isEqualToString:@"com.compuserve.gif"]) {
-                    
-                    TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeGIF];
-                    [models addObject:model];
-                }
-            }];
-        }
+        if ([[asset valueForKey:@"filename"] hasSuffix:@"GIF"]) {
+            
+            TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeGIF];
+            [models addObject:model];
+        }    
     }];
     
     if (completion) {
