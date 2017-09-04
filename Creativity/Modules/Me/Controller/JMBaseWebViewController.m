@@ -13,7 +13,7 @@
 @interface JMBaseWebViewController ()<UIWebViewDelegate>
 @property (nonatomic, weak) UIWebView *cloudShareView;
 @property (nonatomic, strong) JMWebProgressView *progressLayer;
-@property (nonatomic, weak) MBProgressHUD *hud;
+//@property (nonatomic, weak) MBProgressHUD *hud;
 @end
 
 @implementation JMBaseWebViewController
@@ -22,10 +22,10 @@
     
     [super viewDidLoad];
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-    self.hud = hud;
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+//    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+//    self.hud = hud;
     [self loadRequest:self.urlString];
     
 }
@@ -94,9 +94,9 @@
     [_progressLayer finishedLoad];
     self.title = @"帮助中心";// [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_hud hideAnimated:YES];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [_hud hideAnimated:YES];
+//    });
 
 }
 
@@ -104,9 +104,9 @@
 {
     [_progressLayer finishedLoad];
    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_hud hideAnimated:YES];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [_hud hideAnimated:YES];
+//    });
 
 }
 

@@ -13,5 +13,6 @@ pod "SDWebImage"
 pod "SDWebImage/GIF"
 pod "FMDB"
 pod "MJExtension"
+pod 'RMStore'
 pod "MBProgressHUD"
 end

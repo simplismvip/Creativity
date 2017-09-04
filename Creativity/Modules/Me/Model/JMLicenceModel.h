@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface JMLicenceModel : NSObject
+@property (nonatomic, assign) BOOL isServer;
 @property (nonatomic, copy) NSString *headeTitle;
 @property (nonatomic, copy) NSString *copyright;
 @property (nonatomic, copy) NSString *lower;

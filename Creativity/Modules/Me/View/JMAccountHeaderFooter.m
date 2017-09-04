@@ -17,7 +17,7 @@
     if (headView == nil) {
         headView = [[JMAccountHeaderFooter alloc] initWithReuseIdentifier:headID];
         
-        headView.backgroundColor = [UIColor clearColor];
+//        headView.backgroundColor = [UIColor clearColor];
         
         // CGFloat f = 240 / 255.0;
         // headView.contentView.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
@@ -33,7 +33,7 @@
         
         UILabel *name = [[UILabel alloc] init];
         name.font = [UIFont systemFontOfSize:11];
-        name.textColor = JMTabViewBaseColor;
+//        name.textColor = JMTabViewBaseColor;
         [self.contentView addSubview:name];
         name.textAlignment = NSTextAlignmentLeft;
         self.name = name;

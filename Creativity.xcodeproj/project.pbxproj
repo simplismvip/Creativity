@@ -161,6 +161,7 @@
 		A2B2D7F61F16E97D0068CB15 /* JMEditerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F51F16E97D0068CB15 /* JMEditerModel.m */; };
 		A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */; };
 		A2F254A61F494F3B00A8E2B0 /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F254A51F494F3B00A8E2B0 /* CustomAlertView.m */; };
+		A2FF320A1F4B90FD00DEE5AA /* JMServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2FF32091F4B90FD00DEE5AA /* JMServerViewController.m */; };
 		E38178D8D78B0997D888FA8D /* libPods-Creativity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 923CD91F8AB60FE7B4F2385C /* libPods-Creativity.a */; };
 /* End PBXBuildFile section */
 
@@ -489,6 +490,8 @@
 		A2B2D7F81F16F2990068CB15 /* JMEditerDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerDetailController.m; sourceTree = "<group>"; };
 		A2F254A41F494F3B00A8E2B0 /* CustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAlertView.h; sourceTree = "<group>"; };
 		A2F254A51F494F3B00A8E2B0 /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAlertView.m; sourceTree = "<group>"; };
+		A2FF32081F4B90FD00DEE5AA /* JMServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMServerViewController.h; sourceTree = "<group>"; };
+		A2FF32091F4B90FD00DEE5AA /* JMServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMServerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -919,6 +922,8 @@
 				0490F1B51EEF9C4900E05A84 /* JMAboutUsController.m */,
 				04E62D0F1EF91F0D00C8B24F /* JMBuyProViewController.h */,
 				04E62D101EF91F0D00C8B24F /* JMBuyProViewController.m */,
+				A2FF32081F4B90FD00DEE5AA /* JMServerViewController.h */,
+				A2FF32091F4B90FD00DEE5AA /* JMServerViewController.m */,
 				0490F1BC1EEF9C4900E05A84 /* JMMeViewController.h */,
 				0490F1BD1EEF9C4900E05A84 /* JMMeViewController.m */,
 				A20BE88E1EFE07980083DBF1 /* JMLicenceController.h */,
@@ -1560,6 +1565,7 @@
 				0490EECC1EEF977000E05A84 /* SXColorGradientView.m in Sources */,
 				040F173C1F20886100E9067E /* JMAuthorizeManager.m in Sources */,
 				042B25E61F39CCB2004BD269 /* LivDownloadHelper.m in Sources */,
+				A2FF320A1F4B90FD00DEE5AA /* JMServerViewController.m in Sources */,
 				04A0DDF01EEF81A400464852 /* main.m in Sources */,
 				0490F2431EEFA32900E05A84 /* JMPaintTools.m in Sources */,
 				0490F24D1EEFB7CF00E05A84 /* StaticClass.m in Sources */,
