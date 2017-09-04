@@ -149,7 +149,7 @@
     }else if (indexPath.section==2 && indexPath.row==1) {
         
         JMServerViewController *server = [[JMServerViewController alloc] init];
-        server.title = @"服务条款";
+        server.title = NSLocalizedString(@"gif.base.alert.appServer", "");
         [self.navigationController pushViewController:server animated:YES];
     }else{
         

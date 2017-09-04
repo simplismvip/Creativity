@@ -108,22 +108,22 @@
 {
     JMLicenceModel *networking = [[JMLicenceModel alloc] init];
     [_dataSource addObject:networking];
-    networking.headeTitle = @"使用协议";
+    networking.headeTitle = NSLocalizedString(@"gif.base.alert.protoal", "");
     networking.lower = @"https://github.com/simplismvip/Privacy-Policy/blob/master/%E4%BD%BF%E7%94%A8%E5%8D%8F%E8%AE%AE.txt";
     
     JMLicenceModel *mjextension = [[JMLicenceModel alloc] init];
     [_dataSource addObject:mjextension];
-    mjextension.headeTitle = @"隐私政策";
+    mjextension.headeTitle = NSLocalizedString(@"gif.base.alert.pricaty", "");
     mjextension.lower = @"https://github.com/simplismvip/Privacy-Policy/blob/master/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96.txt";
     
     JMLicenceModel *fmdb = [[JMLicenceModel alloc] init];
     [_dataSource addObject:fmdb];
-    fmdb.headeTitle = @"应用描述";
+    fmdb.headeTitle = NSLocalizedString(@"gif.base.alert.appDesc", "");
     fmdb.lower =@"https://github.com/simplismvip/Privacy-Policy/blob/master/%E5%BA%94%E7%94%A8%E6%8F%8F%E8%BF%B0.txt";
     
     JMLicenceModel *sub = [[JMLicenceModel alloc] init];
     [_dataSource addObject:sub];
-    sub.headeTitle = @"使用指南";
+    sub.headeTitle = NSLocalizedString(@"gif.base.alert.userGuide", "");
     sub.lower = @"https://github.com/simplismvip/Privacy-Policy/blob/master/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.txt";
 }/*
 #pragma mark - Navigation
