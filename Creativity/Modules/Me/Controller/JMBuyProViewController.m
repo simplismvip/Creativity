@@ -37,8 +37,8 @@
     proView.dataSource = self;
     proView.sectionHeaderHeight = 0;
     proView.sectionFooterHeight = 0;
-    proView.backgroundColor = JMColor(41, 41, 41);
-    proView.separatorColor = proView.backgroundColor;
+//    proView.backgroundColor = JMColor(41, 41, 41);
+    proView.separatorColor = JMColorRGBA(200, 200, 200, .8);
     proView.showsVerticalScrollIndicator = NO;
     if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){proView.cellLayoutMarginsFollowReadableWidth = NO;}
     [self.view addSubview:proView];
@@ -47,7 +47,7 @@
     
     JMProHeaderView *header = [[JMProHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.width*0.6)];
     header.delegate = self;
-    header.backgroundColor = JMColor(41, 41, 41);
+    header.backgroundColor = JMColorRGBA(240, 240, 240, 1.0);
     proView.tableHeaderView = header;
     self.header = header;
 }
@@ -61,12 +61,9 @@
 {
     NSLog(@"恢复购买目录");
     [JMUserDefault setBool:NO forKey:@"superUser"];
+    [_header refruseView];
+    [self reloadModels];
     
-    if ([JMBuyHelper getVip]) {
-        
-        [_header refruseView];
-        [self reloadModels];
-    };
 }
 
 #pragma mark --
@@ -89,7 +86,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (self.view.height - self.view.width*0.8-84)/4;
+    return (self.view.height - self.view.width*0.7-84)/4;
 }
 
 - (void)reloadModels

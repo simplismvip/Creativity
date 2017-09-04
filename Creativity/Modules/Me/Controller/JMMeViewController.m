@@ -142,17 +142,11 @@
         
     }else if (indexPath.section==2 && indexPath.row==0) {
         
-        JMLicenceController *about = [[JMLicenceController alloc] init];
-        about.title = model.title;
-        [self.navigationController pushViewController:about animated:YES];
-        
-    }else if (indexPath.section==2 && indexPath.row==1) {
-        
         JMAboutUsController *about = [[JMAboutUsController alloc] init];
         about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
     
-    }else if (indexPath.section==2 && indexPath.row==2) {
+    }else if (indexPath.section==2 && indexPath.row==1) {
         
         JMServerViewController *server = [[JMServerViewController alloc] init];
         server.title = @"服务条款";

@@ -12,6 +12,7 @@
 #import "JMAccountHeaderFooter.h"
 #import "JMLicenceViewModel.h"
 #import "JMBaseWebViewController.h"
+#import "NSString+Extension.h"
 
 @interface JMServerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
@@ -66,77 +67,64 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMLicenceViewModel *model = self.dataSource[indexPath.section];
+    JMLicenceModel *model = self.dataSource[indexPath.section];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"server"];
     if (!cell) {cell = [[JMLicenceCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"server"];}
-    cell.textLabel.text = model.model.lower;
+    cell.textLabel.text = model.lower;
+    cell.textLabel.numberOfLines = 0;
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     JMAccountHeaderFooter *headView = [JMAccountHeaderFooter headViewWithTableView:tableView];
-    JMLicenceViewModel *model = _dataSource[section];
-    headView.name.text = model.model.headeTitle;
-    headView.name.textColor = [UIColor blackColor];
-    headView.name.font = [UIFont fontWithName:@"AlNile-Bold" size:22];
+    JMLicenceModel *model = _dataSource[section];
+    headView.name.text = model.headeTitle;
+    headView.name.textColor = [UIColor grayColor];
     return headView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 44;
+    return 30;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMLicenceViewModel *model = _dataSource[indexPath.section];
-    return model.cellFrame;
+    JMLicenceModel *model = _dataSource[indexPath.section];
+    CGSize sizeLower = [model.lower sizeWithFont:[UIFont systemFontOfSize:17] maxW:kW-20];
+    return sizeLower.height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JMLicenceViewModel *model = _dataSource[indexPath.section];
+    JMLicenceModel *model = _dataSource[indexPath.section];
     JMBaseWebViewController *drawVC = [[JMBaseWebViewController alloc] init];
-    drawVC.urlString = model.model.copyright;
+    drawVC.urlString = model.lower;
     if (drawVC.urlString) {[self.navigationController pushViewController:drawVC animated:YES];}
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)creatMitsLicence
 {
-    JMLicenceViewModel *viewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *networking = [[JMLicenceModel alloc] init];
-    [_dataSource addObject:viewModel];
+    [_dataSource addObject:networking];
     networking.headeTitle = @"使用协议";
     networking.lower = @"https://github.com/simplismvip/Privacy-Policy/blob/master/%E4%BD%BF%E7%94%A8%E5%8D%8F%E8%AE%AE.txt";
-    viewModel.model = networking;
     
-    JMLicenceViewModel *mjxtentViewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *mjextension = [[JMLicenceModel alloc] init];
-    [_dataSource addObject:mjxtentViewModel];
+    [_dataSource addObject:mjextension];
     mjextension.headeTitle = @"隐私政策";
     mjextension.lower = @"https://github.com/simplismvip/Privacy-Policy/blob/master/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96.txt";
-    mjxtentViewModel.model = mjextension;
     
-    
-    JMLicenceViewModel *fmdbViewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *fmdb = [[JMLicenceModel alloc] init];
-    [_dataSource addObject:fmdbViewModel];
+    [_dataSource addObject:fmdb];
     fmdb.headeTitle = @"应用描述";
     fmdb.lower =@"https://github.com/simplismvip/Privacy-Policy/blob/master/%E5%BA%94%E7%94%A8%E6%8F%8F%E8%BF%B0.txt";
-    fmdbViewModel.model = fmdb;
     
-    JMLicenceViewModel *subViewModel = [[JMLicenceViewModel alloc] init];
     JMLicenceModel *sub = [[JMLicenceModel alloc] init];
-    [_dataSource addObject:subViewModel];
+    [_dataSource addObject:sub];
     sub.headeTitle = @"使用指南";
     sub.lower = @"https://github.com/simplismvip/Privacy-Policy/blob/master/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.txt";
-    subViewModel.model = sub;
 }/*
 #pragma mark - Navigation
 

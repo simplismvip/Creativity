@@ -13,7 +13,6 @@
 @interface JMBaseWebViewController ()<UIWebViewDelegate>
 @property (nonatomic, weak) UIWebView *cloudShareView;
 @property (nonatomic, strong) JMWebProgressView *progressLayer;
-//@property (nonatomic, weak) MBProgressHUD *hud;
 @end
 
 @implementation JMBaseWebViewController
@@ -21,11 +20,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-//    hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-//    self.hud = hud;
     [self loadRequest:self.urlString];
     
 }
@@ -92,22 +86,12 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [_progressLayer finishedLoad];
-    self.title = @"帮助中心";// [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [_hud hideAnimated:YES];
-//    });
-
+//    self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [_progressLayer finishedLoad];
-   
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [_hud hideAnimated:YES];
-//    });
-
 }
 
 - (void)dealloc
