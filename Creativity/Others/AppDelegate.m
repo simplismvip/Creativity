@@ -14,6 +14,8 @@
 #import <UShareUI/UShareUI.h>
 #import <UMMobClick/MobClick.h>
 #import "JMAuthorizeManager.h"
+#import "JMUserDefault.h"
+#import "JMFileManger.h"
 
 @interface AppDelegate ()
 
@@ -22,11 +24,23 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
     
-    
-//    [[JMAuthorizeManager sharedInstance] requestPhotoAccessCompletionHandler:^(BOOL request, NSError *error) {}];
-    // Initialize Google Mobile Ads SDK
-    
+    if (![JMUserDefault readBoolByKey:@"defaultImage"]) {
+        
+        NSFileManager *manger = [NSFileManager defaultManager];
+        NSString *string = [[NSBundle mainBundle] pathForResource:@"luanch" ofType:@"gif"];
+        if ([manger fileExistsAtPath:string]) {
+            
+            NSString *gifPath = [JMDocumentsPath stringByAppendingPathComponent:[JMHelper timerString]];
+            [JMFileManger creatDir:gifPath];
+
+            if ([manger copyItemAtPath:string toPath:[gifPath stringByAppendingPathComponent:@"luanch.gif"] error:nil]) {
+                
+                [JMUserDefault setBool:YES forKey:@"defaultImage"];
+            }
+        }
+    }
     
     // 友盟
     [[UMSocialManager defaultManager] openLog:YES];

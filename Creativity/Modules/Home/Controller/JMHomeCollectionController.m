@@ -32,7 +32,6 @@
 #import "JMUserDefault.h"
 
 @import GoogleMobileAds;
-
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -383,7 +382,7 @@ static NSString *const collectionID = @"cell";
     return number / (24*3600)+1;
 }
 
->>>>>>> 12c853304605507c0b499ebb8a13c4aab6188295
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 #ifdef DEBUG
