@@ -12,6 +12,8 @@
 #import "JMProHeaderView.h"
 #import "JMUserDefault.h"
 #import "CustomAlertView.h"
+#import "JMServerViewController.h"
+#import "RMStore.h"
 
 @interface JMBuyProViewController ()<SKPaymentTransactionObserver, SKProductsRequestDelegate, UITableViewDelegate, UITableViewDataSource, JMProHeaderViewDelegate>
 @property (nonatomic, weak) UITableView *proView;
@@ -29,6 +31,7 @@
     self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
     self.leftTitle = NSLocalizedString(@"gif.BuyPro.LeftTitle.RestorePurchase", "");
     self.title = NSLocalizedString(@"gif.set.sectionZero.rowZero", "");
+    
     [self reloadModels];
     
     UITableView *proView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
@@ -63,7 +66,6 @@
     [JMUserDefault setBool:NO forKey:@"superUser"];
     [_header refruseView];
     [self reloadModels];
-    
 }
 
 #pragma mark --

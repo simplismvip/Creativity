@@ -10,6 +10,13 @@
 "gif.base.alert.permissions"="請設定許可權允許訪問相册";
 "gif.base.alert.nothing"="空实现";
 
+"gif.base.alert.protoal"="使用協議";
+"gif.base.alert.pricaty"="隱私政策";
+"gif.base.alert.userGuide"="使用指南";
+"gif.base.alert.appDesc"="應用描述";
+"gif.base.alert.appServer"="服務條款";
+
+
 "gif.base.alert.close"="關閉";
 "gif.base.alert.alert"="提示";
 "gif.base.alert.cancle"="取消";

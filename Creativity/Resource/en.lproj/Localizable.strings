@@ -8,6 +8,13 @@
 
 // base
 
+"gif.base.alert.protoal"="Use Agreement";
+"gif.base.alert.pricaty"="Privacy Policy";
+"gif.base.alert.userGuide"="Usage Guide";
+"gif.base.alert.appDesc"="Application description";
+"gif.base.alert.appServer"="Terms of Service";
+
+
 "gif.base.alert.nothing"="NULL";
 "gif.base.alert.permissions"="No access album permissions";
 "gif.base.alert.close"="Close";

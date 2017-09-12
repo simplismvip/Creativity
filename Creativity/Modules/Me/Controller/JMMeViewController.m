@@ -80,18 +80,18 @@
     JMAccountHeaderFooter *headView = [JMAccountHeaderFooter headViewWithTableView:tableView];
     if (section == 0) {
     
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionZero", "");
+//        headView.name.text = NSLocalizedString(@"gif.set.header.SectionZero", "");
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionTwo", "");
         
     }else if (section == 1){
     
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionTwo", "");
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionOne", "");
         
     }else if (section == 2){
+        headView.name.text = NSLocalizedString(@"gif.set.header.SectionThree", "");
     
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionOne", "");
     }else{
     
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionThree", "");
     }
     
     return headView;
@@ -106,19 +106,13 @@
 {
      SetModel *model = self.dataSource[indexPath.section][indexPath.row];
     
-    if (indexPath.section==0 && indexPath.row==0) {
-       
-        JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
-        JMMainNavController *nav = [[JMMainNavController alloc] initWithRootViewController:pro];
-        [self presentViewController:nav animated:YES completion:nil];
-        
-    }else if (indexPath.section == 1 && indexPath.row==0){
+    if (indexPath.section == 0 && indexPath.row==0){
     
         JMBaseWebViewController *drawVC = [[JMBaseWebViewController alloc] init];
         drawVC.urlString = @"https://github.com/simplismvip/Creativity";
         [self.navigationController pushViewController:drawVC animated:YES];
         
-    }else if (indexPath.section == 1 && indexPath.row==1){
+    }else if (indexPath.section == 0 && indexPath.row==1){
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -140,19 +134,26 @@
             }];
         });
         
-    }else if (indexPath.section==2 && indexPath.row==0) {
+    }else if (indexPath.section==1 && indexPath.row==0) {
         
         JMAboutUsController *about = [[JMAboutUsController alloc] init];
         about.title = model.title;
         [self.navigationController pushViewController:about animated:YES];
     
-    }else if (indexPath.section==2 && indexPath.row==1) {
+    }else if (indexPath.section==1 && indexPath.row==1) {
         
         JMServerViewController *server = [[JMServerViewController alloc] init];
-        server.title = @"服务条款";
+        server.title = NSLocalizedString(@"gif.base.alert.appServer", "");
         [self.navigationController pushViewController:server animated:YES];
-    }else{
-        NSURL *url  = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1257334539"];
+        
+    }else if (indexPath.section==2 && indexPath.row==0) {
+        
+        NSURL *url  = [NSURL URLWithString:ebookReaderID];
+        [[UIApplication sharedApplication] openURL:url];
+        
+    }else if (indexPath.section==2 && indexPath.row==1) {
+        
+        NSURL *url  = [NSURL URLWithString:photolockID];
         [[UIApplication sharedApplication] openURL:url];
     }
 }

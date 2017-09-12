@@ -23,7 +23,7 @@
 
 + (BOOL)isVip
 {
-    return [JMUserDefault readBoolByKey:kVIP];
+    return YES; // [JMUserDefault readBoolByKey:kVIP];
 }
 
 + (BOOL)getVip

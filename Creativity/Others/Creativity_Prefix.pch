@@ -12,6 +12,7 @@
 #define GoogleAppID @"ca-app-pub-5649482177498836~1771710237"
 #define GoogleUtiID @"ca-app-pub-5649482177498836/9307597084"
 
+
 #define AppiTunesID_Creativity @"itms://itunes.apple.com/us/app/gifplayer-gif%E5%A4%A7%E5%B8%88/id1268963155?mt=8"
 #define AppiTunesID_ebookReader @"itms://itunes.apple.com/cn/app/ebookreader/id1269413156?mt=8"
 #define AppiTunesID_ToolBox @"itms://itunes.apple.com/cn/app/ebookreader/id1279811812?mt=8"
@@ -44,7 +45,7 @@
 
 // @[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]
 
-#define kSetArray @[@[@{@"title":NSLocalizedString(@"gif.set.sectionZero.rowZero", ""), @"icon":@"icons8-xbox_b",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionOne.rowZero", ""), @"icon":@"icons8-help 2",@"accessoryType":@"1"}, @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowOne", ""), @"icon":@"cacheclean",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowOne", ""), @"icon":@"icons8-info",@"accessoryType":@"1"}, @{@"title":@"服务条款", @"icon":@"icon-83.5",@"accessoryType":@"0"}], @[@{@"title":@"PhotoLocker", @"icon":@"icon-83.5",@"accessoryType":@"0"}]];
+#define kSetArray @[@[@{@"title":NSLocalizedString(@"gif.set.sectionOne.rowZero", ""), @"icon":@"icons8-help 2",@"accessoryType":@"1"}, @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowOne", ""), @"icon":@"cacheclean",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowOne", ""), @"icon":@"icons8-info",@"accessoryType":@"1"}, @{@"title":@"服务条款", @"icon":@"server_set ",@"accessoryType":@"0"}], @[@{@"title":@"epub阅读器", @"icon":@"Icon-80",@"accessoryType":@"0"},@{@"title":@"PhotoLocker", @"icon":@"icon-83.5",@"accessoryType":@"0"}]];
 
 // 颜色
 #define JMCellBackground JMColor(239, 239, 239)

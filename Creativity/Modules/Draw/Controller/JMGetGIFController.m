@@ -441,13 +441,10 @@
 //
 - (void)cancle
 {
-    if (![JMBuyHelper isVip]) {
-        
-        if (self.interstitial.isReady) {
-            [self.interstitial presentFromRootViewController:self];
-        } else {
-            NSLog(@"Ad wasn't ready");
-        }
+    if (self.interstitial.isReady) {
+        [self.interstitial presentFromRootViewController:self];
+    } else {
+        NSLog(@"Ad wasn't ready");
     }
 }
 
