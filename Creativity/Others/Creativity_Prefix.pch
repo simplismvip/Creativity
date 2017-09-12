@@ -12,6 +12,10 @@
 #define GoogleAppID @"ca-app-pub-5649482177498836~1771710237"
 #define GoogleUtiID @"ca-app-pub-5649482177498836/9307597084"
 
+#define AppiTunesID_Creativity @"itms://itunes.apple.com/us/app/gifplayer-gif%E5%A4%A7%E5%B8%88/id1268963155?mt=8"
+#define AppiTunesID_ebookReader @"itms://itunes.apple.com/cn/app/ebookreader/id1269413156?mt=8"
+#define AppiTunesID_ToolBox @"itms://itunes.apple.com/cn/app/ebookreader/id1279811812?mt=8"
+
 #define baseTag 1000
 #define layerBaseTag 900
 #define ellipseBaseTag 800
