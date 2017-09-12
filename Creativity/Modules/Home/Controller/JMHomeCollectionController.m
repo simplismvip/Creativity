@@ -59,7 +59,6 @@ static NSString *const collectionID = @"cell";
 {
     [super viewWillLayoutSubviews];
     [_collection reloadData];
-    
 }
 
 - (void)viewDidLoad {
