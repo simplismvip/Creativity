@@ -29,9 +29,8 @@
 #import <UShareUI/UShareUI.h>
 #import "JMShareTool.h"
 #import "JMAuthorizeManager.h"
-#import <ReplayKit/ReplayKit.h>
 
-@interface JMHomeCollectionController ()<RPPreviewViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
+@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @end
@@ -81,9 +80,6 @@ static NSString *const collectionID = @"cell";
     //设置用户自定义的平台
     [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
     [UMSocialUIManager setShareMenuViewDelegate:self];
-    
-#pragma mark -- 开始录制
-//    [self startRecordScreen];
 }
 
 #pragma mark UICollectionViewDataSource,
@@ -347,61 +343,6 @@ static NSString *const collectionID = @"cell";
             [alerView2 show];            
         }
     }];
-}
-
-
-#pragma mark -- 屏幕录制
-- (void)startRecordScreen {
-    
-    if ([[RPScreenRecorder sharedRecorder] isAvailable] && [[UIDevice currentDevice].systemVersion floatValue] > 9.0) {
-        
-        [[RPScreenRecorder sharedRecorder] startRecordingWithMicrophoneEnabled:NO handler:^(NSError *error){
-            if (!error) {
-                
-                NSLog(@"录制开始...");
-            }
-        }];
-    }
-}
-
-- (void)stopRecordScreen {
-    
-    JMSelf(ws);
-    [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController *previewViewController, NSError *  error){
-        
-        if (!error) {
-            
-            previewViewController.previewControllerDelegate = ws;
-            previewViewController.view.frame = [UIScreen mainScreen].bounds;
-            [ws.view addSubview:previewViewController.view];
-            [ws addChildViewController:previewViewController];
-            
-            // 显示录制到的视频的预览页
-            NSLog(@"显示预览页面");
-        }
-    }];
-}
-
-#pragma mark - 屏幕录制视频预览页面回调
-- (void)previewControllerDidFinish:(RPPreviewViewController *)previewController {
-    
-    // 移除页面
-    [previewController.view removeFromSuperview];
-    [previewController removeFromParentViewController];
-}
-
-// 选择了某些功能的回调（如分享和保存）
-- (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet <NSString *> *)activityTypes {
-    
-    if ([activityTypes containsObject:@"com.apple.UIKit.activity.SaveToCameraRoll"]) {
-        
-        NSLog(@"已经保存到系统相册");
-    }
-    
-    if ([activityTypes containsObject:@"com.apple.UIKit.activity.CopyToPasteboard"]) {
-        
-        NSLog(@"已经复制到粘贴板");
-    }
 }
 
 - (void)didReceiveMemoryWarning {

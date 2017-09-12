@@ -149,6 +149,7 @@
 		A20F388B1EF64902009E5E48 /* JMButtom.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F38881EF64902009E5E48 /* JMButtom.m */; };
 		A20F388C1EF64902009E5E48 /* JMPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F388A1EF64902009E5E48 /* JMPopView.m */; };
 		A20F38A91EF96662009E5E48 /* JMProHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F38A81EF96662009E5E48 /* JMProHeaderView.m */; };
+		A23D74B51F6815B900E176C4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A23D74B41F6815B900E176C4 /* Default.png */; };
 		A28DCF561F104DA1005E316D /* JMPhotosController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF451F104DA1005E316D /* JMPhotosController.m */; };
 		A28DCF591F104DA1005E316D /* TZAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF4C1F104DA1005E316D /* TZAssetModel.m */; };
 		A28DCF5A1F104DA1005E316D /* TZImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF4E1F104DA1005E316D /* TZImageManager.m */; };
@@ -466,6 +467,7 @@
 		A20F388A1EF64902009E5E48 /* JMPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopView.m; sourceTree = "<group>"; };
 		A20F38A71EF96662009E5E48 /* JMProHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMProHeaderView.h; sourceTree = "<group>"; };
 		A20F38A81EF96662009E5E48 /* JMProHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMProHeaderView.m; sourceTree = "<group>"; };
+		A23D74B41F6815B900E176C4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		A28DCF441F104DA1005E316D /* JMPhotosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhotosController.h; sourceTree = "<group>"; };
 		A28DCF451F104DA1005E316D /* JMPhotosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotosController.m; sourceTree = "<group>"; };
 		A28DCF4B1F104DA1005E316D /* TZAssetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetModel.h; sourceTree = "<group>"; };
@@ -1084,6 +1086,7 @@
 				04A0DDFF1EEF81A400464852 /* Info.plist */,
 				A20DAF291EF2E85E008DBFA9 /* topBarJson.json */,
 				04DA30BE1F3882BA007ACF3F /* share_weChat.png */,
+				A23D74B41F6815B900E176C4 /* Default.png */,
 				04A0DDEE1EEF81A400464852 /* Supporting Files */,
 			);
 			path = Creativity;
@@ -1403,6 +1406,7 @@
 				04DA30BF1F3882BA007ACF3F /* share_weChat.png in Resources */,
 				0490EE241EEF976F00E05A84 /* emoji.json in Resources */,
 				04DA2E311F17629E00D59DDD /* Info.plist in Resources */,
+				A23D74B51F6815B900E176C4 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
