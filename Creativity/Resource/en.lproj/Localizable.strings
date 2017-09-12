@@ -8,6 +8,15 @@
 
 // base
 
+"gif.base.alert.share"="Share";
+"gif.base.otherApp.epubreader"="epubReadert";
+"gif.base.otherApp.toolBox"="ToolBox-heartRate";
+"gif.base.comment.refuse"="Cruel refused";
+"gif.base.comment.comment"="Play a praise";
+"gif.base.comment.later"="Comment later";
+"gif.base.comment.title"="Your comments are very important to us, please also appreciate the praise!";
+
+
 "gif.base.alert.protoal"="Use Agreement";
 "gif.base.alert.pricaty"="Privacy Policy";
 "gif.base.alert.userGuide"="Usage Guide";

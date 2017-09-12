@@ -7,6 +7,14 @@
 */
 // base
 
+"gif.base.alert.share"="分享";
+"gif.base.otherApp.epubreader"="epub阅读器";
+"gif.base.otherApp.toolBox"="实用工具箱-心率检测";
+"gif.base.comment.refuse"="残忍拒绝";
+"gif.base.comment.comment"="打赏一个好评";
+"gif.base.comment.later"="以后再说";
+"gif.base.comment.title"="您的宝贵意见我们更新改进APP最大的动力和方向, 还请不吝赏个好评!";
+
 "gif.base.alert.permissions"="请设置允许访问相册权限";
 "gif.base.alert.nothing"="空实现";
 

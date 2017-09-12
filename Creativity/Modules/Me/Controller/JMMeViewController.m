@@ -148,12 +148,17 @@
         
     }else if (indexPath.section==2 && indexPath.row==0) {
         
-        NSURL *url  = [NSURL URLWithString:ebookReaderID];
+        NSURL *url  = [NSURL URLWithString:AppiTunesID_Locker];
         [[UIApplication sharedApplication] openURL:url];
         
     }else if (indexPath.section==2 && indexPath.row==1) {
         
-        NSURL *url  = [NSURL URLWithString:photolockID];
+        NSURL *url  = [NSURL URLWithString:AppiTunesID_ebookReader];
+        [[UIApplication sharedApplication] openURL:url];
+    
+    }else if (indexPath.section==2 && indexPath.row==2) {
+        
+        NSURL *url  = [NSURL URLWithString:AppiTunesID_ToolBox];
         [[UIApplication sharedApplication] openURL:url];
     }
 }

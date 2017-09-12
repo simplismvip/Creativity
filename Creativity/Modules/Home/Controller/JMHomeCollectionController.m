@@ -29,6 +29,9 @@
 #import <UShareUI/UShareUI.h>
 #import "JMShareTool.h"
 #import "JMAuthorizeManager.h"
+#import "JMUserDefault.h"
+
+@import GoogleMobileAds;
 
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
@@ -62,6 +65,7 @@ static NSString *const collectionID = @"cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [GADMobileAds configureWithApplicationID:GoogleAppID];
     self.title = NSLocalizedString(@"gif.home.navigation.title", "");
     self.leftImage = @"toolbar_setting_icon_black";
     self.rightImage = @"navbar_plus_icon_black";
@@ -80,6 +84,8 @@ static NSString *const collectionID = @"cell";
     //设置用户自定义的平台
     [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
     [UMSocialUIManager setShareMenuViewDelegate:self];
+
+    [self showAlert];
 }
 
 #pragma mark UICollectionViewDataSource,
@@ -103,7 +109,6 @@ static NSString *const collectionID = @"cell";
 }
 
 #pragma mark UICollectionViewDelegate
-// 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -345,6 +350,40 @@ static NSString *const collectionID = @"cell";
     }];
 }
 
+- (void)showAlert
+{
+    if (![JMUserDefault setBool:YES forKey:@"comment"]) {
+        
+        if ([self dayFromluanch] > 7 && [self dayFromluanch] /4 == 0) {
+            
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.comment.title", "") message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancle = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.later", "") style:(UIAlertActionStyleDefault) handler:nil];
+            UIAlertAction *refuse = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.refuse", "") style:(UIAlertActionStyleDefault) handler:nil];
+            UIAlertAction *comment = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.comment", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppiTunesID_Creativity]];
+                [JMUserDefault setBool:YES forKey:@"comment"];
+            }];
+            
+            [alertVC addAction:cancle];
+            [alertVC addAction:refuse];
+            [alertVC addAction:comment];
+            [self presentViewController:alertVC animated:YES completion:nil];
+        }
+    }
+}
+
+// 第几天
+- (NSInteger)dayFromluanch
+{
+    NSDate *senddate = [NSDate date];
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    NSString *nowTimesp = [NSString stringWithFormat:@"%ld",(long)[senddate timeIntervalSince1970]];
+    NSInteger number = [nowTimesp integerValue] - [[user objectForKey:@"timeMark"] integerValue];
+    return number / (24*3600)+1;
+}
+
+>>>>>>> 12c853304605507c0b499ebb8a13c4aab6188295
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 #ifdef DEBUG

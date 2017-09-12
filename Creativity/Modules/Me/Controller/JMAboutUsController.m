@@ -24,25 +24,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (![JMUserDefault readStringByKey:@"itunes"]) {
-    
-        // 下载文件
-        NSDateFormatter*formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyMMdd"];
-        NSString *dateTime = [formatter stringFromDate:[NSDate date]];
-        
-        NSString *newUrl = [NSString stringWithFormat:@"http://otowcj5j8.bkt.clouddn.com/GifPlayerItunes-%@.json", dateTime];
-        [LivDownloadHelper loadLIvFileWithUrl:newUrl progress:nil success:^(NSMutableArray *success) {
-            
-            NSError *error;
-            NSData *data = success.firstObject;
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            NSString *url = dic[@"itunes"];
-            if (![url isEqualToString:@"null"]) {if (url) {[JMUserDefault setString:url forKey:@"itunes"];}}
-            
-        } fail:nil];
-    }
-    
     self.view.backgroundColor = JMColor(240, 240, 240);
     self.memberArray = @[NSLocalizedString(@"gif.set.aboutUs.rowZero", ""), NSLocalizedString(@"gif.set.aboutUs.rowOne", ""), NSLocalizedString(@"gif.set.aboutUs.rowTwo", "")];
     [self setUI];
@@ -132,8 +113,7 @@
         
     }else if (indexPath.row == 1){
     
-        NSString *url = [JMUserDefault readStringByKey:@"itunes"];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppiTunesID_Creativity]];
         
     }else{
         [self showBottomCircleView:nil];
@@ -205,7 +185,7 @@
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"来自GifPlay的分享" descr:@"强大的GIF编辑生成工具" thumImage:[UIImage imageNamed:@"GifPlayer_Icon"]];
     
     //设置网页地址
-    shareObject.webpageUrl = [JMUserDefault readStringByKey:@"itunes"];
+    shareObject.webpageUrl = AppiTunesID_Creativity;
     
     //分享消息对象设置分享内容对象
     messageObject.shareObject = shareObject;

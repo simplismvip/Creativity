@@ -52,6 +52,7 @@
             popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
         }
     }
+    
     activityViewController.completionHandler = ^(NSString *activityType, BOOL complted){
         
         if (completionHandler) {

@@ -15,9 +15,6 @@
 #import <UMMobClick/MobClick.h>
 #import "JMAuthorizeManager.h"
 
-
-@import GoogleMobileAds;
-
 @interface AppDelegate ()
 
 @end
@@ -26,10 +23,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // Initialize Google Mobile Ads SDK
-    [GADMobileAds configureWithApplicationID:GoogleAppID];
     
 //    [[JMAuthorizeManager sharedInstance] requestPhotoAccessCompletionHandler:^(BOOL request, NSError *error) {}];
+    // Initialize Google Mobile Ads SDK
+    
     
     // 友盟
     [[UMSocialManager defaultManager] openLog:YES];
@@ -44,6 +41,7 @@
     [MobClick setAppVersion:version];
     [MobClick startWithConfigure:UMConfigInstance];
     [MobClick setLogEnabled:YES];
+    
     
     [StaticClass setLineWidth:3.0];
     [StaticClass setAlpha:1.0];
