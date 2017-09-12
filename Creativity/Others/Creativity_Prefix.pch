@@ -12,10 +12,10 @@
 #define GoogleAppID @"ca-app-pub-5649482177498836~1771710237"
 #define GoogleUtiID @"ca-app-pub-5649482177498836/9307597084"
 
-
-#define AppiTunesID_Creativity @"itms://itunes.apple.com/us/app/gifplayer-gif%E5%A4%A7%E5%B8%88/id1268963155?mt=8"
-#define AppiTunesID_ebookReader @"itms://itunes.apple.com/cn/app/ebookreader/id1269413156?mt=8"
-#define AppiTunesID_ToolBox @"itms://itunes.apple.com/cn/app/ebookreader/id1279811812?mt=8"
+#define AppiTunesID_Locker @"https://itunes.apple.com/cn/app/%E9%9A%90%E7%A7%81-%E7%85%A7%E7%89%87%E7%9B%B8%E5%86%8C%E5%8A%A0%E5%AF%86/id1257334539?mt=8"
+#define AppiTunesID_Creativity @"https://itunes.apple.com/cn/app/gifplayer-gif%E5%A4%A7%E5%B8%88/id1268963155?mt=8"
+#define AppiTunesID_ebookReader @"https://itunes.apple.com/cn/app/ebookreader/id1269413156?mt=8"
+#define AppiTunesID_ToolBox @"https://itunes.apple.com/cn/app/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%AE%B1-%E4%B8%93%E4%B8%9A%E7%89%88/id1279811812?mt=8"
 
 #define baseTag 1000
 #define layerBaseTag 900
@@ -43,9 +43,9 @@
 #define JMDocumentsPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0]
 #define JMCachePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
-// @[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]
+// @[@[@"获取Pro"], @[@"帮助中心", @"反馈"], @[@"版本", @"软件许可"]]gif.base.alert.appServer
 
-#define kSetArray @[@[@{@"title":NSLocalizedString(@"gif.set.sectionOne.rowZero", ""), @"icon":@"icons8-help 2",@"accessoryType":@"1"}, @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowOne", ""), @"icon":@"cacheclean",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowOne", ""), @"icon":@"icons8-info",@"accessoryType":@"1"}, @{@"title":@"服务条款", @"icon":@"server_set ",@"accessoryType":@"0"}], @[@{@"title":@"epub阅读器", @"icon":@"Icon-80",@"accessoryType":@"0"},@{@"title":@"PhotoLocker", @"icon":@"icon-83.5",@"accessoryType":@"0"}]];
+#define kSetArray @[@[@{@"title":NSLocalizedString(@"gif.set.sectionOne.rowZero", ""), @"icon":@"icons8-help 2",@"accessoryType":@"1"}, @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowOne", ""), @"icon":@"cacheclean",@"accessoryType":@"1"}], @[@{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowOne", ""), @"icon":@"icons8-info",@"accessoryType":@"1"}, @{@"title":NSLocalizedString(@"gif.base.alert.appServer", ""), @"icon":@"server_set ",@"accessoryType":@"0"}], @[@{@"title":@"PhotoLocker", @"icon":@"icon-83.5",@"accessoryType":@"0"},@{@"title":NSLocalizedString(@"gif.base.otherApp.epubreader", ""), @"icon":@"Icon-80",@"accessoryType":@"0"},@{@"title":NSLocalizedString(@"gif.base.otherApp.toolBox", ""), @"icon":@"toolbox",@"accessoryType":@"0"}]];
 
 // 颜色
 #define JMCellBackground JMColor(239, 239, 239)

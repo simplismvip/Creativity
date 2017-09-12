@@ -232,7 +232,7 @@
 - (void)changeValueSerial:(CGFloat)progress
 {    
     _showFps.hidden = NO;
-    [self.showFps setTitle:[NSString stringWithFormat:@"%ld 秒", (NSInteger)(progress*_images.count)] forState:(UIControlStateNormal)];
+    [self.showFps setTitle:[NSString stringWithFormat:@"%ld s", (NSInteger)(progress*_images.count)] forState:(UIControlStateNormal)];
 }
 
 #pragma mark -- 添加滤镜效果
@@ -395,11 +395,13 @@
 
 - (void)showShare
 {
-    if (![JMBuyHelper isVip]) {
-        
-        [self createAndLoadInterstitial];
-    }
-    NSArray *array = [JMBuyHelper isVip] ? @[@"分享", @"取消"]: @[@"去水印", @"去广告", @"分享", @"取消"];
+//    if (![JMBuyHelper isVip]) {
+//        
+//        [self createAndLoadInterstitial];
+//    }
+    
+    [self createAndLoadInterstitial];
+    NSArray *array = [JMBuyHelper isVip] ? @[NSLocalizedString(@"gif.base.alert.share", ""), NSLocalizedString(@"gif.base.alert.cancle", "")]: @[@"去水印", @"去广告", @"分享", @"取消"];
     JMPhotosAlertView *alert = [[JMPhotosAlertView alloc] initWithFrame:CGRectMake(0, kH, kW, alertHeight)];
     alert.titles = array;
     alert.delegate = self;
@@ -452,12 +454,19 @@
 {
     NSData *data = [NSData dataWithContentsOfFile:_filePath];
     JMShareTool *shareTool = [[JMShareTool alloc] init];
-    [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:@"" image:data popView:self.navigationController.navigationBar completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
-        
-        NSLog(@"%@  %d", activityType, completed);
-    }];
     
     JMSelf(ws);
+    [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:AppiTunesID_Creativity image:data popView:self.navigationController.navigationBar completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
+        
+        if (!completed) {
+            if (ws.interstitial.isReady) {
+                [ws.interstitial presentFromRootViewController:self];
+            }
+        }
+        
+        // NSLog(@"%@  %d", activityType, completed);
+    }];
+    
     shareTool.share = ^{
         
         [UMSocialUIManager removeAllCustomPlatformWithoutFilted];

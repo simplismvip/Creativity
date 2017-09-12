@@ -29,9 +29,10 @@
 #import <UShareUI/UShareUI.h>
 #import "JMShareTool.h"
 #import "JMAuthorizeManager.h"
-#import <ReplayKit/ReplayKit.h>
+#import "JMUserDefault.h"
 
-@interface JMHomeCollectionController ()<RPPreviewViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
+@import GoogleMobileAds;
+@interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @end
@@ -58,11 +59,13 @@ static NSString *const collectionID = @"cell";
 {
     [super viewWillLayoutSubviews];
     [_collection reloadData];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [GADMobileAds configureWithApplicationID:GoogleAppID];
     self.title = NSLocalizedString(@"gif.home.navigation.title", "");
     self.leftImage = @"toolbar_setting_icon_black";
     self.rightImage = @"navbar_plus_icon_black";
@@ -82,8 +85,7 @@ static NSString *const collectionID = @"cell";
     [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
     [UMSocialUIManager setShareMenuViewDelegate:self];
     
-#pragma mark -- 开始录制
-//    [self startRecordScreen];
+    [self showAlert];
 }
 
 #pragma mark UICollectionViewDataSource,
@@ -107,7 +109,6 @@ static NSString *const collectionID = @"cell";
 }
 
 #pragma mark UICollectionViewDelegate
-// 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -349,59 +350,37 @@ static NSString *const collectionID = @"cell";
     }];
 }
 
-
-#pragma mark -- 屏幕录制
-- (void)startRecordScreen {
-    
-    if ([[RPScreenRecorder sharedRecorder] isAvailable] && [[UIDevice currentDevice].systemVersion floatValue] > 9.0) {
+- (void)showAlert
+{
+    if (![JMUserDefault setBool:YES forKey:@"comment"]) {
         
-        [[RPScreenRecorder sharedRecorder] startRecordingWithMicrophoneEnabled:NO handler:^(NSError *error){
-            if (!error) {
+        if ([self dayFromluanch] > 7 && [self dayFromluanch] /4 == 0) {
+            
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.comment.title", "") message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancle = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.later", "") style:(UIAlertActionStyleDefault) handler:nil];
+            UIAlertAction *refuse = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.refuse", "") style:(UIAlertActionStyleDefault) handler:nil];
+            UIAlertAction *comment = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.comment", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                 
-                NSLog(@"录制开始...");
-            }
-        }];
-    }
-}
-
-- (void)stopRecordScreen {
-    
-    JMSelf(ws);
-    [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController *previewViewController, NSError *  error){
-        
-        if (!error) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppiTunesID_Creativity]];
+                [JMUserDefault setBool:YES forKey:@"comment"];
+            }];
             
-            previewViewController.previewControllerDelegate = ws;
-            previewViewController.view.frame = [UIScreen mainScreen].bounds;
-            [ws.view addSubview:previewViewController.view];
-            [ws addChildViewController:previewViewController];
-            
-            // 显示录制到的视频的预览页
-            NSLog(@"显示预览页面");
+            [alertVC addAction:cancle];
+            [alertVC addAction:refuse];
+            [alertVC addAction:comment];
+            [self presentViewController:alertVC animated:YES completion:nil];
         }
-    }];
+    }
 }
 
-#pragma mark - 屏幕录制视频预览页面回调
-- (void)previewControllerDidFinish:(RPPreviewViewController *)previewController {
-    
-    // 移除页面
-    [previewController.view removeFromSuperview];
-    [previewController removeFromParentViewController];
-}
-
-// 选择了某些功能的回调（如分享和保存）
-- (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet <NSString *> *)activityTypes {
-    
-    if ([activityTypes containsObject:@"com.apple.UIKit.activity.SaveToCameraRoll"]) {
-        
-        NSLog(@"已经保存到系统相册");
-    }
-    
-    if ([activityTypes containsObject:@"com.apple.UIKit.activity.CopyToPasteboard"]) {
-        
-        NSLog(@"已经复制到粘贴板");
-    }
+// 第几天
+- (NSInteger)dayFromluanch
+{
+    NSDate *senddate = [NSDate date];
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    NSString *nowTimesp = [NSString stringWithFormat:@"%ld",(long)[senddate timeIntervalSince1970]];
+    NSInteger number = [nowTimesp integerValue] - [[user objectForKey:@"timeMark"] integerValue];
+    return number / (24*3600)+1;
 }
 
 - (void)didReceiveMemoryWarning {
