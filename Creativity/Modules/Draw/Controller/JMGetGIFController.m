@@ -154,13 +154,14 @@
 // 创作选项弹出，保存第一次生成GIF文件
 - (void)Done:(UIBarButtonItem *)done
 {
+    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
     _isSave ? [self.navigationController dismissViewControllerAnimated:YES completion:nil] : [self showAlert];
 }
 
 - (BOOL)navigationShouldPopOnBackButton
 {
     if (_imagesFromHomeVC) {
-    
+        
         if (!_isSave) {[self showAlert];}
     }
     
@@ -179,7 +180,9 @@
     UIAlertAction *cancle = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.alert.cancle", "") style:(UIAlertActionStyleDefault) handler:nil];
     [alertController addAction:cancle];
     [alertController addAction:buyVip];
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:alertController animated:YES completion:^{
+        
+    }];
 }
 
 // 1> 开始编辑
@@ -258,7 +261,9 @@
                 _animationView.imageSource = [newImages copy];
             });
         });
+        
     }else{
+        
         if (isVip) {
             
             JMBuyProViewController *pro = [[JMBuyProViewController alloc] init];
@@ -443,11 +448,7 @@
 //
 - (void)cancle
 {
-    if (self.interstitial.isReady) {
-        [self.interstitial presentFromRootViewController:self];
-    } else {
-        NSLog(@"Ad wasn't ready");
-    }
+    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
 }
 
 - (void)shareUM
@@ -459,9 +460,7 @@
     [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:AppiTunesID_Creativity image:data popView:self.navigationController.navigationBar completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
         
         if (!completed) {
-            if (ws.interstitial.isReady) {
-                [ws.interstitial presentFromRootViewController:self];
-            }
+            if (ws.interstitial.isReady) {[ws.interstitial presentFromRootViewController:self];}
         }
         
         // NSLog(@"%@  %d", activityType, completed);
@@ -473,7 +472,6 @@
         [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
         [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
         [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
-            
             [ws shareImageAndTextToPlatformType:platformType shareImage:data];
         }];
     };

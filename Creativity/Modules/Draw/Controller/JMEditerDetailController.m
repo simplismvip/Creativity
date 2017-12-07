@@ -26,7 +26,11 @@
 #import "JMEditerSuperView.h"
 #import "UIViewController+BackButtonHandler.h"
 
+@import GoogleMobileAds;
 @interface JMEditerDetailController ()<JMPhotosAlertViewDelegate,JMTopTableViewDelegate,UMSocialShareMenuViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+/// The interstitial ad.
+@property(nonatomic, strong) GADInterstitial *interstitial;
+
 @property (nonatomic, weak) JMPaintView *paintView;
 @property (nonatomic, weak) JMSlider *slider;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -45,6 +49,8 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
+    
+    [self createAndLoadInterstitial];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -56,6 +62,8 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     }
+    
+    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
 }
 
 - (void)viewDidLoad {
@@ -382,6 +390,17 @@
 {
     if (self.editerDetailDone) {self.editerDetailDone(_paintView.image);}
     return YES;
+}
+
+#pragma mark -- googleADS
+- (void)createAndLoadInterstitial {
+    
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:GoogleUtiID];
+    GADRequest *request = [GADRequest request];
+    // Request test ads on devices you specify. Your test device ID is printed to the console when
+    // an ad request is made.
+//    request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
+    [self.interstitial loadRequest:request];
 }
 
 - (void)dealloc

@@ -30,8 +30,11 @@
 #import "JMEditerSuperView.h"
 
 #define kMargin 10.0
-
+@import GoogleMobileAds;
 @interface JMDrawViewController ()<JMPhotosAlertViewDelegate,JMTopTableViewDelegate,UMSocialShareMenuViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+/// The interstitial ad.
+@property(nonatomic, strong) GADInterstitial *interstitial;
+
 @property (nonatomic, weak) UILabel *timeLabel;
 @property (nonatomic, weak) JMPaintView *paintView;
 @property (nonatomic, weak) JMSlider *slider;
@@ -49,13 +52,13 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = JMColor(41, 41, 41);
-    [MobClick beginLogPageView:@"JMDrawViewController"];
+    [self createAndLoadInterstitial];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"JMDrawViewController"];
+    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
 }
 
 - (void)viewDidLoad {
@@ -473,6 +476,17 @@
 #ifdef DEBUG
     NSLog(@"JMDrawViewController销毁 %s", __FUNCTION__);
 #endif
+}
+
+#pragma mark -- googleADS
+- (void)createAndLoadInterstitial {
+    
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:GoogleUtiID];
+    GADRequest *request = [GADRequest request];
+    // Request test ads on devices you specify. Your test device ID is printed to the console when
+    // an ad request is made.
+//    request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
+    [self.interstitial loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning {

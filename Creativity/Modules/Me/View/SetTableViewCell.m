@@ -23,41 +23,41 @@
         
 //        self.backgroundColor = [UIColor clearColor];
         
-        UIImageView *leftImage = [[UIImageView alloc] init];
+        UIImageView *leftImage = [[UIImageView alloc] initWithFrame:CGRectZero];
         [self.contentView addSubview:leftImage];
         leftImage.tintColor = [UIColor grayColor];
         self.leftImage = leftImage;
         
-        UILabel *textTitle = [[UILabel alloc] init];
+        UILabel *textTitle = [[UILabel alloc] initWithFrame:CGRectZero];
         textTitle.textAlignment = NSTextAlignmentLeft;
         textTitle.font = [UIFont systemFontOfSize:14.0];
 //        textTitle.textColor = JMTabViewBaseColor;
         [self.contentView addSubview:textTitle];
         self.textTitle = textTitle;
+        
+        self.accessoryType = 1;
+        self.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMBaseColor];
     }
     
     return self;
 }
 
-+ (instancetype)setCell:(UITableView *)tableView IndexPath:(NSIndexPath *)indexPath model:(SetModel *)model
+- (void)setModel:(SetModel *)model
 {
-    static NSString *ID = @"baseCell";
-    SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (cell == nil) {cell = [[SetTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
-    
-    cell.leftImage.image = indexPath.section == 2 ? [UIImage imageNamed:model.icon]:[UIImage imageWithTemplateName:model.icon];
-    cell.textTitle.text = model.title;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:JMBaseColor];
-    return cell;
+    _model = model;
+    _textTitle.text = model.title;
+    if (![_model.icon isEqualToString:@"0"]) {_leftImage.image = [UIImage imageNamed:model.icon];}
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    _leftImage.frame = CGRectMake(10, 12, self.height-20, self.height-20);
-    _textTitle.frame = CGRectMake(CGRectGetMaxX(_leftImage.frame)+10, 8, self.width*0.6, self.height-10);
+    CGFloat w = [_model.icon isEqualToString:@"0"]?0:self.height-20;
+    _leftImage.frame = CGRectMake(10, 12, w, self.height-20);
+    
+    CGFloat m = [_model.icon isEqualToString:@"0"]?0:10;
+    _textTitle.frame = CGRectMake(CGRectGetMaxX(_leftImage.frame)+m, 8, self.width*0.6, self.height-10);
 }
 
 - (void)awakeFromNib {

@@ -19,12 +19,16 @@
 #import "JMBaseWebViewController.h"
 #import "SDImageCache.h"
 #import "JMServerViewController.h"
+#import "JMHeaderFooterModel.h"
+#import "JMHeaderFooterView.h"
 
 @interface JMMeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *headView;
 @property (nonatomic, weak) UITableView *setTableView;
 @property (nonatomic, weak) UIImageView *image;
 @property (nonatomic, weak) UILabel *nameLabel;
+
+@property (nonatomic, strong) NSMutableArray *headerFooterSource;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @end
 
@@ -35,6 +39,8 @@
     [super viewDidLoad];
     
     self.dataSource = [JMHelper getSetModel];
+    self.headerFooterSource = [NSMutableArray array];
+    
     [self setUI];
     self.rightTitle = NSLocalizedString(@"gif.base.alert.done", "");
 }
@@ -42,14 +48,26 @@
 - (void)setUI
 {
     self.title = NSLocalizedString(@"gif.set.navigation.title", "");
-    UITableView *setTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStyleGrouped)];
+    NSDictionary *dic1 = @{@"leftImage":@"0", @"leftTitle":NSLocalizedString(@"gif.set.header.SectionTwo", "")};
+    NSDictionary *dic2 = @{@"leftImage":@"0", @"leftTitle":NSLocalizedString(@"gif.set.header.SectionOne", "")};
+    NSDictionary *dic3 = @{@"leftImage":@"0", @"leftTitle":NSLocalizedString(@"gif.set.header.SectionThree", "")};
+    NSArray *sections = @[dic1, dic2, dic3];
+    
+    for (NSDictionary *dic in sections) {
+        
+        JMHeaderFooterModel *model = [[JMHeaderFooterModel alloc] init];
+        model.leftImage = dic[@"leftImage"];
+        model.leftTitle = dic[@"leftTitle"];
+        [_headerFooterSource addObject:model];
+    }
+    
+    UITableView *setTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-54) style:(UITableViewStyleGrouped)];
     [setTableView registerClass:[SetTableViewCell class] forCellReuseIdentifier:@"baseCell"];
     setTableView.delegate = self;
     setTableView.dataSource = self;
     setTableView.sectionHeaderHeight = 0;
     setTableView.sectionFooterHeight = 0;
-//    setTableView.backgroundColor = JMColor(41, 41, 41);
-    setTableView.separatorColor = setTableView.backgroundColor;
+    setTableView.separatorColor = JMColorRGBA(230, 230, 230, 0.8);
     setTableView.showsVerticalScrollIndicator = NO;
     if ([[UIDevice currentDevice].systemVersion doubleValue] >= 9.0){setTableView.cellLayoutMarginsFollowReadableWidth = NO;}
     [self.view addSubview:setTableView];
@@ -69,31 +87,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray *sections = self.dataSource[indexPath.section];
-    SetModel *model = sections[indexPath.row];
-    SetTableViewCell *cell = [SetTableViewCell setCell:tableView IndexPath:indexPath model:model];
+    static NSString *ID = @"baseCell";
+    SetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {cell = [[SetTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:ID];}
+    cell.model = self.dataSource[indexPath.section][indexPath.row];
     return cell;
+
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    JMAccountHeaderFooter *headView = [JMAccountHeaderFooter headViewWithTableView:tableView];
-    if (section == 0) {
-    
-//        headView.name.text = NSLocalizedString(@"gif.set.header.SectionZero", "");
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionTwo", "");
-        
-    }else if (section == 1){
-    
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionOne", "");
-        
-    }else if (section == 2){
-        headView.name.text = NSLocalizedString(@"gif.set.header.SectionThree", "");
-    
-    }else{
-    
-    }
-    
+    JMHeaderFooterView *headView = [JMHeaderFooterView initHeaderFooterWithTableView:tableView];
+    headView.model = self.headerFooterSource[section];
     return headView;
 }
 

@@ -157,6 +157,8 @@
 		A28DCF5B1F104DA1005E316D /* JMPhotosAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF511F104DA1005E316D /* JMPhotosAlertView.m */; };
 		A28DCF5C1F104DA1005E316D /* JMPhotosCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF531F104DA1005E316D /* JMPhotosCollectionCell.m */; };
 		A28DCF5D1F104DA1005E316D /* JMPhotosLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A28DCF551F104DA1005E316D /* JMPhotosLayout.m */; };
+		A2ABC66B1FD96DCE00743092 /* JMHeaderFooterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2ABC66A1FD96DCE00743092 /* JMHeaderFooterModel.m */; };
+		A2ABC66E1FD96E7300743092 /* JMHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2ABC66C1FD96E7200743092 /* JMHeaderFooterView.m */; };
 		A2B2D7EC1F16E8100068CB15 /* JMEditerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7EB1F16E8100068CB15 /* JMEditerController.m */; };
 		A2B2D7F01F16E89A0068CB15 /* JMEditerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7EF1F16E89A0068CB15 /* JMEditerCollectionViewCell.m */; };
 		A2B2D7F31F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B2D7F21F16E8CC0068CB15 /* JMEditerCollectionViewFlowLayout.m */; };
@@ -482,6 +484,10 @@
 		A28DCF531F104DA1005E316D /* JMPhotosCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotosCollectionCell.m; sourceTree = "<group>"; };
 		A28DCF541F104DA1005E316D /* JMPhotosLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhotosLayout.h; sourceTree = "<group>"; };
 		A28DCF551F104DA1005E316D /* JMPhotosLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotosLayout.m; sourceTree = "<group>"; };
+		A2ABC6691FD96DCE00743092 /* JMHeaderFooterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHeaderFooterModel.h; sourceTree = "<group>"; };
+		A2ABC66A1FD96DCE00743092 /* JMHeaderFooterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHeaderFooterModel.m; sourceTree = "<group>"; };
+		A2ABC66C1FD96E7200743092 /* JMHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHeaderFooterView.m; sourceTree = "<group>"; };
+		A2ABC66D1FD96E7200743092 /* JMHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHeaderFooterView.h; sourceTree = "<group>"; };
 		A2B2D7EA1F16E8100068CB15 /* JMEditerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerController.h; sourceTree = "<group>"; };
 		A2B2D7EB1F16E8100068CB15 /* JMEditerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditerController.m; sourceTree = "<group>"; };
 		A2B2D7EE1F16E89A0068CB15 /* JMEditerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditerCollectionViewCell.h; sourceTree = "<group>"; };
@@ -943,6 +949,8 @@
 		0490F1C41EEF9C4900E05A84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A2ABC66D1FD96E7200743092 /* JMHeaderFooterView.h */,
+				A2ABC66C1FD96E7200743092 /* JMHeaderFooterView.m */,
 				A20DAF321EF4363F008DBFA9 /* UIView+AccessViewController.h */,
 				A20DAF331EF4363F008DBFA9 /* UIView+AccessViewController.m */,
 				A20DAF341EF4363F008DBFA9 /* MSCellAccessory.h */,
@@ -974,6 +982,8 @@
 				A20BE8951EFE09AB0083DBF1 /* JMLicenceModel.m */,
 				A20BE89A1EFE18B20083DBF1 /* JMLicenceViewModel.h */,
 				A20BE89B1EFE18B20083DBF1 /* JMLicenceViewModel.m */,
+				A2ABC6691FD96DCE00743092 /* JMHeaderFooterModel.h */,
+				A2ABC66A1FD96DCE00743092 /* JMHeaderFooterModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1540,6 +1550,7 @@
 				0490EEA31EEF977000E05A84 /* JMHudManger.m in Sources */,
 				0490EEDC1EEF977000E05A84 /* ViewController.m in Sources */,
 				04DA2E301F17629E00D59DDD /* FICUtilities.m in Sources */,
+				A2ABC66E1FD96E7300743092 /* JMHeaderFooterView.m in Sources */,
 				04B033AE1EFA153700A10D4C /* ImageUtil.m in Sources */,
 				0490EDE41EEF976F00E05A84 /* UIAlertController+SYQAlterViewController.m in Sources */,
 				04654A611F04F760008D0B27 /* JMWebProgressView.m in Sources */,
@@ -1548,6 +1559,7 @@
 				047F57311F0CBF660045D3ED /* JMGIFAnimationView.m in Sources */,
 				A20DAF281EF2E61E008DBFA9 /* JMTopTableView.m in Sources */,
 				A28DCF5C1F104DA1005E316D /* JMPhotosCollectionCell.m in Sources */,
+				A2ABC66B1FD96DCE00743092 /* JMHeaderFooterModel.m in Sources */,
 				04B033AF1EFA153700A10D4C /* UIImage+Alpha.m in Sources */,
 				047FCEE91EF26E5700AD0C08 /* JMHelper.m in Sources */,
 				A2B2D7F91F16F2990068CB15 /* JMEditerDetailController.m in Sources */,
@@ -1779,6 +1791,8 @@
 			baseConfigurationReference = 7F9CEB50E09C70B2C97D93B8 /* Pods-Creativity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48K328WFVJ;
 				GCC_PREFIX_HEADER = Creativity/Others/Creativity_Prefix.pch;
 				INFOPLIST_FILE = Creativity/Info.plist;
@@ -1786,6 +1800,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.GifPlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1794,6 +1809,8 @@
 			baseConfigurationReference = 0DAD8C28929C26D4495D45D0 /* Pods-Creativity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48K328WFVJ;
 				GCC_PREFIX_HEADER = Creativity/Others/Creativity_Prefix.pch;
 				INFOPLIST_FILE = Creativity/Info.plist;
@@ -1801,6 +1818,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JunMing.GifPlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

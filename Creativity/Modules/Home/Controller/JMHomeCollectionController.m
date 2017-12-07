@@ -35,6 +35,7 @@
 @interface JMHomeCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, JMHomeCollectionViewCellDelegate, JMPhotosAlertViewDelegate ,UMSocialShareMenuViewDelegate>
 @property (nonatomic, weak) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property(nonatomic, strong) GADInterstitial *interstitial;
 @end
 
 @implementation JMHomeCollectionController
@@ -47,12 +48,25 @@ static NSString *const collectionID = @"cell";
     
     self.dataSource = [JMFileManger homeModels];
     [self.collection reloadData];
+    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
+}
+
+#pragma mark -- googleADS
+- (void)createAndLoadInterstitial {
+    
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:GoogleUtiID];
+    GADRequest *request = [GADRequest request];
+    // Request test ads on devices you specify. Your test device ID is printed to the console when
+    // an ad request is made.
+//    request.testDevices = @[kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
+    [self.interstitial loadRequest:request];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self.dataSource removeAllObjects];
+    [self createAndLoadInterstitial];
 }
 
 - (void)viewWillLayoutSubviews
@@ -83,8 +97,6 @@ static NSString *const collectionID = @"cell";
     //设置用户自定义的平台
     [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
     [UMSocialUIManager setShareMenuViewDelegate:self];
-
-    [self showAlert];
 }
 
 #pragma mark UICollectionViewDataSource,
@@ -159,15 +171,16 @@ static NSString *const collectionID = @"cell";
 #pragma mark -- JMHomeCollectionViewCellDelegate
 - (void)share:(NSIndexPath *)indexPath
 {
-#pragma mark -- 停止录制
-//    [self stopRecordScreen];
-    
+    // 广告
+    [self createAndLoadInterstitial];
     JMHomeModel *model = _dataSource[indexPath.row];
     JMShareTool *shareTool = [[JMShareTool alloc] init];
     NSData *data = [NSData dataWithContentsOfFile:model.folderPath];
     [shareTool shareWithTitle:@"#GifPlay#" description:@"" url:@"" image:data popView:self.navigationController.navigationBar completionHandler:^(UIActivityType  _Nullable activityType, BOOL completed) {
         
         NSString *shareMessage =  completed ? NSLocalizedString(@"gif.base.alert.success", "") : NSLocalizedString(@"gif.base.alert.Failed", "");
+        
+        if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
         
         UIAlertView *alerView =  [[UIAlertView alloc] initWithTitle:shareMessage message:nil
                                                            delegate:nil cancelButtonTitle:NSLocalizedString(@"gif.base.alert.close","") otherButtonTitles:nil];
@@ -252,6 +265,8 @@ static NSString *const collectionID = @"cell";
 #pragma mark --
 - (void)photoFromSource:(NSInteger)sourceType
 {
+    // 广告
+    [self createAndLoadInterstitial];
     [[JMAuthorizeManager sharedInstance] requestPhotoAccessCompletionHandler:^(BOOL request, NSError *error) {
 
         if (request) {
@@ -349,40 +364,10 @@ static NSString *const collectionID = @"cell";
     }];
 }
 
-- (void)showAlert
+- (void)cancle
 {
-    if (![JMUserDefault setBool:YES forKey:@"comment"]) {
-        
-        if ([self dayFromluanch] > 7 && [self dayFromluanch] /4 == 0) {
-            
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"gif.base.comment.title", "") message:@"" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancle = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.later", "") style:(UIAlertActionStyleDefault) handler:nil];
-            UIAlertAction *refuse = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.refuse", "") style:(UIAlertActionStyleDefault) handler:nil];
-            UIAlertAction *comment = [UIAlertAction actionWithTitle:NSLocalizedString(@"gif.base.comment.comment", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppiTunesID_Creativity]];
-                [JMUserDefault setBool:YES forKey:@"comment"];
-            }];
-            
-            [alertVC addAction:cancle];
-            [alertVC addAction:refuse];
-            [alertVC addAction:comment];
-            [self presentViewController:alertVC animated:YES completion:nil];
-        }
-    }
+    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
 }
-
-// 第几天
-- (NSInteger)dayFromluanch
-{
-    NSDate *senddate = [NSDate date];
-    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-    NSString *nowTimesp = [NSString stringWithFormat:@"%ld",(long)[senddate timeIntervalSince1970]];
-    NSInteger number = [nowTimesp integerValue] - [[user objectForKey:@"timeMark"] integerValue];
-    return number / (24*3600)+1;
-}
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 #ifdef DEBUG

@@ -10,5 +10,5 @@
 
 @class SetModel;
 @interface SetTableViewCell : UITableViewCell
-+ (instancetype)setCell:(UITableView *)tableView IndexPath:(NSIndexPath *)indexPath model:(SetModel *)model;
+@property (nonatomic, strong) SetModel *model;
 @end

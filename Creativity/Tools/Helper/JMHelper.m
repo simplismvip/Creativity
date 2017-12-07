@@ -14,6 +14,7 @@
 #import "JMBottomModel.h"
 #import "SetModel.h"
 #import "JMAttributeStringModel.h"
+#import "NSObject+JMProperty.h"
 
 @implementation JMHelper
 
@@ -294,17 +295,25 @@
 
 + (NSMutableArray *)getSetModel
 {
-    NSArray *setA = kSetArray;
     NSMutableArray *mutab = [NSMutableArray array];
+    NSArray *setA = @[
+                      @[
+                          @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowZero", ""), @"icon":@"0"},
+                          @{@"title":NSLocalizedString(@"gif.set.sectionOne.rowOne", ""), @"icon":@"0"}
+                          ],
+                      @[
+                          @{@"title":NSLocalizedString(@"gif.set.sectionTwo.rowOne", ""), @"icon":@"0"},
+                          @{@"title":NSLocalizedString(@"gif.base.alert.appServer", ""), @"icon":@"0"}
+                          ],
+                      @[
+                          @{@"title":NSLocalizedString(@"gif.base.otherApp.epubreader", ""), @"icon":@"Icon-80"},
+                      @{@"title":NSLocalizedString(@"gif.base.otherApp.toolBox", ""), @"icon":@"Icon-80"}]
+                      ];
     
     for (NSArray *arr in setA) {
         
         NSMutableArray *a = [NSMutableArray array];
-        for (NSDictionary *dic in arr) {
-            
-            [a addObject:[SetModel mj_objectWithKeyValues:dic]];
-        }
-        
+        for (NSDictionary *dic in arr) {[a addObject:[SetModel objectWithDictionary:dic]];}
         [mutab addObject:a];
     }
     

@@ -17,18 +17,27 @@
 #import "JMFileManger.h"
 #import "NSGIF.h"
 
+@import GoogleMobileAds;
 @interface JMPhotosController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
-
 @property (nonatomic, strong) UICollectionView *collection;
 @property (nonatomic, strong) NSMutableArray *selectSource;
+
+/// The interstitial ad.
+@property(nonatomic, strong) GADInterstitial *interstitial;
 @end
 
 @implementation JMPhotosController
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
-//    _models = nil;
+    [super viewWillAppear:animated];
+    [self createAndLoadInterstitial];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
 }
 
 static NSString *const collectionID = @"cell";
@@ -275,6 +284,17 @@ static NSString *const collectionID = @"cell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -- googleADS
+- (void)createAndLoadInterstitial {
+    
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:GoogleUtiID];
+    GADRequest *request = [GADRequest request];
+    // Request test ads on devices you specify. Your test device ID is printed to the console when
+    // an ad request is made.
+//    request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
+    [self.interstitial loadRequest:request];
 }
 
 - (void)dealloc
