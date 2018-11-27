@@ -6,7 +6,7 @@ pod "UMengUShare/Social/ReducedWeChat"
 pod "UMengUShare/Social/ReducedQQ"
 pod "UMengUShare/Social/ReducedSina"
 pod "UMengAnalytics"
-pod "Google-Mobile-Ads-SDK"
+pod "Google-Mobile-Ads-SDK",'~> 7.30.0'
 pod "Masonry"
 pod "AFNetworking"
 pod "SDWebImage"

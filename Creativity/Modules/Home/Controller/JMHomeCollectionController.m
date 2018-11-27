@@ -48,25 +48,23 @@ static NSString *const collectionID = @"cell";
     
     self.dataSource = [JMFileManger homeModels];
     [self.collection reloadData];
-    if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
 }
 
 #pragma mark -- googleADS
 - (void)createAndLoadInterstitial {
     
-    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:GoogleUtiID];
-    GADRequest *request = [GADRequest request];
-    // Request test ads on devices you specify. Your test device ID is printed to the console when
-    // an ad request is made.
-//    request.testDevices = @[kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
-    [self.interstitial loadRequest:request];
+//    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:GoogleUtiID];
+//    GADRequest *request = [GADRequest request];
+//    // Request test ads on devices you specify. Your test device ID is printed to the console when
+//    // an ad request is made.
+////    request.testDevices = @[kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a"];
+//    [self.interstitial loadRequest:request];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self.dataSource removeAllObjects];
-    [self createAndLoadInterstitial];
 }
 
 - (void)viewWillLayoutSubviews
@@ -97,6 +95,11 @@ static NSString *const collectionID = @"cell";
     //设置用户自定义的平台
     [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine)]];
     [UMSocialUIManager setShareMenuViewDelegate:self];
+    
+//    [self createAndLoadInterstitial];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        if (self.interstitial.isReady) {[self.interstitial presentFromRootViewController:self];}
+//    });
 }
 
 #pragma mark UICollectionViewDataSource,
